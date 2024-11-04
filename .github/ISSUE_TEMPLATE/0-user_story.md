@@ -4,7 +4,7 @@ about: Write a user story
 title: ""
 labels: "User Story"
 assignees: ""
-projects: ["Capstone Github SCRUM"]
+projects: "orangecorporation/1"
 ---
 
 ### Front
