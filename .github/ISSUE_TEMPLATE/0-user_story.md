@@ -24,7 +24,3 @@ Scenario:
 Given:
 When:
 Then:
-
-### Linked tasks
-
-- [ ] {{TASK}}
