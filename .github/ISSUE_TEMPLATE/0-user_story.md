@@ -4,7 +4,8 @@ about: Write a user story
 title: ""
 labels: "User Story"
 assignees: ""
-projects: "orangecorporation/1"
+projects:
+    - "orangecorporation/1"
 ---
 
 ### Front
