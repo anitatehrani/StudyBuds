@@ -1,0 +1,35 @@
+------How to run the database
+
+docker run --name postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -d \
+  -p 5432:5432 \
+  -v ./sql_scripts:/docker-entrypoint-initdb.d \
+  -v ./data:/var/lib/postgresql/data \
+  -v ./migrations:/migrations \
+  postgres
+
+
+
+------How to use migration
+
+# install go version 1.23.0
+
+# install migrate from github repo https://github.com/golang-migrate/
+go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+# go inside the /backend/server_db of our project
+
+# add the following environment variable
+export POSTGRESQL_URL='postgres://postgres:postgres@localhost:5432/studybuds_db?sslmode=disable' 
+
+# create the migration 
+migrate create -ext sql -dir migrations -seq create_test_table_for_example
+
+# fill the migration files inside migration folder with sql code (an example is inside migration folder)
+
+# run migration 
+migrate -database ${POSTGRESQL_URL} -path migrations up
+
+# back to the previous version
+migrate -database ${POSTGRESQL_URL} -path migrations down
