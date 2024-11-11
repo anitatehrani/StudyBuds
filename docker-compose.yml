@@ -5,5 +5,5 @@ services:
       - ${BURNDOWN_DATA:-./burndown}:/data
     environment:
       INPUT: /data/data.csv
-      OUTPUT: /data/test.svg
+      OUTPUT: /data/plot.svg
       GH_TOKEN: ${GH_TOKEN:-lol}
