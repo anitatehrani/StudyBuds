@@ -2,8 +2,8 @@ services:
   burndown:
     build: ./burndown
     volumes:
-      - ./burndown:/data
+      - ${BURNDOWN_DATA:-./burndown}:/data
     environment:
-      INPUT: ${INPUT:-/data/data.csv}
-      OUTPUT: ${OUTPUT:-/data/test.svg}
+      INPUT: /data/data.csv
+      OUTPUT: /data/test.svg
       GH_TOKEN: ${GH_TOKEN:-lol}
