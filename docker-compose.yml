@@ -1,6 +1,6 @@
 services:
   burndown:
-    build: ./burndown
+    build: ./scripts/burndown
     volumes:
       - ${BURNDOWN_DATA:-./burndown}:/data
     environment:

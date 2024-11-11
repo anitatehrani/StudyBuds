@@ -1,29 +1,27 @@
 name: Automatic sprint burndown chart
-run-name: Test
 on:
   push:
   workflow_dispatch:
 jobs:
-  build:
+  plot:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ciao
-      # - uses: actions/checkout@v4
-      #
-      # - name: Download old artifact
-      #   run: mkdir ./tmp && cp burndown/data.csv ./tmp/data.csv
-      #
-      # - name: Run docker-compose
-      #   run: docker compose run burndown
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      #     BURNDOWN_DATA: ./tmp
-      # - run: cat ./tmp/plot.svg
-      # - name: Archive result
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: output
-      #     path: |
-      #       ./tmp/plot.svg
-      #       ./tmp/data.csv
+      - uses: actions/checkout@v4
+
+      - name: Download old artifact
+        run: mkdir ./tmp && cd ./tmp && gh run download -n sprint_burndown_chart || echo 'date,value' > data.csv
+
+      - name: Run docker-compose
+        run: docker compose run burndown
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BURNDOWN_DATA: ./tmp
+      - run: cat ./tmp/plot.svg
+      - name: Archive result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint_burndown_chart
+          path: |
+            ./tmp/plot.svg
+            ./tmp/data.csv
