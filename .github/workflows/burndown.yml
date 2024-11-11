@@ -1,0 +1,30 @@
+name: Automatic sprint burndown chart
+run-name: Test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download old artifact
+        run: cp burndown/data.csv /tmp/data.csv
+
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker-compose.yml"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT: /tmp/data.csv
+          OUTPUT: /tmp/plot.svg
+      - name: Archive result
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: |
+            /tmp/plot.svg
+            /tmp/data.csv
