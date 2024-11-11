@@ -1,0 +1,9 @@
+services:
+  burndown:
+    build: ./burndown
+    volumes:
+      - ./burndown:/data
+    environment:
+      INPUT: ${INPUT:/data/data.csv}
+      OUTPUT: ${OUTPUT:/data/test.svg}
+      GH_TOKEN: ${GH_TOKEN:-lol}

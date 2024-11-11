@@ -31,7 +31,7 @@
               androidSdk # The customized SDK that we've made above
               jdk17
             ];
-            packages=[ bun nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq ];
+            packages=[ bun nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq pkgs.docker pkgs.docker-compose ];
           };
       });
 }
