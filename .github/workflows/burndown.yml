@@ -16,8 +16,9 @@ jobs:
       - name: Run docker-compose
         run: docker compose run burndown
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           BURNDOWN_DATA: ./tmp
+      - run: cat ./tmp/data.csv
       - name: Archive result
         uses: actions/upload-artifact@v4
         with:
