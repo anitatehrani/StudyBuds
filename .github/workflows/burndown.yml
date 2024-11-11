@@ -1,7 +1,6 @@
 name: Automatic sprint burndown chart
 run-name: Test
 on:
-  push:
   workflow_dispatch:
 jobs:
   build:
