@@ -2,7 +2,7 @@ services:
   burndown:
     build: ./burndown
     volumes:
-      - ${BURNDOWN_DATA:-./burndown}:/data
+      - ${BURNDOWN_DATA}:/data
     environment:
       INPUT: /data/data.csv
       OUTPUT: /data/test.svg
