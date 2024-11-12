@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Download old artifact
-        run: gh run download -n sprint_burndown_chart && echo 'date,value' > data.csv
+        run: mkdir ./tmp && cd ./tmp && gh run download -n sprint_burndown_chart && echo 'date,value' > data.csv
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
