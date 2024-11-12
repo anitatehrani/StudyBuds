@@ -1,14 +1,16 @@
 const wdio = require("webdriverio");
 const assert = require("assert");
 const { byValueKey } = require("appium-flutter-finder");
-const { Given, When, Then } = require("@cucumber/cucumber");
+const { Given, When, Then, setDefaultTimeout } = require("@cucumber/cucumber");
+
+setDefaultTimeout(60*1000);
 
 const osSpecificOps =
   process.env.APPIUM_OS === "android"
     ? {
         platformName: "Android",
-        "appium:deviceName": "Pixel 2",
-        "appium:app": __dirname + "/../apps/app-free-debug.apk",
+        "appium:deviceName": process.env.DEVICE,
+        "appium:app": __dirname + "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
       }
     : process.env.APPIUM_OS === "ios"
       ? {
@@ -35,15 +37,15 @@ Given("I am on the home page not logged in", async () => {
 
   const driver = await wdio.remote(opts);
 
-  if (process.env.APPIUM_OS === "android") {
-    await driver.switchContext("NATIVE_APP");
-    await (await driver.$("~fab")).click();
-    await driver.switchContext("FLUTTER");
-  } else {
-    console.log(
-      "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
-    );
-  }
+  // if (process.env.APPIUM_OS === "android") {
+  //   await driver.switchContext("NATIVE_APP");
+  //   await (await driver.$("~fab")).click();
+  //   await driver.switchContext("FLUTTER");
+  // } else {
+  //   console.log(
+  //     "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
+  //   );
+  // }
 
   assert.strictEqual(await driver.getElementText(counterTextFinder), "0");
 
