@@ -19,6 +19,7 @@
           buildToolsVersions = [ buildToolsVersion "28.0.3" ];
           platformVersions = [ "34" "28" ];
           abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
+          includeEmulator = true;
         };
         androidSdk = androidComposition.androidsdk;
       in
@@ -31,7 +32,7 @@
               androidSdk # The customized SDK that we've made above
               jdk17
             ];
-            packages=[ bun nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq pkgs.docker pkgs.docker-compose ];
+            packages = [ bun nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq pkgs.docker pkgs.docker-compose pkgs.ffmpeg ];
           };
       });
 }
