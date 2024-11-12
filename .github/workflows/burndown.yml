@@ -2,6 +2,7 @@ name: Automatic sprint burndown chart
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
 jobs:
   plot:
     runs-on: ubuntu-latest
@@ -11,6 +12,8 @@ jobs:
 
       - name: Download old artifact
         run: mkdir ./tmp && cd ./tmp && gh run download -n sprint_burndown_chart || echo 'date,value' > data.csv
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Run docker-compose
         run: docker compose run burndown

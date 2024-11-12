@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Download old artifact
         run: gh run download -n sprint_burndown_chart && echo 'date,value' > data.csv
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Archive result
         uses: actions/upload-artifact@v4
