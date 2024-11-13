@@ -23,8 +23,8 @@ CREATE TABLE StudentsGroup (
 );
 
 CREATE TABLE StudentsGroupMember (
-    student_id smallint REFERENCES Student(student_id) ON UPDATE CASCADE,
-    students_group_id serial REFERENCES StudentsGroup(id) ON UPDATE CASCADE,
+    student_id smallint NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
+    students_group_id serial NOT NULL REFERENCES StudentsGroup(id) ON UPDATE CASCADE,
     PRIMARY KEY(student_id, students_group_id)
 );
 
