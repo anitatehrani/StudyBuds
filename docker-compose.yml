@@ -7,3 +7,14 @@ services:
       INPUT: /data/data.csv
       OUTPUT: /data/plot.svg
       GH_TOKEN: ${GH_TOKEN:-lol}
+
+  # the .env should be created manually by each of you in backend/server_db/.env
+  postgres: 
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./backend/server_db/sql_scripts:/docker-entrypoint-initdb.d
+      - ./backend/server_db/data:/var/lib/postgresql/data
+      - ./backend/server_db/migrations:/migrations 
+    network_mode: host 
