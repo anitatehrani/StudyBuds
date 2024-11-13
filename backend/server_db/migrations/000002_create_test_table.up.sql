@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS Test (
+    Test varchar(20) PRIMARY KEY
+);
