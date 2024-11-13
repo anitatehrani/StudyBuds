@@ -48,11 +48,3 @@ CREATE TABLE Notification (
     notification_type varchar(20) NOT NULL
 );
 
-
--- Create the user 'studybuds_user' and set a password
-CREATE USER studybuds_user WITH PASSWORD 'studybuds_password';
-
--- Grant necessary privileges to the new user
-GRANT CONNECT ON DATABASE studybuds_db TO studybuds_user;
-GRANT USAGE ON SCHEMA public TO studybuds_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO studybuds_user;
