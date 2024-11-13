@@ -5,7 +5,7 @@ CREATE DATABASE studybuds_db;
 \c studybuds_db
 
 CREATE TABLE Student (
-    student_id smallint PRIMARY KEY,
+    student_id int PRIMARY KEY,
     telegram_account int
 );
 
