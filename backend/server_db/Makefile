@@ -1,7 +1,15 @@
 # Makefile for managing database migrations and the starting/stopping of postgres
 
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
+
+
+
 # Variables
-POSTGRESQL_URL = postgres://postgres:postgres@localhost:5432/studybuds_db?sslmode=disable
+POSTGRESQL_URL = postgres://postgres:$(POSTGRES_PASSWORD)@localhost:5432/studybuds_db?sslmode=disable
 MIGRATIONS_DIR = ./migrations
 IMAGE_NAME = migrate_image
 POSTGRES_CONTAINER_NAME = postgres
@@ -10,6 +18,10 @@ DATA_DIR = ./data
 # Default target
 .PHONY: all
 all: build-migration run-migration
+
+.PHONY: try
+try: 
+	echo $(POSTGRESQL_URL)
 
 # Build the migration Docker image
 .PHONY: build-migration
@@ -70,7 +82,7 @@ previous-migration:
 .PHONY: start-postgres
 start-postgres:
 	docker run --name $(POSTGRES_CONTAINER_NAME) \
-		-e POSTGRES_PASSWORD=postgres \
+		-e POSTGRES_PASSWORD= $(POSTGRES_PASSWORD)\
 		-d \
 		-p 5432:5432 \
 		-v ./sql_scripts:/docker-entrypoint-initdb.d \
