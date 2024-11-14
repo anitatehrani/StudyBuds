@@ -38,12 +38,16 @@ services:
   postgres: 
     image: postgres
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     volumes:
       - ./backend/server_db/sql_scripts:/docker-entrypoint-initdb.d
       - ./backend/server_db/data:/var/lib/postgresql/data
       - ./backend/server_db/migrations:/migrations 
-    network_mode: host 
+    network_mode: host
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
 
 volumes:
   apk:

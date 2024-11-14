@@ -1,0 +1,18 @@
+GET http://localhost:8000
+
+
+###
+GET http://localhost:8000/898
+
+###
+
+POST http://localhost:1337
+Content-Type: application/json
+
+{
+    "id": 6196367,
+    "telegram_id": 2787
+}
+
+###
+
