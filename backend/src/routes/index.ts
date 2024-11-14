@@ -1,8 +1,9 @@
-import {Router} from 'express';
+import { Router } from 'express';
 export const router = Router();
 export default router;
 
-import {getAllStudents, getStudent} from '../controllers/studentController';
-
+import { getStudentsAllNotification } from '../controllers/notificationController';
+import { getAllStudents, getStudent } from '../controllers/studentController';
 router.get('/',getAllStudents);
 router.get('/:id', getStudent);
+router.get('/notifcation/:studentId', getStudentsAllNotification)

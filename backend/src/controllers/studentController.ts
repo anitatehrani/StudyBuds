@@ -17,7 +17,6 @@ export const getAllStudents = async (req,res)=>{
 export const getStudent = async (req,res)=>{
     try {
         const result = await getStudentById(req.params.id)
-        // await getStudentById(req.params.id);
         console.log(result);
         res.status(200).send(result)
     } catch (err) {

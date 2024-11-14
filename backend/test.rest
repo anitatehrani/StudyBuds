@@ -2,7 +2,10 @@ GET http://localhost:8000
 
 
 ###
-GET http://localhost:8000/898
+GET http://localhost:8000/7856
+
+###
+GET http://localhost:8000/notifcation/7856
 
 ###
 
