@@ -1,5 +1,5 @@
 const pool = require('../../db');
-const { ApiError } = require('../utils/response');
+const { ApiError, errorCodes } = require('../utils/response');
 
 async function getStudentsGroup(student_id) {
     try {
@@ -7,7 +7,7 @@ async function getStudentsGroup(student_id) {
         return data.rows;
     } catch (e) {
         console.log(`Failed to get student's groups request error: ${e}`);
-        throw new ApiError({code:internalServerErrorCode});
+        throw new ApiError({code: errorCodes.internalServerErrorCode});
     }
 }
 

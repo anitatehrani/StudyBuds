@@ -3,13 +3,13 @@ const { getAllStudent, getStudentById } = require('../service/student_service')
 const getAllStudents = async (req,res)=>{
     try {
         const result = await getAllStudent();
-        console.log(result);
         res.status(200).send({
             data: result
         })
     } catch (err) {
         console.log(err)
-        res.sendStatus(500)
+        res.status(err.status || 500);
+        res.send(err.message || 'Internal server error');
     }
 };
 
@@ -22,7 +22,8 @@ const getStudent = async (req,res)=>{
         })
     } catch (err) {
         console.log(err)
-        res.sendStatus(500)
+        res.status(err.status || 500);
+        res.send(err.message || 'Internal server error');
     }
 };
 
