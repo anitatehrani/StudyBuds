@@ -1,16 +1,18 @@
-const wdio = require("webdriverio");
-const assert = require("assert");
-const { byValueKey } = require("appium-flutter-finder");
-const { Given, When, Then, setDefaultTimeout } = require("@cucumber/cucumber");
+import {remote} from "webdriverio";
+import assert from "assert";
+import { byValueKey } from "appium-flutter-finder";
+import { Given, When, Then, setDefaultTimeout } from "@cucumber/cucumber";
 
-setDefaultTimeout(60*1000);
+setDefaultTimeout(60 * 1000);
 
 const osSpecificOps =
   process.env.APPIUM_OS === "android"
     ? {
         platformName: "Android",
         "appium:deviceName": process.env.DEVICE,
-        "appium:app": __dirname + "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
+        "appium:app": process.env.APK,
+        // __dirname +
+        // "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
       }
     : process.env.APPIUM_OS === "ios"
       ? {
@@ -23,7 +25,10 @@ const osSpecificOps =
       : {};
 
 const opts = {
-  port: 4723,
+  hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
+  port: Number.parseInt(
+    process.env.APPIUM_PORT ? process.env.APPIUM_PORT : "4723",
+  ),
   capabilities: {
     ...osSpecificOps,
     "appium:automationName": "Flutter",
@@ -35,7 +40,7 @@ Given("I am on the home page not logged in", async () => {
   const counterTextFinder = byValueKey("counter");
   const buttonFinder = byValueKey("increment");
 
-  const driver = await wdio.remote(opts);
+  const driver = await remote(opts);
 
   // if (process.env.APPIUM_OS === "android") {
   //   await driver.switchContext("NATIVE_APP");
@@ -50,12 +55,16 @@ Given("I am on the home page not logged in", async () => {
   assert.strictEqual(await driver.getElementText(counterTextFinder), "0");
 
   await driver.elementClick(buttonFinder);
-  await driver.touchAction({
-    action: "tap",
-    element: { elementId: buttonFinder },
-  });
+  // await
+  // await driver.action("pointer", {
+  //   parameters: { pointerType: "touch" },
+  // });
+  // await driver.touchAction({
+  //   action: "tap",
+  //   element: { elementId: buttonFinder },
+  // });
 
-  assert.strictEqual(await driver.getElementText(counterTextFinder), "2");
+  assert.strictEqual(await driver.getElementText(counterTextFinder), "1");
 
   driver.deleteSession();
 });

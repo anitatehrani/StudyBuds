@@ -46,13 +46,19 @@
               androidSdk # The customized SDK that we've made above
               jdk17
             ];
-            packages = [ bun nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq pkgs.docker pkgs.docker-compose pkgs.ffmpeg ];
+            packages = [ nodePackages.pnpm nodejs just nodePackages.vega-lite pkgs.yq pkgs.docker pkgs.docker-compose pkgs.ffmpeg ];
             shellHook=''
             echo ${pkgs.flutter-unwrapped}/packages/flutter_tools/gradle
             if [ ! -w "${pkgs.flutter-unwrapped}/packages/flutter_tools/gradle" ]
             then
                 sudo chmod o+w "${pkgs.flutter-unwrapped}/packages/flutter_tools/gradle"
             fi
+            if [ ! -e /var/run/docker.sock ]
+            then
+                # sudo ls
+                # sudo podman system service -t0 unix:///var/run/docker.sock &
+            fi
+            DOCKER_HOST=unix:///var/run/docker.sock
             '';
           };
       });

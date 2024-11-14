@@ -7,3 +7,30 @@ services:
       INPUT: /data/data.csv
       OUTPUT: /data/plot.svg
       GH_TOKEN: ${GH_TOKEN:-lol}
+  emulator:
+    image: docker.io/budtmo/docker-android:emulator_11.0
+    ports:
+      - "6080:6080"
+    environment:
+      EMULATOR_DEVICE: "Samsung Galaxy S10"
+      WEB_VNC: true
+      APPIUM: true
+    devices:
+      - /dev/kvm
+    volumes:
+      - apk:/apk:ro
+  build-apk:
+    build: ./frontend
+    volumes:
+      - apk:/app/build/app/outputs/flutter-apk
+  acceptance-tests:
+    build: ./test
+    environment:
+      APPIUM_OS: android
+      APK: /apk/app-debug.apk
+      DEVICE: ''
+      APPIUM_HOST: "emulator"
+      APPIUM_PORT: "4723"
+
+volumes:
+  apk:
