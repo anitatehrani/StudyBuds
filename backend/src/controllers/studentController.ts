@@ -1,6 +1,6 @@
-const { getAllStudent, getStudentById } = require('../service/student_service')
+import { getAllStudent, getStudentById } from '../service/student_service';
 
-const getAllStudents = async (req,res)=>{
+export const getAllStudents = async (req,res)=>{
     try {
         const result = await getAllStudent();
         res.status(200).send({
@@ -13,7 +13,7 @@ const getAllStudents = async (req,res)=>{
     }
 };
 
-const getStudent = async (req,res)=>{
+export const getStudent = async (req,res)=>{
     try {
         const result = await getStudentById(req.params.id);
         console.log(result);
@@ -26,8 +26,3 @@ const getStudent = async (req,res)=>{
         res.send(err.message || 'Internal server error');
     }
 };
-
-module.exports = {
-    getAllStudents,
-    getStudent
-}

@@ -1,7 +1,7 @@
-const pool = require('../../db');
-const { ApiError, errorCodes } = require('../utils/response');
+import { pool } from 'pg';
+import { ApiError, errorCodes } from '../utils/response';
 
-async function getAllStudent() {
+export async function getAllStudent() {
     try {
         const data = await pool.query('select * from studybuds.student')
         return data.rows;
@@ -12,7 +12,7 @@ async function getAllStudent() {
 }
 
 
-async function getStudentById(id) {
+export async function getStudentById(id) {
     try {
         const data = await pool.query('select * from studybuds.student where student_id = $1', [id])
         if (data.rowCount == 0)
@@ -24,10 +24,4 @@ async function getStudentById(id) {
         console.log(`Failed to get student information, id: ${id}, error: ${e}`);
         throw new ApiError({code:errorCodes.internalServerErrorCode});
     }
-}
-
-
-module.exports = {
-    getAllStudent,
-    getStudentById
 }

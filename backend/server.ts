@@ -1,4 +1,4 @@
-const express =  require('express');
+import express from 'express';
 const app = express();
 
 //middlewares
@@ -11,12 +11,12 @@ app.use((err, req, res, next) => {
     res.status(500);
     res.send('500: Internal server error');
 });
-
+import index from './src/routes/index';
 //routes
-app.use(require('./src/routes/index'));
-
-require('dotenv').config()
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+app.use(index);
+import {config} from 'dotenv';
+config()
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 app.listen(process.env.PORT||1337);
 
