@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
-    // "module": "esnext",
+    // "lib": ["ESNext"],
+    "module": "commonjs",
     "target": "esnext",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
+    "esModuleInterop": true,
     "types": [
       "bun-types" // add Bun global
     ]

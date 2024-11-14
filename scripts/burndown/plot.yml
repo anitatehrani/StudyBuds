@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://vega.github.io/schema/vega-lite/v5.json
+title: "Burndown chart sprint"
+layer:
+  - mark:
+      type: "line"
+      point: true
+    encoding:
+      x:
+        field: "date"
+        type: "temporal"
+        timeUnit: "binnedmonthdate"
+      y:
+        field: "value"
+        type: "quantitative"
