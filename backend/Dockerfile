@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npx","ts-node", "server.js"]
+CMD ["npx","ts-node", "server"]
