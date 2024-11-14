@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:studybuds/firebase/push_notification_service.dart';
 import 'package:studybuds/firebase_options.dart';
+import 'package:flutter_driver/driver_extension.dart';
 
-void main() async{
+void main() {
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   PushNotificationService.instance.retrievePushNotificationToken();

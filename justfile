@@ -53,3 +53,8 @@ admin-format:
 admin-format-check:
     cd backend && pnpm exec prettier --write src test
 
+emulator:
+    docker run --rm -d -p 6080:6080 -p 4723:4723 -e EMULATOR_DEVICE="Samsung Galaxy S10" -e WEB_VNC=true -e APPIUM=true --volume ./frontend/build/app/outputs/apk/debug:/apk:ro --device /dev/kvm --name android-container budtmo/docker-android:emulator_11.0
+
+emulator-stop:
+    docker stop android-container

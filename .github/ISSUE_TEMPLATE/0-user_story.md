@@ -22,6 +22,6 @@ I as {{USER}} would like to {{FEATURE}} to {{OBJECTIVE}}
 ### Back
 
 Scenario:
-Given:
-When:
-Then:
+Given
+When
+Then
