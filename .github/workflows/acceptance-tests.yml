@@ -1,0 +1,33 @@
+name: Acceptance tests
+on:
+  # schedule:
+  #   - cron: "0 0 * * *"
+  workflow_dispatch:
+jobs:
+  plot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Compile apk
+        run: docker compose up build-apk
+      - name: Start the emulator
+        run: docker compose up -d emulator
+      - name: Wait emulator to start
+        run: sleep 60
+      - name: Run tests
+        run: docker compose run acceptance-tests
+      # - name: Archive result
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: sprint_burndown_chart
+      #     path: |
+      #       ./tmp/plot.svg
+      #       ./tmp/data.csv
