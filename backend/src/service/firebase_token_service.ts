@@ -1,5 +1,5 @@
-const pool = require('../../db');
-const { ApiError, errorCodes } = require('../utils/response');
+import { pool } from 'pg';
+import { ApiError, errorCodes } from '../utils/response';
 
 async function getStudentToke(student_id) {
     try {
@@ -9,8 +9,4 @@ async function getStudentToke(student_id) {
         console.log(`Failed to get student's groups request error: ${e}`);
         throw new ApiError({code: errorCodes.internalServerErrorCode});
     }
-}
-
-module.exports = {
-    getStudentsGroup
 }

@@ -1,13 +1,28 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database';
 
-const FbToken = sequelize.define('FbToken', {
-    userId: {
-        type: DataTypes.INTEGER,
+const FbToken = sequelize.define(
+    'FbToken', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true
+        },
+        studentId: {
+            type: DataTypes.INTEGER,
+            field: 'student_id'
+        },
+        token: {
+            type: DataTypes.STRING,
+        },
     },
-    token: {
-        type: DataTypes.STRING,
-    },
-});
+    {
+        tableName: 'fb_token',
+        schema: 'studybuds',
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
+
+);
 
 module.exports = FbToken;

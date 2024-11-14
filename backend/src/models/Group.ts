@@ -1,38 +1,53 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database';
 
-const Group = sequelize.define('Group', {
-    id: {
-        type: DataTypes.BIGINT,
-        primaryKey: true,
+const StudentGroup = sequelize.define(
+    'StudentGroup', {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+        },
+        membersLimit: {
+            type: DataTypes.INTEGER,
+            field: 'members_limit'
+        },
+        isPublic: {
+            type: DataTypes.BOOLEAN,
+            field: 'is_public',
+            defaultValue: false
+        },
+        course: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        telegramLink: {
+            type: DataTypes.STRING,
+            field: 'telegram_link'
+        },
+        telegramId: {
+            type: DataTypes.INTEGER,
+            field: 'telegram_id'
+        },
+        adminId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            field: 'admin_id'
+        },
     },
-    name: {
-        type: DataTypes.STRING,
-    },
-    description: {
-        type: DataTypes.STRING,
-    },
-    membersLimit: {
-        type: DataTypes.INTEGER,
-    },
-    isPublic: {
-        type: DataTypes.BOOLEAN,
-    },
-    course: {
-        type: DataTypes.STRING,
-    },
-    isActive: {
-        type: DataTypes.BOOLEAN,
-    },
-    telegram_link: {
-        type: DataTypes.STRING,
-    },
-    telegram_id: {
-        type: DataTypes.INTEGER,
-    },
-    adminId: {
-        type: DataTypes.INTEGER,
-    },
-});
+    {
+        tableName: 'student_group',
+        schema: 'studybuds',
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
+);
 
-module.exports = Group
+module.exports = StudentGroup;

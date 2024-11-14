@@ -1,11 +1,12 @@
-import { getAllStudent, getStudentById } from '../service/student_service';
+import Student from '../models/Student';
+import { getStudentById } from '../service/student_service';
 
 export const getAllStudents = async (req,res)=>{
     try {
-        const result = await getAllStudent();
-        res.status(200).send({
-            data: result
-        })
+        const result = await Student.findAll()
+        res.status(200).send(
+            result
+        )
     } catch (err) {
         console.log(err)
         res.status(err.status || 500);
@@ -15,11 +16,10 @@ export const getAllStudents = async (req,res)=>{
 
 export const getStudent = async (req,res)=>{
     try {
-        const result = await getStudentById(req.params.id);
+        const result = await getStudentById(req.params.id)
+        // await getStudentById(req.params.id);
         console.log(result);
-        res.status(200).send({
-            data: result
-        })
+        res.status(200).send(result)
     } catch (err) {
         console.log(err)
         res.status(err.status || 500);

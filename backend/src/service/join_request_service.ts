@@ -1,5 +1,5 @@
-const pool = require('../../db');
-const { ApiError, errorCodes } = require('../utils/response');
+import { pool } from 'pg';
+import { ApiError, errorCodes } from '../utils/response';
 
 async function getJoinRequest(id) {
     try {
@@ -9,9 +9,4 @@ async function getJoinRequest(id) {
         console.log(`Failed to get join request error: ${e}`);
         throw new ApiError({code: errorCodes.internalServerErrorCode});
     }
-}
-
-
-module.exports = {
-    getJoinRequest
 }

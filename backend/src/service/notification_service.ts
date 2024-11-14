@@ -1,5 +1,5 @@
-const pool = require('../../db');
-const { ApiError, errorCodes } = require('../utils/response');
+import { pool } from 'pg';
+import { ApiError, errorCodes } from '../utils/response';
 
 async function getCustomersAllNotification(customerId) {
     try {
@@ -9,8 +9,4 @@ async function getCustomersAllNotification(customerId) {
         console.log(`Failed to get customers notification error: ${e}`);
         throw new ApiError({code:errorCodes.internalServerErrorCode});
     }
-}
-
-module.exports = {
-    getCustomersAllNotification
 }

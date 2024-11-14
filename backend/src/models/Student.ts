@@ -1,14 +1,23 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database';
 
-const Student = sequelize.define('Student', {
-    studentId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
+const Student = sequelize.define(
+    'Student', {
+        studentId: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            field: 'student_id'
+        },
+        telegramAccount: {
+            type: DataTypes.INTEGER,
+            field: 'telegram_account'
+        },
     },
-    tel_account: {
-        type: DataTypes.INTEGER,
-    },
-});
+    {
+        tableName: 'student',
+        schema: 'studybuds',
+        timestamps: false
+    }
+);
 
-module.exports = Student;
+export default Student;
