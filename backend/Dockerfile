@@ -7,10 +7,9 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-RUN npm install dotenv --save-dev
 
 COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["npx","ts-node", "server.js"]
