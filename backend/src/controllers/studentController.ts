@@ -1,4 +1,5 @@
 import Student from '../models/Student';
+import { getCurrentMemberList } from '../service/group_member';
 import { getGroupById } from '../service/group_service';
 import { getStudentById } from '../service/student_service';
 
@@ -41,7 +42,7 @@ export const joinTheGroup = async (req,res)=>{
         if (group)
             // Todo throw NotFound error
             console.log('')
-        // const result = await getCurrentMemberList(groupId)
+        const result = await getCurrentMemberList(groupId)
         // console.log(result);
         res.status(200).send('')
     } catch (err) {
