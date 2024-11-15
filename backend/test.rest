@@ -7,6 +7,16 @@ GET http://localhost:8000/7856
 ###
 GET http://localhost:8000/notifcation/7856
 
+
+###
+POST http://localhost:8000/notifcation
+Content-Type: application/json
+
+{
+    "studentId": 7856,
+    "toke": "dhajsfs1"
+}
+
 ###
 
 POST http://localhost:1337
@@ -18,4 +28,8 @@ Content-Type: application/json
 }
 
 ###
-
+{
+    "studentId": 7856,
+    "joinRequestId": 1,
+    "notificationType": "joinRequest"
+}

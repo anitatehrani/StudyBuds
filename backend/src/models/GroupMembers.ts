@@ -29,4 +29,4 @@ const GroupMembers = sequelize.define(
     }
     );
 
-module.exports = GroupMembers;
+export default GroupMembers;
