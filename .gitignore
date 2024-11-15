@@ -4,3 +4,44 @@
 ### direnv ###
 .direnv
 .envrc
+
+#Flutter Ignore List
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+mobile_app/.DS_Store
+mobile_app/.atom/
+mobile_app/.buildlog/
+mobile_app/.history
+mobile_app/.svn/
+mobile_app/migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+mobile_app/.idea/
+
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+mobile_app/.dart_tool/
+mobile_app/.flutter-plugins
+mobile_app/.flutter-plugins-dependencies
+mobile_app/.pub-cache/
+mobile_app/.pub/
+mobile_app/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+mobile_app/android/app/debug
+mobile_app/android/app/profile
+mobile_app/android/app/release
