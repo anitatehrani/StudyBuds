@@ -1,7 +1,7 @@
-import Group from '../models/Group';
+import StudentGroup from '../models/Group';
 
-export async function getGroup(groupId: number) {
-    const data = await Group.findOne({
+export async function getGroupById(groupId: number) {
+    const data = await StudentGroup.findOne({
         where: {
             id: groupId
         }
