@@ -1,12 +1,30 @@
-import { pool } from 'pg';
-import { ApiError, errorCodes } from '../utils/response';
+import Group from '../models/Group';
 
-async function getGroupData(id) {
-    try {
-        const data = await pool.query('select * from study_buds.studentsGroup where id=$1',[id])
-        return data.rows;
-    } catch (e) {
-        console.log(`Failed to get join request error: ${e}`);
-        throw new ApiError({code: errorCodes.internalServerErrorCode});
-    }
+interface GroupData {
+    name: string;
+    description: string;
+    course: string;
+    isPublic: boolean;
+    membersLimit: number;
+    telegramLink?: string; // camelCase, no need for telegram_link here
+    studentId: number;
 }
+
+export const createGroup = async (groupData: GroupData): Promise<Group> => {
+    const { name, description, course, isPublic, membersLimit, telegramLink, studentId } = groupData;
+
+    // Save the group information in the database
+    const group = await Group.create({
+        name,
+        description,
+        course,
+        isPublic,
+        membersLimit,
+        telegramLink,
+        adminId: studentId,
+    });
+
+    return group;
+};
+
+export default { createGroup };
