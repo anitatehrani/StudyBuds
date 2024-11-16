@@ -18,6 +18,16 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8000/group
+Content-Type: application/json
+
+{
+    "studentId": 6342,
+    "groupId": 2
+}
+
+
+###
 
 POST http://localhost:1337
 Content-Type: application/json
