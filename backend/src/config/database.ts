@@ -1,7 +1,7 @@
 // import { Pool } from 'pg';
 
-// import { config } from 'dotenv';
-// config();
+import { config } from 'dotenv';
+config();
 
 // const pool = new Pool({
 //     connectionString: process.env.DATABASE_URL,
@@ -19,6 +19,10 @@
 import { Sequelize } from 'sequelize';
 
 // Create and export a Sequelize instance
-const sequelize = new Sequelize('postgres://postgres:Test1234.@localhost:5432/studybuds_db');
+const URL = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}`;
+console.log('--oooo--');
+console.log(URL);
+console.log('--oooo--');
+const sequelize = new Sequelize(URL);
 
 export default sequelize;

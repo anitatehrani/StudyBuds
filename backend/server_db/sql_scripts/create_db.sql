@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS studybuds;
 set search_path to studybuds;
 
 CREATE TABLE student (
@@ -23,7 +24,7 @@ CREATE TABLE student_group (
 );
 
 CREATE TABLE group_members (
-    student_id smallint NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
+    student_id int NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
     group_id serial NOT NULL REFERENCES student_group(id) ON UPDATE CASCADE,
     PRIMARY KEY(student_id, group_id),
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
