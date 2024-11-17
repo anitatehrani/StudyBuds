@@ -11,7 +11,7 @@ interface GroupAttributes {
     membersLimit: number;
     isPublic: boolean;
     course: string;
-    telegramLink?: string; // Using camelCase for TypeScript
+    telegramLink?: string;
     telegramId?: number;
     adminId: number;
     createdAt?: Date;

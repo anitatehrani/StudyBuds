@@ -1,9 +1,3 @@
-/**
- * Group Routes
- * Defines the API routes for group-related endpoints
- * Written by: Anita and Mahdi
- */
-
 import { Router } from 'express';
 import { createGroup } from '../controllers/groupController';
 

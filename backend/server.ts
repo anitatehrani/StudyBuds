@@ -1,23 +1,28 @@
-import express from 'express';
-const app = express();
+import express, { Request, Response, NextFunction } from 'express';
+import { config } from 'dotenv';
+import indexRouter from './src/routes/index'; // Main router for all API routes
 
-//middlewares
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-app.use((err, req, res, next) => {
-    if (! err) {
-        return next();
-    }
-    res.status(500);
-    res.send('500: Internal server error');
-});
-import index from './src/routes/index';
-//routes
-app.use(index);
-import {config} from 'dotenv';
-config()
+// Load environment variables
+config();
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-app.listen(process.env.PORT||1337);
+const app = express();
 
-console.log(`Server on port ${process.env.PORT}`);
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
+app.use('/api', indexRouter); // Mount all routes under "/api"
+
+// Error handling for uncaught errors
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 1337;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

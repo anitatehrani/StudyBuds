@@ -1,8 +1,12 @@
-import {Router} from 'express';
-export const router = Router();
-export default router;
+import { Router } from 'express';
+import { getAllStudents, getStudent } from '../controllers/studentController';
 
-import {getAllStudents, getStudent} from '../controllers/studentController';
+const router: Router = Router();
 
-router.get('/',getAllStudents);
+// Route to get all students
+router.get('/', getAllStudents);
+
+// Route to get a student by ID
 router.get('/:id', getStudent);
+
+export default router;
