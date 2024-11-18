@@ -1,28 +1,15 @@
-// import { Pool } from 'pg';
-
-import { config } from 'dotenv';
-config();
-
-// const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
-// });
-
-// pool.on('connect', () => {
-//     console.log('Connected to the PostgreSQL database');
-// });
-
-// module.exports = {
-//     query: (text, params) => pool.query(text, params),
-// };
-
-
+import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 
-// Create and export a Sequelize instance
-const URL = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}`;
-console.log('--oooo--');
-console.log(URL);
-console.log('--oooo--');
-const sequelize = new Sequelize(URL);
+// Load environment variables from a `.env` file
+dotenv.config();
+
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
+
+if (!DB_USER || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
+    throw new Error('One or more database environment variables are missing.');
+}
+
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
 export default sequelize;

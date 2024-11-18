@@ -8,24 +8,27 @@ const Notification = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        userId: {
+        studentId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'user_id'
+            field: 'student_id'
         },
         joinRequestId: {
             type: DataTypes.BIGINT,
             allowNull: false,
             field: 'join_request_id'
         },
-        type: {
+        notificationType: {
             type: DataTypes.ENUM('Acceptance', 'Request', 'Rejection'),
+            field: 'notification_type'
         },
     },
     {
         tableName: 'notification',
         schema: 'studybuds',
-        timestamps: true
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 );
 

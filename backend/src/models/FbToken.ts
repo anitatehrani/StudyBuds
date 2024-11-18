@@ -5,7 +5,8 @@ const FbToken = sequelize.define(
     'FbToken', {
         id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true
+            autoIncrement: true,
+            primaryKey: true
         },
         studentId: {
             type: DataTypes.INTEGER,
@@ -25,4 +26,4 @@ const FbToken = sequelize.define(
 
 );
 
-module.exports = FbToken;
+export default FbToken;
