@@ -18,7 +18,8 @@ export async function basicSearch(text, studentId) {
         const searchText = `%${text}%`;
         console.log(text + " .. "+studentId);
         const query = `
-            SELECT 
+            SELECT
+                sg.id, 
                 sg.name,
                 sg.description,
                 sg.is_public,
