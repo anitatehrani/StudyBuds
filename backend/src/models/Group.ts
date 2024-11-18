@@ -50,4 +50,4 @@ const StudentGroup = sequelize.define(
     }
 );
 
-module.exports = StudentGroup;
+export default StudentGroup;
