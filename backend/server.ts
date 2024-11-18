@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { config } from 'dotenv';
-import indexRouter from './src/routes/index'; // Main router for all API routes
+import indexRouter from './src/routes/index';
+import sequelize from './src/config/database';
 
 // Load environment variables
 config();
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 const app = express();
 
@@ -12,17 +12,26 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
-app.use('/api', indexRouter); // Mount all routes under "/api"
+// Mount all routes without "/api" prefix
+app.use('/', indexRouter);
 
-// Error handling for uncaught errors
+// Test database connection
+sequelize.authenticate()
+    .then(() => {
+        console.log('Database connected successfully!');
+    })
+    .catch((error) => {
+        console.error('Unable to connect to the database:', error.message);
+    });
+
+// Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
 });
 
 // Start the server
-const PORT = process.env.PORT || 1337;
+const PORT = process.env.SERVER_PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

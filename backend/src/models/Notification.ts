@@ -2,30 +2,35 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const Notification = sequelize.define(
-    'Notification', {
+    'Notification',
+    {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
-        userId: {
+        studentId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'user_id'
+            field: 'student_id',
         },
         joinRequestId: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            field: 'join_request_id'
+            field: 'join_request_id',
         },
-        type: {
-            type: DataTypes.ENUM('Acceptance', 'Request', 'Rejection'),
+        notificationType: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            field: 'notification_type',
         },
     },
     {
         tableName: 'notification',
         schema: 'studybuds',
-        timestamps: true
+        timestamps: true,
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
     }
 );
 

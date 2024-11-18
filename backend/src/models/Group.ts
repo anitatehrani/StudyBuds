@@ -1,11 +1,8 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
 
-/**
- * Interface for the Group attributes
- */
-interface GroupAttributes {
-    id: number;
+export interface GroupAttributes {
+    id: number; // Auto-generated field
     name: string;
     description?: string;
     membersLimit: number;
@@ -14,20 +11,12 @@ interface GroupAttributes {
     telegramLink?: string;
     telegramId?: number;
     adminId: number;
-    createdAt?: Date;
-    updatedAt?: Date;
 }
 
-/**
- * Interface for Group creation attributes,
- * marking 'id', 'createdAt', and 'updatedAt' as optional
- */
-type GroupCreationAttributes = Optional<GroupAttributes, 'id' | 'createdAt' | 'updatedAt'>;
+// Optional id field for creating new groups
+export interface GroupCreationAttributes extends Optional<GroupAttributes, 'id'> {}
 
-/**
- * Group model for the "student_group" table in the "studybuds" schema
- */
-class StudentGroup extends Model<GroupAttributes, GroupCreationAttributes> implements GroupAttributes {
+class Group extends Model<GroupAttributes, GroupCreationAttributes> implements GroupAttributes {
     public id!: number;
     public name!: string;
     public description?: string;
@@ -37,48 +26,43 @@ class StudentGroup extends Model<GroupAttributes, GroupCreationAttributes> imple
     public telegramLink?: string;
     public telegramId?: number;
     public adminId!: number;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
 }
 
-StudentGroup.init(
+Group.init(
     {
         id: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(40),
             allowNull: false,
         },
         description: {
-            type: DataTypes.STRING,
-            allowNull: true,
+            type: DataTypes.STRING(100),
         },
         membersLimit: {
-            type: DataTypes.INTEGER,
-            field: 'members_limit',
+            type: DataTypes.SMALLINT,
             allowNull: false,
+            field: 'members_limit',
         },
         isPublic: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             field: 'is_public',
-            defaultValue: false,
         },
         course: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(60),
             allowNull: false,
         },
         telegramLink: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             field: 'telegram_link',
-            allowNull: true,
         },
         telegramId: {
             type: DataTypes.INTEGER,
             field: 'telegram_id',
-            allowNull: true,
         },
         adminId: {
             type: DataTypes.INTEGER,
@@ -96,4 +80,4 @@ StudentGroup.init(
     }
 );
 
-export default StudentGroup;
+export default Group;

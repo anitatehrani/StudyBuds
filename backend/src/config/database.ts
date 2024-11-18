@@ -1,24 +1,20 @@
-// import { Pool } from 'pg';
-
-// import { config } from 'dotenv';
-// config();
-
-// const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
-// });
-
-// pool.on('connect', () => {
-//     console.log('Connected to the PostgreSQL database');
-// });
-
-// module.exports = {
-//     query: (text, params) => pool.query(text, params),
-// };
-
-
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-// Create and export a Sequelize instance
-const sequelize = new Sequelize('postgres://postgres:Test1234.@localhost:5432/studybuds_db');
+// Load environment variables from .env file
+dotenv.config();
+
+// Create a Sequelize instance
+const sequelize = new Sequelize(
+    process.env.POSTGRES_DB!,       // Database name
+    process.env.POSTGRES_USER!,     // Username
+    process.env.POSTGRES_PASSWORD!, // Password
+    {
+        host: process.env.POSTGRES_HOST!, // Remote database host
+        port: Number(process.env.POSTGRES_PORT) || 5432, // Database port
+        dialect: 'postgres', // PostgreSQL
+        logging: console.log, // Enable query logging for debugging (optional)
+    }
+);
 
 export default sequelize;

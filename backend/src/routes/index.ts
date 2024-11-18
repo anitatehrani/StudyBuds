@@ -1,12 +1,23 @@
-import { Router } from 'express';
-import { getAllStudents, getStudent } from '../controllers/studentController';
+import { Router, Request, Response } from 'express';
+import studentRoutes from './studentRoutes';
+import groupRoutes from './groupRoutes';
 
 const router: Router = Router();
 
-// Route to get all students
-router.get('/', getAllStudents);
+// Handle favicon requests to prevent unnecessary processing
+router.get('/favicon.ico', (req: Request, res: Response) => {
+    res.status(204).end(); // No Content
+});
 
-// Route to get a student by ID
-router.get('/:id', getStudent);
+// Root route
+router.get('/', (req: Request, res: Response) => {
+    res.send('Welcome to the StudyBuds API!');
+});
+
+// Mount student routes under "/students"
+router.use('/students', studentRoutes);
+
+// Mount group routes under "/groups"
+router.use('/groups', groupRoutes);
 
 export default router;

@@ -2,16 +2,17 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const GroupMembers = sequelize.define(
-    'GroupMembers', {
+    'GroupMembers',
+    {
         studentId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.SMALLINT,
+            allowNull: false,
             field: 'student_id',
-            primaryKey: true
         },
         groupId: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.INTEGER,
+            allowNull: false,
             field: 'group_id',
-            primaryKey: true
         },
     },
     {
@@ -20,13 +21,7 @@ const GroupMembers = sequelize.define(
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
-        indexes: [
-            {
-                unique: true,
-                fields: ['student_id', 'group_id']
-            }
-        ]
     }
-    );
+);
 
-module.exports = GroupMembers;
+export default GroupMembers;

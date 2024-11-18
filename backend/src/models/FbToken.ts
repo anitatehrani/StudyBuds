@@ -2,17 +2,21 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const FbToken = sequelize.define(
-    'FbToken', {
+    'FbToken',
+    {
         id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        token: {
+            type: DataTypes.STRING(200),
+            allowNull: false,
         },
         studentId: {
             type: DataTypes.INTEGER,
-            field: 'student_id'
-        },
-        token: {
-            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'student_id',
         },
     },
     {
@@ -20,9 +24,8 @@ const FbToken = sequelize.define(
         schema: 'studybuds',
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: 'updated_at'
+        updatedAt: 'updated_at',
     }
-
 );
 
-module.exports = FbToken;
+export default FbToken;
