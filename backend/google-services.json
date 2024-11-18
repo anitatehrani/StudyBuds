@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "532609230646",
+    "project_id": "studybuds-116d5",
+    "storage_bucket": "studybuds-116d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532609230646:android:1c34057810d79885f0f597",
+        "android_client_info": {
+          "package_name": "com.orange.studybuds"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB0T_5QlDbGGY-tkFlj3Pasdqf_QGlMCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

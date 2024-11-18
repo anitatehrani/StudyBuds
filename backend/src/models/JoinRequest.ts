@@ -6,6 +6,7 @@ const JoinRequest = sequelize.define(
         id: {
             type: DataTypes.BIGINT,
             primaryKey: true,
+            autoIncrement: true
         },
         groupId: {
             type: DataTypes.BIGINT,
