@@ -1,0 +1,16 @@
+[project]
+name = "unige"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]>=0.115.5",
+    "pyjwt>=2.10.0",
+    "pyyaml>=6.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "faker>=33.0.0",
+]
