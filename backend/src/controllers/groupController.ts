@@ -15,6 +15,14 @@ export const createGroup = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
+
+        // Check if the telegramLink already exists
+        const existingGroup = await Group.findOne({ where: { telegramLink } });
+        if (existingGroup) {
+            res.status(400).json({ message: "This Telegram link already exists" });
+            return;
+        }
+
         // Create the group using GroupService
         const group = await GroupService({
             name,
