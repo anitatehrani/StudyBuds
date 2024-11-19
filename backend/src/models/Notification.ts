@@ -2,25 +2,27 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const Notification = sequelize.define(
-    'Notification', {
+    'Notification',
+    {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         studentId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'student_id'
+            field: 'student_id',
         },
         joinRequestId: {
             type: DataTypes.BIGINT,
             allowNull: false,
-            field: 'join_request_id'
+            field: 'join_request_id',
         },
         notificationType: {
-            type: DataTypes.ENUM('Acceptance', 'Request', 'Rejection'),
-            field: 'notification_type'
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            field: 'notification_type',
         },
     },
     {
@@ -28,7 +30,7 @@ const Notification = sequelize.define(
         schema: 'studybuds',
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: 'updated_at'
+        updatedAt: 'updated_at',
     }
 );
 
