@@ -1,33 +1,37 @@
+import express, { Request, Response, NextFunction } from 'express';
 import { config } from 'dotenv';
-import express from 'express';
-import { errorHandler } from './src/middlewares/errorHandler';
-import index from './src/routes/index';
+import indexRouter from './src/routes/index';
+import sequelize from './src/config/database';
 
+// Load environment variables
 config();
 
 const app = express();
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(index);
-app.use(errorHandler);
+// Mount all routes without "/api" prefix
+app.use('/', indexRouter);
 
+// Test database connection
+sequelize.authenticate()
+    .then(() => {
+        console.log('Database connected successfully!');
+    })
+    .catch((error) => {
+        console.error('Unable to connect to the database:', error.message);
+    });
 
-// const serviceAccountPath = path.resolve(__dirname, process.env.APP_CREDENTIALS || '');
-// if (!fs.existsSync(serviceAccountPath)) {
-//     throw new Error(`Service account file not found at: ${serviceAccountPath}`);
-// }
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
 
-// const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
-
-const port = process.env.PORT || 1337;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+// Start the server
+const PORT = process.env.SERVER_PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

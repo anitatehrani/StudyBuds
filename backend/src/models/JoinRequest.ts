@@ -2,24 +2,25 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
 
 const JoinRequest = sequelize.define(
-    'JoinRequest', {
+    'JoinRequest',
+    {
         id: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
         },
         groupId: {
-            type: DataTypes.BIGINT,
+            type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'group_id'
+            field: 'group_id',
         },
         studentId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'student_id'
+            field: 'student_id',
         },
         status: {
-            type: DataTypes.ENUM('Pending', 'Accepted', 'Rejected', 'Cancelled'),
+            type: DataTypes.STRING(20),
         },
     },
     {
@@ -27,9 +28,8 @@ const JoinRequest = sequelize.define(
         schema: 'studybuds',
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: 'updated_at'
+        updatedAt: 'updated_at',
     }
-
-    );
+);
 
 export default JoinRequest;

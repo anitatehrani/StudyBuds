@@ -1,15 +1,23 @@
-import { Router } from 'express';
-export const router = Router();
+import { Router, Request, Response } from 'express';
+import studentRoutes from './studentRoutes';
+import groupRoutes from './groupRoutes';
+
+const router: Router = Router();
+
+// Handle favicon requests to prevent unnecessary processing
+router.get('/favicon.ico', (req: Request, res: Response) => {
+    res.status(204).end(); // No Content
+});
+
+// Root route
+router.get('/', (req: Request, res: Response) => {
+    res.send('Welcome to the StudyBuds API!');
+});
+
+// Mount student routes under "/students"
+router.use('/students', studentRoutes);
+
+// Mount group routes under "/groups"
+router.use('/groups', groupRoutes);
+
 export default router;
-
-import { joinTheGroup } from '../controllers/joinrequestContoller';
-import { getAllStudents, getStudent } from '../controllers/studentController';
-import { basicSearchResult } from '../controllers/groupController';
-import { getStudentsAllNotification, saveStudentToken } from '../controllers/notificationController';
-router.get('/',getAllStudents);
-router.get('/:id', getStudent);
-router.get('/basic_search/:text/:student_id', basicSearchResult);
-
-router.get('/notifcation/:studentId', getStudentsAllNotification);
-router.post('/notifcation', saveStudentToken);
-router.post('/group', joinTheGroup)
