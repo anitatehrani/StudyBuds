@@ -43,3 +43,15 @@ Content-Type: application/json
     "joinRequestId": 1,
     "notificationType": "joinRequest"
 }
+
+###
+# change telegram id in profile data
+POST http://localhost:5000/profile/edit-telegram-id/4669615/9955
+
+###
+
+
+# get profile data
+GET http://localhost:5000/profile/4669615
+
+###

@@ -2,6 +2,8 @@ import { Router } from 'express';
 import studentRoutes from './studentRoutes';
 import groupRoutes from './groupRoutes';
 import courseRoutes from './courseRoutes';
+import profileRoutes from './profileRoutes';
+
 
 const router: Router = Router();
 
@@ -9,6 +11,8 @@ const router: Router = Router();
 router.get('/', (req, res) => {
     res.send('Welcome to the StudyBuds API!');
 });
+
+router.use('/profile', profileRoutes);
 
 // Mount student routes under "/students"
 router.use('/students', studentRoutes);
