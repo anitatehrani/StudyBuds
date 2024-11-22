@@ -48,8 +48,7 @@ class GroupCard extends StatelessWidget {
                 onPressed: () {
                   // Handle button action
                 },
-                child: Text(
-                    group.isPublic ? 'Send a join request' : 'Join a group'),
+                child: Text(group.isPublic ? 'Send a join request' : 'Join'),
               ),
             ),
           ],
