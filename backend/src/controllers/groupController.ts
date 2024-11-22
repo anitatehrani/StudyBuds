@@ -24,7 +24,7 @@ export const createGroup = async (req: Request, res: Response): Promise<void> =>
         }
 
         // Create the group using GroupService
-        const group = await GroupService({
+        const group = await GroupService.createGroup({
             name,
             description,
             course,
@@ -51,6 +51,20 @@ export const getAllGroups = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ message: 'An error occurred', error: (error as Error).message });
     }
 };
+
+export const basicSearchResult = async (req,res)=>{
+    try {
+        const result = await GroupService.basicSearch(req.params.text, req.params.student_id);
+        res.status(200).send({
+            data: result
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(err.status || 500);
+        res.send(err.message || 'Internal server error');
+    }
+};
+
 
 export default {
     createGroup,
