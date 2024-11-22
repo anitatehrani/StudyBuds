@@ -55,9 +55,9 @@ export const getAllGroups = async (req: Request, res: Response): Promise<void> =
 export const basicSearchResult = async (req,res)=>{
     try {
         const result = await GroupService.basicSearch(req.params.text, req.params.student_id);
-        res.status(200).send({
-            data: result
-        })
+        res.status(200).send(
+            result
+        )
     } catch (err) {
         console.log(err)
         res.status(err.status || 500);
