@@ -1,8 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/basic_search/basic_search.dart';
+import 'package:study_buds/utils/push_notification.dart';
 
-void main() {
+void main() async{
+  // enableFlutterDriverExtension();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  PushNotificationService.instance.retrievePushNotificationToken();
   runApp(const MyApp());
 }
 
