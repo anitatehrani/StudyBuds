@@ -18,16 +18,20 @@ class GroupCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  group.name,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Row(
+                  children:[
+                    Text(
+                    group.name,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    )
+                    ),
+                    Icon(group.isPublic ? Icons.lock_open : Icons.lock)]
                   ),
-                ),
                 Row(
                   children: [
-                    Icon(group.isPublic ? Icons.public : Icons.lock),
+                    Icon(Icons.group),
                     SizedBox(width: 4),
                     Text('${group.members} members'),
                   ],
