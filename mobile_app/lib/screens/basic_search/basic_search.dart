@@ -43,10 +43,14 @@ class _BasicSearchState extends State<BasicSearchPage> {
 
         // Map the dynamic response to a list of Group objects
         setState(() {
-          _searchResults =
-              List<Group>.from(data.map((item) => Group.fromJson(item)));
+          _searchResults = List<Group>.from(data.map((item) {
+            var gr = Group.fromJson(item);
+            print(";;;");
+            print(gr.isPublic);
+            print(";;;");
+            return gr; // Return the Group object so it's added to the list
+          }));
         });
-
         print('_searchResults: $_searchResults'); // Print the search results
       } else {
         print('Error: ${response.statusCode}');

@@ -27,7 +27,7 @@ class GroupCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(group.isPrivate ? Icons.lock : Icons.public),
+                    Icon(group.isPublic ? Icons.public : Icons.lock),
                     SizedBox(width: 4),
                     Text('${group.members} members'),
                   ],
@@ -49,7 +49,7 @@ class GroupCard extends StatelessWidget {
                   // Handle button action
                 },
                 child: Text(
-                    group.isPrivate ? 'Send a join request' : 'Join a group'),
+                    group.isPublic ? 'Send a join request' : 'Join a group'),
               ),
             ),
           ],

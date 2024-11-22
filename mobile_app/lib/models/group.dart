@@ -4,13 +4,13 @@ class Group {
   final String name;
   final String description;
   final int members;
-  final bool isPrivate;
+  final bool isPublic;
 
   Group({
     required this.name,
     required this.description,
     required this.members,
-    required this.isPrivate,
+    required this.isPublic,
   });
 
   // Factory constructor to create a Group from JSON
@@ -18,8 +18,8 @@ class Group {
     return Group(
       name: json['name'] ?? 'No Name',
       description: json['description'] ?? 'No Description',
-      members: json['members'] ?? 0,
-      isPrivate: json['isPrivate'] ?? false,
+      members: int.parse(json['member_count']) ?? 0,
+      isPublic: json['is_public'] ?? false,
     );
   }
 }
