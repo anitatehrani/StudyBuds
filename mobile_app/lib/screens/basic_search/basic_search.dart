@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:study_buds/widgets/group_card.dart'; // Import GroupCard
 import 'package:study_buds/models/group.dart';
 
+
+
 void main() {
   runApp(MyApp());
 }

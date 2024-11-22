@@ -4,6 +4,7 @@ import '../models/group.dart';
 class GroupCard extends StatelessWidget {
   final Group group;
   GroupCard({required this.group});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,20 +16,31 @@ class GroupCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Top row: Name and lock icon
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  children:[
+                  children: [
                     Text(
-                    group.name,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    )
+                      group.name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Icon(group.isPublic ? Icons.lock_open : Icons.lock)]
-                  ),
+                    SizedBox(width: 4),
+                    IconTheme(
+                      data: IconThemeData(
+                        color: Colors.black, // Explicitly set color to black
+                      ),
+                      child: Icon(
+                        group.isPublic ? Icons.lock_open : Icons.lock,
+                      ),
+                    ),
+                  ],
+                ),
+                // Members count
                 Row(
                   children: [
                     Icon(Icons.group),
@@ -39,6 +51,19 @@ class GroupCard extends StatelessWidget {
               ],
             ),
             SizedBox(height: 8),
+
+            // Course name
+            Text(
+              group.course, // New field for course name
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+
+            SizedBox(height: 8),
+
+            // Description
             Text(
               group.description,
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
@@ -46,13 +71,15 @@ class GroupCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: 16),
+
+            // Join button
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button action
                 },
-                child: Text(group.isPublic ? 'Send a join request' : 'Join'),
+                child: Text(group.isPublic ? 'Join' : 'Send a join request'),
               ),
             ),
           ],
