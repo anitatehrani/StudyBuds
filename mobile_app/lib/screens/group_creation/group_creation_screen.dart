@@ -17,12 +17,10 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController membersLimitController = TextEditingController();
   final TextEditingController telegramLinkController = TextEditingController();
-  bool isPrivateGroup = true; // Default to private group
-  bool isTelegramLinked = true; // Set this based on actual telegram account linking logic
+  bool isPrivateGroup = true;
 
   List<String> courses = [];
   String? selectedCourse;
-  bool isLoading = false;
 
   @override
   void initState() {
@@ -31,48 +29,23 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   }
 
   Future<void> fetchCourses() async {
-    final url = Uri.parse('http://10.0.2.2:5000/courses/all'); // Adjust for your local API
+    final url = Uri.parse('http://10.0.2.2:5000/courses/all');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final List<dynamic> fetchedCourses = responseData['courses'];
         setState(() {
-          courses = fetchedCourses.cast<String>();
-          isLoading = false;
+          courses = List<String>.from(responseData['courses']);
         });
-        print('Courses fetched successfully');
       } else {
         print('Error fetching courses: ${response.statusCode}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to fetch courses. Error: ${response.statusCode}'),
-            backgroundColor: Colors.red,
-          ),
-        );
       }
     } catch (error) {
       print('Error fetching courses: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error fetching courses. Please check your connection.'),
-          backgroundColor: Colors.red,
-        ),
-      );
     }
   }
 
   Future<void> createGroup(BuildContext context) async {
-    if (!isTelegramLinked) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error: Please link your Telegram account before creating a group.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
     if (nameController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         selectedCourse == null ||
@@ -91,7 +64,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error: Telegram link must start with "https://t.me/".'),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.orange,
         ),
       );
       return;
@@ -102,7 +75,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Error: Members limit must be between 2 and 100.'),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.orange,
         ),
       );
       return;
@@ -114,33 +87,22 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
       'name': nameController.text,
       'description': descriptionController.text,
       'course': selectedCourse,
-      'isPublic': !isPrivateGroup, // If not private, make it public
+      'isPublic': !isPrivateGroup,
       'membersLimit': membersLimit,
       'telegramLink': telegramLinkController.text,
-      'studentId': 123, // Use dynamic value if necessary
+      'studentId': 123,
     });
 
     try {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 201) {
-        final responseData = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Group created successfully!'),
             backgroundColor: Colors.green,
           ),
         );
-        print('Group Created: ${responseData['group']}');
-      } else if(response.statusCode == 400) {
-        final errorData = jsonDecode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${errorData['message']}'),
-            backgroundColor: Colors.orange,
-          ),
-        );
-        print('${errorData['error']}');
-      }else {
+      } else {
         final errorData = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -148,7 +110,6 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
             backgroundColor: Colors.red,
           ),
         );
-        print('Error: ${errorData['message']}');
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -157,168 +118,197 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
           backgroundColor: Colors.red,
         ),
       );
-      print('Error: $error');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // List<String> courses = [];
-    // fetchCourses();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(top: 20.0),
-          child: Text(
-            'Create a Study Group',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
+        title: const Text(
+          'Create a Study Group',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
+        toolbarHeight: 80, // Add more space to the top
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Name',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter the group name',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                ),
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 16),
-
-              const Text(
-                'Description',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: descriptionController,
-                maxLines: 3, // Increased to allow a longer description
-                decoration: const InputDecoration(
-                  hintText: 'Write an additional description for your study group. Include details about goals, topics, or preferences.',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                ),
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 16),
-
-              const Text(
-                'Course',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-            DropdownSearch<String>(
-              popupProps: PopupProps.menu(
-                showSearchBox: true, // Enables search functionality
-              ),
-              items: (filter, infiniteScrollProps) => courses,
-              selectedItem: selectedCourse,
-              decoratorProps: DropDownDecoratorProps(
-                decoration: InputDecoration(
-                  labelText: "Select a course",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  selectedCourse = value;
-                });
-              },
-              validator: (value) => value == null ? "Please select a course" : null,
-            ),
-
-              const SizedBox(height: 16),
-
-              const Text(
-                'Members Limit',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: membersLimitController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  hintText: 'Enter the maximum number of members',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                ),
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 16),
-
-              const Text(
-                'Telegram Group Link',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: telegramLinkController,
-                decoration: const InputDecoration(
-                  hintText: 'Example: https://t.me/example_group',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                ),
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 16),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Private Group',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        child: Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.85, // Adjust width dynamically
+            constraints: const BoxConstraints(maxWidth: 500), // Set a maximum width
+            padding: const EdgeInsets.all(16.0), // Add padding for spacing
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    hintText: 'Capstone Project',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    filled: true, // Enable the fill color
+                    fillColor: Colors.white, // Set the fill color
+                    labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
                   ),
-                  Switch(
-                    value: isPrivateGroup,
-                    onChanged: (value) {
-                      setState(() {
-                        isPrivateGroup = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              Center(
-                child: CustomFilledButton(
-                  label: 'Create the study group',
-                  onPressed: () => createGroup(context),
-                  iconData: Icons.add,
+                  style: const TextStyle(color: Colors.black), // Make the text color white
                 ),
-              ),
-              const SizedBox(height: 16),
-
-              Center(
-                child: CustomTextButton(
-                  label: 'Cancel',
-                  onPressed: () {
-                    Navigator.pop(context);
+                const SizedBox(height: 4),
+                const Text(
+                  'Set a descriptive name for your study group.',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: descriptionController,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'A study group for people who...',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    fillColor: Colors.white, // Set the fill color
+                    labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
+                  ),
+                  style: const TextStyle(color: Colors.black), // Make the text color white
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Provide details about the goals, topics, or preferences.',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                DropdownSearch<String>(
+                  popupProps: const PopupProps.menu(showSearchBox: true),
+                  items: (filter, infiniteScrollProps) => courses,
+                  selectedItem: selectedCourse,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCourse = value;
+                    });
                   },
+                  decoratorProps: const DropDownDecoratorProps(
+                    decoration: InputDecoration(
+                      labelText: 'Course',
+                      hintText: 'Select a course',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                const Text(
+                  'Choose a course from the list.',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: membersLimitController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Members Limit',
+                    hintText: '10',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    fillColor: Colors.white, // Set the fill color
+                    labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
+                  ),
+                  style: const TextStyle(color: Colors.black), // Make the text color white
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Limit should be between 2 and 100 members.',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: telegramLinkController,
+                  decoration: const InputDecoration(
+                    labelText: 'Telegram Group Link',
+                    hintText: 'https://t.me/example_group',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    fillColor: Colors.white, // Set the fill color
+                    labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
+                  ),
+                  style: const TextStyle(color: Colors.black), // Make the text color white
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'You have to create your Telegram group and add its link here.',
+                  style: TextStyle(fontSize: 12, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Private Group',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    Switch(
+                      value: isPrivateGroup,
+                      onChanged: (value) {
+                        setState(() {
+                          isPrivateGroup = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: CustomFilledButton(
+                    label: 'Create the study group',
+                    onPressed: () => createGroup(context),
+                    iconData: Icons.add,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min, // Ensures the row takes up only as much space as needed
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800], // Background color of the circle
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close, // Close icon
+                            color: Colors.white, // Icon color
+                            size: 16, // Icon size
+                          ),
+                        ),
+                        const SizedBox(width: 8), // Space between the icon and the text
+                        const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
           ),
         ),
       ),
