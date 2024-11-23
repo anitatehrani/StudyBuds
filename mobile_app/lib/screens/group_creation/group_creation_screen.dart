@@ -140,6 +140,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
             width: MediaQuery.of(context).size.width * 0.85, // Adjust width dynamically
             constraints: const BoxConstraints(maxWidth: 500), // Set a maximum width
             padding: const EdgeInsets.all(16.0), // Add padding for spacing
+            color: Colors.white, // Set the background color
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
