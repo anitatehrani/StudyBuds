@@ -1,35 +1,41 @@
+
+
+### Created by https://www.gitignore.io
+### direnv ###
+.direnv
+.envrc
+.env
+
+#Flutter Ignore List
 # Miscellaneous
 *.class
 *.log
 *.pyc
 *.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-migrate_working_dir/
+mobile_app/.DS_Store
+mobile_app/.atom/
+mobile_app/.buildlog/
+mobile_app/.history
+mobile_app/.svn/
+mobile_app/migrate_working_dir/
 
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
-.idea/
+mobile_app/.idea/
+.idea
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
+mobile_app/.dart_tool/
+mobile_app/.flutter-plugins
+mobile_app/.flutter-plugins-dependencies
+mobile_app/.pub-cache/
+mobile_app/.pub/
+mobile_app/build/
 
 # Symbolication related
 app.*.symbols
@@ -38,6 +44,6 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+mobile_app/android/app/debug
+mobile_app/android/app/profile
+mobile_app/android/app/release
