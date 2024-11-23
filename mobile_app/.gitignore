@@ -24,7 +24,7 @@ mobile_app/migrate_working_dir/
 *.ipr
 *.iws
 mobile_app/.idea/
-.idea
+.idea/
 
 
 # Flutter/Dart/Pub related

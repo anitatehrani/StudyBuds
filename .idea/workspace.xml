@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a6de87ad-26d9-41b3-99a9-4a7fc996d0fe" name="Changes" comment="- Added `getCourses` controller to fetch courses from the Unige API using a token.&#10;- Created `courseRoutes.ts` for course-related API routes.&#10;- Updated `index.ts` to include course routes under `/courses`.&#10;- Ensured proper token-based authentication for API calls.&#10;- Added detailed error handling for course fetching.">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_app/lib/groupcreation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_app/lib/screens/group_creation/group_creation_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/config/database.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/config/database.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/controllers/courseController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/courseController.ts" afterDir="false" />
+    <list default="true" id="a6de87ad-26d9-41b3-99a9-4a7fc996d0fe" name="Changes" comment="- Designed Group Creation UI course/all API and group/creation added to the Group Creation Design">
       <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.yaml" afterDir="false" />
     </list>
@@ -93,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1732152910531</updated>
       <workItem from="1732152914759" duration="7997000" />
-      <workItem from="1732276820123" duration="17182000" />
+      <workItem from="1732276820123" duration="17649000" />
     </task>
     <task id="LOCAL-00001" summary="- Added `getCourses` controller to fetch courses from the Unige API using a token.&#10;- Created `courseRoutes.ts` for course-related API routes.&#10;- Updated `index.ts` to include course routes under `/courses`.&#10;- Ensured proper token-based authentication for API calls.&#10;- Added detailed error handling for course fetching.">
       <option name="closed" value="true" />
@@ -103,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732154698104</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Designed Group Creation UI course/all API and group/creation added to the Group Creation Design">
+      <option name="closed" value="true" />
+      <created>1732322531113</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732322531114</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +106,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- Added `getCourses` controller to fetch courses from the Unige API using a token.&#10;- Created `courseRoutes.ts` for course-related API routes.&#10;- Updated `index.ts` to include course routes under `/courses`.&#10;- Ensured proper token-based authentication for API calls.&#10;- Added detailed error handling for course fetching." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added `getCourses` controller to fetch courses from the Unige API using a token.&#10;- Created `courseRoutes.ts` for course-related API routes.&#10;- Updated `index.ts` to include course routes under `/courses`.&#10;- Ensured proper token-based authentication for API calls.&#10;- Added detailed error handling for course fetching." />
+    <MESSAGE value="- Designed Group Creation UI course/all API and group/creation added to the Group Creation Design" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Designed Group Creation UI course/all API and group/creation added to the Group Creation Design" />
   </component>
 </project>
