@@ -124,6 +124,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Create a Study Group',
@@ -135,6 +136,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
         toolbarHeight: 80, // Add more space to the top
       ),
       body: SingleChildScrollView(
+        //want color to white
         child: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.85, // Adjust width dynamically
@@ -199,6 +201,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       hintText: 'Select a course',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.black),
+                      fillColor: Colors.white,
                     ),
                   ),
                 ),
