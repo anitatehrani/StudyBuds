@@ -29,7 +29,6 @@ export const getCourses = async (req: Request, res: Response): Promise<void> => 
         const courses = response.data;
 
         res.status(200).json({
-            message: 'Courses retrieved successfully',
             courses,
         });
     } catch (error) {
