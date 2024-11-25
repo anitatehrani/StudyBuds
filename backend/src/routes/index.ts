@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import studentRoutes from './studentRoutes';
-import groupRoutes from './groupRoutes';
 import courseRoutes from './courseRoutes';
+import groupRoutes from './groupRoutes';
+import notification from './notificationRoutes';
 import profileRoutes from './profileRoutes';
-
+import studentRoutes from './studentRoutes';
 
 const router: Router = Router();
 
@@ -22,5 +22,8 @@ router.use('/groups', groupRoutes);
 
 // Mount course routes under "/courses"
 router.use('/courses', courseRoutes);
+
+// Mount course routes under "/notification"
+router.use('/notification', notification);
 
 export default router;

@@ -1,6 +1,7 @@
 import Notification from '../models/Notification';
-import { saveFbToken } from '../service/firebase_token_service';
+import { getStudentFirebaseToken, saveFbToken, updateFbToken } from '../service/firebase_token_service';
 import { getStudentNotifcations } from '../service/notification_service';
+
 
 export const getAllNotification = async (req,res)=>{
     try {
@@ -27,14 +28,21 @@ export const getStudentsAllNotification = async (req,res)=>{
     }
 };
 
-export const saveStudentToken = async (req, res) =>{
+export const saveToken = async (req, res) => {
     try {
         const { studentId, token } = req.body;
-        const result = await saveFbToken(studentId, token);
-        res.status(200).send(result)
+
+        const fbTokenModel = await getStudentFirebaseToken(studentId);
+
+        if (!fbTokenModel) {
+            await saveFbToken(studentId, token);
+            return res.status(200).send({ message: "Successfully saved the student's Firebase token" });
+        } else {
+            await updateFbToken(studentId, token);
+            return res.status(200).send({ message: "Successfully updated the student's Firebase token" });
+        }
     } catch (err) {
-        console.log(err)
-        res.status(err.status || 500);
-        res.send(err.message || 'Internal server error');
+        console.error('Error in saveToken:', err);
+        return res.status(err.status || 500).send(err.message || 'Internal server error');
     }
-}
+};
