@@ -1,7 +1,7 @@
 // Node.js Example
 import { Router } from "express";
 import passport from "passport";
-import { Strategy as SamlStrategy } from "passport-saml";
+import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
 import { fetch, MetadataReader, toPassportConfig, claimsToCamelCase } from "passport-saml-metadata";
 import jwt from "jsonwebtoken";
 
@@ -19,10 +19,13 @@ async function getMetadata() {
             {
                 ...config,
                 entryPoint: process.env.IDP_ENTRYPOINT,
+                callbackUrl: "l",
                 issuer: "saml-poc",
-                cert: config.idpCert,
+                idpCert: config.idpCert,
                 disableRequestedAuthnContext: true,
-                validateInResponseTo: false,
+            },
+            function (profile: any, done: (error: any, user?: any) => void) {
+                return done(null, profile);
             },
             function (profile: any, done: (error: any, user?: any) => void) {
                 return done(null, profile);
