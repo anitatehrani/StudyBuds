@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
+import 'package:study_buds/screens/basic_search/basic_search.dart';
 import 'package:study_buds/utils/push_notification.dart';
 
 void main() async{
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         useMaterial3: false,
       ),
-      home: const Login(title: "Login"),
+      //home: const Login(title: "Login"),
+      home: BasicSearchPage(title: "kk"),
     );
   }
 }
