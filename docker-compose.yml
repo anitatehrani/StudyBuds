@@ -21,7 +21,7 @@ services:
         volumes:
             - apk:/apk:ro
     build-apk:
-        build: ./frontend
+        build: ./mobile_app
         volumes:
             - apk:/app/build/app/outputs/flutter-apk
     acceptance-tests:
