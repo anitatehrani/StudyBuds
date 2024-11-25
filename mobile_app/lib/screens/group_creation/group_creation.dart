@@ -128,15 +128,14 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
       appBar: AppBar(
         title: const Text(
           'Create a Study Group',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
-        toolbarHeight: 80, // Add more space to the top
+        foregroundColor: Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
-        //want color to white
         child: Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.85, // Adjust width dynamically
