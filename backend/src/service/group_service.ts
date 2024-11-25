@@ -1,6 +1,6 @@
+import { QueryTypes } from 'sequelize';
+import sequelize from '../config/database';
 import Group from '../models/Group';
-import sequelize from '../config/database'; 
-import { QueryTypes } from 'sequelize'; 
 const { ApiError, errorCodes } = require('../utils/response');
 
 interface GroupData {
@@ -11,6 +11,15 @@ interface GroupData {
     membersLimit: number;
     telegramLink?: string;
     adminId: number; // Maps studentId to adminId
+}
+
+export async function getGroupById(groupId: number) {
+    const data = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    });
+    return data;
 }
 
 export const createGroup = async (groupData: GroupData): Promise<Group> => {

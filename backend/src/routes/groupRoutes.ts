@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { createGroup, getAllGroups, basicSearchResult } from '../controllers/groupController';
+import { basicSearchResult, createGroup, getAllGroups } from '../controllers/groupController';
+import { changeJoinRequestStatus, joinTheGroup } from '../controllers/joinrequestContoller';
 
 
 const router: Router = Router();
@@ -11,5 +12,9 @@ router.post('/create', createGroup);
 router.get('/all', getAllGroups);
 
 router.get('/basic_search/:text/:student_id', basicSearchResult);
+
+router.post('/join', joinTheGroup)
+
+router.post('/respond-join-request', changeJoinRequestStatus)
 
 export default router;
