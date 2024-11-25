@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:study_buds/firebase_options.dart';
-import 'package:study_buds/screens/group_creation/group_creation.dart';
+import 'package:study_buds/screens/main.dart';
 import 'package:study_buds/screens/login/login.dart';
-import 'package:study_buds/screens/basic_search/basic_search.dart';
 import 'package:study_buds/utils/push_notification.dart';
 
-void main() async{
-  // enableFlutterDriverExtension();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   PushNotificationService.instance.retrievePushNotificationToken();
@@ -17,7 +15,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,9 +31,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         useMaterial3: false,
       ),
-      //home: const Login(title: "Login"),
-      // home: BasicSearchPage(title: "kk"),
-      home: const GroupCreationScreen(),
+      home: const Login(title: "Login"),
+      routes: {
+        '/home': (context) => const MainScreen(),
+      },
     );
   }
 }
