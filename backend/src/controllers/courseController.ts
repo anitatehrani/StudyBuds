@@ -5,9 +5,6 @@ import { exec } from 'child_process';
 export const getCourses = async (req: Request, res: Response): Promise<void> => {
     try {
         // Step 1: Dynamically generate the token
-        const token = await new Promise<string>((resolve, reject) => {
-            resolve(process.env.UNIGE_TOKEN!)
-        });
 
         // Step 2: Fetch courses from the external API using the token
         const response = await axios.get(`${process.env.UNIGEAPI_URL}/courses`, {
