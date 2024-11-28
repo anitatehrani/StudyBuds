@@ -1,8 +1,4 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-
-// Load environment variables from .env file
-dotenv.config();
 
 // Create a Sequelize instance
 const sequelize = new Sequelize(
