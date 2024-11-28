@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getStudentsAllNotification, saveToken } from '../controllers/notificationController';
+import { getStudentsAllNotification, saveToken } from '../controllers/notification_controller';
 
 
 const router: Router = Router();

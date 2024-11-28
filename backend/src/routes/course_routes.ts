@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getCourses } from '../controllers/courseController';
+import { getCourseList } from '../controllers/unige_controller';
 
 const router: Router = Router();
 
 // Route to fetch all courses
-router.get('/all', getCourses);
+router.get('/all', getCourseList);
 
 export default router;

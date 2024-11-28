@@ -1,14 +1,12 @@
 import { Sequelize } from 'sequelize';
+import { getEnvironmentVariable } from '../utils/config_error';
+
 
 // Create a Sequelize instance
 const sequelize = new Sequelize(
-    process.env.POSTGRES_DB!,       // Database name
-    process.env.POSTGRES_USER!,     // Username
-    process.env.POSTGRES_PASSWORD!, // Password
+    getEnvironmentVariable("DB_URL"),
     {
-        host: process.env.POSTGRES_HOST!, // Remote database host
-        port: Number(process.env.POSTGRES_PORT) || 5432, // Database port
-        dialect: 'postgres', // PostgreSQL
+        // dialect: 'postgres', // PostgreSQL
         logging: console.log, // Enable query logging for debugging (optional)
     }
 );

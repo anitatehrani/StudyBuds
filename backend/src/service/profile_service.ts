@@ -1,42 +1,17 @@
-import StudentService from '../service/student_service';
+import { getStudentById } from "../service/student_service";
+import { getUnigeProfile } from "./unige_service";
 
-export async function getProfileService(studentId) {
-    try {
-        const response = await fetch(`${process.env.UNIGEAPI_URL}/student/${studentId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0`, // Add the token here
-            },
-        });
+export async function getProfileService(studentId: number) {
+  const data = await getUnigeProfile(studentId);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+  // Remove the 'courses' field
+  const { courses, ...dataWithoutCourses } = data;
 
-        const data = await response.json();
-        
-        // Remove the 'courses' field
-        const { courses, ...dataWithoutCourses } = data;
+  console.log(studentId);
 
-        console.log(studentId);
-        
-        const response2 = await StudentService.getStudentById(studentId);
+  const student = await getStudentById(studentId);
 
-        // Check if response2 is null or undefined
-        if (!response2) {
-            throw new Error('StudentService.getStudentById returned null or undefined');
-        }
+  dataWithoutCourses["telegram_account"] = student?.telegramAccount;
 
-        if (!response2) {
-            throw new Error(`Student object of getProfileService`);
-        }
-
-        dataWithoutCourses['telegram_account'] = response2['dataValues']['telegramAccount'];
-
-        return dataWithoutCourses;
-    } catch (error) {
-        console.error('Error fetching profile:', error);
-        throw error;
-    }
+  return dataWithoutCourses;
 }
