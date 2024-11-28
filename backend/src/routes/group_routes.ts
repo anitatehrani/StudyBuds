@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { basicSearchResult, createGroup, getAllGroups } from '../controllers/groupController';
-import { changeJoinRequestStatus, joinTheGroup } from '../controllers/joinrequestContoller';
+import { basicSearchResult, createGroup, getAllGroups } from '../controllers/group_controller';
+import { changeJoinRequestStatus, joinTheGroup } from '../controllers/joinrequest_controller';
 
 
 const router: Router = Router();

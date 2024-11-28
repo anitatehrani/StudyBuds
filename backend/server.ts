@@ -1,10 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { config } from 'dotenv';
 import indexRouter from './src/routes/index';
 import sequelize from './src/config/database';
 
-// Load environment variables
-config();
 
 const app = express();
 

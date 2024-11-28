@@ -1,10 +1,10 @@
 import { Router } from "express";
-import courseRoutes from "./courseRoutes";
-import groupRoutes from "./groupRoutes";
-import notification from "./notificationRoutes";
-import profileRoutes from "./profileRoutes";
-import studentRoutes from "./studentRoutes";
-import loginRoutes from "./loginRoutes";
+import courseRoutes from "./course_routes";
+import groupRoutes from "./group_routes";
+import notification from "./notification_routes";
+import profileRoutes from "./profile_routes";
+import studentRoutes from "./student_routes";
+import loginRoutes from "./login_routes";
 
 const router: Router = Router();
 
