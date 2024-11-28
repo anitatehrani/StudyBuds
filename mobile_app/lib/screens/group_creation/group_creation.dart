@@ -275,42 +275,6 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                     iconData: Icons.add,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min, // Ensures the row takes up only as much space as needed
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[800], // Background color of the circle
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.close, // Close icon
-                            color: Colors.white, // Icon color
-                            size: 16, // Icon size
-                          ),
-                        ),
-                        const SizedBox(width: 8), // Space between the icon and the text
-                        const Text(
-                          'Cancel',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
               ],
             ),
           ),
