@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getProfileById } from '../controllers/profileController';
-import { editTelegramId } from '../controllers/studentController';
+import { getProfileById } from '../controllers/profile_controller';
+import { editTelegramId } from '../controllers/student_controller';
 
 const router: Router = Router();
 
