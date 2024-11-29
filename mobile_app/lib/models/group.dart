@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 class Group {
   final String name;
@@ -6,13 +6,15 @@ class Group {
   final String description;
   final int members;
   final bool isPublic;
+  final String telegramLink;
 
   Group({
     required this.name,
     required this.course,
     required this.description,
     required this.members,
-    required this.isPublic
+    required this.isPublic,
+    required this.telegramLink
   });
 
   // Factory constructor to create a Group from JSON
@@ -23,7 +25,20 @@ class Group {
       description: json['description'] ?? 'No Description',
       members: int.parse(json['member_count']) ?? 0,
       isPublic: json['is_public'] ?? false,
+      telegramLink: json['telegram_link'] ?? ''
     );
+  }
+
+  Map<String, dynamic> toJson(){
+    return {
+      'name': this.name,
+      'description': this.description,
+      'course': this.course,
+      'isPublic': this.isPublic,
+      'membersLimit': this.members,
+      'telegramLink': this.telegramLink,
+      'studentId': 123,
+    };
   }
 }
 
