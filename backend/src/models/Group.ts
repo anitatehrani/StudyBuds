@@ -14,7 +14,7 @@ export interface GroupAttributes {
 }
 
 // Optional id field for creating new groups
-export interface GroupCreationAttributes extends Optional<GroupAttributes, 'id'> {}
+type GroupCreationAttributes=Optional<GroupAttributes, 'id'>;
 
 class Group extends Model<GroupAttributes, GroupCreationAttributes> implements GroupAttributes {
     public id!: number;
@@ -79,5 +79,6 @@ Group.init(
         updatedAt: 'updated_at',
     }
 );
+
 
 export default Group;
