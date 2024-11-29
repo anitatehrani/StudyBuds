@@ -33,6 +33,7 @@ services:
             DEVICE: ""
             APPIUM_HOST: "emulator"
             APPIUM_PORT: "4723"
+            MOCK_DATA: "true"
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
@@ -60,6 +61,7 @@ services:
             UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
+            MOCK_DATA: "true"
         depends_on:
             - postgres
 
