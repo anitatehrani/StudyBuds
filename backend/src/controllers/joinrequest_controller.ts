@@ -5,29 +5,28 @@ import { getGroupById } from '../service/group_service';
 import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '../service/join_request_service';
 import { sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
-import { NotFoundError } from '../utils/notfound_error';
-import { ValidationError } from '../utils/validation_error';
 import { NotificationType } from '../models/Notification';
+import { checkBoolean, checkInt } from '../utils/validation_error';
+import { NotFoundError, ValidationError } from '../utils/api_error';
 
-export async function joinTheGroup(req:Request, res:Response){
-    const { studentId, groupId } = req.body;
+export async function joinTheGroup(req: Request, res: Response) {
+    const studentId = checkInt(req.body, "studentId");
+    const groupId = checkInt(req.body, "groupId");
     console.log(`studentId:${studentId}`);
-    if (!studentId || !groupId) {
-        throw new ValidationError('studentId and groupId are required.');
-    }
+    console.log(`groupId:${groupId}`);
 
     const student = await getStudentById(studentId);
-    if (!student) {
+    if (student === null) {
         console.log('Student not found');
         throw new NotFoundError('Student not found');
     }
-    if (!student.telegramAccount) {
+    if (student.telegramAccount === undefined) {
         console.log('Student has not linked their Telegram account');
         throw new ValidationError('Student has not linked their Telegram account');
     }
 
     const group = await getGroupById(groupId);
-    if (!group) {
+    if (group === null) {
         console.log('Could not find group information');
         throw new NotFoundError('Group not found');
     }
@@ -49,7 +48,7 @@ export async function joinTheGroup(req:Request, res:Response){
         const adminId = group.adminId;
 
         const fbToken = await getStudentFirebaseToken(adminId);
-        if (!fbToken) {
+        if (fbToken === null) {
             console.log('Firebase token not found for the student');
             throw new ValidationError('Student has not registered a device for notifications.');
         }
@@ -61,24 +60,28 @@ export async function joinTheGroup(req:Request, res:Response){
     }
 };
 
-export async function changeJoinRequestStatus(req:Request, res:Response){
-    const { adminId, joinRequestId, isAccepted }  = req.body;
+export async function changeJoinRequestStatus(req: Request, res: Response) {
+    const adminId = checkInt(req.body, "adminId");
+    const joinRequestId = checkInt(req.body, "joinRequestId");
+    const isAccepted = checkBoolean(req.body, "isAccepted");
+
     console.log(joinRequestId)
     const joinRequest = await getJoinRequestById(joinRequestId)
     console.log(`---- ${joinRequest}`)
-    if (!joinRequest) {
+    if (joinRequest === null) {
         console.log('JoinRequest not found')
         throw new NotFoundError('JoinRequest not found')
     }
     const groupId = joinRequest.groupId
+
     // const studentId = joinRequest.get('studentId') as number
     console.log(`groupId: ${groupId}`)
     const group = await getGroupById(groupId)
-    if (!group) {
+    if (group === null) {
         console.log('Group not found')
         throw new NotFoundError('Group not found');
     }
-    const groupAdminId = group?.adminId
+    const groupAdminId = group.adminId
     if (groupAdminId !== adminId)
         throw new ValidationError("You don't have permission");
     if (!isAccepted) {
@@ -93,7 +96,7 @@ export async function changeJoinRequestStatus(req:Request, res:Response){
     //     console.log('The group is already reached the limit of members')
     //     throw new ValidationError('The group is already reached the limit of members');
     // }
-    await updateJoinRequestStatus(joinRequestId, 'Accepted')
+    await updateJoinRequestStatus(joinRequestId, NotificationType.ACCEPT)
     // todo send notification
     res.send('Join request accepted successfully');
 }
