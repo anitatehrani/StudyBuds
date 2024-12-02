@@ -1,19 +1,18 @@
-import { getProfileService } from '../service/profile_service';
+import { Request, Response } from "express";
+import { getProfileService } from "../service/profile_service";
+import { ValidationError } from "../utils/api_error";
 
+export async function getProfileById(req:Request, res:Response){
+    const rawStudentId=req.params["id"];
+  console.log(req.params["id"]);
+  if(rawStudentId===undefined){
+      throw new ValidationError("Student ID is missing");
+  }
+  const studentId=Number.parseInt(rawStudentId);
+  if(isNaN(studentId))throw new ValidationError("Invalid student ID");
 
-export const getProfileById = async (req, res) => {
-    try {
-        console.log(req.params.id);
-        
-        // if (isNaN(studentId)) {
-        //     res.status(400).json({ message: 'Invalid student ID' });
-        //     return;
-        // }
-        const result = await getProfileService(req.params.id);
-        res.status(200).json(result);
-    } catch (error) {
-        console.error('Error fetching groups:', error);
-        res.status(500).json({ message: 'An error occurred', error: error.message });
-    }
+  const result = await getProfileService(studentId);
+  // Remove the 'courses' field
+  const { courses, ...dataWithoutCourses } = result;
+  res.json(dataWithoutCourses);
 };
-

@@ -7,6 +7,7 @@ import { sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { NotFoundError } from '../utils/notfound_error';
 import { ValidationError } from '../utils/validation_error';
+import { NotificationType } from '../models/Notification';
 
 export async function joinTheGroup(req:Request, res:Response){
     const { studentId, groupId } = req.body;
@@ -54,7 +55,7 @@ export async function joinTheGroup(req:Request, res:Response){
         }
 
         const token = fbToken.token;
-        await sendPushNotification(adminId, joinRequestId, token, 'joinRequest');
+        await sendPushNotification(adminId, joinRequestId, token, NotificationType.JOIN_REQUEST);
 
         res.send('Join request submitted successfully');
     }
@@ -78,7 +79,7 @@ export async function changeJoinRequestStatus(req:Request, res:Response){
         throw new NotFoundError('Group not found');
     }
     const groupAdminId = group?.adminId
-    if (groupAdminId != adminId)
+    if (groupAdminId !== adminId)
         throw new ValidationError("You don't have permission");
     if (!isAccepted) {
         await updateJoinRequestStatus(joinRequestId, 'Rejected')

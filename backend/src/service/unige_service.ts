@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axios_instance, TOKEN, UNIGEAPI_URL } from "../config/unigeapi";
 
 export async function getCourses(): Promise<Array<string>> {
@@ -11,7 +10,7 @@ export async function getCourses(): Promise<Array<string>> {
   ).data;
 }
 
-interface Student {
+export interface UnigeStudent {
   first_name: string;
   last_name: string;
   email: string;
@@ -20,15 +19,14 @@ interface Student {
   courses: Array<string>;
 }
 
-export async function getUnigeProfile(studentId: number): Promise<Student> {
+export async function getUnigeProfile(
+  studentId: number,
+): Promise<UnigeStudent> {
   return (
-    await axios_instance.get(
-      `${process.env.UNIGEAPI_URL}/student/${studentId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
+    await axios_instance.get(`${UNIGEAPI_URL}/student/${studentId}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
       },
-    )
+    })
   ).data;
 }

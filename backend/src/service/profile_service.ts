@@ -1,17 +1,18 @@
+import { StudentAttributes } from "../models/Student";
 import { getStudentById } from "../service/student_service";
-import { getUnigeProfile } from "./unige_service";
+import { getUnigeProfile,UnigeStudent } from "./unige_service";
+import { NotFoundError } from "../utils/api_error";
 
-export async function getProfileService(studentId: number) {
+interface ProfileData extends StudentAttributes,UnigeStudent{}
+
+export async function getProfileService(studentId: number):Promise<ProfileData> {
   const data = await getUnigeProfile(studentId);
 
-  // Remove the 'courses' field
-  const { courses, ...dataWithoutCourses } = data;
 
   console.log(studentId);
 
   const student = await getStudentById(studentId);
+  if(student===null)throw new NotFoundError("Student id not found");
 
-  dataWithoutCourses["telegram_account"] = student?.telegramAccount;
-
-  return dataWithoutCourses;
+  return {...data,...student};
 }

@@ -1,5 +1,7 @@
 import admin from 'firebase-admin';
-import Notification from '../models/Notification';
+import Notification, { NotificationType } from '../models/Notification';
+import { getErrorMessage } from '../utils/api_error';
+import assert from 'assert';
 
 
 export async function getStudentNotifications(studentId: number) {
@@ -11,7 +13,7 @@ export async function getStudentNotifications(studentId: number) {
     return data;
 }
 
-export async function saveNotification(studentId, joinRequestId, notificationType) {
+export async function saveNotification(studentId:number, joinRequestId:number, notificationType:string) {
     const result = await Notification.create({
         studentId: studentId,
         joinRequestId: joinRequestId,
@@ -20,35 +22,32 @@ export async function saveNotification(studentId, joinRequestId, notificationTyp
     return result;
 }
 
-const getNotificationTemplate = (notificationType: string) => {
+const getNotificationTemplate = (notificationType: NotificationType) => {
     switch (notificationType) {
-        case 'joinRequest':
+        case NotificationType.JOIN_REQUEST:
             return {
                 title: 'New Join Request',
                 body: 'A student wants to join your group.',
             };
 
-        case 'accept':
+        case NotificationType.ACCEPT:
             return {
                 title: 'Join Request Accepted',
                 body: 'Your request to join the group has been accepted!',
             };
 
-        case 'reject':
+        case NotificationType.REJECT:
             return {
                 title: 'Join Request Rejected',
                 body: 'Your request to join the group has been rejected.',
             };
 
         default:
-            return {
-                title: 'Notification',
-                body: 'You have a new notification.',
-            };
+            assert(false,"Unknown notification type");
     }
 };
 
-export const sendPushNotification = async (studentId: number, joinRequestId: number, token: string, notificationType: string) => {
+export async function sendPushNotification(studentId: number, joinRequestId: number, token: string, notificationType: NotificationType) {
     try {
         const template = getNotificationTemplate(notificationType);
         if (!template) {
@@ -65,7 +64,8 @@ export const sendPushNotification = async (studentId: number, joinRequestId: num
 
         await saveNotification(studentId, joinRequestId, notificationType);
     } catch (error) {
-        console.error('Failed to send push notification:', error.message);
+        console.error('Failed to send push notification:', getErrorMessage(error));
+        throw error;
     }
 };
 
