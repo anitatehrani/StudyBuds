@@ -8,6 +8,7 @@ export default [
   {
     rules: {
       "@typescript-eslint/no-non-null-assertion": "error",
+      "eqeqeq": "error",
       "@typescript-eslint/consistent-type-assertions": [
         "error",
         {
@@ -19,3 +20,4 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
 ];
+

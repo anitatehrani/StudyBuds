@@ -8,8 +8,17 @@ const router: Router = Router();
 // Route to create a group
 router.post('/create', createGroup);
 
+function asyncWrapper(fn) {
+    return function (req, res, next) {
+        fn(req, res).catch(next);
+    };
+}
+
 // Route to fetch all groups
-router.get('/all', getAllGroups);
+router.get('/all', asyncWrapper(getAllGroups));
+
+
+
 
 router.get('/basic_search/:text/:student_id', basicSearchResult);
 

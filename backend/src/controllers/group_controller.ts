@@ -38,11 +38,12 @@ export async function createGroup(req: Request, res: Response): Promise<void> {
 
 // Function to get all groups
 export async function getAllGroups(req: Request, res: Response): Promise<void> {
+    throw new Error();
     const groups = await Group.findAll();
     res.json(groups);
 };
 
-export async function basicSearchResult(req:Request,res: Response){
+export async function basicSearchResult(req: Request, res: Response) {
     const result = await GroupService.basicSearch(req.params['text'], req.params['student_id']);
     res.send(
         result
