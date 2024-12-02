@@ -11,12 +11,38 @@ class CreateGroupEvent extends GroupCreationEvent {
   const CreateGroupEvent(this.group);
   
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
 
 class FetchCoursesListEvent extends GroupCreationEvent {
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
+}
+
+class FetchCoursesListLoading extends GroupCreationState {}
+
+class FetchCoursesListInitial extends GroupCreationState {}
+
+class FetchCoursesListSuccess extends GroupCreationState {
+  final List<String> courses;
+  FetchCoursesListSuccess(this.courses);
+}
+
+class FetchCoursesListFailed extends GroupCreationState {
+  final String error;
+  FetchCoursesListFailed(this.error);
+}
+
+class GroupCreationLoading extends GroupCreationState {}
+
+class GroupCreationInitial extends GroupCreationState {}
+
+class GroupCreationSuccess extends GroupCreationState {
+  final Group group;
+  GroupCreationSuccess(this.group);
+}
+
+class GroupCreationFailed extends GroupCreationState {
+  final String error;
+  GroupCreationFailed(this.error);
 }

@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:study_buds/models/group.dart';
-import 'package:study_buds/utils/static_env.dart';
+import 'package:study_buds/network/request/fetch_courses_request.dart';
+import 'package:study_buds/network/request/group_creation_request.dart';
 
 part 'group_creation_event.dart';
 part 'group_creation_state.dart';
@@ -17,54 +15,35 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
 
   Future<void> _onFetchCourses(
       FetchCoursesListEvent event, Emitter<GroupCreationState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    final url = Uri.parse('$API_URL/courses/all');
+    emit(FetchCoursesListLoading());
     try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final courses = List<String>.from(responseData['courses']);
-        emit(state.copyWith(courses: courses, isLoading: false));
+      final fetchCoursesRequest = FetchCoursesRequest();
+      final response = await fetchCoursesRequest.send();
+      if (!response.requestFailed) {
+        if (response.data != null && response.data!.isNotEmpty) {
+          emit(FetchCoursesListSuccess(response.data! as List<String>));
+        }
       } else {
-        print('Error fetching courses: ${response.statusCode}');
-        emit(state.copyWith(
-          errorMessage: 'Failed to load courses.',
-          isLoading: false,
-        ));
+        emit(FetchCoursesListFailed('Failed to load courses'));
       }
     } catch (error) {
       print('Error fetching courses: $error');
-      emit(state.copyWith(
-        errorMessage: 'An error occurred: $error',
-        isLoading: false,
-      ));
+      emit(FetchCoursesListFailed('Failed to fetch course list'));
     }
   }
 
-  Future<void> _onCreateGroup(
-      CreateGroupEvent event, Emitter<GroupCreationState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    final url = Uri.parse('$API_URL/groups/create');
-    final body = event.group.toJson();
-
+  Future<void> _onCreateGroup(CreateGroupEvent event, Emitter<GroupCreationState> emit) async {
+    emit(GroupCreationLoading());
     try {
-      final response = await http.post(url, body: body, headers: {
-        'Content-Type': 'application/json',
-      });
-      if (response.statusCode == 201) {
-        emit(state.copyWith(isLoading: false));
+      final groupCreation = GroupCreationRequest(event.group);
+      final response = await groupCreation.send();
+      if (!response.requestFailed) {
+        emit(GroupCreationSuccess(response.data!));
       } else {
-        final errorData = jsonDecode(response.body);
-        emit(state.copyWith(
-          errorMessage: errorData['message'],
-          isLoading: false,
-        ));
+        emit(GroupCreationFailed('Failed to create group'));
       }
     } catch (error) {
-      emit(state.copyWith(
-        errorMessage: 'Failed to create group.',
-        isLoading: false,
-      ));
+      emit(GroupCreationFailed('Failed to create group.'));
     }
   }
 }
