@@ -2,30 +2,28 @@ import { Request, Response } from 'express';
 import Notification from '../models/Notification';
 import { getStudentFirebaseToken, saveFbToken, updateFbToken } from '../service/firebase_token_service';
 import { getStudentNotifications } from '../service/notification_service';
+import { ValidationError } from '../utils/api_error';
 
 
 
-export const getAllNotification = async (req: Request, res: Response) => {
-    try {
-        const result = await Notification.findAll()
-        res.status(200).send(
-            result
-        )
-    } catch (err) {
-        console.log(err)
-        res.status(err.status || 500);
-        res.send(err.message || 'Internal server error');
-    }
+export async function getAllNotification(req: Request, res: Response) {
+    const result = await Notification.findAll()
+    res.send(
+        result
+    )
 };
 
-export const getStudentsAllNotification = async (req: Request, res: Response) => {
-
-    const result = await getStudentNotifications(Number.parseInt(req.params['studentId']))
+export async function getStudentsAllNotification(req: Request, res: Response) {
+    const studentIdRaw=req.params['studentId']
+    if(studentIdRaw===undefined)throw new ValidationError("Missing Student ID")
+    const studentId=Number.parseInt(studentIdRaw);
+    if(isNaN())
+    const result = await getStudentNotifications(Number.parseInt(studentId))
     console.log(result)
     res.send(result)
 };
 
-export const saveToken = async (req: Request, res: Response) => {
+export async function saveToken(req: Request, res: Response){
     try {
         const { studentId, token } = req.body;
 

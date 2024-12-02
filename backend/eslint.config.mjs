@@ -15,6 +15,10 @@ export default [
           assertionStyle: "never",
         },
       ],
+      "func-style":["error","declaration"],
+        "@typescript-eslint/no-unsafe-member-access":"error",
+        "@typescript-eslint/no-unsafe-assignment":"error",
+        "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }]
     },
   },
   pluginJs.configs.recommended,

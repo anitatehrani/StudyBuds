@@ -10,13 +10,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log("ciaoooo");
-    console.error(err.stack);
-    res.status(500).json({ error: 'Internal Server Error' });
-});
-
 // Mount all routes without "/api" prefix
 app.use('/', indexRouter);
 
@@ -29,7 +22,12 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', error.message);
     });
 
-
+// Error handling middleware
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.log("Ciaoooooooo")
+    console.error(err.stack);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
 
 // Start the server
 const PORT = process.env.SERVER_PORT || 5000;
