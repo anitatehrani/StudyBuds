@@ -1,22 +1,29 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import courseRoutes from "./course_routes";
 import groupRoutes from "./group_routes";
 import notification from "./notification_routes";
 import profileRoutes from "./profile_routes";
 import studentRoutes from "./student_routes";
 import loginRoutes from "./login_routes";
+import { asyncWrapper } from "../utils/wrapper";
 
 const router: Router = Router();
 
-// Handle favicon requests to prevent unnecessary processing
-router.get("/favicon.ico", (req, res) => {
+async function favicon(req: Request, res: Response) {
     res.status(204).end(); // No Content
-});
+}
+
+
+
+// Handle favicon requests to prevent unnecessary processing
+router.get("/favicon.ico", asyncWrapper(favicon));
+
+async function welcome(req: Request, res: Response) {
+    res.send("Welcome to the StudyBuds API!");
+}
 
 // Root route
-router.get("/", (req, res) => {
-    res.send("Welcome to the StudyBuds API!");
-});
+router.get("/", asyncWrapper(welcome));
 
 router.use("/profile", profileRoutes);
 

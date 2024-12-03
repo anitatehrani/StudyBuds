@@ -4,13 +4,14 @@ import passport from "passport";
 import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
 import { fetch, MetadataReader, toPassportConfig, claimsToCamelCase } from "passport-saml-metadata";
 import jwt from "jsonwebtoken";
+import { ENTITY_ID, IDP_ENTRYPOINT, IDP_METADATA } from "../config/unigeapi";
+import { JWT_SECRET } from "../config/secrets";
 
 const router: Router = Router();
 
-const url = process.env.IDP_METADATA;
 
 async function getMetadata() {
-    const reader = await fetch({ url });
+    const reader = await fetch({ url: IDP_METADATA });
 
     const config = toPassportConfig(reader);
 
@@ -18,9 +19,9 @@ async function getMetadata() {
         new SamlStrategy(
             {
                 ...config,
-                entryPoint: process.env.IDP_ENTRYPOINT,
-                callbackUrl: "l",
-                issuer: "saml-poc",
+                entryPoint: IDP_ENTRYPOINT,
+                callbackUrl: "l", // it has to be not empty string | unused
+                issuer: ENTITY_ID,
                 idpCert: config.idpCert,
                 disableRequestedAuthnContext: true,
             },
@@ -39,7 +40,7 @@ getMetadata();
 router.get("/", passport.authenticate("saml"));
 
 router.post("/", passport.authenticate("saml", { session: false }), (req, res) => {
-    const token = jwt.sign({ user: req.user }, process.env.JWT_SECRET!, { expiresIn: "1h" });
+    const token = jwt.sign({ user: req.user }, JWT_SECRET, { expiresIn: "1h" });
     res.redirect(`myapp://auth?token=${token}`);
 });
 

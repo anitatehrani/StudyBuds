@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { getAllStudents, getStudent } from '../controllers/student_controller';
+import { asyncWrapper } from '../utils/wrapper';
 
 const router: Router = Router();
 
 // Route to get all students (specific to /students/all)
-router.get('/all', getAllStudents); // Change the path to avoid overlap
+router.get('/all', asyncWrapper(getAllStudents)); // Change the path to avoid overlap
 
 // Route to get a student by ID
-router.get('/:id', getStudent);
+router.get('/:id', asyncWrapper(getStudent));
 
 export default router;

@@ -59,6 +59,7 @@ services:
             IDP_ENTRYPOINT: ${IDP_ENTRYPOINT:-http://127.0.0.1:8080/simplesaml/saml2/idp/SSOService.php}
             UNIGE_TOKEN: ${UNIGE_TOKEN:-changeme}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
+            ENTITY_ID: saml-poc
         depends_on:
             - postgres
 
