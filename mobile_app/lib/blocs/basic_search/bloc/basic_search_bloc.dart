@@ -15,7 +15,7 @@ class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
         try {
           final basicSearchRequest = BasicSearchRequest(query: event.queryString, studentId: event.studentId);
           final response = await basicSearchRequest.send();
-          if (!response.requestFailed) {
+          if (response.isSuccess) {
             final List<Group> groups = Group.fromJsonList(response.data ?? []);
             emit(SearchSuccess(groups));
           } else {

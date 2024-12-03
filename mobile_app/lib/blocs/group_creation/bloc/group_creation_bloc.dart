@@ -19,7 +19,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     try {
       final fetchCoursesRequest = FetchCoursesRequest();
       final response = await fetchCoursesRequest.send();
-      if (!response.requestFailed) {
+      if (response.isSuccess) {
         if (response.data != null && response.data!.isNotEmpty) {
           emit(FetchCoursesListSuccess(response.data! as List<String>));
         }
@@ -37,8 +37,9 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     try {
       final groupCreation = GroupCreationRequest(event.group);
       final response = await groupCreation.send();
-      if (!response.requestFailed) {
-        emit(GroupCreationSuccess(response.data!));
+      print('+++++++++++ response: ${response.isSuccess}');
+      if (response.isSuccess) {
+        emit(GroupCreationSuccess('The group created successfully'));
       } else {
         emit(GroupCreationFailed('Failed to create group'));
       }

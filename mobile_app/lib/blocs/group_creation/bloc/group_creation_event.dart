@@ -38,8 +38,8 @@ class GroupCreationLoading extends GroupCreationState {}
 class GroupCreationInitial extends GroupCreationState {}
 
 class GroupCreationSuccess extends GroupCreationState {
-  final Group group;
-  GroupCreationSuccess(this.group);
+  final String message;
+  GroupCreationSuccess(this.message);
 }
 
 class GroupCreationFailed extends GroupCreationState {

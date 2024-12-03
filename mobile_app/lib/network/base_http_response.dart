@@ -14,22 +14,18 @@ class BaseHttpResponseBuilder<T> {
     if (response == null) {
       print("No response received.");
       return BaseHttpResponse<T>(
-        requestFailed: true,
+        isSuccess: false,
         requestParams: requestParams,
       );
     }
 
-    print("Response status code: ${response.statusCode}");
-    print("Response body: ${response.body}");
-
     try {
-      // Parse the response into a dynamic JSON structure (can be Map or List)
-      print("vvvvv");
       final parsedJson = jsonDecode(response.body);
-      print(parsedJson);
-      print("vvvvv");
+      var isSuccessRes= false;
+      if (response.statusCode == 200 || response.statusCode == 201)
+        isSuccessRes = true;
       return BaseHttpResponse<T>(
-        requestFailed: false,
+        isSuccess: isSuccessRes,
         requestParams: requestParams,
         statusCode: response.statusCode,
         data: _dataFactory != null ? _dataFactory!(parsedJson) : null,
@@ -37,7 +33,7 @@ class BaseHttpResponseBuilder<T> {
     } catch (e) {
       print("Error decoding JSON: $e");
       return BaseHttpResponse<T>(
-        requestFailed: true,
+        isSuccess: false,
         requestParams: requestParams,
         statusCode: response.statusCode,
       );
@@ -47,13 +43,13 @@ class BaseHttpResponseBuilder<T> {
 
 /// Represents a structured HTTP response.
 class BaseHttpResponse<T> {
-  bool requestFailed;
+  bool isSuccess;
   Map<String, dynamic> requestParams;
   int? statusCode;
   T? data;
 
   BaseHttpResponse({
-    required this.requestFailed,
+    required this.isSuccess,
     required this.requestParams,
     this.statusCode,
     this.data,

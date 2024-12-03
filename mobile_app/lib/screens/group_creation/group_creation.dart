@@ -39,26 +39,26 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
       body:  BlocProvider(
       create: (_) => GroupCreationBloc()..add(FetchCoursesListEvent()),
       child: Scaffold(
-        // appBar: AppBar(title: Text('t')),
-        body: BlocConsumer<GroupCreationBloc, GroupCreationState>(
-          listener: (context, state) {
-            if (state.errorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage!), backgroundColor: Colors.red),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state.isLoading) {
-              return Center(child: CircularProgressIndicator());
-            }
-
+        body:  BlocConsumer<GroupCreationBloc, GroupCreationState>(
+      listener: (context, state) {
+        if (state is GroupCreationSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Group created successfully!'), backgroundColor: Colors.green),
+          );
+        } else if (state is GroupCreationFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+          );
+        }
+      }, builder: (context, state) {
+        if (state.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              // Wrap with SingleChildScrollView to handle bottom overflow
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
                         controller: nameController,
@@ -186,13 +186,13 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                         label: 'Create the study group',
                         iconData: Icons.add,
                         onPressed: () {
-                          BlocProvider.of<GroupCreationBloc>(context).add(
+                          context.read<GroupCreationBloc>().add(
                             CreateGroupEvent(
                               new Group(
                               name: nameController.text,
                               description: descriptionController.text,
                               course: selectedCourse,
-                              members: int.parse(membersLimitController.text),
+                              members: membersLimitController.text != '' ? int.parse(membersLimitController.text) : 0,
                               telegramLink: telegramLinkController.text,
                               isPublic: isPrivateGroup,
                               studentId: 10
