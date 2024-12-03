@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import StudentService from '../service/student_service';
+import { validateInt } from '../utils/validation_error';
+import { NotFoundError } from '../utils/api_error';
 
 export const getAllStudents = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -12,51 +14,21 @@ export const getAllStudents = async (req: Request, res: Response): Promise<void>
 };
 
 export const getStudent = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const studentId = parseInt(req.params.id, 10);
-        if (isNaN(studentId)) {
-            res.status(400).json({ message: 'Invalid student ID' });
-            return;
-        }
+    const studentId = validateInt(req.params, "id");
 
-        const student = await StudentService.getStudentById(studentId);
-        if (!student) {
-            res.status(404).json({ message: 'Student not found' });
-            return;
-        }
 
-        res.status(200).json(student);
-    } catch (error) {
-        console.error('Error in getStudent:', error);
-        res.status(500).json({ message: 'An error occurred', error: (error as Error).message });
+    const student = await StudentService.getStudentById(studentId);
+    if (student === null) {
+        throw new NotFoundError('Student not found');
     }
+    res.json(student);
 };
 
 export const editTelegramId = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const studentId = parseInt(req.params.id, 10);
-        if (isNaN(studentId)) {
-            res.status(400).json({ message: 'Invalid student ID' });
-            return;
-        }
-
-        const telegramId = parseInt(req.params.telegram_id);
-        if (isNaN(studentId)) {
-            res.status(400).json({ message: 'Invalid telegram ID' });
-            return;
-        }
-
-        const student = await StudentService.editTelegramIdService(studentId, telegramId);
-        if (!student) {
-            res.status(404).json({ message: 'Student not found' });
-            return;
-        }
-
-        res.status(200).json(student);
-    } catch (error) {
-        console.error('Error in getStudent:', error);
-        res.status(500).json({ message: 'An error occurred', error: (error as Error).message });
-    }
+    const studentId = validateInt(req.params, "id");
+    const telegramId = validateInt(req.params, "telegram_id");
+    const student = await StudentService.editTelegramIdService(studentId, telegramId);
+    res.json(student);
 };
 
 

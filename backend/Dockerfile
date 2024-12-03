@@ -13,4 +13,4 @@ COPY ./src ./src
 
 EXPOSE 3000
 
-CMD ["npx","ts-node", "server"]
+CMD ["npx","ts-node-transpile-only", "server"]
