@@ -1,6 +1,7 @@
 import { axios_instance, TOKEN, UNIGEAPI_URL } from "../config/unigeapi";
 
 export async function getCourses(): Promise<Array<string>> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return (
     await axios_instance.get(`${UNIGEAPI_URL}/courses`, {
       headers: {
@@ -22,6 +23,7 @@ export interface UnigeStudent {
 export async function getUnigeProfile(
   studentId: number,
 ): Promise<UnigeStudent> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return (
     await axios_instance.get(`${UNIGEAPI_URL}/student/${studentId}`, {
       headers: {

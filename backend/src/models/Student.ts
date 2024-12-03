@@ -10,7 +10,7 @@ import { Column, Model, Table } from "sequelize-typescript";
     createdAt: "created_at",
     updatedAt: "updated_at",
 })
-class Student extends Model {
+export class Student extends Model {
     @Column({
         type: DataTypes.INTEGER,
         primaryKey: true,
