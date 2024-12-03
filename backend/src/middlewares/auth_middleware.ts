@@ -1,16 +1,20 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import { BadRequestError, UnhautorizedError } from '../utils/api_error';
+import { JWT_SECRET } from '../config/secrets';
 
-const authMiddleware = (req, res, next) => {
+
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
-    if (!token) return res.status(401).send('Access Denied');
+    if (token === undefined)
+        throw new UnhautorizedError('Access Denied');
 
     try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        const verified = jwt.verify(token, JWT_SECRET);
         req.user = verified;
         next();
     } catch (err) {
-        res.status(400).send('Invalid Token');
+        throw new BadRequestError('Invalid Token');
     }
 };
 
