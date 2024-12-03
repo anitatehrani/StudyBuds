@@ -57,7 +57,7 @@ services:
             JWT_SECRET: ${JWT_SECRET:-changeme}
             IDP_METADATA: ${IDP_METADATA:-http://unigelogin:8080/simplesaml/saml2/idp/metadata.php}
             IDP_ENTRYPOINT: ${IDP_ENTRYPOINT:-http://127.0.0.1:8080/simplesaml/saml2/idp/SSOService.php}
-            UNIGE_TOKEN: ${UNIGE_TOKEN:-changeme}
+            UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
         depends_on:
