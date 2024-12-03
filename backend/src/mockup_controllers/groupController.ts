@@ -14,7 +14,7 @@ export const createGroup = async (req: Request, res: Response): Promise<void> =>
 export const basicSearchResult = async (req, res) => {
     try {
         console.log("Using mock data");
-        console.log(req.params.text);
+        //console.log(req.params.text);
         const groups = await findGroupsByNameContains(req.params.text);
         const resJson = groups.map((group) => group.dataValues);
         res.status(200).json(resJson);

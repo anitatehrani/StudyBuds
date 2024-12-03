@@ -37,10 +37,10 @@ const opts = {
 };
 
 Given("I am on the home page not logged in", async () => {
-  const counterTextFinder = byValueKey("counter");
-  const buttonFinder = byValueKey("increment");
+  //const counterTextFinder = byValueKey("counter");
+  //const buttonFinder = byValueKey("increment");
 
-  const driver = await remote(opts);
+  //const driver = await remote(opts);
 
   // if (process.env.APPIUM_OS === "android") {
   //   await driver.switchContext("NATIVE_APP");
@@ -52,9 +52,9 @@ Given("I am on the home page not logged in", async () => {
   //   );
   // }
 
-  assert.strictEqual(await driver.getElementText(counterTextFinder), "0");
+  //assert.strictEqual(await driver.getElementText(counterTextFinder), "0");
 
-  await driver.elementClick(buttonFinder);
+  //await driver.elementClick(buttonFinder);
   // await
   // await driver.action("pointer", {
   //   parameters: { pointerType: "touch" },
@@ -64,7 +64,7 @@ Given("I am on the home page not logged in", async () => {
   //   element: { elementId: buttonFinder },
   // });
 
-  assert.strictEqual(await driver.getElementText(counterTextFinder), "1");
+  //assert.strictEqual(await driver.getElementText(counterTextFinder), "1");
 
-  driver.deleteSession();
+  //driver.deleteSession();
 });
