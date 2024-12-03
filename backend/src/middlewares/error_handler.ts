@@ -1,22 +1,27 @@
 // src/middleware/errorHandler.ts
-import { NextFunction, Request, Response } from 'express';
-import { CustomError } from '../utils/custom_error';
+import { NextFunction, Request, Response } from "express";
+import { ApiError } from "../utils/api_error";
 
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof CustomError) {
-        res.status(err.statusCode).json({
-    error: {
+export function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  if (err instanceof ApiError) {
+    res.status(err.status).json({
+      error: {
         message: err.message,
-        status: err.statusCode,
-    },
+        status: err.status,
+      },
     });
-    } else {
+  } else {
     console.error(err);
     res.status(500).json({
-        error: {
-            message: 'Something went wrong.',
-            status: 500,
-        },
+      error: {
+        message: "Something went wrong.",
+        status: 500,
+      },
     });
+  }
 }
-};

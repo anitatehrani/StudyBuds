@@ -1,6 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
+import { getErrorMessage } from "../utils/api_error";
 
 interface GroupData {
   name: string;
@@ -84,7 +85,7 @@ export async function basicSearch(text: string, studentId: number) {
     return results;
   } catch (error) {
     console.error(
-      `Failed to execute basic search. Error: ${error instanceof Error ? error.message : error}`,
+      `Failed to execute basic search. Error: ${getErrorMessage(error)}`,
     );
     throw error;
   }
