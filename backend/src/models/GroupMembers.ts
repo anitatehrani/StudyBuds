@@ -1,35 +1,44 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
+import { Column, Model, Table } from 'sequelize-typescript';
 
-const GroupMembers = sequelize.define(
-    'GroupMembers',
-    {
-        studentId: {
+
+
+@Table({
+    tableName: 'group_members',
+    schema: 'studybuds',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    indexes: [
+        {
+            unique: true,
+            fields: ['student_id', 'group_id']
+        }
+    ]
+})
+
+class GroupMembers extends Model {
+    @Column(
+        {
             type: DataTypes.SMALLINT,
             allowNull: false,
             field: 'student_id',
             primaryKey: true
-        },
-        groupId: {
+        }
+    )
+    public studentId!: number;
+
+    @Column(
+        {
             type: DataTypes.INTEGER,
             allowNull: false,
             field: 'group_id',
             primaryKey: true
-        },
-    },
-    {
-        tableName: 'group_members',
-        schema: 'studybuds',
-        timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
-        indexes: [
-            {
-                unique: true,
-                fields: ['student_id', 'group_id']
-            }
-        ]
-    }
-);
+        }
+    )
+    public groupId!: number;
+}
+sequelize.addModels([GroupMembers])
 
 export default GroupMembers;
