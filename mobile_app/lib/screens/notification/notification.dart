@@ -19,13 +19,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
         message: 'Your request to join the Capstone Project was approved',
         createdAt: DateTime.now()
       ),
-     NotificationModel(
+      NotificationModel(
         id: 4,
         studentId: 10,
         joinRequestId: 1,
         notificationType: 'Join Request',
         message: 'Nona wants to join to the Capstone Project',
-        createdAt: DateTime.now()
+        createdAt: DateTime.parse("2024-11-29")
       ),
       NotificationModel(
         id: 3,
@@ -50,19 +50,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
           foregroundColor: Theme.of(context).primaryColor,
         ),
       body: Center(
-       child: ListView.builder(
-        itemCount: notifs.length,
-        itemBuilder: (context, index) {
-          final notification = notifs[index];
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
-            // Add vertical and horizontal padding
-            child: NotificationCard(
-              backgroundColor: Colors.white,
-              notification: notification,
-            ),
-          );
+        child: ListView.builder(
+          itemCount: notifs.length,
+          itemBuilder: (context, index) {
+            final notification = notifs[index];
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
+              // Add vertical and horizontal padding
+              child: NotificationCard(
+                backgroundColor: Colors.white,
+                notification: notification,
+              ),
+            );
         },
       ),
       ),
