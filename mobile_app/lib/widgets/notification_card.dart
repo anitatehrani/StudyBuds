@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study_buds/models/notification_model.dart';
+import 'package:study_buds/utils/date_utils.dart';
 import 'package:study_buds/widgets/custom_icon_button.dart';
 
 
@@ -16,22 +17,6 @@ class NotificationCard extends StatelessWidget {
     required this.notification
   });
 
-  String dateToString(){
-    DateTime nowDate = DateTime.now();
-    Duration difference = nowDate.difference(notification.createdAt);
-    int days = difference.inDays;
-    if (days == 0)
-      return 'New';
-    if (days == 1)
-      return 'Yesterday';
-    else if (days <= 7)
-      return 'Last 7 days';
-    else if (days > 30){
-      var m = days / 30;
-      return 'Last ${m} months';
-    }
-    return 'New';
-  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,7 +45,7 @@ class NotificationCard extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      dateToString(),
+                      DateTimeUtils.dateDiffToString(notification.createdAt),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
