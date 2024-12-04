@@ -71,18 +71,34 @@ class NotificationCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 8),
-            Text(
-              notification.message,
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.primary,
+            SizedBox(width: 8),
+            Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      notification.message,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      softWrap: true,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            CustomIconButton(onPressed: (){},
-              iconData: Icons.chevron_right_outlined,
-              fontSize: 12,)
+              SizedBox(width: 8),
+              CustomIconButton(
+                onPressed: () {
+                  print('Icon button pressed');
+                },
+                iconData: Icons.chevron_right_outlined,
+              ),
+            ],
+          )
           ],
         ),
       ),

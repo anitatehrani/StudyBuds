@@ -5,27 +5,26 @@ class CustomIconButton extends StatelessWidget {
   final IconData? iconData;
   final Color? foregroundColor;
   final Color? backgroundColor;
-  final double? fontSize;
+  final double? size;
 
-  /// Creates a [CustomFilledButton] widget.
+  /// Creates a [CustomIconButton] widget.
   ///
-  /// The [label] and [onPressed] parameters must not be null.
+  /// The [onPressed] parameter must not be null.
   ///
-  /// The [iconData] parameter is optional, in case you don't want to add an icon
-  /// for the button, simply do not provide this parameter.
+  /// The [iconData] parameter specifies the icon inside the button.
   ///
-  /// The [foregroundColor] parameter is optional, if not provided, white color will be used.
+  /// The [foregroundColor] is the color of the icon. Defaults to white.
   ///
-  /// The [backgroundColor] parameter is optional, if not provided, the primary color will be used.
+  /// The [backgroundColor] is the background color of the button. Defaults to the primary color.
   ///
-  /// The [fontSize] parameter is optional, if not provided, the default font size will be used.
+  /// The [size] determines the button's diameter. Defaults to 48.
   const CustomIconButton({
     super.key,
     required this.onPressed,
     this.iconData,
     this.foregroundColor = Colors.white,
     this.backgroundColor,
-    this.fontSize = 12
+    this.size = 18.0,
   });
 
   @override
@@ -33,22 +32,22 @@ class CustomIconButton extends StatelessWidget {
     final buttonBackgroundColor =
         backgroundColor ?? Theme.of(context).primaryColor;
 
-    return IconButton(
-            onPressed: onPressed,
-            icon: Icon(
-              iconData,
-              size: fontSize! + 4,
-              color: Colors.white,
-            ),
-            style: ButtonStyle(
-              // backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
-              backgroundColor: WidgetStatePropertyAll(backgroundColor),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                ),
-              ),
-            ),
-          );
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(size! / 2),
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: buttonBackgroundColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          iconData,
+          color: foregroundColor,
+          size: size! / 2, // Adjust icon size relative to button size
+        ),
+      ),
+    );
   }
 }
