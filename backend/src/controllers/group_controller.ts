@@ -9,7 +9,7 @@ import {
 import { checkBoolean, checkInt, checkString, IndexSignature, validateInt, validateString } from "../utils/validation_error";
 
 // Function to create a group
-export async function createGroup(req: Request, res: Response): Promise<void> {
+export async function createGroup(req: Request) {
 
     const body = req.body as IndexSignature
     const name = checkString(body, "name");
@@ -43,20 +43,19 @@ export async function createGroup(req: Request, res: Response): Promise<void> {
         adminId: studentId, // Maps studentId to adminId
     });
 
-    res.status(201).json({ message: "Group created successfully", group });
+    return { message: "Group created successfully", group }
 }
 
 // Function to get all groups
-export async function getAllGroups(req: Request, res: Response): Promise<void> {
-    const groups = await Group.findAll();
-    res.json(groups);
+export async function getAllGroups(req: Request) {
+    return await Group.findAll();
 }
 
-export async function basicSearchResult(req: Request, res: Response) {
+export async function basicSearchResult(req: Request) {
     const text = validateString(req.params, "text");
     const student_id = validateInt(req.params, "student_id");
     const result = await GroupService.basicSearch(text, student_id);
-    res.send(result);
+    return result;
 }
 
 export default {

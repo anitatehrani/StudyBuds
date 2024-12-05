@@ -6,11 +6,11 @@ import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '
 import { sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { NotificationType } from '../models/Notification';
-import { checkBoolean, checkInt } from '../utils/validation_error';
+import { checkBoolean, checkInt, GenericIndexSignature } from '../utils/validation_error';
 import { NotFoundError, ValidationError } from '../utils/api_error';
 
-export async function joinTheGroup(req: Request, res: Response) {
-    const studentId = checkInt(req.body, "studentId");
+export async function joinTheGroup(req: Request) {
+    const studentId = checkInt(req.body as GenericIndexSignature, "studentId");
     const groupId = checkInt(req.body, "groupId");
     console.log(`studentId:${studentId}`);
     console.log(`groupId:${groupId}`);
@@ -40,7 +40,7 @@ export async function joinTheGroup(req: Request, res: Response) {
     const isPublic = group.isPublic;
     if (isPublic) {
         await joinGroup(studentId, groupId);
-        res.send('Student added to the group successfully');
+        return 'Student added to the group successfully';
     } else {
         const joinRequest = await createJoinRequest(studentId, groupId);
         const joinRequestId = joinRequest.id;
@@ -56,11 +56,11 @@ export async function joinTheGroup(req: Request, res: Response) {
         const token = fbToken.token;
         await sendPushNotification(adminId, joinRequestId, token, NotificationType.JOIN_REQUEST);
 
-        res.send('Join request submitted successfully');
+        return 'Join request submitted successfully';
     }
 };
 
-export async function changeJoinRequestStatus(req: Request, res: Response) {
+export async function changeJoinRequestStatus(req: Request) {
     const adminId = checkInt(req.body, "adminId");
     const joinRequestId = checkInt(req.body, "joinRequestId");
     const isAccepted = checkBoolean(req.body, "isAccepted");
@@ -87,7 +87,7 @@ export async function changeJoinRequestStatus(req: Request, res: Response) {
     if (!isAccepted) {
         await updateJoinRequestStatus(joinRequestId, 'Rejected')
         // todo send notification
-        res.send('Join request rejected successfully');
+        return 'Join request rejected successfully';
     }
     // TODO
     // const currentLimit = group.currentMembersCnt
@@ -98,5 +98,5 @@ export async function changeJoinRequestStatus(req: Request, res: Response) {
     // }
     await updateJoinRequestStatus(joinRequestId, NotificationType.ACCEPT)
     // todo send notification
-    res.send('Join request accepted successfully');
+    return 'Join request accepted successfully';
 }
