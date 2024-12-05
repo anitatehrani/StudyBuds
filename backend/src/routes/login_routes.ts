@@ -41,7 +41,7 @@ getMetadata().catch(console.error);
 router.get("/", passport.authenticate("saml"));
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-router.post("/", passport.authenticate("saml", { session: false }), (req:Request, res:Response) => {
+router.post("/", passport.authenticate("saml", { session: false }), (req: Request, res: Response) => {
     const token = jwt.sign({ user: req.user }, JWT_SECRET, { expiresIn: "1h" });
     res.redirect(`myapp://auth?token=${token}`);
 });
