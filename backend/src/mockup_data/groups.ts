@@ -20,4 +20,11 @@ export const groupsData = [
         members: 8,
         isPublic: true,
     },
+    {
+        name: "adm",
+        course: "CSE",
+        description: "This is a group for CSE students",
+        members: 5,
+        isPublic: true,
+    },
 ];

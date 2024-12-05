@@ -9,9 +9,12 @@ services:
             GH_TOKEN: ${GH_TOKEN:-lol}
 
     emulator:
-        image: docker.io/budtmo/docker-android:emulator_11.0
+        build: ./emulator
+        #image: docker.io/budtmo/docker-android:emulator_11.0
         ports:
             - "6080:6080"
+            #- "5555:5555" for adb
+            #- "5554:5554" for adb
         environment:
             EMULATOR_DEVICE: "Samsung Galaxy S10"
             WEB_VNC: true
@@ -20,6 +23,10 @@ services:
             - /dev/kvm
         volumes:
             - apk:/apk:ro
+            - emulator-data:/home/androidusr
+        depends_on:
+            - backend
+
     build-apk:
         build: ./mobile_app
         volumes:
@@ -33,7 +40,6 @@ services:
             DEVICE: ""
             APPIUM_HOST: "emulator"
             APPIUM_PORT: "4723"
-            #MOCK_DATA: "true"
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
@@ -64,6 +70,8 @@ services:
             MOCK_DATA: "true"
         depends_on:
             - postgres
+            - unigelogin
+            - unigeapi
 
     unigelogin:
         build:
@@ -109,3 +117,4 @@ volumes:
     unigedata:
     apk-build-cache:
     postgres_data:
+    emulator-data:

@@ -24,7 +24,7 @@ const osSpecificOps =
         }
       : {};
 
-const opts = {
+export const opts = {
   hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
   port: Number.parseInt(
     process.env.APPIUM_PORT ? process.env.APPIUM_PORT : "4723",
@@ -36,7 +36,7 @@ const opts = {
   },
 };
 
-Given("I am on the home page not logged in", async () => {
+//Given("I am on the search page and logged in", async () => {
   //const counterTextFinder = byValueKey("counter");
   //const buttonFinder = byValueKey("increment");
 
@@ -67,4 +67,6 @@ Given("I am on the home page not logged in", async () => {
   //assert.strictEqual(await driver.getElementText(counterTextFinder), "1");
 
   //driver.deleteSession();
-});
+
+  //assert.strictEqual("1", "1");
+//});
