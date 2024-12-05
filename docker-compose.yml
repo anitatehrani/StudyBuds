@@ -53,16 +53,13 @@ services:
         ports:
             - "5000:5000"
         environment:
-            POSTGRES_USER: ${POSTGRES_USER:-postgres}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-            POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
-            POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-            POSTGRES_DB: ${POSTGRES_DB:-postgres}
+            DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             JWT_SECRET: ${JWT_SECRET:-changeme}
-            IDP_METADATA: http://unigelogin:8080/simplesaml/saml2/idp/metadata.php
+            IDP_METADATA: ${IDP_METADATA:-http://unigelogin:8080/simplesaml/saml2/idp/metadata.php}
             IDP_ENTRYPOINT: ${IDP_ENTRYPOINT:-http://127.0.0.1:8080/simplesaml/saml2/idp/SSOService.php}
-            UNIGE_TOKEN: ${UNIGE_TOKEN:-changeme}
-            UNIGEAPI_URL: ${UNIGEAPI_URL:-http://127.0.0.1:8000}
+            UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
+            UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
+            ENTITY_ID: saml-poc
         depends_on:
             - postgres
 

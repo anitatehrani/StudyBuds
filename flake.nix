@@ -60,6 +60,7 @@
               scrcpy
               linux-wifi-hotspot
               hostapd
+              usql
             ];
             shellHook = ''
               echo ${pkgs.flutter}/packages/flutter_tools/gradle

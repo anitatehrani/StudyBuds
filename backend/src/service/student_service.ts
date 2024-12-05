@@ -1,24 +1,25 @@
 import Student from '../models/Student';
+import { NotFoundError } from '../utils/api_error';
 
-export const getAllStudents = async () => {
+export async function getAllStudents() {
     return await Student.findAll({
         attributes: ['studentId', 'telegramAccount'],
     });
 };
 
-export const getStudentById = async (studentId: number) => {
+export async function getStudentById(studentId: number) {
     return await Student.findByPk(studentId, {
         attributes: ['studentId', 'telegramAccount'],
     });
 };
 
-export const editTelegramIdService = async (studentId: number, new_telegram_id: number) => {
+export async function editTelegramIdService(studentId: number, new_telegram_id: number) {
     // Fetch the student by their primary key
     const student = await Student.findByPk(studentId);
 
     // Handle case where student does not exist
-    if (!student) {
-        throw new Error(`Student with ID ${studentId} not found`);
+    if (student === null) {
+        throw new NotFoundError(`Student with ID ${studentId} not found`);
     }
 
     // Update the `telegramAccount` field with the new value
