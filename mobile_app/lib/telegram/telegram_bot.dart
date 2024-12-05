@@ -9,7 +9,6 @@ class TelegramBot {
   static Future<void> getTelegramId() async {
     try {
       if (botToken.isEmpty) {
-        print('------------------------------');
         throw Exception("Bot token not found in environment");
       }
 
@@ -39,7 +38,6 @@ class TelegramBot {
   static Future<void> checkGroupExists(String groupLink) async {
     try {
       final groupUsername = groupLink.replaceAll('https://t.me/', '');
-      print('------------------------------ $groupUsername');
       final chat = await telegram.getChat('@$groupUsername');
     } catch (e) {
       print('Error: Group does not exist or cannot be accessed error: $e');
@@ -49,9 +47,7 @@ class TelegramBot {
   static Future<void> checkGroupMember(String groupLink) async {
     try {
       final groupUsername = groupLink.replaceAll('https://t.me/', '');
-      print('------------------------------ $groupUsername');
       final chat = await telegram.getChatAdministrators('@$groupUsername');
-      print('--------------$chat');
     } catch (e) {
       print('Error: Group does not exist or cannot be accessed error: $e');
     }
@@ -60,9 +56,7 @@ class TelegramBot {
   static Future<void> checkGroupMembetCnt(String groupLink) async {
     try {
       final groupUsername = groupLink.replaceAll('https://t.me/', '');
-      print('------------------------------ $groupUsername');
       final chat = await telegram.getChatMemberCount('@$groupUsername');
-      print('----------------------- $chat');
     } catch (e) {
       print('Error: Group does not exist or cannot be accessed error: $e');
     }

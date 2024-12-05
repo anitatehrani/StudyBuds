@@ -1,9 +1,9 @@
-import { StudentAttributes } from "../models/Student";
+import { Student } from "../models/Student";
 import { getStudentById } from "../service/student_service";
 import { getUnigeProfile,UnigeStudent } from "./unige_service";
 import { NotFoundError } from "../utils/api_error";
 
-interface ProfileData extends StudentAttributes,UnigeStudent{}
+type ProfileData=Student|UnigeStudent
 
 export async function getProfileService(studentId: number):Promise<ProfileData> {
   const data = await getUnigeProfile(studentId);

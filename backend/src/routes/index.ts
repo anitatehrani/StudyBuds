@@ -9,21 +9,19 @@ import { asyncWrapper } from "../utils/wrapper";
 
 const router: Router = Router();
 
-async function favicon(req: Request, res: Response) {
-    res.status(204).end(); // No Content
+function favicon(req: Request, res: Response) {
+  res.status(204).end(); // No Content
 }
 
-
-
 // Handle favicon requests to prevent unnecessary processing
-router.get("/favicon.ico", asyncWrapper(favicon));
+router.get("/favicon.ico", favicon);
 
-async function welcome(req: Request, res: Response) {
-    res.send("Welcome to the StudyBuds API!");
+function welcome(req: Request, res: Response) {
+  res.send("Welcome to the StudyBuds API!");
 }
 
 // Root route
-router.get("/", asyncWrapper(welcome));
+router.get("/", welcome);
 
 router.use("/profile", profileRoutes);
 
