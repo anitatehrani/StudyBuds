@@ -39,7 +39,9 @@ def print_token():
     print(jwt.encode({"sub": "study_buds"}, SECRET_KEY, algorithm=ALGORITHM))  # type: ignore
 
 
-def validate_token(token: Annotated[HTTPAuthorizationCredentials, Depends(token_scheme)]):
+def validate_token(
+    token: Annotated[HTTPAuthorizationCredentials, Depends(token_scheme)],
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -61,6 +63,20 @@ def get_student(student_id: int):
         if student.id == student_id:
             return student
     raise HTTPException(status.HTTP_404_NOT_FOUND)
+
+
+@app.post("/students", dependencies=[Depends(validate_token)])
+def get_students(student_list: list[int]):
+    """Get the details of students"""
+    return [
+        {
+            "first_name": student.first_name,
+            "last_name": student.last_name,
+            "student_id": student.id,
+        }
+        for student in DATABASE.students
+        if student.id in student_list
+    ]
 
 
 @app.get("/courses", dependencies=[Depends(validate_token)])

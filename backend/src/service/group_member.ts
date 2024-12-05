@@ -1,6 +1,6 @@
 import GroupMembers from "../models/GroupMembers";
 
-export async function getCurrentMemberList(groupId) {
+export async function getCurrentMemberList(groupId:number) {
     const cnt = await GroupMembers.count({
         where: {
             groupId: groupId
@@ -10,7 +10,7 @@ export async function getCurrentMemberList(groupId) {
 }
 
 
-export async function joinGroup(studentId, groupId) {
+export async function joinGroup(studentId:number, groupId:number) {
     const joinGroup = await GroupMembers.create({
         studentId: studentId,
         groupId: groupId
