@@ -14,20 +14,4 @@ class SearchQueryChanged extends BasicSearchEvent {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
-
-}
-
-class SearchInitial extends BasicSearchState{}
-
-class SearchLoading extends BasicSearchState {
-}
-
-class SearchSuccess extends BasicSearchState {
-  final List<Group> results;
-  SearchSuccess(this.results);
-}
-
-class SearchFailure extends BasicSearchState {
-  final String error;
-  SearchFailure(this.error);
 }
