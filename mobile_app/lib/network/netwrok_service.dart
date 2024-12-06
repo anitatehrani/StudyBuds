@@ -8,7 +8,7 @@ enum HttpVerb { GET, POST }
 class NetworkService {
   static final NetworkService instance = NetworkService._internal();
   final String _baseUrl =
-      String.fromEnvironment('API_URL', defaultValue: 'http://10.0.2.2:3000');
+      String.fromEnvironment('API_URL', defaultValue: 'http://10.0.2.2:5000');
 
   NetworkService._internal();
 
