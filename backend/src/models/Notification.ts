@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database";
 import { Column, Model, Table } from "sequelize-typescript";
+import sequelize from "../config/database";
 
 export enum NotificationType {
   JOIN_REQUEST = "joinRequest",
@@ -29,7 +29,7 @@ class Notification extends Model {
   })
   public studentId!: number;
   @Column({
-    type: DataTypes.BIGINT,
+    type: DataTypes.INTEGER,
     allowNull: false,
     field: "join_request_id",
   })
@@ -40,6 +40,12 @@ class Notification extends Model {
     field: "notification_type",
   })
   public notificationType!: NotificationType;
+  @Column({
+    type:DataTypes.STRING(50),
+    allowNull: false,
+    field: "message",
+  })
+  public message!: String
 }
 
 sequelize.addModels([Notification]);
