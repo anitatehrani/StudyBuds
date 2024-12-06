@@ -38,7 +38,7 @@ class NotificationCard extends StatelessWidget {
                       child: Icon(
                         notification.notificationType == 'join_request'
                             ? Icons.group
-                            : (notification.notificationType == 'accepted'
+                            : (notification.notificationType == 'accept'
                                 ? Icons.check_circle
                                 : Icons.cancel),
                         size: 18,

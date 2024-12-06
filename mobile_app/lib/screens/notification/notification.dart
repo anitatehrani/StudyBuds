@@ -12,29 +12,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  List<NotificationModel> notifs = [
-    NotificationModel(
-        id: 1,
-        studentId: 10,
-        joinRequestId: 1,
-        notificationType: 'Accepted',
-        message: 'Your request to join the Capstone Project was approved',
-        createdAt: DateTime.now()),
-    NotificationModel(
-        id: 4,
-        studentId: 10,
-        joinRequestId: 1,
-        notificationType: 'Join Request',
-        message: 'Nona wants to join to the Capstone Project',
-        createdAt: DateTime.parse("2024-11-29")),
-    NotificationModel(
-        id: 3,
-        studentId: 10,
-        joinRequestId: 1,
-        notificationType: 'Rejected',
-        message: 'Your request to join the Capstone Project was declined',
-        createdAt: DateTime.now()),
-  ];
+  List<NotificationModel> notificationList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +33,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 body: BlocConsumer<NotificationListBloc, NotificationListState>(
                     listener: (context, state) {
               if (state is NotificationListSuccess)
-                notifs = state.results;
+                notificationList = state.results;
               else if (state is NotificationListFailure) {
-                notifs = [];
+                notificationList = [];
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                       content: Text(state.error), backgroundColor: Colors.red),
@@ -69,9 +47,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               }
               return Center(
                 child: ListView.builder(
-                  itemCount: notifs.length,
+                  itemCount: notificationList.length,
                   itemBuilder: (context, index) {
-                    final notification = notifs[index];
+                    final notification = notificationList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 2.0, horizontal: 16.0),

@@ -29,8 +29,8 @@ class NotificationModel {
 
     return NotificationModel(
         id: json['id'],
-        studentId: 0,
-        joinRequestId: 0,
+        studentId: json['studentId'],
+        joinRequestId: json['joinRequestId'],
         message: json['message'] ?? ' ',
         notificationType: json['notificationType'] ?? ' ',
         createdAt: DateTime.parse(json['created_at']));

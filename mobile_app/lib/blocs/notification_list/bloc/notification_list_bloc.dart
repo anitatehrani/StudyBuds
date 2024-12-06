@@ -25,11 +25,8 @@ class NotificationListBloc
       Emitter<NotificationListState> emit) async {
     emit(NotificationListLoading());
     try {
-      print("====Nona was here:");
-
       final fetchNotificationRequest = NotificationListRequest(event.studentId);
       final response = await fetchNotificationRequest.send();
-      print("yeah");
       if (response.isSuccess) {
         if (response.data != null && response.data!.isNotEmpty) {
           final List<NotificationModel> result =

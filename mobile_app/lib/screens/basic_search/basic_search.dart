@@ -59,7 +59,7 @@ class _SearchBar extends StatelessWidget {
     return TextField(
       controller: _searchController,
       onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query, 123));
+        context.read<BasicSearchBloc>().add(SearchQueryChanged(query,10));
       },
       decoration: InputDecoration(
         hintText: 'Search...',
@@ -103,7 +103,7 @@ class _SearchResults extends StatelessWidget {
         } else if (state is SearchFailure) {
           return Center(child: Text('Error: ${state.error}'));
         } else {
-          return Center(child: Text('Unknown state.'));
+          return Center(child: Text(''));
         }
       },
     );

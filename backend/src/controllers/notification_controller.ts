@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import Notification from '../models/Notification';
 import { getStudentFirebaseToken, saveFbToken, updateFbToken } from '../service/firebase_token_service';
 import { getStudentNotifications } from '../service/notification_service';

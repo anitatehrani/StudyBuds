@@ -13,11 +13,3 @@ class FetchNotificationListEvent extends NotificationListEvent {
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
-
-class ClickButtonNotificationListEvent extends NotificationListEvent {
-  const ClickButtonNotificationListEvent();
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-}
