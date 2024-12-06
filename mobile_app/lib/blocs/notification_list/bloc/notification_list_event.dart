@@ -14,16 +14,10 @@ class FetchNotificationListEvent extends NotificationListEvent {
   List<Object?> get props => throw UnimplementedError();
 }
 
-class NotificationListInitial extends NotificationListState {}
+class ClickButtonNotificationListEvent extends NotificationListEvent {
+  const ClickButtonNotificationListEvent();
 
-class NotificationListLoading extends NotificationListState {}
-
-class NotificationListSuccess extends NotificationListState {
-  final List<NotificationModel> results;
-  NotificationListSuccess(this.results);
-}
-
-class NotificationListFailure extends NotificationListState {
-  final String error;
-  NotificationListFailure(this.error);
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
 }

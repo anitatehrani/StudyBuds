@@ -3,19 +3,16 @@ import 'package:study_buds/models/notification_model.dart';
 import 'package:study_buds/utils/date_utils.dart';
 import 'package:study_buds/widgets/custom_icon_button.dart';
 
-
 class NotificationCard extends StatelessWidget {
-  
   final Color? backgroundColor;
   final String? buttonLabel;
   final NotificationModel notification;
 
-  const NotificationCard({
-    super.key,
-    this.backgroundColor,
-    this.buttonLabel,
-    required this.notification
-  });
+  const NotificationCard(
+      {super.key,
+      this.backgroundColor,
+      this.buttonLabel,
+      required this.notification});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,11 @@ class NotificationCard extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       child: Icon(
-                        notification.notificationType == 'Join Request' ? Icons.group : (notification.notificationType == 'Accepted' ? Icons.check_circle : Icons.cancel),
+                        notification.notificationType == 'join_request'
+                            ? Icons.group
+                            : (notification.notificationType == 'accepted'
+                                ? Icons.check_circle
+                                : Icons.cancel),
                         size: 18,
                       ),
                     ),
@@ -58,36 +59,35 @@ class NotificationCard extends StatelessWidget {
             ),
             SizedBox(width: 8),
             Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      notification.message,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).colorScheme.primary,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        notification.message,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        softWrap: true,
                       ),
-                      softWrap: true,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              CustomIconButton(
-                onPressed: () {
-                  print('Icon button pressed');
-                },
-                iconData: Icons.chevron_right_outlined,
-              ),
-            ],
-          )
+                SizedBox(width: 8),
+                CustomIconButton(
+                  onPressed: () {
+                    print('Icon button pressed');
+                  },
+                  iconData: Icons.chevron_right_outlined,
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 }
-
