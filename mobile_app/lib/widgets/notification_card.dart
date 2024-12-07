@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:study_buds/models/notification_model.dart';
 import 'package:study_buds/utils/date_utils.dart';
 import 'package:study_buds/widgets/custom_icon_button.dart';
-import 'package:study_buds/widgets/popup.dart';
+import 'package:study_buds/widgets/notification_popup.dart';
 
 class NotificationCard extends StatelessWidget {
   final Color? backgroundColor;
@@ -81,11 +81,16 @@ class NotificationCard extends StatelessWidget {
                 CustomIconButton(
                   onPressed: () {
                     print('Icon button pressed');
-                    PopUp(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        acceptButtonLabel: 'Accept',
-                        rejectButtonLabel: 'Reject',
-                        notification: notification);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return NotificationPopup(
+                          acceptButtonLabel: 'Accept',
+                          rejectButtonLabel: 'Reject',
+                          notification: notification,
+                        );
+                      },
+                    );
                   },
                   iconData: Icons.chevron_right_outlined,
                 ),
