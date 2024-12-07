@@ -1,6 +1,7 @@
 
 
 class Group {
+  final int? id;
   final String name;
   final String course;
   final String description;
@@ -10,6 +11,7 @@ class Group {
   final int studentId;
 
   Group({
+    this.id,
     required this.name,
     required this.course,
     required this.description,
@@ -28,6 +30,7 @@ class Group {
 
   Map<String, dynamic> toJson(){
       return {
+        'id': this.id,
         'name': this.name,
         'description': this.description,
         'course': this.course,
@@ -45,6 +48,7 @@ class Group {
     }
 
     return Group(
+      id: json['id'],
       name: json['name'] ?? 'No Name',
       course: json['course'] ?? 'No Course',
       description: json['description'] ?? 'No Description',
