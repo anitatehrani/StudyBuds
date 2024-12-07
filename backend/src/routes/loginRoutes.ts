@@ -40,7 +40,29 @@ router.get("/", passport.authenticate("saml"));
 
 router.post("/", passport.authenticate("saml", { session: false }), (req, res) => {
     const token = jwt.sign({ user: req.user }, process.env.JWT_SECRET!, { expiresIn: "1h" });
-    res.redirect(`myapp://auth?token=${token}`);
+    // res.redirect(`myapp://auth?token=${token}`);
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Redirecting...</title>
+        </head>
+        <body>
+            <script>
+                // Redirect to the app's callback URL
+                window.location.href = "myapp://auth?token=${token}";
+
+                // Close the WebView after a short delay
+                setTimeout(() => {
+                    window.close();
+                }, 500);
+            </script>
+            <p>Redirecting, please wait...</p>
+        </body>
+        </html>
+    `);
 });
 
 export default router;
