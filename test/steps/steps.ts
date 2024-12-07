@@ -1,10 +1,10 @@
 import assert from "assert";
-import {remote} from "webdriverio";
-import {Given, When, Then, setDefaultTimeout, After } from "@cucumber/cucumber";
+import { remote } from "webdriverio";
+import { Given, When, Then, setDefaultTimeout, After } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { opts } from "./appium";
 
-let driver:any;
+let driver: any;
 
 Given("I am on the search page and logged in", async () => {
   //assert.strictEqual("1", "1");
@@ -42,14 +42,14 @@ Then("the system displays an empty list", async function () {
 });
 
 
-async function login_guest(){
+async function login_guest() {
   driver = await remote(opts);
 
-  if(process.env.APPIUM_OS === "android"){
+  if (process.env.APPIUM_OS === "android") {
     await driver.switchContext("NATIVE_APP");
     await (await driver.$("~fab")).click();
     await driver.switchContext("FLUTTER");
-  }else{
+  } else {
     console.log(
       "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
     );
@@ -58,15 +58,17 @@ async function login_guest(){
   await driver.elementClick(guestButton);
 }
 
-async function go_to_search_page(){
+async function go_to_search_page() {
   const searchPageButton = byValueKey("searchIcon");
 
+
+  driver = await remote(opts);
 
   //await driver.elementClick(searchPageButton);
 
   await driver.touchAction({
-       action: "tap",
-       element: { elementId: searchPageButton },
+    action: "tap",
+    element: { elementId: searchPageButton },
   });
 
 
@@ -74,17 +76,19 @@ async function go_to_search_page(){
   //await driver.getElementAttribute(searchPageTitle, "isDisplayed");
 }
 
+async function go_to_group_creation() {
+  const createGroupButton = byValueKey("create_group_button");
+  await driver.elementClick(createGroupButton);
+
+}
+
 Given("The student is on the group creation page", async () => {
   //assert.strictEqual("1", "1");
   login_guest();
   go_to_group_creation();
-}
+});
 
-async function go_to_group_creation() {
-  const createGroupButton = byValueKey("create_group_button");
-  await driver.elementClick(createGroupButton);
-  
-}
+
 
 
 After(async () => {
