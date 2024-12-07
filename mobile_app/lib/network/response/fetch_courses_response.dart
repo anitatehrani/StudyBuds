@@ -4,10 +4,8 @@ import '../../network/base_http_response.dart';
 class FetchCoursesResponseBuilder extends BaseHttpResponseBuilder<List<String>> {
   FetchCoursesResponseBuilder()
       : super(dataFactory: (jsonObject) {
-        if (jsonObject != null && jsonObject['courses'] is List<dynamic>) {
-          return (jsonObject['courses'] as List<dynamic>)
-            .map((course) => course.toString())
-            .toList();
+        if (jsonObject != null) {
+          return List<String>.from(jsonObject);
         }
         return [];
       });

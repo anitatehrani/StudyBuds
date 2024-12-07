@@ -20,6 +20,7 @@ class BaseHttpResponseBuilder<T> {
     }
 
     try {
+      print(response);
       final parsedJson = jsonDecode(response.body);
       var isSuccessRes= false;
       if (response.statusCode == 200 || response.statusCode == 201)
