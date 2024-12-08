@@ -11,6 +11,20 @@ class CustomFilledButton extends StatelessWidget {
   final double? width;
   final double? height;
 
+  /// Creates a [CustomFilledButton] widget.
+  ///
+  /// The [label] and [onPressed] parameters must not be null.
+  ///
+  /// The [iconData] parameter is optional. If provided, the icon will appear next to the label.
+  ///
+  /// The [foregroundColor] parameter is optional. Defaults to white if not provided.
+  ///
+  /// The [backgroundColor] parameter is optional. Defaults to the primary color if not provided.
+  ///
+  /// The [fontSize] parameter is optional. Defaults to 14 if not provided.
+  ///
+  /// The [width] and [height] parameters are optional for customizing button size.
+
   const CustomFilledButton({
     super.key,
     required this.label,
@@ -40,32 +54,58 @@ class CustomFilledButton extends StatelessWidget {
           ? MaterialStateProperty.all(Size(width!, height!))
           : null,
     );
-
-    return FilledButton(
-      onPressed: onPressed,
-      style: buttonStyle,
-      child: rotationAngle == 0
-          ? Text(
-              label,
-              style: TextStyle(
-                color: foregroundColor,
-                fontSize: fontSize,
-              ),
-              maxLines: 1, // Prevents text from wrapping
-              overflow: TextOverflow.ellipsis, // Truncates text if necessary
-            )
-          : RotatedBox(
-              quarterTurns: (rotationAngle! / 1.57).round(), // Rotate text
-              child: Text(
+    final buttonContent = rotationAngle == 0
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (iconData != null)
+                Icon(
+                  iconData,
+                  color: foregroundColor,
+                  size: fontSize != null ? fontSize! + 4 : 18,
+                ),
+              if (iconData != null) const SizedBox(width: 6),
+              Text(
                 label,
                 style: TextStyle(
                   color: foregroundColor,
                   fontSize: fontSize,
                 ),
-                maxLines: 1, // Prevents text from wrapping
-                overflow: TextOverflow.ellipsis, // Truncates text if necessary
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
+            ],
+          )
+        : RotatedBox(
+            quarterTurns: (rotationAngle! / 1.57).round(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (iconData != null)
+                  Icon(
+                    iconData,
+                    color: foregroundColor,
+                    size: fontSize != null ? fontSize! + 4 : 18,
+                  ),
+                if (iconData != null) const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: foregroundColor,
+                    fontSize: fontSize,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
+          );
+
+    return FilledButton(
+      onPressed: onPressed,
+      style: buttonStyle,
+      child: buttonContent,
     );
   }
 }
+

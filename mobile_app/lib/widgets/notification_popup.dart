@@ -35,18 +35,18 @@ class NotificationPopup extends StatelessWidget {
               width: 60,
               child: CustomFilledButton(
                 label: rejectButtonLabel,
+                iconData: Icons.cancel,
                 onPressed: () {
-                  Navigator.of(context).pop(); // Handle reject action
+                  Navigator.of(context).pop();
                 },
-                rotationAngle: -1.57, // Rotates label to be vertical
+                rotationAngle: -1.57,
                 backgroundColor: const Color(0xFFD90429),
                 foregroundColor: Colors.white,
                 width: 80,
-                height: double.infinity, // Makes button full-height
+                height: double.infinity,
               ),
             ),
 
-            // Central Content
             Expanded(
               child: Padding(
                 padding:
@@ -80,19 +80,19 @@ class NotificationPopup extends StatelessWidget {
               ),
             ),
 
-            // Approve Button
             Container(
               width: 60,
               child: CustomFilledButton(
                 label: acceptButtonLabel,
+                iconData: Icons.check_circle,
                 onPressed: () {
-                  Navigator.of(context).pop(); // Handle accept action
+                  Navigator.of(context).pop();
                 },
-                rotationAngle: 1.57, // Rotates label to be vertical
+                rotationAngle: 1.57,
                 backgroundColor: const Color(0xFF252B33),
                 foregroundColor: Colors.white,
                 width: 80,
-                height: double.infinity, // Makes button full-height
+                height: double.infinity,
               ),
             ),
           ],
