@@ -21,75 +21,101 @@ class NotificationPopup extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Container(
-        width: 360,
-        height: 189,
+        width: 320,
+        height: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Positioned(
-              top: 16,
-              child: Text(
-                notification.notificationType,
-                style: const TextStyle(
-                  color: Color(0xFF252B33),
-                  fontSize: 18,
-                  fontFamily: 'Quicksand',
-                  fontWeight: FontWeight.bold,
+            // Decline Button
+            Container(
+              width: 50,
+              decoration: const BoxDecoration(
+                color: Color(0xFFD90429),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
                 ),
               ),
-            ),
-            Positioned(
-              top: 60,
-              width: 240,
-              child: Text(
-                notification.message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF252B33),
-                  fontSize: 14,
-                  fontFamily: 'Quicksand',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            // Reject Button (Left)
-            Positioned(
-              right: 200,
-              child: Transform.rotate(
-                angle: -1.57, // Rotate -90 degrees
-                child: CustomFilledButton(
-                  label: rejectButtonLabel,
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
-                  },
-                  backgroundColor: const Color(0xFFD90429),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
-                  width: 189, // Narrower button
-                  height: 20, // Same height as popup
-                  fontSize: 14,
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: const RotatedBox(
+                  quarterTurns: 3,
+                  child: Text('Decline'),
                 ),
               ),
             ),
-            // Accept Button (Right)
-            Positioned(
-              // right: 0,
-              left: 200,
-              child: Transform.rotate(
-                angle: 1.57,
-                child: CustomFilledButton(
-                  label: acceptButtonLabel,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  backgroundColor: const Color(0xFF252B33),
+
+            // Central Content
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      notification.notificationType,
+                      style: const TextStyle(
+                        color: Color(0xFF252B33),
+                        fontSize: 18,
+                        fontFamily: 'Quicksand',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      notification.message,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xFF252B33),
+                        fontSize: 14,
+                        fontFamily: 'Quicksand',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Accept Button
+            Container(
+              width: 50,
+              decoration: const BoxDecoration(
+                color: Color(0xFF252B33),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
-                  width: 189,
-                  height: 20,
-                  fontSize: 14,
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: const RotatedBox(
+                  quarterTurns: 1,
+                  child: Text('Approve'),
                 ),
               ),
             ),
