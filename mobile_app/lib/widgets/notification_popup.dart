@@ -32,29 +32,17 @@ class NotificationPopup extends StatelessWidget {
           children: [
             // Decline Button
             Container(
-              width: 50,
-              decoration: const BoxDecoration(
-                color: Color(0xFFD90429),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  bottomLeft: Radius.circular(12),
-                ),
-              ),
-              child: TextButton(
+              width: 60,
+              child: CustomFilledButton(
+                label: rejectButtonLabel,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(); // Handle reject action
                 },
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                child: const RotatedBox(
-                  quarterTurns: 3,
-                  child: Text('Decline'),
-                ),
+                rotationAngle: -1.57, // Rotates label to be vertical
+                backgroundColor: const Color(0xFFD90429),
+                foregroundColor: Colors.white,
+                width: 80,
+                height: double.infinity, // Makes button full-height
               ),
             ),
 
@@ -92,31 +80,19 @@ class NotificationPopup extends StatelessWidget {
               ),
             ),
 
-            // Accept Button
+            // Approve Button
             Container(
-              width: 50,
-              decoration: const BoxDecoration(
-                color: Color(0xFF252B33),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
-                ),
-              ),
-              child: TextButton(
+              width: 60,
+              child: CustomFilledButton(
+                label: acceptButtonLabel,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(); // Handle accept action
                 },
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                child: const RotatedBox(
-                  quarterTurns: 1,
-                  child: Text('Approve'),
-                ),
+                rotationAngle: 1.57, // Rotates label to be vertical
+                backgroundColor: const Color(0xFF252B33),
+                foregroundColor: Colors.white,
+                width: 80,
+                height: double.infinity, // Makes button full-height
               ),
             ),
           ],
