@@ -70,6 +70,7 @@ services:
             UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
+            FB_PKEY: ${FB_PKEY:-test}
         depends_on:
             - postgres
 
