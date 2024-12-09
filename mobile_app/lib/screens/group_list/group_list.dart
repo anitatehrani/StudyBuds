@@ -15,6 +15,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Capstone Project",
@@ -22,6 +24,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Capstone Project",
@@ -29,6 +33,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Capstone Project",
@@ -36,6 +42,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Software Engineering",
@@ -43,6 +51,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Data Structures",
@@ -50,6 +60,8 @@ class GroupList extends StatelessWidget {
         description: "Blah blah",
         members: 23,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
     ];
     List<Group> ownedGroupSampleList = [
@@ -59,6 +71,8 @@ class GroupList extends StatelessWidget {
         description: "In-depth study of algorithms",
         members: 15,
         isPublic: false,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Machine Learning",
@@ -66,6 +80,8 @@ class GroupList extends StatelessWidget {
         description: "Exploring ML techniques",
         members: 30,
         isPublic: true,
+        telegramLink: '',
+        studentId: 10
       ),
       Group(
         name: "Database Systems",
@@ -73,6 +89,8 @@ class GroupList extends StatelessWidget {
         description: "Understanding database design",
         members: 20,
         isPublic: false,
+        telegramLink: '',
+        studentId: 10
       ),
     ];
     return Scaffold(

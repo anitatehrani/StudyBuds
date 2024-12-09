@@ -7,20 +7,25 @@ class CustomFilledButton extends StatelessWidget {
   final Color? foregroundColor;
   final Color? backgroundColor;
   final double? fontSize;
+  final double? rotationAngle;
+  final double? width;
+  final double? height;
   final bool isEnabled;
 
   /// Creates a [CustomFilledButton] widget.
   ///
   /// The [label] and [onPressed] parameters must not be null.
   ///
-  /// The [iconData] parameter is optional, in case you don't want to add an icon
-  /// for the button, simply do not provide this parameter.
+  /// The [iconData] parameter is optional. If provided, the icon will appear next to the label.
   ///
-  /// The [foregroundColor] parameter is optional, if not provided, white color will be used.
+  /// The [foregroundColor] parameter is optional. Defaults to white if not provided.
   ///
-  /// The [backgroundColor] parameter is optional, if not provided, the primary color will be used.
+  /// The [backgroundColor] parameter is optional. Defaults to the primary color if not provided.
   ///
-  /// The [fontSize] parameter is optional, if not provided, the default font size will be used.
+  /// The [fontSize] parameter is optional. Defaults to 14 if not provided.
+  ///
+  /// The [width] and [height] parameters are optional for customizing button size.
+
   const CustomFilledButton({
     super.key,
     required this.label,
@@ -29,6 +34,9 @@ class CustomFilledButton extends StatelessWidget {
     this.foregroundColor = Colors.white,
     this.backgroundColor,
     this.fontSize = 14,
+    this.rotationAngle = 0,
+    this.width,
+    this.height,
     this.isEnabled = true,
   });
 
@@ -36,51 +44,72 @@ class CustomFilledButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonBackgroundColor =
         backgroundColor ?? Theme.of(context).primaryColor;
-
     final disabledBackgroundColor = Colors.grey.shade400;
     final disabledForegroundColor = Colors.grey.shade600;
 
-    return iconData != null
-        ? FilledButton.icon(
-            onPressed: isEnabled ? onPressed : null,
-            icon: Icon(
-              iconData,
-              size: fontSize! + 4,
-              color: isEnabled ? foregroundColor : disabledForegroundColor,
-            ),
-            label: Text(
-              label,
-              style: TextStyle(
-                color: isEnabled ? foregroundColor : disabledForegroundColor,
-                fontSize: fontSize,
-              ),
-            ),
-            style: ButtonStyle(
-              backgroundColor:  isEnabled ? WidgetStateProperty.all(buttonBackgroundColor) : WidgetStateProperty.all(disabledBackgroundColor),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
+    final buttonStyle = ButtonStyle(
+      backgroundColor:  isEnabled ? WidgetStateProperty.all(buttonBackgroundColor) : WidgetStateProperty.all(disabledBackgroundColor),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6.0),
+        ),
+      ),
+      fixedSize: width != null && height != null
+          ? MaterialStateProperty.all(Size(width!, height!))
+          : null,
+    );
+    final buttonContent = rotationAngle == 0
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (iconData != null)
+                Icon(
+                  iconData,
+                  color: isEnabled ? foregroundColor : disabledForegroundColor,
+                  size: fontSize != null ? fontSize! + 4 : 18,
                 ),
+              if (iconData != null) const SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isEnabled ? foregroundColor : disabledForegroundColor,
+                  fontSize: fontSize,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
+            ],
           )
-        : FilledButton(
-            onPressed: onPressed,
-            style: ButtonStyle(
-              backgroundColor: isEnabled ? WidgetStateProperty.all(buttonBackgroundColor) : WidgetStateProperty.all(disabledBackgroundColor),
-              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
+        : RotatedBox(
+            quarterTurns: (rotationAngle! / 1.57).round(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (iconData != null)
+                  Icon(
+                    iconData,
+                    color: isEnabled ? foregroundColor : disabledForegroundColor,
+                    size: fontSize != null ? fontSize! + 4 : 18,
+                  ),
+                if (iconData != null) const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: isEnabled ? foregroundColor : disabledForegroundColor,
+                    fontSize: fontSize,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ),
-            child: Text(
-              label,
-              style: TextStyle(
-                color: isEnabled ? foregroundColor : disabledForegroundColor,
-                fontSize: fontSize,
-              ),
+              ],
             ),
           );
+
+    return FilledButton(
+      onPressed: isEnabled ? onPressed : null,
+      style: buttonStyle,
+      child: buttonContent,
+    );
   }
 }
+
