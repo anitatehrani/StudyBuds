@@ -13,6 +13,7 @@ services:
         #image: docker.io/budtmo/docker-android:emulator_11.0
         ports:
             - "6080:6080"
+            - "4723:4723"
             - "5555:5555" #for adb
             - "5554:5554" #for adb
         environment:
@@ -37,7 +38,7 @@ services:
         environment:
             APPIUM_OS: android
             APK: /apk/app-debug.apk
-            DEVICE: ""
+            DEVICE: "emulator-5554"
             APPIUM_HOST: "emulator"
             APPIUM_PORT: "4723"
 
@@ -77,7 +78,7 @@ services:
             UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
-            MOCK_DATA: "true"
+            #MOCK_DATA: "true"
         depends_on:
             - postgres
             - unigelogin
