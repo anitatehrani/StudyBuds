@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_buds/blocs/join_request/bloc/join_request_bloc.dart';
 import 'package:study_buds/models/notification_model.dart';
 import 'package:study_buds/utils/date_utils.dart';
 import 'package:study_buds/widgets/custom_icon_button.dart';
@@ -17,7 +19,10 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return
+        // BlocProvider(
+        //   create: (_) => JoinRequestBloc()..add(TestJ()),
+        Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 2,
       margin: EdgeInsets.symmetric(vertical: 8),
@@ -84,10 +89,13 @@ class NotificationCard extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return NotificationPopup(
-                            acceptButtonLabel: 'Accept',
-                            rejectButtonLabel: 'Reject',
-                            notification: notification,
+                          return BlocProvider(
+                            create: (_) => JoinRequestBloc()..add(TestJ()),
+                            child: NotificationPopup(
+                              acceptButtonLabel: 'Accept',
+                              rejectButtonLabel: 'Reject',
+                              notification: notification,
+                            ),
                           );
                         },
                       );
@@ -99,6 +107,7 @@ class NotificationCard extends StatelessWidget {
           ],
         ),
       ),
+      // ),
     );
   }
 }
