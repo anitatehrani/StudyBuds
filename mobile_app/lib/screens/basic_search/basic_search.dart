@@ -88,9 +88,23 @@ class _SearchResults extends StatelessWidget {
         } else if (state is SearchSuccess) {
           final results = state.results;
           if (results.isEmpty) {
-            return Center(
-              key: Key('no_results_message'),
-              child: Text('No results found.'),
+            return Column(
+              key: Key('no_results_column'),
+              children: [
+                Center(
+                  key: Key('no_results_message'),
+                  child: Text('No results found.'),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    key: Key('search_results'),
+                    itemCount: 0,
+                    itemBuilder: (context, index) {
+                      return SizedBox.shrink();
+                    },
+                  ),
+                ),
+              ],
             );
           }
           return ListView.builder(

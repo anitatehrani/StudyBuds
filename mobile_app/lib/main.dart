@@ -10,10 +10,10 @@ const API_URL =
     String.fromEnvironment("API_URL", defaultValue: "http://10.0.2.2:5000");
 
 void main() async {
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   PushNotificationService.instance.retrievePushNotificationToken();
-  enableFlutterDriverExtension();
   runApp(const MyApp());
 }
 

@@ -1,9 +1,4 @@
-import {remote} from "webdriverio";
-import assert from "assert";
-import { byValueKey } from "appium-flutter-finder";
-import { Given, When, Then, setDefaultTimeout } from "@cucumber/cucumber";
 
-setDefaultTimeout(60 * 1000);
 
 const osSpecificOps =
   process.env.APPIUM_OS === "android"
@@ -35,6 +30,8 @@ export const opts = {
     "appium:retryBackoffTime": 500,
   },
 };
+
+export const SECONDS_TIMEOUT = 60_000; // 60 seconds
 
 //Given("I am on the search page and logged in", async () => {
   //const counterTextFinder = byValueKey("counter");

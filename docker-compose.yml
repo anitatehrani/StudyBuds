@@ -33,6 +33,7 @@ services:
         volumes:
             - apk:/app/build/app/outputs/flutter-apk
             - apk-build-cache:/app/build
+            - /root/.gradle
     acceptance-tests:
         build: ./test
         environment:
