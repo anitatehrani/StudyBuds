@@ -78,22 +78,22 @@ class NotificationCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8),
-                CustomIconButton(
-                  onPressed: () {
-                    print('Icon button pressed');
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return NotificationPopup(
-                          acceptButtonLabel: 'Accept',
-                          rejectButtonLabel: 'Reject',
-                          notification: notification,
-                        );
-                      },
-                    );
-                  },
-                  iconData: Icons.chevron_right_outlined,
-                ),
+                if (notification.notificationType == 'join_request')
+                  CustomIconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return NotificationPopup(
+                            acceptButtonLabel: 'Accept',
+                            rejectButtonLabel: 'Reject',
+                            notification: notification,
+                          );
+                        },
+                      );
+                    },
+                    iconData: Icons.chevron_right_outlined,
+                  ),
               ],
             )
           ],
