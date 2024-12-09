@@ -6,7 +6,6 @@ import 'package:study_buds/screens/home/home.dart';
 import 'package:study_buds/screens/notification/notification.dart';
 import 'package:study_buds/screens/profile/profile.dart';
 
-
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -49,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
             Icons.search_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_search'),
           ),
           Icon(
             Icons.group_add_rounded,
