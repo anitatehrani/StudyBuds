@@ -22,11 +22,6 @@ class JoinRequestBloc extends Bloc<JoinRequestEvent, JoinRequestState> {
       } catch (error) {
         emit(JoinRequestFailed('Failed to change join request status.'));
       }
-
-      // TODO: implement event handler
     });
-    // on<JoinRequestInitialEvent>((event, emit) {
-    //   print('ready to see join request popup');
-    // });
   }
 }
