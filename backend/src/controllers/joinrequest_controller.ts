@@ -79,6 +79,12 @@ export async function changeJoinRequestStatus(req: Request) {
         console.log('JoinRequest not found')
         throw new NotFoundError('JoinRequest not found')
     }
+
+    if (joinRequest.status != 'pending'){
+        console.log('Admin student has already managed the join request');
+        throw new ValidationError('You have already managed the request');
+    }
+
     const groupId = joinRequest.groupId
 
     const group = await getGroupById(groupId)
@@ -93,7 +99,7 @@ export async function changeJoinRequestStatus(req: Request) {
     if (groupAdminId !== adminId)
         throw new ValidationError("You don't have permission");
     if (!isAccepted) {
-        await updateJoinRequestStatus(joinRequestId, 'Rejected')
+        await updateJoinRequestStatus(joinRequestId, NotificationType.REJECT)
         if (fbToken === null)
             console.log('Could not find the firebase token of requested student');
         else

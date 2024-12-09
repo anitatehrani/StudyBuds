@@ -14,7 +14,6 @@ class JoinRequestBloc extends Bloc<JoinRequestEvent, JoinRequestState> {
         final changeJoinRequestStatus = UpdateJoinRequest(
             event.studentId, event.joinRequestId, event.isAccepted);
         final response = await changeJoinRequestStatus.send();
-        print('-------------- $response');
         if (response.isSuccess) {
           emit(JoinRequestSuccess(response.data));
         } else {
@@ -26,8 +25,8 @@ class JoinRequestBloc extends Bloc<JoinRequestEvent, JoinRequestState> {
 
       // TODO: implement event handler
     });
-    on<TestJ>((event, emit) {
-      print('tets');
-    });
+    // on<JoinRequestInitialEvent>((event, emit) {
+    //   print('ready to see join request popup');
+    // });
   }
 }

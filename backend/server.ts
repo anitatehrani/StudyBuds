@@ -27,7 +27,7 @@ sequelize.authenticate()
 app.use(errorHandler)
 
 // firebase notification configuration
-var serviceAccount = require("./studybuds-firebase.json");
+var serviceAccount = require("./studybuds-116d5.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)

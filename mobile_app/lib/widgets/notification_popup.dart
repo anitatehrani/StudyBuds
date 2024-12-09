@@ -18,12 +18,15 @@ class NotificationPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // BlocProvider(create: (_) => JoinRequestBloc()..add(TestJ()),
-        BlocListener<JoinRequestBloc, JoinRequestState>(
+    pressButton(isAccepted){
+      context.read<JoinRequestBloc>().add(
+                        ChangeJoinRequestStatusEvent(
+                            10, notification.joinRequestId, isAccepted));
+    }
+    return BlocListener<JoinRequestBloc, JoinRequestState>(
       listener: (context, state) {
         if (state is JoinRequestLoading) {
-          // todo show loading
+          // loading
         } else if (state is JoinRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -33,6 +36,7 @@ class NotificationPopup extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error), backgroundColor: Colors.red),
           );
+        // Navigator.of(context).pop();
       },
       child: Dialog(
         shape: RoundedRectangleBorder(
@@ -55,10 +59,8 @@ class NotificationPopup extends StatelessWidget {
                   label: rejectButtonLabel,
                   iconData: Icons.cancel,
                   onPressed: () {
-                    context.read<JoinRequestBloc>().add(
-                        ChangeJoinRequestStatusEvent(
-                            10, notification.joinRequestId, false));
-                    Navigator.of(context).pop();
+                    pressButton(false);
+                    // Navigator.of(context).pop();
                   },
                   rotationAngle: -1.57,
                   backgroundColor: const Color(0xFFD90429),
@@ -107,10 +109,7 @@ class NotificationPopup extends StatelessWidget {
                   label: acceptButtonLabel,
                   iconData: Icons.check_circle,
                   onPressed: () {
-                    context.read<JoinRequestBloc>().add(
-                        ChangeJoinRequestStatusEvent(
-                            10, notification.joinRequestId, true));
-                    Navigator.of(context).pop();
+                    pressButton(true);
                   },
                   rotationAngle: 1.57,
                   backgroundColor: const Color(0xFF252B33),

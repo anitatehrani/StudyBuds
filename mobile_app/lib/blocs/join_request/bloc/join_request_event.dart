@@ -4,12 +4,12 @@ sealed class JoinRequestEvent extends Equatable {
   const JoinRequestEvent();
 }
 
-class TestJ extends JoinRequestEvent {
-  const TestJ();
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-}
+// class JoinRequestInitialEvent extends JoinRequestEvent {
+//   const JoinRequestInitialEvent();
+//   @override
+//   // TODO: implement props
+//   List<Object?> get props => throw UnimplementedError();
+// }
 
 class ChangeJoinRequestStatusEvent extends JoinRequestEvent {
   final int studentId;

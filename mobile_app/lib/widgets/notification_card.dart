@@ -19,10 +19,7 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // BlocProvider(
-        //   create: (_) => JoinRequestBloc()..add(TestJ()),
-        Card(
+    return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 2,
       margin: EdgeInsets.symmetric(vertical: 8),
@@ -90,7 +87,7 @@ class NotificationCard extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return BlocProvider(
-                            create: (_) => JoinRequestBloc()..add(TestJ()),
+                            create: (_) => JoinRequestBloc(),
                             child: NotificationPopup(
                               acceptButtonLabel: 'Accept',
                               rejectButtonLabel: 'Reject',
