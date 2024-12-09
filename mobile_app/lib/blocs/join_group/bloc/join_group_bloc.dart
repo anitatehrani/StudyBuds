@@ -13,6 +13,7 @@ class JoinGroupBloc extends Bloc<JoinGroupEvent, JoinGroupState> {
     try {
       final groupCreation = JoinGroupRequest(event.studentId, event.groupId);
       final response = await groupCreation.send();
+      print('-------------- $response');
       if (response.isSuccess) {
         emit(JoinGroupRequestSuccess(response.data));
       } else {

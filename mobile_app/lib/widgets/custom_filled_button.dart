@@ -10,6 +10,7 @@ class CustomFilledButton extends StatelessWidget {
   final double? rotationAngle;
   final double? width;
   final double? height;
+  final bool isEnabled;
 
   /// Creates a [CustomFilledButton] widget.
   ///
@@ -36,15 +37,18 @@ class CustomFilledButton extends StatelessWidget {
     this.rotationAngle = 0,
     this.width,
     this.height,
+    this.isEnabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final buttonBackgroundColor =
         backgroundColor ?? Theme.of(context).primaryColor;
+    final disabledBackgroundColor = Colors.grey.shade400;
+    final disabledForegroundColor = Colors.grey.shade600;
 
     final buttonStyle = ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(buttonBackgroundColor),
+      backgroundColor:  isEnabled ? WidgetStateProperty.all(buttonBackgroundColor) : WidgetStateProperty.all(disabledBackgroundColor),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6.0),
@@ -61,14 +65,14 @@ class CustomFilledButton extends StatelessWidget {
               if (iconData != null)
                 Icon(
                   iconData,
-                  color: foregroundColor,
+                  color: isEnabled ? foregroundColor : disabledForegroundColor,
                   size: fontSize != null ? fontSize! + 4 : 18,
                 ),
               if (iconData != null) const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
-                  color: foregroundColor,
+                  color: isEnabled ? foregroundColor : disabledForegroundColor,
                   fontSize: fontSize,
                 ),
                 maxLines: 1,
@@ -84,14 +88,14 @@ class CustomFilledButton extends StatelessWidget {
                 if (iconData != null)
                   Icon(
                     iconData,
-                    color: foregroundColor,
+                    color: isEnabled ? foregroundColor : disabledForegroundColor,
                     size: fontSize != null ? fontSize! + 4 : 18,
                   ),
                 if (iconData != null) const SizedBox(width: 6),
                 Text(
                   label,
                   style: TextStyle(
-                    color: foregroundColor,
+                    color: isEnabled ? foregroundColor : disabledForegroundColor,
                     fontSize: fontSize,
                   ),
                   maxLines: 1,
@@ -102,7 +106,7 @@ class CustomFilledButton extends StatelessWidget {
           );
 
     return FilledButton(
-      onPressed: onPressed,
+      onPressed: isEnabled ? onPressed : null,
       style: buttonStyle,
       child: buttonContent,
     );
