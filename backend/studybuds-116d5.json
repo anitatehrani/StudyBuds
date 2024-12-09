@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "studybuds-116d5",
+  "private_key_id": "bf16633ba4c0d9b6e8494bb363dcfdd704b7efa1",
+  "client_email": "firebase-adminsdk-ojiyp@studybuds-116d5.iam.gserviceaccount.com",
+  "client_id": "112852498622285375472",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ojiyp%40studybuds-116d5.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
