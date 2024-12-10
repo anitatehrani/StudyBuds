@@ -63,3 +63,15 @@ export async function sendPushNotification(studentId: number, joinRequestId: num
     }
 };
 
+export async function testNotification(token:string, msg:string) {
+
+    const message = {
+            notification: {title: 'test', body: msg},
+            token,
+        };
+
+        const response = await admin.messaging().send(message);
+        console.log('Notification sent successfully:', response);
+
+}
+

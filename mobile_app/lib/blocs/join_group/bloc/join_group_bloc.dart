@@ -10,18 +10,17 @@ class JoinGroupBloc extends Bloc<JoinGroupEvent, JoinGroupState> {
   JoinGroupBloc() : super(JoinGroupInitial()) {
     on<JoinGroupRequestEvent>((event, emit) async {
       emit(JoinGroupRequestLoading());
-    try {
-      final groupCreation = JoinGroupRequest(event.studentId, event.groupId);
-      final response = await groupCreation.send();
-      print('-------------- $response');
-      if (response.isSuccess) {
-        emit(JoinGroupRequestSuccess(response.data));
-      } else {
-        emit(JoinGroupRequestFailed(response.data));
+      try {
+        final groupCreation = JoinGroupRequest(event.studentId, event.groupId);
+        final response = await groupCreation.send();
+        if (response.isSuccess) {
+          emit(JoinGroupRequestSuccess(response.data));
+        } else {
+          emit(JoinGroupRequestFailed(response.data));
+        }
+      } catch (error) {
+        emit(JoinGroupRequestFailed('Failed to join group.'));
       }
-    } catch (error) {
-      emit(JoinGroupRequestFailed('Failed to join group.'));
-    }
     });
   }
 }

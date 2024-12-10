@@ -4,7 +4,7 @@ export async function createJoinRequest(studentId: number, groupId:number) {
     const joinGroup = await JoinRequest.create({
         studentId: studentId,
         groupId: groupId,
-        status: "Pending"
+        status: "pending"
     });
     return joinGroup;
 }

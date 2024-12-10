@@ -4,6 +4,8 @@ import sequelize from './src/config/database';
 import { errorHandler } from './src/middlewares/error_handler';
 import indexRouter from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
+import { getEnvironmentVariable } from './src/utils/config_error';
+
 
 const app = express();
 
@@ -27,10 +29,9 @@ sequelize.authenticate()
 app.use(errorHandler)
 
 // firebase notification configuration
-var serviceAccount = require("./studybuds-firebase.json");
-
+var serviceAccount = require("./studybuds-116d5.json");
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert({"private_key": getEnvironmentVariable("FB_PKEY"), ...serviceAccount})
 });
 
 

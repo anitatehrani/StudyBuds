@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getStudentsAllNotification, saveToken } from '../controllers/notification_controller';
+import { getStudentsAllNotification, saveToken, testNotif } from '../controllers/notification_controller';
 import { asyncWrapper } from '../utils/wrapper';
 
 
@@ -10,5 +10,7 @@ router.post('/token', asyncWrapper(saveToken));
 
 // Route to fetch a student's all notification
 router.get('/list/:studentId', asyncWrapper(getStudentsAllNotification));
+
+router.post('/test', asyncWrapper(testNotif));
 
 export default router;

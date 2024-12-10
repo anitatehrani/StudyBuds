@@ -22,7 +22,7 @@ router.get('/basic_search/:text/:student_id', asyncWrapper(basicSearchResult));
 
 router.post('/join', asyncWrapper(joinTheGroup))
 
-router.post('/respond-join-request', asyncWrapper(changeJoinRequestStatus))
+router.post('/respond_join_request', asyncWrapper(changeJoinRequestStatus))
 
 router.get('/joined_groups/:studentId', asyncWrapper(getJoinedGroupList));
 
