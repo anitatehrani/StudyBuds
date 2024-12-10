@@ -1,6 +1,7 @@
 
 
 class Group {
+  final int? id;
   final String name;
   final String course;
   final String description;
@@ -8,15 +9,18 @@ class Group {
   final bool isPublic;
   final String telegramLink;
   final int studentId;
+  final String? status;
 
   Group({
+    this.id,
     required this.name,
     required this.course,
     required this.description,
     required this.members,
     required this.isPublic,
     required this.telegramLink,
-    required this.studentId
+    required this.studentId,
+    this.status
   });
 
   // Static method to parse a JSON string into a list of Group instances
@@ -28,6 +32,7 @@ class Group {
 
   Map<String, dynamic> toJson(){
       return {
+        'id': this.id,
         'name': this.name,
         'description': this.description,
         'course': this.course,
@@ -45,13 +50,15 @@ class Group {
     }
 
     return Group(
+      id: json['id'],
       name: json['name'] ?? 'No Name',
       course: json['course'] ?? 'No Course',
       description: json['description'] ?? 'No Description',
       members: parseInt(json['member_count']),
       isPublic: json['is_public'] == true,
       studentId: parseInt(json['student_id']),
-      telegramLink: json['telegram_link'] ?? ''
+      telegramLink: json['telegram_link'] ?? '',
+      status: json['status'] ?? null,
     );
   }
 }

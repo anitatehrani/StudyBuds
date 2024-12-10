@@ -10,6 +10,7 @@ RUN npm install
 
 COPY server.ts tsconfig.json ./
 COPY ./src ./src
+COPY studybuds-116d5.json ./studybuds-116d5.json
 
 EXPOSE 3000
 

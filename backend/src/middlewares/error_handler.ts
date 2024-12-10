@@ -11,7 +11,7 @@ export function errorHandler(
   if (err instanceof ApiError) {
     res.status(err.status).json({
       error: {
-        message: err.message,
+        message: err.details != null ? err.details : err.message,
         status: err.status,
       },
     });
@@ -21,6 +21,7 @@ export function errorHandler(
       error: {
         message: "Something went wrong.",
         status: 500,
+        details: "Internal server error"
       },
     });
   }

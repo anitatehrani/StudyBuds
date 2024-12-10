@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       home: const Login(key: Key("login_page"), title: "Login"),
       routes: {
         '/home': (context) => const MainScreen(),
+        '/login': (context) => const Login(title: "Login"),
       },
     );
   }

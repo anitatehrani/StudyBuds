@@ -20,16 +20,25 @@ class BaseHttpResponseBuilder<T> {
     }
 
     try {
+      print(response.body);
       final parsedJson = jsonDecode(response.body);
       var isSuccessRes= false;
-      if (response.statusCode == 200 || response.statusCode == 201)
+      if (response.statusCode == 200 || response.statusCode == 201) {
         isSuccessRes = true;
-      return BaseHttpResponse<T>(
-        isSuccess: isSuccessRes,
-        requestParams: requestParams,
-        statusCode: response.statusCode,
-        data: _dataFactory != null ? _dataFactory!(parsedJson) : null,
-      );
+        return BaseHttpResponse<T>(
+          isSuccess: isSuccessRes,
+          requestParams: requestParams,
+          statusCode: response.statusCode,
+          data: _dataFactory != null ? _dataFactory!(parsedJson) : null,
+        );
+      } else {
+        return BaseHttpResponse<T>(
+          isSuccess: isSuccessRes,
+          requestParams: requestParams,
+          statusCode: response.statusCode,
+          data: _dataFactory != null ? _dataFactory!(parsedJson['error']) : null,
+        );
+      }
     } catch (e) {
       print("Error decoding JSON: $e");
       return BaseHttpResponse<T>(
