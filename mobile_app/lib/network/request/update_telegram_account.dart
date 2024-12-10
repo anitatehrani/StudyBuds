@@ -10,6 +10,6 @@ class UpdateTelegramAccountRequest extends BaseHttpRequest<ProfileResponseBuilde
             responseBuilder: ProfileResponseBuilder(),
             parameters: {
             'studentId': studentId,
-            'groupId': telegramAccount
+            'telegramAccount': telegramAccount
           },);
 }
