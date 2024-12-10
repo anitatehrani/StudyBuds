@@ -10,9 +10,7 @@ class Profile {
       required this.lastName,
       required this.telegramAccount});
 
-  // Static method to parse a JSON string into a list of Profile instances
   static List<Profile> fromJsonList(List<dynamic> jsonArray) {
-    print(jsonArray);
     List<Profile> res =
         jsonArray.map((model) => Profile.fromJson(model)).toList();
     return res;
@@ -37,7 +35,7 @@ class Profile {
       studentId: json['id'],
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
-      telegramAccount: parseInt(json['telegram_account']),
+      telegramAccount: json['telegram_account'],
     );
   }
 }

@@ -1,7 +1,6 @@
 import { Request } from "express";
 import { getProfileService } from "../service/profile_service";
 import { validateInt } from "../utils/validation_error";
-import { getStudentById } from "../service/student_service";
 
 export async function getProfileById(req: Request) {
   const studentId = validateInt(req.params, "studentId");

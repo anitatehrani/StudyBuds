@@ -21,7 +21,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final response = await profile.send();
 
       if (response.isSuccess) {
-        emit(ProfileLoaded(Profile.fromJson(response.data)));
+        emit(ProfileLoaded(response.data));
       } else {
         emit(ProfileError(error: 'Failed to get profile information'));
       }
