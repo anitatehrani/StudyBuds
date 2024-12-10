@@ -65,7 +65,7 @@ class _SearchBar extends StatelessWidget {
       key: Key('search_bar'),
       controller: _searchController,
       onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query,10));
+        context.read<BasicSearchBloc>().add(SearchQueryChanged(query, 10));
       },
       decoration: InputDecoration(
         hintText: 'Search...',
@@ -73,7 +73,15 @@ class _SearchBar extends StatelessWidget {
           icon: Icon(Icons.clear),
           onPressed: () => _searchController.clear(),
         ),
-        prefixIcon: Icon(Icons.search),
+        prefixIcon: IconButton(
+          key: Key('search_button'),
+          icon: Icon(Icons.search),
+          onPressed: () {
+            context
+                .read<BasicSearchBloc>()
+                .add(SearchQueryChanged(_searchController.text, 10));
+          },
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -121,7 +129,7 @@ class _SearchResults extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GroupCard(key: Key("search_result_$index"), group: group),
+                  GroupCard(group: group, index: index),
                   Divider(),
                 ],
               );
