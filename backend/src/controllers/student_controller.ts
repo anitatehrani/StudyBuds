@@ -22,7 +22,7 @@ export async function editTelegramId(req: Request){
     const studentId = validateInt(req.body, "studentId");
     const telegramId = validateInt(req.body, "telegramAccount");
     const student = await StudentService.editTelegramIdService(studentId, telegramId);
-    return student
+    return {"id": student.studentId, "telegram_account": student.telegramAccount}
 };
 
 
