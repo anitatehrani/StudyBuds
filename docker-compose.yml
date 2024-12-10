@@ -89,6 +89,11 @@ services:
           - unigeapi
           - unigelogin
 
+    api-testing:
+        build: ./backend/api_testing
+        depends_on:
+          - backend
+
     unigelogin:
         build:
             dockerfile: ./unigelogin.dockerfile
