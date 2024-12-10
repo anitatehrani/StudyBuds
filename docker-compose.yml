@@ -9,9 +9,13 @@ services:
             GH_TOKEN: ${GH_TOKEN:-lol}
 
     emulator:
-        image: docker.io/budtmo/docker-android:emulator_11.0
+        build: ./emulator
+        #image: docker.io/budtmo/docker-android:emulator_11.0
         ports:
             - "6080:6080"
+            - "4723:4723"
+            - "5555:5555" #for adb
+            - "5554:5554" #for adb
         environment:
             EMULATOR_DEVICE: "Samsung Galaxy S10"
             WEB_VNC: true
@@ -20,17 +24,22 @@ services:
             - /dev/kvm
         volumes:
             - apk:/apk:ro
+            - emulator-data:/home/androidusr
+        depends_on:
+            - backend
+
     build-apk:
         build: ./mobile_app
         volumes:
             - apk:/app/build/app/outputs/flutter-apk
             - apk-build-cache:/app/build
+            - /root/.gradle
     acceptance-tests:
         build: ./test
         environment:
             APPIUM_OS: android
             APK: /apk/app-debug.apk
-            DEVICE: ""
+            DEVICE: "emulator-5554"
             APPIUM_HOST: "emulator"
             APPIUM_PORT: "4723"
 
@@ -56,7 +65,7 @@ services:
             POSTGRES_DB: postgres
             PGDATA: /tmp/data
         tmpfs:
-          - /tmp
+            - /tmp
         volumes:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
             - ./backend/server_db/test_data/data.sql:/docker-entrypoint-initdb.d/data.sql:ro
@@ -86,13 +95,13 @@ services:
             ENTITY_ID: saml-poc
             FB_PKEY: ${FB_PKEY:-test}
         depends_on:
-          - unigeapi
-          - unigelogin
+            - unigeapi
+            - unigelogin
 
     api-testing:
         build: ./backend/api_testing
         depends_on:
-          - backend
+            - backend
 
     unigelogin:
         build:
@@ -138,3 +147,4 @@ volumes:
     unigedata:
     apk-build-cache:
     postgres_data:
+    emulator-data:

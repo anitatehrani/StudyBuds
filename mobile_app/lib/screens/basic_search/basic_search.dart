@@ -4,7 +4,6 @@ import 'package:study_buds/blocs/basic_search/bloc/basic_search_bloc.dart';
 import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/widgets/group_card.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BasicSearchPage(title: "heyy"),
+      home: BasicSearchPage(key: Key('search_page'), title: "heyy"),
     );
   }
 }
@@ -63,9 +62,10 @@ class _SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: Key('search_bar'),
       controller: _searchController,
       onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query,10));
+        context.read<BasicSearchBloc>().add(SearchQueryChanged(query, 10));
       },
       decoration: InputDecoration(
         hintText: 'Search...',
@@ -73,7 +73,15 @@ class _SearchBar extends StatelessWidget {
           icon: Icon(Icons.clear),
           onPressed: () => _searchController.clear(),
         ),
-        prefixIcon: Icon(Icons.search),
+        prefixIcon: IconButton(
+          key: Key('search_button'),
+          icon: Icon(Icons.search),
+          onPressed: () {
+            context
+                .read<BasicSearchBloc>()
+                .add(SearchQueryChanged(_searchController.text, 10));
+          },
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -93,14 +101,35 @@ class _SearchResults extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (state is SearchSuccess) {
           final results = state.results;
+          if (results.isEmpty) {
+            return Column(
+              key: Key('no_results_column'),
+              children: [
+                Center(
+                  key: Key('no_results_message'),
+                  child: Text('No results found.'),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    key: Key('search_results'),
+                    itemCount: 0,
+                    itemBuilder: (context, index) {
+                      return SizedBox.shrink();
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
           return ListView.builder(
+            key: Key('search_results'),
             itemCount: results.length,
             itemBuilder: (context, index) {
               final group = results[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GroupCard(group: group),
+                  GroupCard(group: group, index: index),
                   Divider(),
                 ],
               );

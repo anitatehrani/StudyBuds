@@ -24,5 +24,5 @@ router.get('/group_details/:groupId', asyncWrapper(getGroupDetails));
 
 router.get('/joined_groups/:studentId', asyncWrapper(getJoinedGroupList));
 
-
 export default router;
+

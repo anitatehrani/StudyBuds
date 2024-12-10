@@ -3,12 +3,17 @@ import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
+import { BadRequestError, NotFoundError } from "../utils/api_error";
 import UnigeService from "../service/unige_service";
+
 import {
-    BadRequestError,
-    NotFoundError
-} from "../utils/api_error";
-import { checkBoolean, checkInt, checkString, IndexSignature, validateInt, validateString } from "../utils/validation_error";
+    checkBoolean,
+    checkInt,
+    checkString,
+    IndexSignature,
+    validateInt,
+    validateString,
+} from "../utils/validation_error";
 
 // Function to create a group
 export async function createGroup(req: Request) {
@@ -56,6 +61,7 @@ export async function basicSearchResult(req: Request) {
     const text = validateString(req.params, "text");
     const student_id = validateInt(req.params, "student_id");
     const result = await GroupService.basicSearch(text, student_id);
+    console.log(result);
     return result;
 }
 
