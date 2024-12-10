@@ -12,8 +12,7 @@ import { checkBoolean, checkInt, checkString, IndexSignature, validateInt, valid
 
 // Function to create a group
 export async function createGroup(req: Request) {
-
-    const body = req.body as IndexSignature
+    const body = req.body as IndexSignature;
     const name = checkString(body, "name");
     const description = checkString(body, "description");
     const course = checkString(body, "course");
@@ -45,7 +44,7 @@ export async function createGroup(req: Request) {
         adminId: studentId, // Maps studentId to adminId
     });
 
-    return { message: "Group created successfully", group }
+    return { message: "Group created successfully", group };
 }
 
 // Function to get all groups
@@ -81,11 +80,11 @@ export async function getGroupDetails(req: Request) {
     // Prepare student details by fetching individually from UnigeMockup
     const groupMembers = [];
     for (const member of members) {
-        const studentDetail = await UnigeService.getUnigeProfile(member.studentId);
+        const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
         groupMembers.push({
             studentId: studentDetail.id,
             firstName: studentDetail.first_name,
-            lastName: studentDetail.last_name
+            lastName: studentDetail.last_name,
         });
     }
 
@@ -99,7 +98,7 @@ export async function getGroupDetails(req: Request) {
         studentId: group.adminId, // Admin student ID
         members: members.length, // Current members count
         membersLimit: group.membersLimit, // Group member limit
-        groupMembers // List of student details
+        groupMembers, // List of student details
     };
 
     return response;
