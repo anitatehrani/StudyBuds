@@ -2,13 +2,13 @@ import { axios_instance, TOKEN, UNIGEAPI_URL } from "../config/unigeapi";
 
 export async function getCourses(): Promise<Array<string>> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const response = await axios_instance.get(`${UNIGEAPI_URL}/courses`, {
-        headers: {
-            Authorization: `Bearer ${TOKEN}`,
-        },
-    });
-    console.log(response.data);
-    return response.data;
+    return (
+        await axios_instance.get(`${UNIGEAPI_URL}/courses`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        })
+    ).data;
 }
 
 export interface UnigeStudent {
@@ -30,3 +30,10 @@ export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> 
         })
     ).data;
 }
+
+const UnigeService = {
+    getCourses,
+    getUnigeProfile,
+};
+
+export default UnigeService;
