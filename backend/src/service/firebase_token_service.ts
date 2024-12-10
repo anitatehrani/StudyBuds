@@ -1,6 +1,6 @@
 import FbToken from '../models/FbToken';
 
-export async function saveFbToken(studentId, token) {
+export async function saveFbToken(studentId:number, token:string) {
     const result = await FbToken.create({
         studentId: studentId,
         token: token
@@ -8,7 +8,7 @@ export async function saveFbToken(studentId, token) {
     return result;
 }
 
-export async function updateFbToken(studentId, token) {
+export async function updateFbToken(studentId:number, token:string) {
     const result = await FbToken.update(
         { token: token},
         {
@@ -18,7 +18,7 @@ export async function updateFbToken(studentId, token) {
     return result;
 }
 
-export async function getStudentFirebaseToken(studentId) {
+export async function getStudentFirebaseToken(studentId:number) {
     return await FbToken.findOne({
         where:{
             studentId: studentId

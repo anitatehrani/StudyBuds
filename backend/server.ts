@@ -1,10 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { config } from 'dotenv';
-import indexRouter from './src/routes/index';
+import express from 'express';
+import admin from 'firebase-admin';
 import sequelize from './src/config/database';
+import { errorHandler } from './src/middlewares/error_handler';
+import indexRouter from './src/routes/index';
+import { getErrorMessage } from './src/utils/api_error';
+import { getEnvironmentVariable } from './src/utils/config_error';
 
-// Load environment variables
-config();
 
 const app = express();
 
@@ -21,17 +22,21 @@ sequelize.authenticate()
         console.log('Database connected successfully!');
     })
     .catch((error) => {
-        console.error('Unable to connect to the database:', error.message);
+        console.error('Unable to connect to the database:', getErrorMessage(error));
     });
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Internal Server Error' });
+app.use(errorHandler)
+
+// firebase notification configuration
+var serviceAccount = require("./studybuds-116d5.json");
+admin.initializeApp({
+    credential: admin.credential.cert({"private_key": getEnvironmentVariable("FB_PKEY"), ...serviceAccount})
 });
 
+
 // Start the server
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = Number.parseInt(process.env["SERVER_PORT"]??"5000");
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

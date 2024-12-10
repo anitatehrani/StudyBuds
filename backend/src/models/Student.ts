@@ -1,36 +1,32 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import sequelize from '../config/database';
+import { Column, Model, Table } from "sequelize-typescript";
 
-export interface StudentAttributes {
-    studentId: number; // Maps to "student_id" in the database
-    telegramAccount?: number;
-}
 
-class Student extends Model<StudentAttributes> implements StudentAttributes {
+@Table({
+    tableName: "student",
+    schema: "studybuds",
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+})
+export class Student extends Model {
+    @Column({
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        field: 'student_id', // Map to database column
+    })
     public studentId!: number;
-    public telegramAccount?: number;
+
+    @Column({
+        type: DataTypes.INTEGER,
+        field: 'telegram_account', // Map to database column
+    })
+    public telegramAccount!: number;
+
 }
 
-Student.init(
-    {
-        studentId: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            field: 'student_id', // Map to database column
-        },
-        telegramAccount: {
-            type: DataTypes.INTEGER,
-            field: 'telegram_account', // Map to database column
-        },
-    },
-    {
-        sequelize,
-        tableName: 'student',
-        schema: 'studybuds',
-        timestamps: true,
-        createdAt: 'created_at',
-        updatedAt: 'updated_at',
-    }
-);
+sequelize.addModels([Student]);
+
 
 export default Student;

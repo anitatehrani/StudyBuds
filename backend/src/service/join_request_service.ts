@@ -1,10 +1,10 @@
 import JoinRequest from "../models/JoinRequest";
 
-export async function createJoinRequest(studentId, groupId) {
+export async function createJoinRequest(studentId: number, groupId:number) {
     const joinGroup = await JoinRequest.create({
         studentId: studentId,
         groupId: groupId,
-        status: "Pending"
+        status: "pending"
     });
     return joinGroup;
 }
@@ -21,7 +21,7 @@ export async function getJoinRequestById(joinRequestId: number) {
     return data;
 }
 
-export async function updateJoinRequestStatus(joinRequestId, status) {
+export async function updateJoinRequestStatus(joinRequestId:number, status:string) {
     console.log('Updating join request with ID:', joinRequestId, 'to status:', status);
     return await JoinRequest.update(
         { status: status },

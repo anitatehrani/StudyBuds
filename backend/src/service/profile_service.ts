@@ -1,42 +1,18 @@
-import StudentService from '../service/student_service';
+import { Student } from "../models/Student";
+import { getStudentById } from "../service/student_service";
+import { getUnigeProfile,UnigeStudent } from "./unige_service";
+import { NotFoundError } from "../utils/api_error";
 
-export async function getProfileService(studentId) {
-    try {
-        const response = await fetch(`${process.env.UNIGEAPI_URL}/student/${studentId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0`, // Add the token here
-            },
-        });
+type ProfileData=Student|UnigeStudent
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+export async function getProfileService(studentId: number):Promise<ProfileData> {
+  const data = await getUnigeProfile(studentId);
 
-        const data = await response.json();
-        
-        // Remove the 'courses' field
-        const { courses, ...dataWithoutCourses } = data;
 
-        console.log(studentId);
-        
-        const response2 = await StudentService.getStudentById(studentId);
+  console.log(studentId);
 
-        // Check if response2 is null or undefined
-        if (!response2) {
-            throw new Error('StudentService.getStudentById returned null or undefined');
-        }
+  const student = await getStudentById(studentId);
+  if(student===null)throw new NotFoundError("Student id not found");
 
-        if (!response2) {
-            throw new Error(`Student object of getProfileService`);
-        }
-
-        dataWithoutCourses['telegram_account'] = response2['dataValues']['telegramAccount'];
-
-        return dataWithoutCourses;
-    } catch (error) {
-        console.error('Error fetching profile:', error);
-        throw error;
-    }
+  return {...data,...student};
 }
