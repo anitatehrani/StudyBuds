@@ -1,11 +1,11 @@
 class Profile {
-  final int? id;
+  final int? studentId;
   final String firstName;
   final String lastName;
   final int telegramAccount;
 
   Profile(
-      {this.id,
+      {this.studentId,
       required this.firstName,
       required this.lastName,
       required this.telegramAccount});
@@ -20,7 +20,7 @@ class Profile {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': this.id,
+      'id': this.studentId,
       'firstName': this.firstName,
       'lastName': this.lastName,
       'telegramAccount': this.telegramAccount
@@ -34,7 +34,7 @@ class Profile {
     }
 
     return Profile(
-      id: json['id'],
+      studentId: json['id'],
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
       telegramAccount: parseInt(json['telegram_account']),

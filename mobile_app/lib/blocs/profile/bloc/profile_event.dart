@@ -13,9 +13,10 @@ class FetchProfileDetailsEvent extends ProfileEvent {
 }
 
 class SaveProfileDetailsEvent extends ProfileEvent {
-  final String telegramAccountId;
+  final int studentId;
+  final int telegramAccountId;
 
-  const SaveProfileDetailsEvent(this.telegramAccountId);
+  const SaveProfileDetailsEvent(this.studentId, this.telegramAccountId);
 
   @override
   List<Object> get props => [telegramAccountId];

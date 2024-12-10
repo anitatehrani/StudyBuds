@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:study_buds/models/profile.dart';
 import 'package:study_buds/network/request/profile_request.dart';
+import 'package:study_buds/network/request/update_telegram_account.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -16,12 +17,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       FetchProfileDetailsEvent event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
-      // Simulate a delay for fetching data (replace with actual API call)
-      final profile = await ProfileRequest(event.studentId);
-      final response = profile.send();
+      final profile = ProfileRequest(event.studentId);
+      final response = await profile.send();
 
       if (response.isSuccess) {
-        emit(ProfileLoaded(profile: Profile.fromJson(response.data)));
+        emit(ProfileLoaded(Profile.fromJson(response.data)));
+      } else {
+        emit(ProfileError(error: 'Failed to get profile information'));
       }
     } catch (e) {
       emit(ProfileError(error: 'Failed to fetch profile details.'));
@@ -32,11 +34,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       SaveProfileDetailsEvent event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileSaving());
-      // Simulate a delay for saving data (replace with actual API call)
-      await Future.delayed(const Duration(seconds: 2));
-
-      // Mock successful save
-      emit(ProfileSaveSuccess());
+      final profile = UpdateTelegramAccountRequest(event.studentId, event.telegramAccountId);
+      final response = await profile.send();
+      if (response.isSuccess) {
+        emit(ProfileSaveSuccess(Profile.fromJson(response.data)));
+      } else {
+        emit(ProfileSaveFailed(error: 'Failed to update telegram account'));
+      }
     } catch (e) {
       emit(ProfileSaveFailed(error: 'Failed to save profile details.'));
     }

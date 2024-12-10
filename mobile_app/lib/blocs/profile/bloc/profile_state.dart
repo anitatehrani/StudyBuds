@@ -20,7 +20,7 @@ class ProfileLoading extends ProfileState {
 class ProfileLoaded extends ProfileState {
   final Profile profile;
 
-  const ProfileLoaded(Profile profile, {required this.profile});
+  const ProfileLoaded(this.profile);
 
   @override
   List<Object> get props => [];
@@ -31,7 +31,11 @@ class ProfileSaving extends ProfileState {
   bool get isLoading => true;
 }
 
-class ProfileSaveSuccess extends ProfileState {}
+class ProfileSaveSuccess extends ProfileState {
+  final Profile profile;
+
+  const ProfileSaveSuccess(this.profile);
+}
 
 class ProfileSaveFailed extends ProfileState {
   final String error;
