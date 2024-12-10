@@ -18,18 +18,12 @@ class ProfileLoading extends ProfileState {
 }
 
 class ProfileLoaded extends ProfileState {
-  final String studentName;
-  final String studentId;
-  final String telegramAccountId;
+  final Profile profile;
 
-  const ProfileLoaded({
-    required this.studentName,
-    required this.studentId,
-    required this.telegramAccountId,
-  });
+  const ProfileLoaded(Profile profile, {required this.profile});
 
   @override
-  List<Object> get props => [studentName, studentId, telegramAccountId];
+  List<Object> get props => [];
 }
 
 class ProfileSaving extends ProfileState {

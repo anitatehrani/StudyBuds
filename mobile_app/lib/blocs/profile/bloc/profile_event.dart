@@ -7,7 +7,10 @@ abstract class ProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchProfileDetailsEvent extends ProfileEvent {}
+class FetchProfileDetailsEvent extends ProfileEvent {
+  final int studentId;
+  FetchProfileDetailsEvent(this.studentId);
+}
 
 class SaveProfileDetailsEvent extends ProfileEvent {
   final String telegramAccountId;
