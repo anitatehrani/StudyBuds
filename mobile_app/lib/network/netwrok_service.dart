@@ -21,7 +21,8 @@ class NetworkService {
       return http.get(url);
     } else if (httpVerb == HttpVerb.POST) {
       return http.post(url,
-          headers: {"Content-Type": "application/json"}, body: jsonEncode(parameters));
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(parameters));
     } else {
       throw Exception("Unsupported HTTP verb");
     }
