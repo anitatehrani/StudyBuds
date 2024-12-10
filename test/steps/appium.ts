@@ -31,7 +31,7 @@ export const opts = {
   },
 };
 
-export const SECONDS_TIMEOUT = 60_000; // 60 seconds
+export const SECONDS_TIMEOUT = 30_000; // 30 seconds
 
 //Given("I am on the search page and logged in", async () => {
   //const counterTextFinder = byValueKey("counter");

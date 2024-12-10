@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         useMaterial3: false,
       ),
-      home: const Login(title: "Login"),
+      home: const Login(key: Key("login_page"), title: "Login"),
       routes: {
         '/home': (context) => const MainScreen(),
       },

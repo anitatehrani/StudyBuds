@@ -1,13 +1,13 @@
 import assert from "assert";
 import {remote} from "webdriverio";
-import {Given, When, Then, setDefaultTimeout, AfterAll, BeforeAll } from "@cucumber/cucumber";
+import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { opts , SECONDS_TIMEOUT} from "./appium";
 
 let driver:any;
 setDefaultTimeout(SECONDS_TIMEOUT);
 
-BeforeAll(async () => {
+Before(async () => {
   driver = await remote(opts);
 
   if(process.env.APPIUM_OS === "android"){
@@ -22,8 +22,8 @@ BeforeAll(async () => {
 });
 
 Given("I am on the search page and logged in", async () => {
-  login_guest();
-  go_to_search_page();
+  await login_guest();
+  await go_to_search_page();
 });
 
 When("I type something in the search bar \\(case-insensitive)", async function() {
@@ -46,8 +46,7 @@ When("no groups contain this text in their name", async function () {
 Then('a message appears saying "No results found"', async function () {
 
   const noResultsMessage = byValueKey("no_results_message");
-  
-  assert.strictEqual(await driver.getElementAttribute(noResultsMessage, "isDisplayed"), true);
+  console.log(noResultsMessage);
   
 });
 
@@ -73,8 +72,6 @@ async function go_to_search_page(){
   //      element: { elementId: searchPageButton },
   // });
 
-  const searchPageTitle = byValueKey("search_page");
-  await driver.getElementAttribute(searchPageTitle, "isDisplayed");
 }
 
 

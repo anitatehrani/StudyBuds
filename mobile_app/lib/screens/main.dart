@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+    HomeScreen(key: Key("home_page")),
     BasicSearchPage(title: 'Basic Search'),
     GroupCreationScreen(),
     NotificationScreen(),
