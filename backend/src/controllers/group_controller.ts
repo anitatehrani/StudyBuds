@@ -2,16 +2,19 @@ import { Request, Response } from "express";
 import Group from "../models/Group";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
+import { BadRequestError, NotFoundError } from "../utils/api_error";
 import {
-    BadRequestError,
-    NotFoundError
-} from "../utils/api_error";
-import { checkBoolean, checkInt, checkString, IndexSignature, validateInt, validateString } from "../utils/validation_error";
+    checkBoolean,
+    checkInt,
+    checkString,
+    IndexSignature,
+    validateInt,
+    validateString,
+} from "../utils/validation_error";
 
 // Function to create a group
 export async function createGroup(req: Request) {
-
-    const body = req.body as IndexSignature
+    const body = req.body as IndexSignature;
     const name = checkString(body, "name");
     const description = checkString(body, "description");
     const course = checkString(body, "course");
@@ -43,7 +46,7 @@ export async function createGroup(req: Request) {
         adminId: studentId, // Maps studentId to adminId
     });
 
-    return { message: "Group created successfully", group }
+    return { message: "Group created successfully", group };
 }
 
 // Function to get all groups
@@ -55,6 +58,7 @@ export async function basicSearchResult(req: Request) {
     const text = validateString(req.params, "text");
     const student_id = validateInt(req.params, "student_id");
     const result = await GroupService.basicSearch(text, student_id);
+    console.log(result);
     return result;
 }
 

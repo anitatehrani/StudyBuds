@@ -115,7 +115,7 @@ class _SearchResults extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GroupCard(group: group),
+                  GroupCard(key: Key("search_result_$index"), group: group),
                   Divider(),
                 ],
               );

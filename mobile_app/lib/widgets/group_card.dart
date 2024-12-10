@@ -10,14 +10,13 @@ class GroupCard extends StatelessWidget {
   final Color? additionalButtonColor;
   final String? additionalButtonLabel;
 
-  const GroupCard({
-    super.key,
-    required this.group,
-    this.backgroundColor,
-    this.buttonLabel,
-    this.additionalButtonColor,
-    this.additionalButtonLabel
-  });
+  const GroupCard(
+      {super.key,
+      required this.group,
+      this.backgroundColor,
+      this.buttonLabel,
+      this.additionalButtonColor,
+      this.additionalButtonLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +36,7 @@ class GroupCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
+                      key: Key('group_name_$key'),
                       group.name,
                       style: TextStyle(
                         fontSize: 18,
@@ -82,8 +82,7 @@ class GroupCard extends StatelessWidget {
             Text(
               group.description,
               style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).colorScheme.primary),
+                  fontSize: 14, color: Theme.of(context).colorScheme.primary),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -92,13 +91,19 @@ class GroupCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CustomTextButton(
-                  foregroundColor: additionalButtonColor ?? Theme.of(context).colorScheme.primary,
+                  foregroundColor: additionalButtonColor ??
+                      Theme.of(context).colorScheme.primary,
                   label: additionalButtonLabel ?? "See more",
                   onPressed: () {},
                 ),
-                Container(margin: EdgeInsets.symmetric(horizontal: 5),),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                ),
                 CustomFilledButton(
-                  label: buttonLabel ?? (group.isPublic ? 'Join the group' : 'Send a join request'),
+                  label: buttonLabel ??
+                      (group.isPublic
+                          ? 'Join the group'
+                          : 'Send a join request'),
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   onPressed: () {},
                 ),
