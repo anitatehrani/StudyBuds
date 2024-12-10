@@ -5,6 +5,8 @@ import { errorHandler } from './src/middlewares/error_handler';
 import indexRouter from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
 import { getEnvironmentVariable } from './src/utils/config_error';
+import { FB_PKEY } from './src/config/secrets';
+import { readFileSync } from 'fs';
 
 
 const app = express();
@@ -29,10 +31,15 @@ sequelize.authenticate()
 app.use(errorHandler)
 
 // firebase notification configuration
-var serviceAccount = require("./studybuds-116d5.json");
-admin.initializeApp({
-    credential: admin.credential.cert({"private_key": getEnvironmentVariable("FB_PKEY"), ...serviceAccount})
-});
+if(FB_PKEY!=="test"){
+    const serviceAccount:unknown = JSON.parse(readFileSync("./studybuds-116d5.json","utf8"))
+    admin.initializeApp({
+        credential: admin.credential.cert({"private_key": FB_PKEY, ...serviceAccount})
+    });
+}
+else{
+    console.warn("Missing firebase private key, disabling firebase functionalities");
+}
 
 
 // Start the server
