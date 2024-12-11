@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_buds/blocs/group_list/bloc/group_list_bloc.dart';
+import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/models/group.dart';
 import 'package:study_buds/widgets/group_card.dart';
 
@@ -7,94 +10,11 @@ class GroupList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change these joinedGroupSampleList and ownedGroupSampleList to actual data
-    List<Group> joinedGroupSampleList = [
-      Group(
-        name: "Capstone Project",
-        course: "Capstone",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Capstone Project",
-        course: "Capstone",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Capstone Project",
-        course: "Capstone",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Capstone Project",
-        course: "Capstone",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Software Engineering",
-        course: "CSE 110",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Data Structures",
-        course: "CSE 101",
-        description: "Blah blah",
-        members: 23,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-    ];
-    List<Group> ownedGroupSampleList = [
-      Group(
-        name: "Advanced Algorithms",
-        course: "CSE 201",
-        description: "In-depth study of algorithms",
-        members: 15,
-        isPublic: false,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Machine Learning",
-        course: "CSE 301",
-        description: "Exploring ML techniques",
-        members: 30,
-        isPublic: true,
-        telegramLink: '',
-        studentId: 10
-      ),
-      Group(
-        name: "Database Systems",
-        course: "CSE 202",
-        description: "Understanding database design",
-        members: 20,
-        isPublic: false,
-        telegramLink: '',
-        studentId: 10
-      ),
-    ];
+    List<Group> joinedGroupList = [];
+    List<Group> ownedGroupList = [];
+
     return Scaffold(
-      body: DefaultTabController(
+        body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -112,20 +32,35 @@ class GroupList extends StatelessWidget {
               ],
             ),
           ),
-          body: TabBarView(
+          body: BlocProvider(
+          create: (_) => GroupListBloc()..add(FetchMyGroupListEvent(4943369)),
+          child: Scaffold(
+                body: BlocConsumer<GroupListBloc, GroupListState>(
+                    listener: (context, state) {
+              if (state is GroupListSuccess){
+                joinedGroupList = state.joinedGroups;
+                ownedGroupList = state.myGroups;
+              }
+            },
+          builder: (context, state) {
+          return TabBarView(
             children: [
               GroupListTab(
-                groups: joinedGroupSampleList,
+                groups: joinedGroupList,
                 isJoinedScreen: true,
               ),
               GroupListTab(
-                groups: ownedGroupSampleList,
+                groups: ownedGroupList,
                 isJoinedScreen: false,
               ),
             ],
-          ),
+          );
+          },
         ),
       ),
+      ),
+    ),
+        ),
     );
   }
 }
@@ -149,7 +84,9 @@ class GroupListTab extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
             // Add vertical and horizontal padding
-            child: GroupCard(
+            child: BlocProvider<JoinGroupBloc>(
+                  create: (_) => JoinGroupBloc(),
+                  child: GroupCard(
               backgroundColor: Colors.white,
               buttonLabel:
                   isJoinedScreen ? "Leave the group" : "Change settings",
@@ -158,8 +95,9 @@ class GroupListTab extends StatelessWidget {
               additionalButtonColor: isJoinedScreen
                   ? Theme.of(context).colorScheme.primary
                   : Colors.red,
-              group: group,
+              group: group, index: index,
             ),
+          ),
           );
         },
       ),

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:study_buds/screens/basic_search/basic_search.dart';
 import 'package:study_buds/screens/group_creation/group_creation.dart';
-import 'package:study_buds/screens/home/home.dart';
+import 'package:study_buds/screens/group_list/group_list.dart';
 import 'package:study_buds/screens/notification/notification.dart';
 import 'package:study_buds/screens/profile/profile.dart';
 
@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(key: Key("home_page")),
+    GroupList(key: Key("home_page")),
     BasicSearchPage(title: 'Basic Search'),
     GroupCreationScreen(),
     NotificationScreen(),
