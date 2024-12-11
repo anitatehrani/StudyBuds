@@ -89,7 +89,7 @@ services:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             JWT_SECRET: ${JWT_SECRET:-changeme}
             IDP_METADATA: ${IDP_METADATA:-http://unigelogin:8080/simplesaml/saml2/idp/metadata.php}
-            IDP_ENTRYPOINT: ${IDP_ENTRYPOINT:-http://127.0.0.1:8080/simplesaml/saml2/idp/SSOService.php}
+            IDP_ENTRYPOINT: ${IDP_ENTRYPOINT:-http://unigelogin:8080/simplesaml/saml2/idp/SSOService.php}
             UNIGE_TOKEN: ${UNIGE_TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkeV9idWRzIn0.RuHH3N-8d0sxukvyVCuq59xnWf-vhkgPmnU30pv1Yo0}
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
@@ -109,7 +109,7 @@ services:
             context: ./unige
         environment:
             SIMPLESAMLPHP_SP_ENTITY_ID: saml-poc
-            SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: ${BACKEND_CALLBACK:-http://127.0.0.1:5000/login/}
+            SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: ${BACKEND_CALLBACK:-http://backend:5000/login/}
             DATA: /data/data.json
         ports:
             - "8080:8080"
