@@ -20,7 +20,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // Mock data
       const profileDetails = {
         'studentName': 'Noah White',
-        'studentId': '5566778',
+        'studentId': '10',
         'telegramAccountId': ''
       };
 

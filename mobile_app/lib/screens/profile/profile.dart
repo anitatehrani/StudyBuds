@@ -40,6 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
+
   void saveChanges() {
     setState(() {
       telegramAccountId = telegramController.text;
@@ -70,11 +71,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           listener: (context, state) {
             if (state is ProfileSaveSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: Colors.green),
+                const SnackBar(
+                    content: Text('Profile updated successfully!'),
+                    backgroundColor: Colors.green),
               );
             } else if (state is ProfileSaveFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+                SnackBar(
+                    content: Text(state.error), backgroundColor: Colors.red),
               );
             }
           },
@@ -96,9 +100,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Full Name',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
                               hintText: studentName,
@@ -107,12 +113,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 16),
                           TextField(
+                            key: Key('student_id_field'),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Student ID',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
                               hintText: studentId,
@@ -125,12 +134,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: const InputDecoration(
                               labelText: 'Telegram Account ID',
                               hintText: 'Enter your Telegram Account ID',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
-                              helperText: 'Use the bot below to get your Telegram ID.',
+                              helperText:
+                                  'Use the bot below to get your Telegram ID.',
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
@@ -154,7 +166,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        context.read<ProfileBloc>().add(SaveProfileDetailsEvent(telegramController.text));
+                        context.read<ProfileBloc>().add(
+                            SaveProfileDetailsEvent(telegramController.text));
                       },
                       icon: const Icon(Icons.save),
                       label: const Text('Save the changes'),
@@ -171,5 +184,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
 }

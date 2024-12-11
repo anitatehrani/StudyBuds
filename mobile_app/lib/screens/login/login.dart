@@ -72,6 +72,7 @@ class Login extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FilledButton.icon(
+                        key: Key("login_button"),
                         onPressed: () =>
                             AuthUtils.authenticateWithUnige(context),
                         icon: const Icon(
