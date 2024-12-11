@@ -41,7 +41,8 @@ def main(id: int | None):
             continue
         title = elem["title"]
         body = elem["body"]
-        filename = f"{n}-{'-'.join(title.replace('-',' ').lower().split())}.feature"
+        filename = f"{
+            n}-{'-'.join(title.replace('-', ' ').lower().split())}.feature"
         print("------------")
         print(filename)
         if DEFAULT in body:

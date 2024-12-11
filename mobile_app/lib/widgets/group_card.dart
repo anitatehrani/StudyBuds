@@ -8,19 +8,20 @@ import '../models/group.dart';
 
 class GroupCard extends StatelessWidget {
   final Group group;
+  final num index;
   final Color? backgroundColor;
   final String? buttonLabel;
   final Color? additionalButtonColor;
   final String? additionalButtonLabel;
 
-  const GroupCard({
-    super.key,
-    required this.group,
-    this.backgroundColor,
-    this.buttonLabel,
-    this.additionalButtonColor,
-    this.additionalButtonLabel
-  });
+  const GroupCard(
+      {super.key,
+      required this.group,
+      required this.index,
+      this.backgroundColor,
+      this.buttonLabel,
+      this.additionalButtonColor,
+      this.additionalButtonLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,8 @@ class GroupCard extends StatelessWidget {
       listener: (context, state) {
         if (state is JoinGroupRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.green),
+            SnackBar(
+                content: Text(state.message), backgroundColor: Colors.green),
           );
         } else if (state is JoinGroupRequestFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -39,7 +41,8 @@ class GroupCard extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             elevation: 2,
             margin: EdgeInsets.symmetric(vertical: 8),
             color: backgroundColor,
@@ -55,6 +58,7 @@ class GroupCard extends StatelessWidget {
                         children: [
                           Text(
                             group.name,
+                            key: Key('group_name_${index.toString()}'),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -117,8 +121,9 @@ class GroupCard extends StatelessWidget {
                       Container(margin: EdgeInsets.symmetric(horizontal: 5)),
                       CustomFilledButton(
                         isEnabled: group.status == null,
-                        label: group.status != null ? group.status! :
-                            (group.isPublic
+                        label: group.status != null
+                            ? group.status!
+                            : (group.isPublic
                                 ? 'Join the group'
                                 : 'Send a join request'),
                         backgroundColor: Theme.of(context).colorScheme.primary,

@@ -1,9 +1,5 @@
-import {remote} from "webdriverio";
-import assert from "assert";
-import { byValueKey } from "appium-flutter-finder";
-import { Given, When, Then, setDefaultTimeout } from "@cucumber/cucumber";
+import { byValueKey } from 'appium-flutter-finder';
 
-setDefaultTimeout(60 * 1000);
 
 const osSpecificOps =
   process.env.APPIUM_OS === "android"
@@ -24,7 +20,7 @@ const osSpecificOps =
         }
       : {};
 
-const opts = {
+export const opts = {
   hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
   port: Number.parseInt(
     process.env.APPIUM_PORT ? process.env.APPIUM_PORT : "4723",
@@ -36,35 +32,20 @@ const opts = {
   },
 };
 
-Given("I am on the home page not logged in", async () => {
-  const counterTextFinder = byValueKey("counter");
-  const buttonFinder = byValueKey("increment");
+export const SECONDS_TIMEOUT = 30_000; // 30 seconds
 
-  const driver = await remote(opts);
+export async function login_guest(driver:any){
+  const guestButton = byValueKey("guest_button");
+  await driver.elementClick(guestButton);
+}
 
-  // if (process.env.APPIUM_OS === "android") {
-  //   await driver.switchContext("NATIVE_APP");
-  //   await (await driver.$("~fab")).click();
-  //   await driver.switchContext("FLUTTER");
-  // } else {
-  //   console.log(
-  //     "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
-  //   );
-  // }
+export async function go_to_search_page(driver:any){
+  const searchPageButton = byValueKey("icon_search");
+  await driver.elementClick(searchPageButton);
 
-  assert.strictEqual(await driver.getElementText(counterTextFinder), "0");
-
-  await driver.elementClick(buttonFinder);
-  // await
-  // await driver.action("pointer", {
-  //   parameters: { pointerType: "touch" },
-  // });
   // await driver.touchAction({
-  //   action: "tap",
-  //   element: { elementId: buttonFinder },
+  //      action: "tap",
+  //      element: { elementId: searchPageButton },
   // });
 
-  assert.strictEqual(await driver.getElementText(counterTextFinder), "1");
-
-  driver.deleteSession();
-});
+}
