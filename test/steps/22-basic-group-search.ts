@@ -2,24 +2,9 @@ import assert from "assert";
 import {remote} from "webdriverio";
 import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
 import { byValueKey, byType } from "appium-flutter-finder";
-import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT} from "./appium";
+import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT, driver} from "./appium";
 
-let driver:any;
-setDefaultTimeout(SECONDS_TIMEOUT);
 
-Before(async () => {
-  driver = await remote(opts);
-
-  if(process.env.APPIUM_OS === "android"){
-    // await driver.switchContext("NATIVE_APP");
-    // await (await driver.$("~fab")).click();
-    await driver.switchContext("FLUTTER");
-  }else{
-    console.log(
-      "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
-    );
-  }
-});
 
 Given("I am on the search page and logged in", async () => {
   await login_guest(driver);
@@ -124,12 +109,3 @@ Then("the system displays an empty list", async function () {
 });
 
 
-
-
-
-
-AfterAll(async () => {
-  if (driver) {
-    await driver.deleteSession();
-  }
-});
