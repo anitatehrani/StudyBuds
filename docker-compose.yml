@@ -45,7 +45,7 @@ services:
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
-    production_database:
+    production-database:
         image: postgres
         environment:
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -55,7 +55,7 @@ services:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
             - postgres_data:/var/lib/postgresql/data
         ports:
-            - "5433:5432"
+            - "5432:5432"
 
     postgres:
         image: postgres
