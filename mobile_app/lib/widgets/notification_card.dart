@@ -69,6 +69,7 @@ class NotificationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        key:ValueKey(notification.id),
                         notification.message,
                         style: TextStyle(
                           fontSize: 16,
