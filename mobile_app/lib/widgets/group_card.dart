@@ -68,12 +68,13 @@ class GroupCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                          Text(
-                            group.name,
-                            key: Key('group_name_${index.toString()}'),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              group.name,
+                              key: Key('group_name_${index.toString()}'),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(width: 4),
                             IconTheme(
