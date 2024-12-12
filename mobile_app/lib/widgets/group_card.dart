@@ -9,6 +9,7 @@ import '../models/group.dart';
 
 class GroupCard extends StatelessWidget {
   final Group group;
+  final num index;
   final Color? backgroundColor;
   final String? buttonLabel;
   final Color? additionalButtonColor;
@@ -17,6 +18,7 @@ class GroupCard extends StatelessWidget {
   const GroupCard(
       {super.key,
       required this.group,
+      required this.index,
       this.backgroundColor,
       this.buttonLabel,
       this.additionalButtonColor,
@@ -66,12 +68,12 @@ class GroupCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              group.name,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          Text(
+                            group.name,
+                            key: Key('group_name_${index.toString()}'),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                             SizedBox(width: 4),
                             IconTheme(

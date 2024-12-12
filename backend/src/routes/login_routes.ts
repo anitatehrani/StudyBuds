@@ -1,10 +1,10 @@
-import passport from "passport";
 import { Strategy as SamlStrategy } from "@node-saml/passport-saml";
-import { fetch, toPassportConfig } from "passport-saml-metadata";
-import jwt from "jsonwebtoken";
-import { ENTITY_ID, IDP_ENTRYPOINT, IDP_METADATA } from "../config/unigeapi";
-import { JWT_SECRET } from "../config/secrets";
 import { Request, Response, Router } from "express";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import { fetch, toPassportConfig } from "passport-saml-metadata";
+import { JWT_SECRET } from "../config/secrets";
+import { ENTITY_ID, IDP_ENTRYPOINT, IDP_METADATA } from "../config/unigeapi";
 
 const router: Router = Router();
 
@@ -43,7 +43,29 @@ router.get("/", passport.authenticate("saml"));
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 router.post("/", passport.authenticate("saml", { session: false }), (req: Request, res: Response) => {
     const token = jwt.sign({ user: req.user }, JWT_SECRET, { expiresIn: "1h" });
-    res.redirect(`myapp://auth?token=${token}`);
+    // res.redirect(`myapp://auth?token=${token}`);
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Redirecting...</title>
+        </head>
+        <body>
+            <script>
+                // Redirect to the app's callback URL
+                window.location.href = "myapp://auth?token=${token}";
+
+                // Close the WebView after a short delay
+                setTimeout(() => {
+                    window.close();
+                }, 500);
+            </script>
+            <p>Redirecting, please wait...</p>
+        </body>
+        </html>
+    `);
 });
 
 export default router;
