@@ -14,7 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController telegramController = TextEditingController();
   final String botLink = "https://t.me/study_buds_bot";
   final String studentName = "Noah White";
-  final String studentId = "5566778";
+  final String studentId = "10";
   String telegramAccountId = "";
 
   @override
@@ -127,6 +127,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               hintText: studentId,
                             ),
                             style: const TextStyle(color: Colors.black),
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: Text(studentId, key: Key('student_id_text')),
                           ),
                           const SizedBox(height: 16),
                           TextField(
