@@ -95,7 +95,8 @@ class GroupListTab extends StatelessWidget {
               additionalButtonColor: isJoinedScreen
                   ? Theme.of(context).colorScheme.primary
                   : Colors.red,
-              group: group, index: index,
+              group: group,
+               index: index,
             ),
           ),
           );
