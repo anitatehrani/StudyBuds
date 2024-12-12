@@ -16,7 +16,7 @@ Given("I am on the home page not logged in", async () => {
 
 When("I click on the login button", async () => {
     //const loginButton = byValueKey("login_button"); CHANGEME
-    const loginButton = byValueKey("guest_button");
+    const loginButton = byValueKey("login_button");
     await driver.elementClick(loginButton);
 });
     
@@ -32,12 +32,10 @@ Then("I can see my profile username {string}", async (username:string) => {
     const profilePage = byValueKey("profile_page");
     await driver.execute('flutter:waitFor', profilePage);
     //checking  the student id
-    const studentId = byValueKey("student_id_field");
-    await driver.execute('flutter:waitFor', studentId);
+    const studentId = byValueKey("student_id_text");
+    //await driver.execute('flutter:waitFor', studentId);
     
-    //CHANGEME
-    const studentIdText = await driver.execute('flutter:getText', studentId);
-
+    const studentIdText = await driver.getElementText(studentId);
 
     assert.strictEqual(studentIdText, username);
 });
@@ -46,14 +44,25 @@ When("I input my Unige credentials username {string} and password {string}", asy
 
 
 //////////////////
+    //const contextNames = await driver.getContext();
+    // console.log("AAAAAAAAAAAAAAAAAAAA" + contextNames.length());
 
 
+   // await driver.switchContext("FLUTTER.WEBVIEW");
 
-    const emailField = byValueKey("email_field");
+   const contextNames = await driver.getContext();
+    console.log("AAAAAAAAAAAAAAAAAAAA" + contextNames);
+
+    const emailField = byValueKey("username");
     const passwordField = byValueKey("password");
+    const loginButton = byValueKey("submit");
+
+    await driver.elementSendKeys(emailField, username);
+    await driver.elementSendKeys(passwordField, password);
+    await driver.elementClick(loginButton);
 
 
-
+    //await driver.switchContext("FLUTTER");
 
 
 
