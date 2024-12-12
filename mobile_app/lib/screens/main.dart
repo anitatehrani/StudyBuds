@@ -64,6 +64,7 @@ class _MainScreenState extends State<MainScreen> {
             Icons.person_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_profile'),
           ),
         ],
         onTap: _onItemTapped,
