@@ -69,6 +69,7 @@ class NotificationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        key:ValueKey(notification.id),
                         notification.message,
                         style: TextStyle(
                           fontSize: 16,
@@ -82,6 +83,7 @@ class NotificationCard extends StatelessWidget {
                 SizedBox(width: 8),
                 if (notification.notificationType == 'join_request')
                   CustomIconButton(
+                    key:ValueKey("btn_${notification.id}"),
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -89,6 +91,7 @@ class NotificationCard extends StatelessWidget {
                           return BlocProvider(
                             create: (_) => JoinRequestBloc(),
                               child: NotificationPopup(
+                              key:ValueKey("popup"),
                               acceptButtonLabel: 'Accept',
                               rejectButtonLabel: 'Reject',
                               notification: notification,

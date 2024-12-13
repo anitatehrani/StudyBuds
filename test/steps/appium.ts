@@ -56,6 +56,7 @@ export async function go_to_search_page(driver: any) {
 
 }
 
+<<<<<<< HEAD
 export async function go_to_profile_page(driver: any) {
   const profilePageButton = byValueKey("icon_profile");
   await driver.elementClick(profilePageButton);
@@ -67,3 +68,5 @@ export async function go_to_profile_page(driver: any) {
 
 }
 
+=======
+>>>>>>> main
