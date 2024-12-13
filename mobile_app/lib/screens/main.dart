@@ -18,10 +18,10 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     GroupList(key: Key("home_page")),
-    BasicSearchPage(title: 'Basic Search'),
-    GroupCreationScreen(),
-    NotificationScreen(),
-    ProfileScreen()
+    BasicSearchPage(title: 'Basic Search',key: Key("search_page")),
+    GroupCreationScreen(key: Key("add_page")),
+    NotificationScreen(key: Key("notifications_page")),
+    ProfileScreen(key: Key("profile_page"))
   ];
 
   void _onItemTapped(int index) {
@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
             Icons.home_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_home'),
           ),
           Icon(
             Icons.search_rounded,
@@ -54,16 +55,19 @@ class _MainScreenState extends State<MainScreen> {
             Icons.group_add_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_add'),
           ),
           Icon(
             Icons.notifications_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_notifications'),
           ),
           Icon(
             Icons.person_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_profile'),
           ),
         ],
         onTap: _onItemTapped,

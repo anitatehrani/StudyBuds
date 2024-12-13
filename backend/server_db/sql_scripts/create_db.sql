@@ -51,8 +51,9 @@ CREATE TABLE fb_token (
 CREATE TABLE notification (
     id serial PRIMARY KEY,
     student_id integer NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
-    join_request_id bigint NOT NULL REFERENCES join_request(id) ON UPDATE CASCADE,
+    join_request_id integer NOT NULL REFERENCES join_request(id) ON UPDATE CASCADE,
     notification_type varchar(20) NOT NULL,
+    message varchar(50) NOT NULL,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
