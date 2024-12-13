@@ -50,15 +50,3 @@ export async function go_to_search_page(driver:any){
 
 }
 
-export enum BottomBarIcon{
-    search="icon_search",
-    add="icon_add",
-    notifications="icon_notifications",
-    profile="icon_profile",
-    home="icon_home",
-}
-
-export async function go_to_page(driver:WebdriverIO.Browser,bottom_bar_icon:BottomBarIcon){
-  const searchPageButton = byValueKey(bottom_bar_icon);
-  await driver.elementClick(searchPageButton);
-}

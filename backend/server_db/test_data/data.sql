@@ -26,9 +26,9 @@ insert into group_members (student_id,group_id) values (11,2);
 insert into student (student_id,telegram_account) values (10,35);
 insert into student (student_id,telegram_account) values (12,37);
 
-insert into student_group (id,name,course,admin_id) values (3,'joinrequest','Capstone',12);
-insert into group_members (student_id,group_id) values (12,3);
+insert into student_group (id,name,course,admin_id,members_limit) values (3,'joinrequest','Capstone',10,100);
+insert into group_members (student_id,group_id) values (10,3);
 
-insert into join_request (id,group_id,student_id,status) values (1,2,12,'pending');
+insert into join_request (id,group_id,student_id,status) values (1,3,12,'pending');
 insert into notification (student_id,join_request_id,notification_type,message) values (10,1,'join_request','Nona has requested to join the Capstone project');
 

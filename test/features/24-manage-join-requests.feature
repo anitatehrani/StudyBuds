@@ -7,14 +7,15 @@ And a student sends a join request to that group
 When I go to the notifications page
 Then I see the notification with the notification message
 
-# Scenario: Accept join request
-# Given I am a SuperStudent of a group
-# And a student sends a join request to that group
-# When I open the notification
-# And I click accept
-# Then The user receives invitation link of Telegram group
-# And a notification is sent to him
-#
+Scenario: Accept join request
+Given I am logged in
+And I am a SuperStudent of a group
+And a student sends a join request to that group
+When I open the notification
+And I click accept
+Then The user receives the invitation link of Telegram group
+And a notification is sent to him
+
 # Scenario: Refuse join request
 # Given I am a SuperStudent of a group
 # And a student sends a join request to that group

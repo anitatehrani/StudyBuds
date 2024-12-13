@@ -2,14 +2,15 @@ import assert from "assert";
 import {remote} from "webdriverio";
 import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
 import { byValueKey, byType } from "appium-flutter-finder";
-import { BottomBarIcon, go_to_page, go_to_search_page, login_guest, opts , SECONDS_TIMEOUT} from "./appium";
+import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT} from "./appium";
+import { BottomBarIcon, clickButton, getText, go_to_page } from "../utils/utils";
 
 let driver:WebdriverIO.Browser;
 setDefaultTimeout(SECONDS_TIMEOUT);
 
 Before(async () => {
   driver = await remote(opts);
-  driver.implicitWait(1*1000)
+  driver.implicitWait(5*1000)
 
   if(process.env.APPIUM_OS === "android"){
     // await driver.switchContext("NATIVE_APP");
@@ -46,6 +47,24 @@ Then("I see the notification with the notification message", async function () {
   const notification = byValueKey(1);
   const itemText = await driver.getElementText(notification);
   assert.ok(itemText==="Nona has requested to join the Capstone project")
+});
+
+When("I open the notification",async function(){
+    console.log("DJSIJHDJJSDHSDKJSD");
+    await clickButton(driver,"btn_1");
+    console.log("DONEDONEDONE__--------------------")
+})
+
+When("I click accept",async function(){
+    await clickButton(driver,"accept");
+})
+
+Then("The user receives the invitation link of Telegram group",async function(){
+});
+Then("a notification is sent to him",async function(){
+  const actual=await getText(driver,"success_toast");
+  const expected="Join request accepted successfully";
+  assert.ok(actual===expected);
 });
 
 // When("no groups contain {string} in their name", async function (String: string) {

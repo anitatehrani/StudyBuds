@@ -83,6 +83,7 @@ class NotificationCard extends StatelessWidget {
                 SizedBox(width: 8),
                 if (notification.notificationType == 'join_request')
                   CustomIconButton(
+                    key:ValueKey("btn_${notification.id}"),
                     onPressed: () {
                       showDialog(
                         context: context,
