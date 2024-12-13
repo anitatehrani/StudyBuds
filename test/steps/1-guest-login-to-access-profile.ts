@@ -16,7 +16,7 @@ Given("I am on the home page not logged in", async () => {
 
 When("I click on the login button", async () => {
     //const loginButton = byValueKey("login_button"); CHANGEME
-    const loginButton = byValueKey("guest_button");
+    const loginButton = byValueKey("login_button");
     await driver.elementClick(loginButton);
 });
     
@@ -40,29 +40,36 @@ Then("I can see my profile username {string}", async (username:string) => {
 
 When("I input my Unige credentials username {string} and password {string}", async (username:string, password:string)=> {
 
+    // const contexts = await driver.getContexts();
+    // console.log("Available contexts:", contexts);
 
-//////////////////
-    //const contextNames = await driver.getContext();
-    // console.log("AAAAAAAAAAAAAAAAAAAA" + contextNames.length());
+    await driver.waitUntil(async () => {
+        const contexts = await driver.getContexts();
+        return contexts.includes('WEBVIEW_chrome');
+    }, { timeout: 10_000, timeoutMsg: 'WEBVIEW_chrome context not found' });
 
+    await driver.switchContext("WEBVIEW_chrome");
+    driver.$('//input[@id="username"]').waitForDisplayed({ timeout: 5000 }),
 
-    // await driver.switchContext("FLUTTER.WEBVIEW");
+    await Promise.all([
+        
+        driver.$('//input[@id="username"]').setValue(username),
+        driver.$('//input[@id="password"]').setValue(password),
+        
+    ]);
+    driver.$('//input[@id="password"]').addValue("\uE007")
 
-    const contextNames = await driver.getContext();
-    console.log("AAAAAAAAAAAAAAAAAAAA" + contextNames);
+    const button = await driver.$('//button[contains(text(), "Login")]');
 
-    const emailField = byValueKey("username");
-    const passwordField = byValueKey("password");
-    const loginButton = byValueKey("submit");
+    await button.waitForEnabled()
+    await button.click()
 
-    // await driver.elementSendKeys(emailField, username);
-    // await driver.elementSendKeys(passwordField, password);
-    // await driver.elementClick(loginButton);
+    // await driver.waitUntil(async () => {
+    //     const contexts = await driver.getContexts();
+    //     return contexts.includes('FLUTTER');
+    // }, { timeout: 10_000, timeoutMsg: 'FLUTTER context not found' });
 
-
-    //await driver.switchContext("FLUTTER");
-
-
+    await driver.switchContext("FLUTTER");
 
 });
 

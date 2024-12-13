@@ -2,6 +2,13 @@ import { byValueKey } from 'appium-flutter-finder';
 import {remote} from "webdriverio";
 import { AfterAll, Before, setDefaultTimeout } from "@cucumber/cucumber";
 
+//DOCS:
+
+//webdriverio            https://webdriver.io/docs/selectors
+//native/webapp          https://github.com/appium/appium-uiautomator2-driver
+//flutter-driver         https://github.com/appium/appium-flutter-driver
+
+
 export let driver:any;
 
 const osSpecificOps =
@@ -32,6 +39,7 @@ export const opts = {
     ...osSpecificOps,
     "appium:automationName": "Flutter",
     "appium:retryBackoffTime": 500,
+    'appium:chromedriverAutodownload': true,
   },
 };
 
