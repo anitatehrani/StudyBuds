@@ -31,9 +31,11 @@ class GroupDetails {
       studentId: json['studentId'],
       members: json['members'],
       membersLimit: json['membersLimit'],
-      groupMembers: (json['groupMembers'] as List<dynamic>)
+      groupMembers: json['groupMembers'] != null
+          ? (json['groupMembers'] as List<dynamic>)
           .map((member) => GroupMember.fromJson(member))
-          .toList(),
+          .toList()
+          : [],
     );
   }
 }

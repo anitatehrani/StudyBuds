@@ -150,11 +150,10 @@ class GroupListTab extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
             // Add vertical and horizontal padding
             child: GroupCard(
+              index: index,
               backgroundColor: Colors.white,
-              buttonLabel:
-                  isJoinedScreen ? "Leave the group" : "Change settings",
-              additionalButtonLabel:
-                  isJoinedScreen ? "See more" : "Delete the group",
+              buttonLabel: isJoinedScreen ? "Leave the group" : "Change settings",
+              additionalButtonLabel: isJoinedScreen ? "See more" : "Delete the group",
               additionalButtonColor: isJoinedScreen
                   ? Theme.of(context).colorScheme.primary
                   : Colors.red,
