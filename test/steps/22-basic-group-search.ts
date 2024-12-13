@@ -1,10 +1,11 @@
 import assert from "assert";
-import {remote} from "webdriverio";
-import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
-import { byValueKey, byType } from "appium-flutter-finder";
-import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT, driver} from "./appium";
+import {Given, When, Then, AfterAll, Before } from "@cucumber/cucumber";
+import { byValueKey } from "appium-flutter-finder";
+import { go_to_search_page, login_guest} from "./appium";
+import { getDriver } from "./all";
 
-
+let driver:any;
+Before(()=>driver=getDriver())
 
 Given("I am on the search page and logged in", async () => {
   await login_guest(driver);

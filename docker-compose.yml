@@ -9,6 +9,7 @@ services:
             GH_TOKEN: ${GH_TOKEN:-lol}
 
     emulator:
+        init: true
         build: ./emulator
         #image: docker.io/budtmo/docker-android:emulator_11.0
         ports:
@@ -24,16 +25,16 @@ services:
         devices:
             - /dev/kvm
         volumes:
-            - apk:/apk:ro
-            - emulator-data:/home/androidusr
+            - ./build/app/outputs/flutter-apk:/apk:ro
+            - /home/androidusr
         depends_on:
             - backend
 
     build-apk:
         build: ./mobile_app
         volumes:
-            - apk:/app/build/app/outputs/flutter-apk
-            - apk-build-cache:/app/build
+            - ./build/app/outputs/flutter-apk:/app/build/app/outputs/flutter-apk
+            - /app/build
             - /root/.gradle
     acceptance-tests:
         build: ./test
@@ -44,9 +45,10 @@ services:
             APPIUM_HOST: "emulator"
             APPIUM_PORT: "4723"
 
+
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
-    production_database:
+    production-database:
         image: postgres
         environment:
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -56,7 +58,7 @@ services:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
             - postgres_data:/var/lib/postgresql/data
         ports:
-            - "5433:5432"
+            - "5432:5432"
 
     postgres:
         image: postgres
@@ -144,8 +146,6 @@ services:
             DATABASE: /data/data.yml
 
 volumes:
-    apk:
     unigedata:
-    apk-build-cache:
     postgres_data:
     emulator-data:

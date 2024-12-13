@@ -18,11 +18,11 @@ class NotificationPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    pressButton(isAccepted){
-      context.read<JoinRequestBloc>().add(
-                        ChangeJoinRequestStatusEvent(
-                            10, notification.joinRequestId, isAccepted));
+    pressButton(isAccepted) {
+      context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
+          10, notification.joinRequestId, isAccepted));
     }
+
     return BlocListener<JoinRequestBloc, JoinRequestState>(
       listener: (context, state) {
         if (state is JoinRequestLoading) {
@@ -30,11 +30,14 @@ class NotificationPopup extends StatelessWidget {
         } else if (state is JoinRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text(state.message), backgroundColor: Colors.green),
+                content: Text(key: Key("success_toast"), state.message),
+                backgroundColor: Colors.green),
           );
         } else if (state is JoinRequestFailed)
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+            SnackBar(
+                content: Text(key: Key("fail_toast"), state.error),
+                backgroundColor: Colors.red),
           );
         // Navigator.of(context).pop();
       },
@@ -56,6 +59,7 @@ class NotificationPopup extends StatelessWidget {
               Container(
                 width: 60,
                 child: CustomFilledButton(
+                  key: ValueKey("reject"),
                   label: rejectButtonLabel,
                   iconData: Icons.cancel,
                   onPressed: () {
@@ -106,6 +110,7 @@ class NotificationPopup extends StatelessWidget {
               Container(
                 width: 60,
                 child: CustomFilledButton(
+                  key: ValueKey("accept"),
                   label: acceptButtonLabel,
                   iconData: Icons.check_circle,
                   onPressed: () {

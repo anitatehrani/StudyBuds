@@ -79,19 +79,21 @@ export async function getGroupDetails(req: Request) {
     // Fetch group members from the GroupMembers table
     const members = await GroupMembers.findAll({ where: { groupId } });
 
-    if (members.length === 0) {
-        throw new NotFoundError("Group members not found");
-    }
-
     // Prepare student details by fetching individually from UnigeMockup
     const groupMembers = [];
-    for (const member of members) {
-        const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
-        groupMembers.push({
-            studentId: studentDetail.id,
-            firstName: studentDetail.first_name,
-            lastName: studentDetail.last_name,
-        });
+
+    if (members.length === 0) {
+        // throw new NotFoundError("Group members not found");
+    }else {
+        for (const member of members) {
+            const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
+            groupMembers.push({
+                studentId: studentDetail.id,
+                firstName: studentDetail.first_name,
+                lastName: studentDetail.last_name,
+            });
+        }
+
     }
 
     // Format response

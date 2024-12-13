@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:study_buds/screens/basic_search/basic_search.dart';
 import 'package:study_buds/screens/group_creation/group_creation.dart';
-import 'package:study_buds/screens/home/home.dart';
+import 'package:study_buds/screens/group_list/group_list.dart';
 import 'package:study_buds/screens/notification/notification.dart';
 import 'package:study_buds/screens/profile/profile.dart';
 
@@ -17,11 +17,11 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(key: Key("home_page")),
-    BasicSearchPage(title: 'Basic Search'),
-    GroupCreationScreen(),
-    NotificationScreen(),
-    ProfileScreen(key: Key("profile_page")),
+    GroupList(key: Key("home_page")),
+    BasicSearchPage(title: 'Basic Search', key: Key("search_page")),
+    GroupCreationScreen(key: Key("add_page")),
+    NotificationScreen(key: Key("notifications_page")),
+    ProfileScreen(key: Key("profile_page"))
   ];
 
   void _onItemTapped(int index) {
@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
             Icons.home_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_home'),
           ),
           Icon(
             Icons.search_rounded,
@@ -54,11 +55,13 @@ class _MainScreenState extends State<MainScreen> {
             Icons.group_add_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_add'),
           ),
           Icon(
             Icons.notifications_rounded,
             size: 30,
             color: Colors.white,
+            key: Key('icon_notifications'),
           ),
           Icon(
             Icons.person_rounded,
