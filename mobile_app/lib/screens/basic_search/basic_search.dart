@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/blocs/basic_search/bloc/basic_search_bloc.dart';
 import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/widgets/group_card.dart';
+import 'package:provider/provider.dart';
+import '../../blocs/group_details/bloc/group_details_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -43,8 +45,11 @@ class BasicSearchPage extends StatelessWidget {
               _SearchBar(),
               const SizedBox(height: 20),
               Expanded(
-                child: BlocProvider<JoinGroupBloc>(
-                  create: (_) => JoinGroupBloc(),
+                child: MultiProvider(
+                  providers: [
+                    Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
+                    Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
+                  ],
                   child: _SearchResults(),
                 ),
               ),
