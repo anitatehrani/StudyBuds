@@ -113,10 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
-                          Visibility(
-                            visible: false,
-                            child: Text(studentId, key: Key('student_id_text')),
-                          ),
                           const SizedBox(height: 16),
                           TextField(
                             controller: telegramController,
