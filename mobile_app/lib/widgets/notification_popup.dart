@@ -30,15 +30,13 @@ class NotificationPopup extends StatelessWidget {
         } else if (state is JoinRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                key: Key("success_toast"),
-                content: Text(state.message),
+                content: Text(key: Key("success_toast"), state.message),
                 backgroundColor: Colors.green),
           );
         } else if (state is JoinRequestFailed)
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                key: Key("fail_toast"),
-                content: Text(state.error),
+                content: Text(key: Key("fail_toast"), state.error),
                 backgroundColor: Colors.red),
           );
         // Navigator.of(context).pop();

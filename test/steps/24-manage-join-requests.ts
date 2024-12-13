@@ -3,7 +3,7 @@ import {remote} from "webdriverio";
 import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
 import { byValueKey, byType } from "appium-flutter-finder";
 import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT} from "./appium";
-import { BottomBarIcon, clickButton, getText, go_to_page } from "../utils/utils";
+import { BottomBarIcon, clickButton, getText, go_to_page, sleep } from "../utils/utils";
 
 let driver:WebdriverIO.Browser;
 setDefaultTimeout(SECONDS_TIMEOUT);
@@ -49,21 +49,38 @@ Then("I see the notification with the notification message", async function () {
   assert.ok(itemText==="Nona has requested to join the Capstone project")
 });
 
-When("I open the notification",async function(){
-    console.log("DJSIJHDJJSDHSDKJSD");
-    await clickButton(driver,"btn_1");
-    console.log("DONEDONEDONE__--------------------")
+When("I open the notification with id {string}",async function(id:string){
+    await sleep(1);
+    await clickButton(driver,`btn_${id}`);
 })
 
 When("I click accept",async function(){
+    await sleep(1);
+    console.log("Waiting accept")
     await clickButton(driver,"accept");
+    console.log("Clicked accept")
+})
+
+When("I click refuse",async function(){
+    await sleep(1);
+    await clickButton(driver,"reject");
 })
 
 Then("The user receives the invitation link of Telegram group",async function(){
 });
 Then("a notification is sent to him",async function(){
+  await sleep(1);
   const actual=await getText(driver,"success_toast");
   const expected="Join request accepted successfully";
+  assert.ok(actual===expected);
+});
+
+Then("The user does not receive the invitation link of Telegram group",async function(){
+});
+Then("a notification is sent to him about the refusal",async function(){
+  await sleep(1);
+  const actual=await getText(driver,"success_toast");
+  const expected="Join request rejected successfully";
   assert.ok(actual===expected);
 });
 
