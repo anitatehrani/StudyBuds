@@ -20,6 +20,7 @@ services:
             EMULATOR_DEVICE: "Samsung Galaxy S10"
             WEB_VNC: true
             APPIUM: true
+            APPIUM_ADDITIONAL_ARGS: --allow-insecure chromedriver_autodownload
         devices:
             - /dev/kvm
         volumes:
