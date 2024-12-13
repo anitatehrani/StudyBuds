@@ -24,16 +24,16 @@ services:
         devices:
             - /dev/kvm
         volumes:
-            - apk:/apk:ro
-            - emulator-data:/home/androidusr
+            - ./build/app/outputs/flutter-apk:/apk:ro
+            - /home/androidusr
         depends_on:
             - backend
 
     build-apk:
         build: ./mobile_app
         volumes:
-            - apk:/app/build/app/outputs/flutter-apk
-            - apk-build-cache:/app/build
+            - ./build/app/outputs/flutter-apk:/app/build/app/outputs/flutter-apk
+            - /app/build
             - /root/.gradle
     acceptance-tests:
         build: ./test
@@ -145,8 +145,6 @@ services:
             DATABASE: /data/data.yml
 
 volumes:
-    apk:
     unigedata:
-    apk-build-cache:
     postgres_data:
     emulator-data:

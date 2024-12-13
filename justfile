@@ -73,3 +73,6 @@ hotspot:
 
 stop-hotspot:
     sudo pkill create_ap && sudo pkill dnsmasq
+
+acceptance-test *args='':
+    docker compose up -d --force-recreate postgres && docker compose run --rm --build acceptance-tests {{args}}

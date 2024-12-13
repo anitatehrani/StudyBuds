@@ -30,3 +30,8 @@ export async function getText(driver: WebdriverIO.Browser, key: Key) {
 export function sleep(seconds: number) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
+
+export async function waitForElement(driver:WebdriverIO.Browser,key:Key){
+    const element=byValueKey(key)
+    await driver.execute("flutter:waitFor",element)
+}

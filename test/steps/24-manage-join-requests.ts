@@ -1,27 +1,13 @@
 import assert from "assert";
-import {remote} from "webdriverio";
 import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
-import { byValueKey, byType } from "appium-flutter-finder";
-import { go_to_search_page, login_guest, opts , SECONDS_TIMEOUT} from "./appium";
-import { BottomBarIcon, clickButton, getText, go_to_page, sleep } from "../utils/utils";
+import { byValueKey } from "appium-flutter-finder";
+import { login_guest, SECONDS_TIMEOUT} from "./appium";
+import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement } from "../utils/utils";
+import { getDriver } from "./all";
 
 let driver:WebdriverIO.Browser;
+Before(()=>driver=getDriver())
 setDefaultTimeout(SECONDS_TIMEOUT);
-
-Before(async () => {
-  driver = await remote(opts);
-  driver.implicitWait(5*1000)
-
-  if(process.env.APPIUM_OS === "android"){
-    // await driver.switchContext("NATIVE_APP");
-    // await (await driver.$("~fab")).click();
-    await driver.switchContext("FLUTTER");
-  }else{
-    console.log(
-      "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
-    );
-  }
-});
 
 Given("I am logged in", async function(){
   await login_guest(driver);
@@ -50,26 +36,26 @@ Then("I see the notification with the notification message", async function () {
 });
 
 When("I open the notification with id {string}",async function(id:string){
-    await sleep(1);
+    await waitForElement(driver,`btn_${id}`)
     await clickButton(driver,`btn_${id}`);
 })
 
 When("I click accept",async function(){
-    await sleep(1);
+    await waitForElement(driver,"accept")
     console.log("Waiting accept")
     await clickButton(driver,"accept");
     console.log("Clicked accept")
 })
 
 When("I click refuse",async function(){
-    await sleep(1);
+    await waitForElement(driver,"reject")
     await clickButton(driver,"reject");
 })
 
 Then("The user receives the invitation link of Telegram group",async function(){
 });
 Then("a notification is sent to him",async function(){
-  await sleep(1);
+  await waitForElement(driver,"success_toast")
   const actual=await getText(driver,"success_toast");
   const expected="Join request accepted successfully";
   assert.ok(actual===expected);
@@ -78,7 +64,7 @@ Then("a notification is sent to him",async function(){
 Then("The user does not receive the invitation link of Telegram group",async function(){
 });
 Then("a notification is sent to him about the refusal",async function(){
-  await sleep(1);
+  await waitForElement(driver,"success_toast")
   const actual=await getText(driver,"success_toast");
   const expected="Join request rejected successfully";
   assert.ok(actual===expected);
@@ -148,8 +134,3 @@ Then("a notification is sent to him about the refusal",async function(){
 //
 //
 //
-AfterAll(async () => {
-  if (driver) {
-    await driver.deleteSession();
-  }
-});
