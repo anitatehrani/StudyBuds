@@ -53,5 +53,5 @@ mobile_app/android/app/release
 .env
 /package.json
 /package-lock.json
-.apk
-.sha1
+*.apk
+*.sha1
