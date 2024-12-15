@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:study_buds/models/group_details_model.dart';
 import 'package:study_buds/widgets/custom_text_button.dart';
 
 import '../models/group.dart';
@@ -7,9 +8,10 @@ import '../models/group.dart';
 class GroupDetailsDialog extends StatelessWidget {
   final Group group;
   final bool isOwner;
+  final GroupDetails groupDetails;
 
   const GroupDetailsDialog(
-      {super.key, required this.group, this.isOwner = false});
+      {super.key, required this.group, this.isOwner = false, required this.groupDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -136,25 +138,25 @@ class GroupDetailsDialog extends StatelessWidget {
                     })
                       ..add(group.members > 10
                           ? Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Container(
-                                width: 21.0,
-                                height: 21.0,
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.more_horiz_rounded,
-                                    size: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            )
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Container(
+                          width: 21.0,
+                          height: 21.0,
+                          decoration: BoxDecoration(
+                            color:
+                            Theme.of(context).colorScheme.secondary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.more_horiz_rounded,
+                              size: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      )
                           : Spacer()),
                   ),
                 ),
