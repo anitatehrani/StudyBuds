@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pathlib import Path
 from subprocess import check_output
 from json import loads
@@ -32,7 +33,7 @@ def entry():
 
 def main(id: int | None):
     output = check_output(
-        "gh issue list -L5000 -l'User Story' --json 'title,number,body'", shell=True
+        ["gh","issue","list","-L5000","-lUser Story","--json","title,number,body"]
     )
     data = loads(output)
     for elem in data:
@@ -41,8 +42,7 @@ def main(id: int | None):
             continue
         title = elem["title"]
         body = elem["body"]
-        filename = f"{
-            n}-{'-'.join(title.replace('-', ' ').lower().split())}.feature"
+        filename = f"{n}-{'-'.join(title.replace('-', ' ').lower().split())}.feature"
         print("------------")
         print(filename)
         if DEFAULT in body:

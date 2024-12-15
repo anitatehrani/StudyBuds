@@ -1,4 +1,4 @@
-import { byValueKey } from "appium-flutter-finder";
+import { byText, byValueKey } from "appium-flutter-finder";
 
 export enum BottomBarIcon {
   search = "icon_search",
@@ -8,7 +8,14 @@ export enum BottomBarIcon {
   home = "icon_home",
 }
 
+export enum UiId {
+  telegramAccountIdTextField = "telegram_account_id_text_field",
+  fullNameTextField = "full_name_text_field",
+  studentIdTextField = "student_id_text_field"
+}
+
 type Key = string | number;
+type Value = string;
 
 export async function go_to_page(
   driver: WebdriverIO.Browser,
@@ -31,7 +38,16 @@ export function sleep(seconds: number) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 
-export async function waitForElement(driver:WebdriverIO.Browser,key:Key){
-    const element=byValueKey(key)
-    await driver.execute("flutter:waitFor",element)
+export async function waitForElement(driver: WebdriverIO.Browser, key: Key) {
+  const element = byValueKey(key)
+  await driver.execute("flutter:waitFor", element)
+}
+
+export async function waitForElementByValue(driver: WebdriverIO.Browser, value: Value) {
+  await driver.execute("flutter:waitFor", byText(value));
+}
+
+export async function editTextField(driver: WebdriverIO.Browser, key: Key, value: Value) {
+  const textField = byValueKey(key);
+  await driver.elementSendKeys(textField, value);
 }

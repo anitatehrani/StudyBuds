@@ -51,11 +51,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
             if (state is ProfileSaveSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: Colors.green),
+                const SnackBar(
+                    content: Text('Profile updated successfully!'),
+                    backgroundColor: Colors.green),
               );
             } else if (state is ProfileSaveFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+                SnackBar(
+                    content: Text(state.error), backgroundColor: Colors.red),
               );
             }
           },
@@ -78,26 +81,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextField(
+                            key: ValueKey('full_name_text_field'),
+                            controller: TextEditingController(),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Full Name',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: '${profile!.firstName} ${profile!.lastName}',
+                              hintText:
+                                  '${profile!.firstName} ${profile!.lastName}',
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
                           const SizedBox(height: 16),
                           TextField(
+                            key: ValueKey('student_id_text_field'),
+                            controller: TextEditingController(),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Student ID',
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
                               hintText: profile!.studentId.toString(),
@@ -106,16 +118,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 16),
                           TextField(
-                            controller: telegramController,
+                            key: ValueKey('telegram_account_id_text_field'),
+                            controller: TextEditingController(),
                             decoration: InputDecoration(
                               labelText: 'Telegram Account ID',
                               hintText: profile!.telegramAccount.toString(),
-                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
-                              helperText: 'Use the bot below to get your Telegram ID.',
+                              helperText:
+                                  'Use the bot below to get your Telegram ID.',
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
@@ -127,7 +143,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 icon: const Icon(Icons.telegram),
                                 label: const Text('Get Telegram ID via Bot'),
                                 style: TextButton.styleFrom(
-                                  foregroundColor: Theme.of(context).primaryColor,
+                                  foregroundColor:
+                                      Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
@@ -141,9 +158,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         if (telegramController.text.isNotEmpty) {
-                          context.read<ProfileBloc>().add(SaveProfileDetailsEvent(
-                            10, int.parse(telegramController.text),
-                          ));
+                          context
+                              .read<ProfileBloc>()
+                              .add(SaveProfileDetailsEvent(
+                                10,
+                                int.parse(telegramController.text),
+                              ));
                         }
                       },
                       icon: const Icon(Icons.save),
