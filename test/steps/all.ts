@@ -7,7 +7,7 @@ setDefaultTimeout(SECONDS_TIMEOUT);
 
 Before(async function () {
   driver = await remote(opts);
-  driver.implicitWait(5 * 1000);
+  driver.implicitWait(10 * 500);
   await driver.switchContext("FLUTTER");
 });
 

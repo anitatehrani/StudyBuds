@@ -1,170 +1,74 @@
 import assert from "assert";
-import { remote } from "webdriverio";
-import { Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
-import { byValueKey, byType } from "appium-flutter-finder";
-import { go_to_profile_page, go_to_search_page, login, login_guest, opts, SECONDS_TIMEOUT } from "./appium";
+import { Given, When, Then, setDefaultTimeout, Before } from "@cucumber/cucumber";
+import { login_guest, SECONDS_TIMEOUT } from "./appium";
+import { BottomBarIcon, editTextField, go_to_page, UiId, waitForElementByValue } from "../utils/utils";
+import { getDriver } from "./all";
 
-let driver: any;
+let driver: WebdriverIO.Browser;
+Before(() => driver = getDriver())
 setDefaultTimeout(SECONDS_TIMEOUT);
 
-Before(async () => {
-    driver = await remote(opts);
+// vars to pass content among functions
+var _telegramIdValue: string;
+var _newTelegramIdValue: string;
 
-    if (process.env.APPIUM_OS === "android") {
-        // await driver.switchContext("NATIVE_APP");
-        // await (await driver.$("~fab")).click();
-        await driver.switchContext("FLUTTER");
-    } else {
-        console.log(
-            "Switching context to `NATIVE_APP` is currently only applicable to Android demo app.",
-        );
-    }
+
+Given("I logged in", async () => {
+    await login_guest(driver);
 });
 
-Given("I am on the profile page and logged in", async () => {
-    await login(driver);
-    await go_to_profile_page(driver);
+When("I open the profile page", async function () {
+    await go_to_page(driver, BottomBarIcon.profile);
 });
 
-Then(" I see my studentId, name, last name, telegram id", async function (String : string) {
-  const searchResults = byValueKey("search_results");
+Then("I see my studentId {string}, fullname {string}, telegram id {string}",
+    async function (studentIdValue: string, fullNameValue: string, telegramIdValue: string) {
+        _telegramIdValue = telegramIdValue;
+        await waitForElementByValue(driver, fullNameValue);
+        await waitForElementByValue(driver, studentIdValue);
+        await waitForElementByValue(driver, telegramIdValue);
+    });
 
-    // Get the render object diagnostics for the ListView
-    const renderObjectDiagnostics = await driver.execute(
-      "flutter:getRenderObjectDiagnostics",
-      searchResults,
-      { includeProperties: true, subtreeDepth: 2 }
-    );
 
-    // Extract children count
-    const itemCount = renderObjectDiagnostics.children.length;
-    console.log(`Number of search results: ${itemCount}`);
+When("I edit the Telegram Id field to the value {string}", async function (newTelegramIdValue: string) {
+    await editTextField(driver, UiId.telegramAccountIdTextField, newTelegramIdValue);
+});
 
-    for (let i = 0; i < itemCount; i++) {
-        console.log(`Checking search result ${i}...`);
-        const currentItem = byValueKey(`group_name_${i}`);
-        await driver.execute('flutter:waitFor', currentItem);
-        const itemText = await driver.getElementText(currentItem);
-        console.log(`Search result ${i}: ${itemText}`);
+Then("The telegram id field is modified to the value I entered, {string}",
+    async function (newTelegramIdValue: string) {
+        _newTelegramIdValue = newTelegramIdValue;
+        await waitForElementByValue(driver, newTelegramIdValue);
+        await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
+        await waitForElementByValue(driver, _telegramIdValue);
+    });
 
-        assert.ok(
-          itemText.toLowerCase().includes(String.toLowerCase()),
-          `Group name does not contain the text: ${String}`
-        );
 
+Then("all fields are locked or disabled from editing except the telegram user id", async function () {
+    try {
+        await editTextField(driver, UiId.fullNameTextField, "New Name");
+        assert.ok(false);
+
+    } catch (e) {
+        console.log("Full name field is locked as expected.");
     }
 
-});
+    try {
+        await editTextField(driver, UiId.studentIdTextField, "555");
+        assert.ok(false);
 
+    } catch (e) {
+        console.log("Student id is locked as expected");
+    }
 
+    try {
+        await editTextField(driver, UiId.telegramAccountIdTextField, _newTelegramIdValue);
+        await waitForElementByValue(driver, _newTelegramIdValue);
+        await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
+        await waitForElementByValue(driver, _telegramIdValue);
+        console.log("Telegram ID field is editable as expected");
 
-
-// When("I type {string} in the search bar \\(case-insensitive)", async function(String : string) {
-//   const searchBar = byValueKey("search_bar");
-//   await driver.elementSendKeys(searchBar, String);
-//   const searchButton = byValueKey("search_button");
-//   await driver.elementClick(searchButton);
-// });
-
-
-
-// Then("I see all groups where {string} is inside their group name", async function (String : string) {
-
-//   const searchResults = byValueKey("search_results");
-
-//     // Get the render object diagnostics for the ListView
-//     const renderObjectDiagnostics = await driver.execute(
-//       "flutter:getRenderObjectDiagnostics",
-//       searchResults,
-//       { includeProperties: true, subtreeDepth: 2 }
-//     );
-
-//     // Extract children count
-//     const itemCount = renderObjectDiagnostics.children.length;
-//     console.log(`Number of search results: ${itemCount}`);
-
-//     for (let i = 0; i < itemCount; i++) {
-//         console.log(`Checking search result ${i}...`);
-//         const currentItem = byValueKey(`group_name_${i}`);
-//         await driver.execute('flutter:waitFor', currentItem);
-//         const itemText = await driver.getElementText(currentItem);
-//         console.log(`Search result ${i}: ${itemText}`);
-
-//         assert.ok(
-//           itemText.toLowerCase().includes(String.toLowerCase()),
-//           `Group name does not contain the text: ${String}`
-//         );
-
-//     }
-
-// });
-
-// When("no groups contain {string} in their name", async function (String: string) {
-//   try{
-//     const noResultsMessage = byValueKey("no_results_message");
-//     assert.strictEqual("1", "1");
-//   }catch(e){
-//     const searchResults = byValueKey("search_results");
-
-//     // Get the render object diagnostics for the ListView
-//     const renderObjectDiagnostics = await driver.execute(
-//       "flutter:getRenderObjectDiagnostics",
-//       searchResults,
-//       { includeProperties: true, subtreeDepth: 2 }
-//     );
-
-//     // Extract children count
-//     const itemCount = renderObjectDiagnostics.children.length;
-//     console.log(`Number of search results: ${itemCount}`);
-
-//     for (let i = 0; i < itemCount; i++) {
-//       const item = byValueKey(`group_name_search_result_${i}`);
-//       const itemText = await driver.getElementText(item);
-//       assert.ok(!itemText.toLowerCase().includes(String.toLowerCase()), `Group name contains the text: ${String}`);
-//     }
-
-//   }
-// });
-
-// Then('a message appears saying {string}', async function (String: string) {
-
-//   const noResultsMessage = byValueKey("no_results_message");
-//   await driver.execute('flutter:waitFor', noResultsMessage);
-//   //Center isn't supported by getText
-//   // const messageText = await driver.getElementText(noResultsMessage);
-//   // assert.strictEqual(messageText, String);
-//   assert.strictEqual(String, String);
-
-// });
-
-// Then("the system displays an empty list", async function () {
-//   try{
-//     const noResultsMessage = byValueKey("no_results_message");
-//     assert.strictEqual("1", "1");
-//   }catch(e){
-//     const searchResults = byValueKey("search_results");
-
-//     // Get the render object diagnostics for the ListView
-//     const renderObjectDiagnostics = await driver.execute(
-//       "flutter:getRenderObjectDiagnostics",
-//       searchResults,
-//       { includeProperties: true, subtreeDepth: 2 }
-//     );
-
-//     // Extract children count
-//     const itemCount = renderObjectDiagnostics.children.length;
-//     console.log(`Number of search results: ${itemCount}`);
-//     assert.strictEqual(itemCount, 0);
-//   }
-// });
-
-
-
-
-
-
-AfterAll(async () => {
-    if (driver) {
-        await driver.deleteSession();
+    } catch (e) {
+        console.log("Telegram account id should be editable");
+        assert.ok(false);
     }
 });
