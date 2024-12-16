@@ -81,6 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextField(
+                            key: ValueKey('full_name_text_field'),
+                            controller: TextEditingController(),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Full Name',
@@ -98,7 +100,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 16),
                           TextField(
-                            key: Key('student_id_field'),
+                            key: ValueKey('student_id_text_field'),
+                            controller: TextEditingController(),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Student ID',
@@ -115,7 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 16),
                           TextField(
-                            controller: telegramController,
+                            key: ValueKey('telegram_account_id_text_field'),
+                            controller: TextEditingController(),
                             decoration: InputDecoration(
                               labelText: 'Telegram Account ID',
                               hintText: profile!.telegramAccount.toString(),
