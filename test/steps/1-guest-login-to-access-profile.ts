@@ -1,75 +1,72 @@
-import assert from "assert";
-import {remote} from "webdriverio";
-import {Given, When, Then, setDefaultTimeout, AfterAll, Before } from "@cucumber/cucumber";
-import { byValueKey, byType, byText } from "appium-flutter-finder";
-import { driver } from "./appium";
+import { byValueKey, byText } from "appium-flutter-finder";
+import { BottomBarIcon, go_to_page } from "./../utils/utils";
+import { Given, When, Then } from "@cucumber/cucumber";
+import { driver } from "./all";
 
-
-
-
+// let driver:WebdriverIO.Browser;
+// Before(()=>driver=getDriver())
 
 Given("I am on the home page not logged in", async () => {
     const homePage = byValueKey("login_page");
-    await driver.execute('flutter:waitFor', homePage);
+    await driver.execute("flutter:waitFor", homePage);
 });
-
 
 When("I click on the login button", async () => {
     //const loginButton = byValueKey("login_button"); CHANGEME
     const loginButton = byValueKey("login_button");
     await driver.elementClick(loginButton);
 });
-    
-Then("I am logged in", async () => {
-    const homePage = byValueKey("home_page");
-    await driver.execute('flutter:waitFor', homePage);
-    
+
+Then("I am logged in successfully", async () => {
+    // const homePage = byValueKey("home_page");
+    // await driver.execute("flutter:waitFor", homePage);
 });
 
-Then("I can see my profile username {string}", async (username:string) => {
-    const profileButton = byValueKey("icon_profile");
-    await driver.elementClick(profileButton);
-    const profilePage = byValueKey("profile_page");
-    await driver.execute('flutter:waitFor', profilePage);
+Then("I can see my profile username {string}", async (username: string) => {
+    await go_to_page(driver, BottomBarIcon.profile);
     //getText doesnt work on textfields
     //const studentId = byValueKey("student_id_text");
     //await driver.execute('flutter:waitFor', studentId);
 
-    await driver.execute('flutter:waitFor', byText(username));
+    await driver.execute("flutter:waitFor", byText(username));
 });
 
-When("I input my Unige credentials username {string} and password {string}", async (username:string, password:string)=> {
+When(
+    "I input my Unige credentials username {string} and password {string}",
+    async (username: string, password: string) => {
+        // const contexts = await driver.getContexts();
+        // console.log("Available contexts:", contexts);
 
-    // const contexts = await driver.getContexts();
-    // console.log("Available contexts:", contexts);
+        await driver.waitUntil(
+            async () => {
+                const contexts = await driver.getContexts();
+                return contexts.includes("WEBVIEW_chrome");
+            },
+            { timeout: 10_000, timeoutMsg: "WEBVIEW_chrome context not found" }
+        );
 
-    await driver.waitUntil(async () => {
-        const contexts = await driver.getContexts();
-        return contexts.includes('WEBVIEW_chrome');
-    }, { timeout: 10_000, timeoutMsg: 'WEBVIEW_chrome context not found' });
+        await driver.switchContext("WEBVIEW_chrome");
+        driver.$('//input[@id="username"]').waitForDisplayed({ timeout: 10_000 });
 
-    await driver.switchContext("WEBVIEW_chrome");
-    driver.$('//input[@id="username"]').waitForDisplayed({ timeout: 5000 }),
+        await Promise.all([
+            driver.$('//input[@id="username"]').setValue(username),
+            driver.$('//input[@id="password"]').setValue(password),
+        ]);
+        const button = await driver.$('//button[contains(text(), "Login")]');
 
-    await Promise.all([
-        
-        driver.$('//input[@id="username"]').setValue(username),
-        driver.$('//input[@id="password"]').setValue(password),
-        
-    ]);
-    driver.$('//input[@id="password"]').addValue("\uE007")
+        driver.$('//input[@id="password"]').addValue("\uE007");
 
-    const button = await driver.$('//button[contains(text(), "Login")]');
+        //await button.waitForEnabled()
+        await button.click();
 
-    await button.waitForEnabled()
-    await button.click()
+        await driver.waitUntil(
+            async () => {
+                const contexts = await driver.getContexts();
+                return contexts.includes("FLUTTER");
+            },
+            { timeout: 10_000, timeoutMsg: "FLUTTER context not found" }
+        );
 
-    // await driver.waitUntil(async () => {
-    //     const contexts = await driver.getContexts();
-    //     return contexts.includes('FLUTTER');
-    // }, { timeout: 10_000, timeoutMsg: 'FLUTTER context not found' });
-
-    await driver.switchContext("FLUTTER");
-
-});
-
+        await driver.switchContext("FLUTTER");
+    }
+);

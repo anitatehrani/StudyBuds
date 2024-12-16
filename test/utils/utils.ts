@@ -35,3 +35,8 @@ export async function waitForElement(driver:WebdriverIO.Browser,key:Key){
     const element=byValueKey(key)
     await driver.execute("flutter:waitFor",element)
 }
+
+export async function login_guest(driver:WebdriverIO.Browser){
+  const guestButton = byValueKey("guest_button");
+  await driver.elementClick(guestButton);
+}
