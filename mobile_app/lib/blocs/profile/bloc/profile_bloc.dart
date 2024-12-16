@@ -34,7 +34,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       SaveProfileDetailsEvent event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileSaving());
-      final profile = UpdateTelegramAccountRequest(event.studentId, event.telegramAccountId);
+      final profile = UpdateTelegramAccountRequest(
+          event.studentId, event.telegramAccountId);
       final response = await profile.send();
       if (response.isSuccess) {
         emit(ProfileSaveSuccess(response.data));
