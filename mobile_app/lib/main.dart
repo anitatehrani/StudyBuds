@@ -1,13 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_driver/driver_extension.dart';
 import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/main.dart';
 import 'package:study_buds/utils/push_notification.dart';
-
-const API_URL = String.fromEnvironment("API_URL",
-    defaultValue: "http://10.0.2.2:5000");
 
 void main() async {
   // enableFlutterDriverExtension(); // Comment out or remove this line

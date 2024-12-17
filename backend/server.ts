@@ -1,12 +1,11 @@
 import express from 'express';
 import admin from 'firebase-admin';
-import sequelize from './src/config/database';
-import { errorHandler } from './src/middlewares/error_handler';
-import indexRouter from './src/routes/index';
-import { getErrorMessage } from './src/utils/api_error';
-import { getEnvironmentVariable } from './src/utils/config_error';
-import { FB_PKEY } from './src/config/secrets';
 import { readFileSync } from 'fs';
+import sequelize from './src/config/database';
+import { FB_PKEY } from './src/config/secrets';
+import { errorHandler } from './src/middlewares/error_handler';
+import { loginRouter, router } from './src/routes/index';
+import { getErrorMessage } from './src/utils/api_error';
 
 
 const app = express();
@@ -16,8 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Mount all routes without "/api" prefix
-app.use('/', indexRouter);
-
+app.use('/', loginRouter);
+app.use('/', router);
 // Test database connection
 sequelize.authenticate()
     .then(() => {

@@ -3,9 +3,10 @@ import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
-import { BadRequestError, NotFoundError } from "../utils/api_error";
 import UnigeService from "../service/unige_service";
+import { BadRequestError, NotFoundError } from "../utils/api_error";
 
+import { getStudentId } from "../middlewares/auth_middleware";
 import {
     checkBoolean,
     checkInt,
@@ -23,7 +24,7 @@ export async function createGroup(req: Request) {
     const course = checkString(body, "course");
     const membersLimit = checkInt(body, "membersLimit");
     const telegramLink = checkString(body, "telegramLink");
-    const studentId = checkInt(body, "studentId");
+    const studentId = getStudentId(req);
     const isPublic = checkBoolean(body, "isPublic");
 
     // Validate if the student exists

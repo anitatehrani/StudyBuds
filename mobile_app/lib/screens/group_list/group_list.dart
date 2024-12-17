@@ -96,7 +96,7 @@ class GroupListTab extends StatelessWidget {
                   ? Theme.of(context).colorScheme.primary
                   : Colors.red,
               group: group,
-               index: index,
+              index: index,
             ),
           ),
           );

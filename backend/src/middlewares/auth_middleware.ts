@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { BadRequestError, getErrorMessage, UnhautorizedError } from '../utils/api_error';
+import assert from 'node:assert';
 import { JWT_SECRET } from '../config/secrets';
+import { BadRequestError, getErrorMessage, UnhautorizedError } from '../utils/api_error';
+import { validateInt } from '../utils/validation_error';
 
 
 export default function authMiddleware(req: Request, res: Response, next: NextFunction){
@@ -11,10 +13,16 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 
     try {
         const verified = jwt.verify(token, JWT_SECRET);
-        req.user = verified;
+        req.user = verified.user;
         next();
     } catch (err) {
         throw new BadRequestError(`Invalid Token: ${getErrorMessage(err)}`);
     }
 };
+
+export function getStudentId(req: Request) : number {
+    assert (req.user !== undefined);
+    assert (req.user.uid !== undefined);
+    return validateInt(req.user, "uid");
+}
 
