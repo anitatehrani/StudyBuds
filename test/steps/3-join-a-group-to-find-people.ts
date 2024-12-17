@@ -12,3 +12,6 @@ setDefaultTimeout(SECONDS_TIMEOUT);
 
 
 
+Given("I already have sent a join request to the group", async () => {
+
+});
