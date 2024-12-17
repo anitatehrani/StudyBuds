@@ -73,12 +73,8 @@ Then(
 
         try {
             await editTextField(driver, UiId.telegramAccountIdTextField, _newTelegramIdValue);
-            await go_to_page(driver, BottomBarIcon.home);
-            await go_to_page(driver, BottomBarIcon.profile);
             await waitForElementByValue(driver, _newTelegramIdValue);
             await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
-            await go_to_page(driver, BottomBarIcon.home);
-            await go_to_page(driver, BottomBarIcon.profile);
             await waitForElementByValue(driver, _telegramIdValue);
             console.log("Telegram ID field is editable as expected");
         } catch (e) {
