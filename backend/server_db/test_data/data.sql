@@ -2,23 +2,23 @@ set search_path to studybuds;
 
 -- Api testing: get joined group list
 
-insert into student (student_id,telegram_account) values (4943369,33);
-insert into student (student_id,telegram_account) values (4943370,34);
+insert into student (student_id,telegram_account) values (4071780,33);
+insert into student (student_id,telegram_account) values (4669615,34);
 
-insert into student_group (id,name,course,admin_id) values (100,'CP','Capstone',4943369);
-insert into student_group (id,name,course,admin_id) values (101,'CP2','Capstone',4943370);
+insert into student_group (id,name,course,admin_id, members_limit) values (100,'CP','Capstone',4071780, 10);
+insert into student_group (id,name,course,admin_id, members_limit) values (101,'CP2','Capstone',4669615, 10);
 
-insert into group_members (student_id,group_id) values (4943369,100);
-insert into group_members (student_id,group_id) values (4943370,100);
+insert into group_members (student_id,group_id) values (4071780,100);
+insert into group_members (student_id,group_id) values (4669615,100);
 
-insert into group_members (student_id,group_id) values (4943369,101);
-insert into group_members (student_id,group_id) values (4943370,101);
+insert into group_members (student_id,group_id) values (4071780,101);
+insert into group_members (student_id,group_id) values (4669615,101);
 
 -- Acceptance testing: basic group search
 
-insert into student (student_id,telegram_account) values (11,36);
-insert into student_group (id,name,course,admin_id,members_limit) values (102,'adm','Capstone',11,10);
-insert into group_members (student_id,group_id) values (11,102);
+insert into student (student_id,telegram_account) values (10,36);
+insert into student_group (id,name,course,admin_id,members_limit) values (102,'adm','Capstone',10,10);
+insert into group_members (student_id,group_id) values (10,102);
 
 
 -- Manage join requests

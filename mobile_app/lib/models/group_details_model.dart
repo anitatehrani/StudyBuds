@@ -25,9 +25,9 @@ class GroupDetails {
     return GroupDetails(
       groupId: json['groupId'],
       name: json['name'],
-      description: json['description'],
+      description: json['description'] ?? '',
       isPublic: json['isPublic'],
-      telegramLink: json['telegramLink'],
+      telegramLink: json['telegramLink'] ?? '',
       studentId: json['studentId'],
       members: json['members'],
       membersLimit: json['membersLimit'],
