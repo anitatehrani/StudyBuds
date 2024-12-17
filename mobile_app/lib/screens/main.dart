@@ -18,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     GroupList(key: Key("home_page")),
-    BasicSearchPage(title: 'Basic Search',key: Key("search_page")),
+    BasicSearchPage(title: 'Basic Search', key: Key("search_page")),
     GroupCreationScreen(key: Key("add_page")),
     NotificationScreen(key: Key("notifications_page")),
     ProfileScreen(key: Key("profile_page"))
