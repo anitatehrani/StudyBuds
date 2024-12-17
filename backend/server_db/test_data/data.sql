@@ -34,3 +34,15 @@ insert into notification (student_id,join_request_id,notification_type,message) 
 
 insert into join_request (id,group_id,student_id,status) values (2,3,12,'pending');
 insert into notification (student_id,join_request_id,notification_type,message) values (10,2,'join_request','Nona has requested to join the Capstone project');
+
+
+-- Joined group list
+
+insert into student (student_id,telegram_account) values (42674,1435);
+insert into student (student_id,telegram_account) values (42675,1436);
+
+insert into student_group (id,name,course,admin_id) values (4,'mygroupyes','Capstone',42674);
+insert into group_members (student_id,group_id) values (42674,4);
+
+insert into student_group (id,name,course,admin_id,members_limit) values (5,'groupof10','Capstone',10,100);
+insert into group_members (student_id,group_id) values (42674,5);
