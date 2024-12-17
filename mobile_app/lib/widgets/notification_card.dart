@@ -11,11 +11,12 @@ class NotificationCard extends StatelessWidget {
   final String? buttonLabel;
   final NotificationModel notification;
 
-  const NotificationCard(
-      {super.key,
-      this.backgroundColor,
-      this.buttonLabel,
-      required this.notification});
+  const NotificationCard({
+    super.key,
+    this.backgroundColor,
+    this.buttonLabel,
+    required this.notification,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class NotificationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        key:ValueKey(notification.id),
+                        key: ValueKey(notification.id),
                         notification.message,
                         style: TextStyle(
                           fontSize: 16,
@@ -83,15 +84,15 @@ class NotificationCard extends StatelessWidget {
                 SizedBox(width: 8),
                 if (notification.notificationType == 'join_request')
                   CustomIconButton(
-                    key:ValueKey("btn_${notification.id}"),
+                    key: ValueKey("btn_${notification.id}"),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return BlocProvider(
                             create: (_) => JoinRequestBloc(),
-                              child: NotificationPopup(
-                              key:ValueKey("popup"),
+                            child: NotificationPopup(
+                              key: ValueKey("popup"),
                               acceptButtonLabel: 'Accept',
                               rejectButtonLabel: 'Reject',
                               notification: notification,
@@ -107,7 +108,6 @@ class NotificationCard extends StatelessWidget {
           ],
         ),
       ),
-      // ),
     );
   }
 }
