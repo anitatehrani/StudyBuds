@@ -51,3 +51,8 @@ export async function editTextField(driver: WebdriverIO.Browser, key: Key, value
   const textField = byValueKey(key);
   await driver.elementSendKeys(textField, value);
 }
+
+export async function clickDropdownItemByValue(driver: WebdriverIO.Browser, value: string) {
+  const item = byText(value);
+  await driver.elementClick(item);
+}
