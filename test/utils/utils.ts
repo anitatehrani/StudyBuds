@@ -52,3 +52,5 @@ export async function editTextField(driver: WebdriverIO.Browser, key: Key, value
     const textField = byValueKey(key);
     await driver.elementSendKeys(textField, value);
 }
+
+export async function do_logout() {}

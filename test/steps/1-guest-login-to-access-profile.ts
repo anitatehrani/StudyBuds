@@ -1,5 +1,5 @@
 import { byValueKey, byText } from "appium-flutter-finder";
-import { BottomBarIcon, go_to_page } from "./../utils/utils";
+import { BottomBarIcon, go_to_page, login_guest } from "./../utils/utils";
 import { Given, When, Then } from "@cucumber/cucumber";
 import { driver } from "./all";
 
@@ -12,9 +12,9 @@ Given("I am on the home page not logged in", async () => {
 });
 
 When("I click on the login button", async () => {
-    //const loginButton = byValueKey("login_button"); CHANGEME
-    const loginButton = byValueKey("login_button");
-    await driver.elementClick(loginButton);
+    login_guest(driver);
+    //const loginButton = byValueKey("login_button"); TODO CHANGEME WHEN LOGOUT IS AVAILABLE
+    //await driver.elementClick(loginButton);
 });
 
 Then("I am logged in successfully", async () => {
@@ -34,39 +34,43 @@ Then("I can see my profile username {string}", async (username: string) => {
 When(
     "I input my Unige credentials username {string} and password {string}",
     async (username: string, password: string) => {
-        // const contexts = await driver.getContexts();
-        // console.log("Available contexts:", contexts);
+        /*
+            TODO
+            WHEN LOGOUT IS IMPLEMENTED REMOVE THE IF
+        */
 
-        await driver.waitUntil(
-            async () => {
-                const contexts = await driver.getContexts();
-                return contexts.includes("WEBVIEW_chrome");
-            },
-            { timeout: 10_000, timeoutMsg: "WEBVIEW_chrome context not found" }
-        );
+        if (false) {
+            await driver.waitUntil(
+                async () => {
+                    const contexts = await driver.getContexts();
+                    return contexts.includes("WEBVIEW_chrome");
+                },
+                { timeout: 10_000, timeoutMsg: "WEBVIEW_chrome context not found" }
+            );
 
-        await driver.switchContext("WEBVIEW_chrome");
-        driver.$('//input[@id="username"]').waitForDisplayed({ timeout: 10_000 });
+            await driver.switchContext("WEBVIEW_chrome");
+            driver.$('//input[@id="username"]').waitForDisplayed({ timeout: 10_000 });
 
-        await Promise.all([
-            driver.$('//input[@id="username"]').setValue(username),
-            driver.$('//input[@id="password"]').setValue(password),
-        ]);
-        const button = await driver.$('//button[contains(text(), "Login")]');
+            await Promise.all([
+                driver.$('//input[@id="username"]').setValue(username),
+                driver.$('//input[@id="password"]').setValue(password),
+            ]);
+            const button = await driver.$('//button[contains(text(), "Login")]');
 
-        driver.$('//input[@id="password"]').addValue("\uE007");
+            driver.$('//input[@id="password"]').addValue("\uE007");
 
-        //await button.waitForEnabled()
-        await button.click();
+            //await button.waitForEnabled()
+            await button.click();
 
-        await driver.waitUntil(
-            async () => {
-                const contexts = await driver.getContexts();
-                return contexts.includes("FLUTTER");
-            },
-            { timeout: 10_000, timeoutMsg: "FLUTTER context not found" }
-        );
+            await driver.waitUntil(
+                async () => {
+                    const contexts = await driver.getContexts();
+                    return contexts.includes("FLUTTER");
+                },
+                { timeout: 10_000, timeoutMsg: "FLUTTER context not found" }
+            );
 
-        await driver.switchContext("FLUTTER");
+            await driver.switchContext("FLUTTER");
+        }
     }
 );
