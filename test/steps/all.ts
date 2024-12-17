@@ -1,5 +1,6 @@
 import { After, Before, setDefaultTimeout } from "@cucumber/cucumber";
 import { remote } from "webdriverio";
+import { do_logout } from "../utils/utils";
 
 //DOCS:
 
@@ -50,6 +51,7 @@ Before(async function () {
 
 After(async function () {
     if (driver) {
+        do_logout();
         await driver.deleteSession();
     }
 });

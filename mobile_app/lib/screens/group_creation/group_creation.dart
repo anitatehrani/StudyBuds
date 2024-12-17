@@ -43,16 +43,16 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
       listener: (context, state) {
         if (state is GroupCreationSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Group created successfully!'), backgroundColor: Colors.green),
+            SnackBar(content: Text(state.message, key: Key('success_snackbar'),), backgroundColor: Colors.green),
           );
         } else if (state is GroupCreationFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error), backgroundColor: Colors.red),
+            SnackBar(content: Text(state.error, key: Key('error_snackbar')), backgroundColor: Colors.red),
           );
         }
       }, builder: (context, state) {
         if (state.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(key: Key('loading_indicator')));
         }
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -72,7 +72,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                           fillColor: Colors.white,
                           labelStyle: TextStyle(color: Colors.black)
                           ),
-                        style: const TextStyle(color: Colors.black)
+                        style: const TextStyle(color: Colors.black),
+                        key: Key('group_name_field'),
                     ),
                     const SizedBox(height: 4),
                     const Text(
@@ -92,7 +93,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                         fillColor: Colors.white, // Set the fill color
                         labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
                       ),
-                      style: const TextStyle(color: Colors.black), // Make the text color white
+                      style: const TextStyle(color: Colors.black), // Make t
+                      key: Key('group_description_field'),// he text color white
                     ),
                     const SizedBox(height: 4),
                     const Text(
@@ -107,6 +109,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                       onChanged: (value) {
                         selectedCourse = value!;
                       },
+                      key: Key('course_dropdown_field'),
                       decoratorProps: const DropDownDecoratorProps(
                         decoration: InputDecoration(
                           labelText: 'Course',
@@ -135,7 +138,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                         fillColor: Colors.white, // Set the fill color
                         labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
                       ),
-                      style: const TextStyle(color: Colors.black), // Make the text color white
+                      style: const TextStyle(color: Colors.black), //
+                      key: Key('members_limit_field'),// Make the text color white
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 4),
@@ -155,6 +159,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                           fillColor: Colors.white, // Set the fill color
                           labelStyle: TextStyle(color: Colors.black), // Make the label white for visibility
                         ),
+                      key: Key('telegram_group_link_field'),
                         style: const TextStyle(color: Colors.black), // Make the text color white
                     ),
                     const SizedBox(height: 4),
@@ -172,6 +177,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                         ),
                         Switch(
                           value: isPrivateGroup,
+                          key: Key('is_private_group_switch'),
                           onChanged: (value) {
                             setState(() {
                               isPrivateGroup = value;
@@ -184,6 +190,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen>  {
                     Center(
                       child: CustomFilledButton(
                         label: 'Create the study group',
+                        key: Key('create_group_button'),
                         iconData: Icons.add,
                         onPressed: () {
                           context.read<GroupCreationBloc>().add(

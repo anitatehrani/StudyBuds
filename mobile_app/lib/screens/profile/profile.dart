@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/models/profile.dart';
 import 'package:study_buds/telegram/telegram_bot.dart';
@@ -13,12 +14,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final TextEditingController telegramController = TextEditingController();
-  Profile? profile; // Use nullable type
+  String? telegramAccountId;
+  Profile? profile;
+  late TextEditingController telegramController;
 
   @override
   void initState() {
     super.initState();
+    telegramController = TextEditingController();
   }
 
   @override
@@ -46,7 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           listener: (context, state) {
             if (state is ProfileLoaded) {
               setState(() {
-                profile = state.profile; // Assign profile when data is loaded
+                profile = state.profile;
+                telegramController.text = profile!.telegramAccount.toString();
               });
             }
             if (state is ProfileSaveSuccess) {
@@ -82,7 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           TextField(
                             key: ValueKey('full_name_text_field'),
-                            controller: TextEditingController(),
+                            controller: TextEditingController(
+                                text:
+                                    '${profile!.firstName} ${profile!.lastName}'),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Full Name',
@@ -93,15 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText:
-                                  '${profile!.firstName} ${profile!.lastName}',
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
                           const SizedBox(height: 16),
                           TextField(
                             key: ValueKey('student_id_text_field'),
-                            controller: TextEditingController(),
+                            controller: TextEditingController(
+                                text: profile!.studentId.toString()),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Student ID',
@@ -112,7 +117,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   horizontal: 12, vertical: 12),
                               filled: true,
                               fillColor: Colors.white,
-                              hintText: profile!.studentId.toString(),
                             ),
                             style: const TextStyle(color: Colors.black),
                           ),
@@ -122,7 +126,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             controller: telegramController,
                             decoration: InputDecoration(
                               labelText: 'Telegram Account ID',
-                              hintText: profile!.telegramAccount.toString(),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
@@ -134,6 +137,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   'Use the bot below to get your Telegram ID.',
                             ),
                             style: const TextStyle(color: Colors.black),
+                            onChanged: (value) {
+                              setState(() {
+                                telegramAccountId = value;
+                              });
+                            },
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(10),
+                            ],
                           ),
                           const SizedBox(height: 10),
                           if (profile?.telegramAccount == null)
@@ -157,12 +169,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        if (telegramController.text.isNotEmpty) {
+                        if (telegramAccountId != null) {
                           context
                               .read<ProfileBloc>()
                               .add(SaveProfileDetailsEvent(
                                 10,
-                                int.parse(telegramController.text),
+                                int.parse(telegramAccountId!),
                               ));
                         }
                       },

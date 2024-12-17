@@ -29,9 +29,12 @@ Then(
     "I see my studentId {string}, fullname {string}, telegram id {string}",
     async function (studentIdValue: string, fullNameValue: string, telegramIdValue: string) {
         _telegramIdValue = telegramIdValue;
-        await waitForElementByValue(driver, fullNameValue);
-        await waitForElementByValue(driver, studentIdValue);
-        await waitForElementByValue(driver, telegramIdValue);
+
+        await Promise.all([
+            waitForElementByValue(driver, fullNameValue),
+            waitForElementByValue(driver, studentIdValue),
+            waitForElementByValue(driver, telegramIdValue),
+        ]);
     }
 );
 
