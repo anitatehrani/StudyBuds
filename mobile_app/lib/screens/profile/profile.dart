@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(height: 16),
                           TextField(
                             key: ValueKey('telegram_account_id_text_field'),
-                            controller: TextEditingController(),
+                            controller: telegramController,
                             decoration: InputDecoration(
                               labelText: 'Telegram Account ID',
                               hintText: profile!.telegramAccount.toString(),
