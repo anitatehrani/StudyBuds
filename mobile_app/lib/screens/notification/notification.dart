@@ -16,32 +16,34 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Notifications',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0,
-          foregroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: const Text(
+          'Notifications',
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        body: BlocProvider(
-            create: (_) =>
-                NotificationListBloc()..add(FetchNotificationListEvent(10)),
-            child: Scaffold(
-                body: BlocConsumer<NotificationListBloc, NotificationListState>(
-                    listener: (context, state) {
-              if (state is NotificationListSuccess)
+        centerTitle: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
+        foregroundColor: Theme.of(context).primaryColor,
+      ),
+      body: BlocProvider(
+        create: (_) => NotificationListBloc()..add(FetchNotificationListEvent(10)),
+        child: Scaffold(
+          body: BlocConsumer<NotificationListBloc, NotificationListState>(
+            listener: (context, state) {
+              if (state is NotificationListSuccess) {
                 notificationList = state.results;
-              else if (state is NotificationListFailure) {
+              } else if (state is NotificationListFailure) {
                 notificationList = [];
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                      content: Text(state.error), backgroundColor: Colors.red),
+                    content: Text(state.error),
+                    backgroundColor: Colors.red,
+                  ),
                 );
               }
-            }, builder: (context, state) {
+            },
+            builder: (context, state) {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -52,8 +54,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     final notification = notificationList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 2.0, horizontal: 16.0),
-                      // Add vertical and horizontal padding
+                        vertical: 2.0,
+                        horizontal: 16.0,
+                      ),
                       child: NotificationCard(
                         backgroundColor: Colors.white,
                         notification: notification,
@@ -62,6 +65,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   },
                 ),
               );
-            }))));
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
