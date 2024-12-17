@@ -14,10 +14,6 @@ class GroupDetailsBloc extends Bloc<GroupDetailsEvent, GroupDetailsState> {
       try {
         final request = GroupDetailsRequest(event.groupId);
         final response = await request.send();
-
-        print('====================');
-        print(event.groupId);
-        print(response.data);
         if (response.isSuccess) {
           emit(GroupDetailsSuccess(GroupDetails.fromJson(response.data)));
         } else {
