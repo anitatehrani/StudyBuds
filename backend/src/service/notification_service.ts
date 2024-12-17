@@ -59,7 +59,7 @@ export async function sendPushNotification(studentId: number, joinRequestId: num
         await saveNotification(studentId, joinRequestId, notificationType, template.body);
     } catch (error) {
         console.error('Failed to send push notification:', getErrorMessage(error));
-        throw error;
+        // throw error;
     }
 };
 

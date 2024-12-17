@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:study_buds/blocs/group_details/bloc/group_details_bloc.dart';
 import 'package:study_buds/blocs/group_list/bloc/group_list_bloc.dart';
 import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/models/group.dart';
@@ -85,8 +87,10 @@ class GroupListTab extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       vertical: 2.0, horizontal: 16.0),
                   // Add vertical and horizontal padding
-                  child: BlocProvider<JoinGroupBloc>(
-                    create: (_) => JoinGroupBloc(),
+                  child: MultiProvider(
+                  providers: [
+                    Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
+                    Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc())],
                     child: GroupCard(
                       backgroundColor: Colors.white,
                       buttonLabel: isJoinedScreen
@@ -100,8 +104,8 @@ class GroupListTab extends StatelessWidget {
                       group: group,
                       index: index,
                     ),
-                  ),
-                );
+                  )
+                  );
               },
             )
           : Padding(
