@@ -18,4 +18,4 @@ jobs:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
       - name: Copy everything to the server
-        run: rsync -urltv --delete -e ssh ./ ${{secrets.SSH_HOST}}:studybuds
+        run: rsync -urltv --delete --exclude=.git -e ssh ./ ${{secrets.SSH_HOST}}:studybuds
