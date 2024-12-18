@@ -42,7 +42,8 @@ class NotificationPopup extends StatelessWidget {
         content: Text(notification.message),
         actions: [
           CustomTextButton(
-            onPressed: (){
+            key: ValueKey("reject"),
+            onPressed: () {
               context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
                   10, notification.joinRequestId, false));
               Navigator.of(context).pop();
@@ -53,6 +54,7 @@ class NotificationPopup extends StatelessWidget {
           ),
           SizedBox(width: 2),
           CustomFilledButton(
+            key: ValueKey("accept"),
             onPressed: () {
               context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
                   10, notification.joinRequestId, true));
