@@ -236,7 +236,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                             : 2,
                                         telegramLink:
                                             telegramLinkController.text,
-                                        isPublic: isPrivateGroup,
+                                        isPublic: !isPrivateGroup,
                                         studentId: 10),
                                   ));
                             },
