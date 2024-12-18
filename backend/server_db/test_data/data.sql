@@ -17,7 +17,7 @@ insert into group_members (student_id,group_id) values (4669615,101);
 -- Acceptance testing: basic group search
 
 insert into student (student_id,telegram_account) values (10,36);
-insert into student_group (id,name, description, course,admin_id,members_limit) values (102,'adm','test description','Capstone',10,10);
+insert into student_group (id,name, description, course,admin_id,members_limit,is_public) values (102,'adm','test description','Capstone',10,10,false);
 insert into group_members (student_id,group_id) values (10,102);
 
 
