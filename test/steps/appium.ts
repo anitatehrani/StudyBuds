@@ -55,5 +55,3 @@ export async function go_to_search_page(driver: any) {
   // });
 
 }
-
-
