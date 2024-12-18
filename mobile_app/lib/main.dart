@@ -5,9 +5,10 @@ import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/main.dart';
 import 'package:study_buds/utils/push_notification.dart';
+import 'package:study_buds/utils/static_env.dart';
 
 void main() async {
-  // enableFlutterDriverExtension();
+  if(DRIVER)enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   PushNotificationService.instance.retrievePushNotificationToken();
