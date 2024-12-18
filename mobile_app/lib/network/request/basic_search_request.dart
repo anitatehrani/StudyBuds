@@ -1,4 +1,4 @@
-import 'package:study_buds/network/netwrok_service.dart';
+import 'package:study_buds/network/network_service.dart';
 import 'package:study_buds/network/response/group_search_build.dart';
 
 import '../../network/base_http_request.dart';
