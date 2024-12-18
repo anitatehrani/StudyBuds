@@ -10,7 +10,7 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           sudo chmod 600 ~/.ssh/id
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         shell: bash
