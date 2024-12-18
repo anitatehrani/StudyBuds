@@ -34,3 +34,14 @@ insert into notification (student_id,join_request_id,notification_type,message) 
 
 insert into join_request (id,group_id,student_id,status) values (2,3,12,'pending');
 insert into notification (student_id,join_request_id,notification_type,message) values (10,2,'join_request','Nona has requested to join the Capstone project');
+
+
+-- Join request Acceptance testing
+
+insert into student_group (id,name, members_limit, is_public, course,admin_id) values (7,'aya',10, false, 'Capstone', 11);
+insert into student_group (id,name, members_limit, is_public, course,admin_id) values (8,'ale',10, true, 'Capstone', 11);
+insert into student_group (id,name, members_limit, is_public, course,admin_id) values (19,'check',10, true, 'Capstone', 11);
+
+insert into group_members (student_id,group_id) values (10,8);
+
+insert into join_request (id,group_id,student_id,status) values (11,7,10,'pending');

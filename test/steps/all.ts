@@ -2,7 +2,7 @@ import { After, Before, setDefaultTimeout } from "@cucumber/cucumber";
 import { remote } from "webdriverio";
 import { opts, SECONDS_TIMEOUT } from "./appium";
 
-let driver: WebdriverIO.Browser;
+export let driver: WebdriverIO.Browser;
 setDefaultTimeout(SECONDS_TIMEOUT);
 
 Before(async function () {

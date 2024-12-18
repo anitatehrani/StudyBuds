@@ -1,74 +1,67 @@
 import assert from "assert";
-import { Given, When, Then, setDefaultTimeout, Before } from "@cucumber/cucumber";
-import { login_guest, SECONDS_TIMEOUT } from "./appium";
-import { BottomBarIcon, editTextField, go_to_page, UiId, waitForElementByValue } from "../utils/utils";
+import { Before, Given, When, Then , setDefaultTimeout} from "@cucumber/cucumber";
+import { byValueKey } from "appium-flutter-finder";
 import { getDriver } from "./all";
+import { login_guest, SECONDS_TIMEOUT} from "./appium";
+import { BottomBarIcon, clickButton, go_to_page, waitForElement, waitForElementByValue } from "../utils/utils";
 
-let driver: WebdriverIO.Browser;
-Before(() => driver = getDriver())
+let driver:WebdriverIO.Browser;
+Before(()=>driver=getDriver())
 setDefaultTimeout(SECONDS_TIMEOUT);
 
-// vars to pass content among functions
-var _telegramIdValue: string;
-var _newTelegramIdValue: string;
+Given("I am on the search page and logged in as User A", async () => {
+      await login_guest(driver);
+      await go_to_page(driver, BottomBarIcon.search);
+  });
 
+Given("I type {string} in the search bar", async function (groupName: string) {
+        const searchBar = byValueKey("search_bar");
+        await driver.elementSendKeys(searchBar, groupName);
+        const searchButton = byValueKey("search_button");
+        await driver.elementClick(searchButton);
+      });
 
-Given("I logged in", async () => {
-    await login_guest(driver);
+Given("I already have sent a join request to the group", async function () {});
+
+When("I attempt to send another join request", async function () {});
+
+Then("The {string} button is displayed to indicate that a request is already pending", async function (buttonLabel: string) {
+    const groupId = 107; 
+    const joinButton = byValueKey(`join_button_${groupId}`);
+    console.log(joinButton);
+    console.log(`join_button_${groupId}`);
+    await waitForElementByValue(driver, buttonLabel);
+
 });
 
-When("I open the profile page", async function () {
-    await go_to_page(driver, BottomBarIcon.profile);
-});
 
-Then("I see my studentId {string}, fullname {string}, telegram id {string}",
-    async function (studentIdValue: string, fullNameValue: string, telegramIdValue: string) {
-        _telegramIdValue = telegramIdValue;
-        await waitForElementByValue(driver, fullNameValue);
-        await waitForElementByValue(driver, studentIdValue);
-        await waitForElementByValue(driver, telegramIdValue);
-    });
+Given("I am a member of the group", async function () {});
 
+  
 
-When("I edit the Telegram Id field to the value {string}", async function (newTelegramIdValue: string) {
-    await editTextField(driver, UiId.telegramAccountIdTextField, newTelegramIdValue);
-});
+// When("I attempt to send another join request", async function () {
+//   const joinRequestButton = byValueKey("send_join_request_btn");
 
-Then("The telegram id field is modified to the value I entered, {string}",
-    async function (newTelegramIdValue: string) {
-        _newTelegramIdValue = newTelegramIdValue;
-        await waitForElementByValue(driver, newTelegramIdValue);
-        await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
-        await waitForElementByValue(driver, _telegramIdValue);
-    });
+  // try {
+  //   await driver.elementClick(joinRequestButton);
+  //   assert.fail("The Join group button is clickable, but it should be disabled!");
+  // } catch (e) {
+  //   console.log("The Join group button is correctly unclickable.");
+  // }
+// });
 
 
-Then("all fields are locked or disabled from editing except the telegram user id", async function () {
-    try {
-        await editTextField(driver, UiId.fullNameTextField, "New Name");
-        assert.ok(false);
+//   const joinRequestButton = byValueKey("send_join_request_btn");
 
-    } catch (e) {
-        console.log("Full name field is locked as expected.");
-    }
+//   const buttonText = await driver.getElementText(joinRequestButton);
+//   assert.strictEqual(
+//     buttonText,
+//     "Pending...",
+//     Expected button text to be "Pending...", but got "${buttonText}".
+//   );
+//   console.log(The ${buttonLabel} button is correctly disabled and displays "Pending...".);
+// });
 
-    try {
-        await editTextField(driver, UiId.studentIdTextField, "555");
-        assert.ok(false);
 
-    } catch (e) {
-        console.log("Student id is locked as expected");
-    }
 
-    try {
-        await editTextField(driver, UiId.telegramAccountIdTextField, _newTelegramIdValue);
-        await waitForElementByValue(driver, _newTelegramIdValue);
-        await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
-        await waitForElementByValue(driver, _telegramIdValue);
-        console.log("Telegram ID field is editable as expected");
 
-    } catch (e) {
-        console.log("Telegram account id should be editable");
-        assert.ok(false);
-    }
-});

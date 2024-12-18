@@ -156,7 +156,7 @@ class GroupCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomTextButton(
+                        CustomTextButton(            
                           foregroundColor: additionalButtonColor ??
                               Theme.of(context).colorScheme.primary,
                           label: additionalButtonLabel ?? "See more",
@@ -166,6 +166,7 @@ class GroupCard extends StatelessWidget {
                         ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
                         CustomFilledButton(
+                         key: Key('join_button_${group.id}'),
                           isEnabled: group.status == null,
                           label: group.status != null
                               ? group.status!
@@ -190,6 +191,7 @@ class GroupCard extends StatelessWidget {
           if (context.watch<JoinGroupBloc>().state is JoinGroupRequestLoading)
             Positioned.fill(
               child: Container(
+                key: Key('loading_spinner'),
                 color: Colors.black.withOpacity(0.3),
                 child: Center(
                   child: CircularProgressIndicator(),

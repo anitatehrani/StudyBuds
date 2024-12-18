@@ -45,9 +45,7 @@ Then("I see all groups where {string} is inside their group name", async functio
           itemText.toLowerCase().includes(String.toLowerCase()),
           `Group name does not contain the text: ${String}`
         );
-  
     }
-
 });
 
 When("no groups contain {string} in their name", async function (String: string) {
@@ -73,7 +71,6 @@ When("no groups contain {string} in their name", async function (String: string)
       const itemText = await driver.getElementText(item);
       assert.ok(!itemText.toLowerCase().includes(String.toLowerCase()), `Group name contains the text: ${String}`);
     }
-    
   }
 });
 
@@ -85,7 +82,6 @@ Then('a message appears saying {string}', async function (String: string) {
   // const messageText = await driver.getElementText(noResultsMessage);
   // assert.strictEqual(messageText, String);
   assert.strictEqual(String, String);
-  
 });
 
 Then("the system displays an empty list", async function () {
