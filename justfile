@@ -63,16 +63,16 @@ emulator: emulator-backend
     unset DOCKER_HOST && docker compose down -v emulator && docker compose up -d emulator
 
 build-apk:
-    cd mobile_app && flutter build apk --debug --dart-define API_URL=${API_URL:-http://10.0.2.2:5000}
+    cd mobile_app && flutter build apk --debug --dart-define-from-file ../.env
 
 run-apk:
-    cd mobile_app && flutter run --dart-define API_URL=${API_URL:-http://10.0.2.2:5000}
+    cd mobile_app && flutter run --dart-define-from-file ../.env
 
 install-apk: build-apk
     adb install mobile_app/build/app/outputs/apk/release/app-release.apk
 
 screenshare:
-    scrcpy
+    scrcpy >/dev/null 2>/dev/null &!
 
 hotspot:
     sudo $(which create_ap) wlp0s20f3 wlp0s20f3 islandwifi island01 --freq-band 2.4 -g 192.168.137.1 --no-dnsmasq --daemon && sleep 5 && sudo dnsmasq --interface=ap0 --bind-interfaces --dhcp-range=192.168.137.2,192.168.137.255 -z -H hosts
@@ -85,4 +85,10 @@ acceptance-test *args='':
 
 models:
     docker compose up -d --force-recreate postgres && docker compose run --rm --build backend-models
+
+appium-server:
+    if ! pgrep appium; then (cd test && npx appium > /tmp/appium 2>&1 )&! echo "Started appium" || echo "Started appium"; fi
+
+physical-acceptance-test *args='': appium-server 
+    docker compose up -d --force-recreate postgres && cd test && npx cucumber-js {{args}}
 

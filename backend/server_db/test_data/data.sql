@@ -23,7 +23,7 @@ insert into group_members (student_id,group_id) values (10,102);
 
 -- Manage join requests
 
-insert into student (student_id,telegram_account) values (10,35);
+-- insert into student (student_id,telegram_account) values (10,35);
 insert into student (student_id,telegram_account) values (12,37);
 
 insert into student_group (id,name, description,course,admin_id,members_limit) values (103,'joinrequest', 'description','Capstone',10,100);
