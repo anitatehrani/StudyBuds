@@ -89,6 +89,6 @@ models:
 appium-server:
     if ! pgrep appium; then (cd test && npx appium > /tmp/appium 2>&1 )&! echo "Started appium" || echo "Started appium"; fi
 
-physical-acceptance-test: appium-server
-    docker compose up -d --force-recreate postgres && cd test && npx cucumber-js
+physical-acceptance-test *args='': appium-server 
+    docker compose up -d --force-recreate postgres && cd test && npx cucumber-js {{args}}
 
