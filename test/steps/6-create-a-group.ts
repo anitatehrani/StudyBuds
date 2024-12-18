@@ -1,9 +1,7 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement, waitForElementByValue, clickDropdownItemByValue, editTextField } from "../utils/utils";
+import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement, waitForElementByValue, clickDropdownItemByValue, editTextField, login_guest } from "../utils/utils";
 import { getDriver } from "./all";
-import { byValueKey } from "appium-flutter-finder";
 import assert from "assert";
-import {login_guest} from "./appium.ts"
 
 let driver: WebdriverIO.Browser;
 
