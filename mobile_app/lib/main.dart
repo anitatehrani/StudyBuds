@@ -6,9 +6,6 @@ import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/main.dart';
 import 'package:study_buds/utils/push_notification.dart';
 
-const API_URL = String.fromEnvironment("API_URL",
-    defaultValue: "http://34.154.87.170:5000");
-
 void main() async {
   // enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
