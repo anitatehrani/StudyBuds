@@ -172,6 +172,7 @@ class GroupCard extends StatelessWidget {
                         ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
                         CustomFilledButton(
+                          key: Key('join_button_${group.id}'),
                           isEnabled: group.status == null,
                           label: group.status != null
                               ? group.status!
