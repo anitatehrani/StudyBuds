@@ -1,12 +1,14 @@
 name: "Continuous delivery"
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 jobs:
   continuous-delivery:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
@@ -17,5 +19,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-      - name: Copy everything to the server
+      - name: Remote deployment
         run: ssh ${{secrets.SSH_HOST}} 'cd orange/StudyBuds && git pull && docker compose up -d --build --force-recreate backend postgres unigelogin unigeapi'
