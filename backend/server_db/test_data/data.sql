@@ -56,9 +56,10 @@ insert into group_members (student_id,group_id) values (10,104);
 
 -- Join request Acceptance testing
 
+insert into student (student_id,telegram_account) values (11,4848);
+
 insert into student_group (id,name, members_limit, is_public, course,admin_id) values (7,'aya',10, false, 'Capstone', 11);
 
 
-insert into group_members (student_id,group_id) values (10,8);
 
-insert into join_request (id,group_id,student_id,status) values (11,7,10,'pending');
+insert into join_request (id,group_id,student_id,status) values (13,7,10,'pending');
