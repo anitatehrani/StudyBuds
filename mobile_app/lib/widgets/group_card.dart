@@ -14,7 +14,7 @@ class GroupCard extends StatelessWidget {
   final Color? backgroundColor;
   final String? buttonLabel;
   final Color? additionalButtonColor;
-  final String? additionalButtonLabel;
+  final String additionalButtonLabel;
 
   const GroupCard(
       {super.key,
@@ -23,7 +23,7 @@ class GroupCard extends StatelessWidget {
       this.backgroundColor,
       this.buttonLabel,
       this.additionalButtonColor,
-      this.additionalButtonLabel});
+      this.additionalButtonLabel = "See more"});
 
   showGroupDetails(BuildContext context) {
     final groupDetailsBloc = context.read<GroupDetailsBloc>();
@@ -160,7 +160,7 @@ class GroupCard extends StatelessWidget {
                         CustomTextButton(
                           foregroundColor: additionalButtonColor ??
                               Theme.of(context).colorScheme.primary,
-                          label: additionalButtonLabel ?? "See more",
+                          label: additionalButtonLabel,
                           onPressed: () {
                             if (additionalButtonLabel == "See more") {
                               showGroupDetails(context);
