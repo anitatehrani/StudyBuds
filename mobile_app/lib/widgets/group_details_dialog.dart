@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:study_buds/models/group_details_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/group.dart';
 import '../widgets/custom_text_button.dart';
@@ -123,16 +124,14 @@ class GroupDetailsDialog extends StatelessWidget {
                       ),
                     );
                   },
-                )
-                  ..addAll(
+                )..addAll(
                     group.members > 10
                         ? [
                             Container(
                               width: 24.0,
                               height: 24.0,
                               decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).colorScheme.secondary,
+                                color: Theme.of(context).colorScheme.secondary,
                                 shape: BoxShape.circle,
                               ),
                               child: const Center(
@@ -165,6 +164,34 @@ class GroupDetailsDialog extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 12),
+              if (groupDetails.isPublic) ...[
+                Text(
+                  'Telegram Link ',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                GestureDetector(
+                  onTap: () async {
+                    final url = Uri.parse(groupDetails.telegramLink);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      throw 'The link is not correct. Add some validation check for the link: $url';
+                    }
+                  },
+                  child: Text(
+                    groupDetails.telegramLink,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
