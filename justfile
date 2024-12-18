@@ -62,14 +62,19 @@ emulator-backend: system-docker
 emulator: emulator-backend
     unset DOCKER_HOST && docker compose down -v emulator && docker compose up -d emulator
 
-build-apk:
-    cd mobile_app && flutter build apk --debug --dart-define-from-file ../.env
+switch-branch branch:
+    git checkout {{branch}}
+
+restart-backend:
+    docker compose up --build -d --force-recreate backend postgres
+
+checkout branch: (switch-branch branch) restart-backend run-apk
 
 run-apk:
     cd mobile_app && flutter run --dart-define-from-file ../.env
 
-install-apk: build-apk
-    adb install mobile_app/build/app/outputs/apk/release/app-release.apk
+run-apk-release:
+    cd mobile_app && flutter run --release --dart-define-from-file ../.env
 
 screenshare:
     scrcpy >/dev/null 2>/dev/null &!
