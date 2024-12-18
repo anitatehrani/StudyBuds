@@ -24,6 +24,7 @@ const opts = {
         "appium:automationName": "Flutter",
         "appium:retryBackoffTime": 500,
         "appium:chromedriverAutodownload": true,
+        "appium:autoGrantPermissions": true
     },
 };
 
