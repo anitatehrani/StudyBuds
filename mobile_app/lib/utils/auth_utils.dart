@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
-import 'package:study_buds/main.dart';
+import 'package:study_buds/utils/static_env.dart';
 
 class AuthUtils {
   static final _storage = FlutterSecureStorage();

@@ -51,10 +51,10 @@ class Group {
       name: json['name'] ?? 'No Name',
       course: json['course'] ?? 'No Course',
       description: json['description'] ?? 'No Description',
-      members: parseInt(json['member_count']),
-      isPublic: json['is_public'] == true,
-      studentId: parseInt(json['student_id']),
-      telegramLink: json['telegram_link'] ?? '',
+      members: parseInt(json['memberCount']),
+      isPublic: json['isPublic'],
+      studentId: parseInt(json['studentId']),
+      telegramLink: json['telegramLink'] ?? '',
       status: json['status'] ?? null,
     );
   }

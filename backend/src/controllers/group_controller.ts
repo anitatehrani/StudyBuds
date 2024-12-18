@@ -3,8 +3,8 @@ import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
-import { BadRequestError, NotFoundError } from "../utils/api_error";
 import UnigeService from "../service/unige_service";
+import { BadRequestError, NotFoundError } from "../utils/api_error";
 
 import {
     checkBoolean,
@@ -48,6 +48,13 @@ export async function createGroup(req: Request) {
         telegramLink,
         adminId: studentId, // Maps studentId to adminId
     });
+
+    let group_id = group.id;
+    
+    const group_member = await GroupMembers.create({
+        studentId,
+        group_id
+    })
 
     return { message: "Group created successfully", group };
 }
