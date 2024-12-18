@@ -8,14 +8,13 @@ enum HttpVerb { GET, POST }
 
 class NetworkService {
   static final NetworkService instance = NetworkService._internal();
-  final String _baseUrl = API_URL;
 
   NetworkService._internal();
 
   // send the http request and returns the http response
   Future<http.Response> sendHTTPRequest(
       String endPoint, HttpVerb httpVerb, Map<String, dynamic> parameters) {
-    final Uri url = Uri.parse("$_baseUrl$endPoint");
+    final Uri url = Uri.parse("$API_URL$endPoint");
 
     if (httpVerb == HttpVerb.GET) {
       return http.get(url);

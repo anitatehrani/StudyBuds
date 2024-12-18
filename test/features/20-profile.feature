@@ -3,7 +3,7 @@ Feature: Profile
 Scenario: Profile
     Given I logged in
     When I open the profile page
-    Then I see my studentId "10", fullname "Noah White", telegram id "35"
+    Then I see my studentId "10", fullname "Noah White", telegram id "36"
 
 Scenario: Telegram Id
     Given I logged in
