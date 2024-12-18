@@ -14,12 +14,12 @@ class JoinGroupBloc extends Bloc<JoinGroupEvent, JoinGroupState> {
         final groupCreation = JoinGroupRequest(event.studentId, event.groupId);
         final response = await groupCreation.send();
         if (response.isSuccess) {
-          emit(JoinGroupRequestSuccess(response.data));
+          emit(JoinGroupRequestSuccess(response.data, event.groupId));
         } else {
-          emit(JoinGroupRequestFailed(response.data));
+          emit(JoinGroupRequestFailed(response.data, event.groupId));
         }
       } catch (error) {
-        emit(JoinGroupRequestFailed('Failed to join group.'));
+        emit(JoinGroupRequestFailed('Failed to join group.', event.groupId));
       }
     });
   }
