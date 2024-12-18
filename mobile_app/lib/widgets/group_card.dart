@@ -14,16 +14,16 @@ class GroupCard extends StatelessWidget {
   final Color? backgroundColor;
   final String? buttonLabel;
   final Color? additionalButtonColor;
-  final String? additionalButtonLabel;
+  final String additionalButtonLabel;
 
   const GroupCard(
       {super.key,
-        required this.group,
-        required this.index,
-        this.backgroundColor,
-        this.buttonLabel,
-        this.additionalButtonColor,
-        this.additionalButtonLabel});
+      required this.group,
+      required this.index,
+      this.backgroundColor,
+      this.buttonLabel,
+      this.additionalButtonColor,
+      this.additionalButtonLabel = "See more"});
 
   showGroupDetails(BuildContext context) {
     final groupDetailsBloc = context.read<GroupDetailsBloc>();
@@ -40,7 +40,8 @@ class GroupCard extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               } else if (state is GroupDetailsSuccess) {
                 return GroupDetailsDialog(
-                  groupDetails: state.groupDetails, group: group,
+                  groupDetails: state.groupDetails,
+                  group: group,
                 );
               } else if (state is GroupDetailsFailure) {
                 return AlertDialog(
@@ -159,9 +160,14 @@ class GroupCard extends StatelessWidget {
                         CustomTextButton(
                           foregroundColor: additionalButtonColor ??
                               Theme.of(context).colorScheme.primary,
-                          label: additionalButtonLabel ?? "See more",
+                          label: additionalButtonLabel,
                           onPressed: () {
-                            showGroupDetails(context);
+                            if (additionalButtonLabel == "See more") {
+                              showGroupDetails(context);
+                            } else if (additionalButtonLabel ==
+                                "Delete the group") {
+                              // TODO: Delete the group functionality
+                            }
                           },
                         ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
@@ -170,14 +176,14 @@ class GroupCard extends StatelessWidget {
                           label: group.status != null
                               ? group.status!
                               : (group.isPublic
-                              ? 'Join the group'
-                              : 'Send a join request'),
+                                  ? 'Join the group'
+                                  : 'Send a join request'),
                           backgroundColor:
-                          Theme.of(context).colorScheme.primary,
+                              Theme.of(context).colorScheme.primary,
                           onPressed: () {
                             context.read<JoinGroupBloc>().add(
-                              JoinGroupRequestEvent(10, group.id ?? 0),
-                            );
+                                  JoinGroupRequestEvent(10, group.id ?? 0),
+                                );
                           },
                         ),
                       ],
