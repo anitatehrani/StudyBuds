@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database';
 import { Column, Model, Table } from 'sequelize-typescript';
+import sequelize from '../config/database';
 
 
 

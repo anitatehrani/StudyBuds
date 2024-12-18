@@ -31,7 +31,8 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
     telegramLink,
     adminId,
   } = groupData;
-  const group = await Group.create({
+
+  const group = new Group({
     name,
     description,
     course,
@@ -41,6 +42,7 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
     adminId,
   });
 
+  await group.save();
   return group;
 }
 

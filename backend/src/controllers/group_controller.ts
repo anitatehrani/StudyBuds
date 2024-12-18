@@ -46,16 +46,16 @@ export async function createGroup(req: Request) {
         isPublic,
         membersLimit,
         telegramLink,
-        adminId: studentId, // Maps studentId to adminId
+        adminId: studentId,
     });
-
-    let group_id = group.id;
-    
-    const group_member = await GroupMembers.create({
-        studentId,
-        group_id
-    })
-
+    let groupId = group.id;
+    if (groupId !== undefined || groupId !== null){
+        const group_member = new GroupMembers({
+            studentId,
+            groupId
+        })
+        group_member.save()
+    }
     return { message: "Group created successfully", group };
 }
 
