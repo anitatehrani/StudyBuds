@@ -148,7 +148,6 @@ class GroupCard extends StatelessWidget {
                     SizedBox(height: 8),
                     Text(
                       group.course,
-                      key : Key('group_course_${index.toString()}'),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -185,6 +184,7 @@ class GroupCard extends StatelessWidget {
                           ),
                         ] else
                           CustomTextButton(
+                            key: ValueKey('see_more_$index'), // Unique key for "See More"
                             foregroundColor: additionalButtonColor ??
                                 Theme.of(context).colorScheme.primary,
                             label: additionalButtonLabel,
