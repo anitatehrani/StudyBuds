@@ -82,10 +82,13 @@ When(
     'I click on "see more" of the first group',
     async function () {
         // Target the first group card using the dynamic key
+        const firstGroupCard = byValueKey('group_card_0'); // Unique key for the first group card
         const seeMoreButton = byValueKey('see_more_0'); // Target the See More button in the first card
 
         // Click on "See More" button
         await driver.elementClick(seeMoreButton);
+        await driver.elementClick(firstGroupCard);
+
     }
 );
 
