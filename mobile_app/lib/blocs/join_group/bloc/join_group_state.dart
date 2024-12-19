@@ -9,10 +9,12 @@ final class JoinGroupRequestLoading extends JoinGroupState {}
 
 final class JoinGroupRequestSuccess extends JoinGroupState {
   final String message;
-  JoinGroupRequestSuccess(this.message);
+  final int groupId;
+  JoinGroupRequestSuccess(this.message, this.groupId);
 }
 
 final class JoinGroupRequestFailed extends JoinGroupState {
   final String error;
-  JoinGroupRequestFailed(this.error);
+  final int groupId;
+  JoinGroupRequestFailed(this.error, this.groupId);
 }

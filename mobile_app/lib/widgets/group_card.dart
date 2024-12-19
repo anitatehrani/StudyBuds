@@ -69,6 +69,16 @@ class GroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<JoinGroupBloc, JoinGroupState>(
+      listenWhen: (prev, current) {
+        // Only listen if the current state's groupId matches this card's groupId
+        if (current is JoinGroupRequestSuccess && current.groupId == group.id) {
+          return true;
+        }
+        if (current is JoinGroupRequestFailed && current.groupId == group.id) {
+          return true;
+        }
+        return false;
+      },
       listener: (context, state) {
         if (state is JoinGroupRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -174,6 +184,7 @@ class GroupCard extends StatelessWidget {
                         ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
                         CustomFilledButton(
+                          key: Key('join_button_${group.id}'),
                           isEnabled: group.status == null,
                           label: group.status != null
                               ? group.status!
