@@ -18,12 +18,12 @@ class GroupCard extends StatelessWidget {
 
   const GroupCard(
       {super.key,
-      required this.group,
-      required this.index,
-      this.backgroundColor,
-      this.buttonLabel,
-      this.additionalButtonColor,
-      this.additionalButtonLabel = "See more"});
+        required this.group,
+        required this.index,
+        this.backgroundColor,
+        this.buttonLabel,
+        this.additionalButtonColor,
+        this.additionalButtonLabel = "See more"});
 
   showGroupDetails(BuildContext context) {
     final groupDetailsBloc = context.read<GroupDetailsBloc>();
@@ -169,6 +169,7 @@ class GroupCard extends StatelessWidget {
                       children: [
                         if (additionalButtonLabel == "Delete the group") ...[
                           CustomFilledButton(
+                            key: ValueKey('see_more_$index'), // Unique key for "See More"
                             backgroundColor: additionalButtonColor ??
                                 Theme.of(context).colorScheme.primary,
                             label: additionalButtonLabel,
@@ -183,6 +184,7 @@ class GroupCard extends StatelessWidget {
                           ),
                         ] else
                           CustomTextButton(
+                            key: ValueKey('see_more_$index'), // Unique key for "See More"
                             foregroundColor: additionalButtonColor ??
                                 Theme.of(context).colorScheme.primary,
                             label: additionalButtonLabel,
@@ -203,14 +205,14 @@ class GroupCard extends StatelessWidget {
                             label: group.status != null
                                 ? group.status!
                                 : (group.isPublic
-                                    ? 'Join the group'
-                                    : 'Send a join request'),
+                                ? 'Join the group'
+                                : 'Send a join request'),
                             backgroundColor:
-                                Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.primary,
                             onPressed: () {
                               context.read<JoinGroupBloc>().add(
-                                    JoinGroupRequestEvent(10, group.id ?? 0),
-                                  );
+                                JoinGroupRequestEvent(10, group.id ?? 0),
+                              );
                             },
                           ),
                       ],
