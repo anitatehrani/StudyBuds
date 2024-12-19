@@ -167,36 +167,52 @@ class GroupCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomTextButton(
-                          foregroundColor: additionalButtonColor ??
-                              Theme.of(context).colorScheme.primary,
-                          label: additionalButtonLabel,
-                          onPressed: () {
-                            if (additionalButtonLabel == "See more") {
-                              showGroupDetails(context);
-                            } else if (additionalButtonLabel ==
-                                "Delete the group") {
-                              // TODO: Delete the group functionality
-                            }
-                          },
-                        ),
+                        if (additionalButtonLabel == "Delete the group") ...[
+                          CustomFilledButton(
+                            backgroundColor: additionalButtonColor ??
+                                Theme.of(context).colorScheme.primary,
+                            label: additionalButtonLabel,
+                            onPressed: () {
+                              if (additionalButtonLabel == "See more") {
+                                showGroupDetails(context);
+                              } else if (additionalButtonLabel ==
+                                  "Delete the group") {
+                                // TODO: Delete the group functionality
+                              }
+                            },
+                          ),
+                        ] else
+                          CustomTextButton(
+                            foregroundColor: additionalButtonColor ??
+                                Theme.of(context).colorScheme.primary,
+                            label: additionalButtonLabel,
+                            onPressed: () {
+                              if (additionalButtonLabel == "See more") {
+                                showGroupDetails(context);
+                              } else if (additionalButtonLabel ==
+                                  "Delete the group") {
+                                // TODO: Delete the group functionality
+                              }
+                            },
+                          ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
-                        CustomFilledButton(
-                          key: Key('join_button_${group.id}'),
-                          isEnabled: group.status == null,
-                          label: group.status != null
-                              ? group.status!
-                              : (group.isPublic
-                                  ? 'Join the group'
-                                  : 'Send a join request'),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          onPressed: () {
-                            context.read<JoinGroupBloc>().add(
-                                  JoinGroupRequestEvent(10, group.id ?? 0),
-                                );
-                          },
-                        ),
+                        if (additionalButtonLabel != "Delete the group")
+                          CustomFilledButton(
+                            key: Key('join_button_${group.id}'),
+                            isEnabled: group.status == null,
+                            label: group.status != null
+                                ? group.status!
+                                : (group.isPublic
+                                    ? 'Join the group'
+                                    : 'Send a join request'),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            onPressed: () {
+                              context.read<JoinGroupBloc>().add(
+                                    JoinGroupRequestEvent(10, group.id ?? 0),
+                                  );
+                            },
+                          ),
                       ],
                     )
                   ],
