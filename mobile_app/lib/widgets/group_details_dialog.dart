@@ -34,6 +34,7 @@ class GroupDetailsDialog extends StatelessWidget {
                 children: [
                   Text(
                     group.name,
+                    key: const ValueKey('group_details_name'),
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
@@ -46,6 +47,8 @@ class GroupDetailsDialog extends StatelessWidget {
                       group.isPublic
                           ? Icons.lock_open_rounded
                           : Icons.lock_rounded,
+                      key: ValueKey('group_details_type_icon'),
+                      // Key for group type icon
                       size: 16,
                     ),
                   ),
@@ -54,6 +57,7 @@ class GroupDetailsDialog extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 group.course,
+                key: ValueKey('group_details_course'), // Key for course name
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w500,
@@ -71,6 +75,8 @@ class GroupDetailsDialog extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 group.description,
+                key: ValueKey('group_details_description'),
+                // Key for full description
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),
@@ -89,6 +95,8 @@ class GroupDetailsDialog extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     '• ${group.members} members',
+                    key: ValueKey('group_details_members_count'),
+                    // Key for group members count
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w500,
@@ -150,6 +158,8 @@ class GroupDetailsDialog extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                   child: GestureDetector(
+                    key: ValueKey('group_details_modify_members'),
+                    // Key for modify option
                     onTap: () {
                       print('Modify clicked');
                     },
