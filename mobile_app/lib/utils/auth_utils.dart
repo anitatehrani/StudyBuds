@@ -33,19 +33,19 @@ class AuthUtils {
 
   static Future<void> logout(BuildContext context) async {
     // Retrieve the current session token
-    final token = await _storage.read(key: 'session_token');
-
-    // Make a logout request to the backend if the token exists
-    if (token != null) {
-      try {
-        await http.post(
-          Uri.parse('$API_URL/logout'), // Replace with your backend logout endpoint
-          headers: {'Authorization': 'Bearer $token'},
-        );
-      } catch (e) {
-        debugPrint('Failed to log out from the server: $e');
-      }
-    }
+    // final token = await _storage.read(key: 'session_token');
+    //
+    // // Make a logout request to the backend if the token exists
+    // if (token != null) {
+    //   try {
+    //     await http.post(
+    //       Uri.parse('$API_URL/logout'), // Replace with your backend logout endpoint
+    //       headers: {'Authorization': 'Bearer $token'},
+    //     );
+    //   } catch (e) {
+    //     debugPrint('Failed to log out from the server: $e');
+    //   }
+    // }
     // Clear the local session
     await _storage.delete(key: 'session_token');
     // Navigate to the login page
