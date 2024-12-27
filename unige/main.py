@@ -21,6 +21,9 @@ class Student:
     id: int
     first_name: str
     last_name: str
+    gpa: int
+    study_plan: list[str]
+    exams_to_take: list[str]
     courses: list[str]
 
 
@@ -36,7 +39,8 @@ DATABASE = TypeAdapter(Database).validate_python(
 
 
 def print_token():
-    print(jwt.encode({"sub": "study_buds"}, SECRET_KEY, algorithm=ALGORITHM))  # type: ignore
+    print(jwt.encode({"sub": "study_buds"}, SECRET_KEY,
+          algorithm=ALGORITHM))  # type: ignore
 
 
 def validate_token(
@@ -48,7 +52,8 @@ def validate_token(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])  # type: ignore
+        payload = jwt.decode(token.credentials, SECRET_KEY,
+                             algorithms=[ALGORITHM])  # type: ignore
         username: str = payload.get("sub")
         if username != "study_buds":
             raise credentials_exception
