@@ -1,6 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
+import { validateInt } from "../utils/validation_error";
 
 interface GroupData {
   name: string;
@@ -101,7 +102,20 @@ export async function basicSearch(
     throw error;
   }
 }
+
+
+export async function getSuggestedGroups(
+  studentId: number
+): Promise<SearchResult[]> {
+
+  return null;
+};
+
+
+
+
 export default {
   createGroup,
   basicSearch,
+  getSuggestedGroups
 };

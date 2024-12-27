@@ -49,7 +49,7 @@ export async function createGroup(req: Request) {
         adminId: studentId,
     });
     let groupId = group.id;
-    if (groupId !== undefined || groupId !== null){
+    if (groupId !== undefined || groupId !== null) {
         const group_member = new GroupMembers({
             studentId,
             groupId
@@ -91,7 +91,7 @@ export async function getGroupDetails(req: Request) {
 
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
-    }else {
+    } else {
         for (const member of members) {
             const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
             groupMembers.push({
@@ -119,9 +119,21 @@ export async function getGroupDetails(req: Request) {
     return response;
 }
 
+
+
+// Function to get suggested groups based on gpa and studyplan
+export async function getSuggestedGroupList(req: Request) {
+    const student_id = validateInt(req.params, "student_id");
+    const result = await GroupService.getSuggestedGroups(student_id);
+    console.log(result);
+    return result;
+}
+
+
 export default {
     createGroup,
     getAllGroups,
     basicSearchResult,
     getGroupDetails,
+    getSuggestedGroupList
 };
