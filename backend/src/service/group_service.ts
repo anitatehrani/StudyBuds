@@ -109,6 +109,23 @@ export async function getSuggestedGroups(
 ): Promise<SearchResult[]> {
 
   return null;
+
+  //for testing, delete later
+  // const query = `
+  //   SELECT *
+  //   FROM
+  //     studybuds.student_group
+    
+  // `;
+  // try {
+  //   const results = await sequelize.query<SearchResult>(query, {
+  //     type: QueryTypes.SELECT,
+  //   });
+  //   return results;
+  // } catch (error) {
+  //   console.error(`Failed to execute suggested Group. Error: ${error.message}`);
+  //   throw error;
+  // }
 };
 
 
