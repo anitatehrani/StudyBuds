@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axios_instance, TOKEN, UNIGEAPI_URL } from "../config/unigeapi";
 
 export async function getCourses(): Promise<Array<string>> {
@@ -31,9 +32,22 @@ export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> 
     ).data;
 }
 
+export async function getStudentsUnigeProfiles(studentIds: Array<number>): Promise<Array<UnigeStudent>> {
+    return (
+        await axios.post(`${UNIGEAPI_URL}/students`,
+        studentIds,
+        {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+            }
+        })
+    ).data;
+}
+
 const UnigeService = {
     getCourses,
     getUnigeProfile,
+    getStudentsUnigeProfiles
 };
 
 export default UnigeService;

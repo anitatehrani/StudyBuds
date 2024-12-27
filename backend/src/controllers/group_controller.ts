@@ -3,7 +3,7 @@ import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
-import UnigeService from "../service/unige_service";
+import UnigeService, { UnigeStudent } from "../service/unige_service";
 import { BadRequestError, NotFoundError } from "../utils/api_error";
 
 import {
@@ -87,19 +87,16 @@ export async function getGroupDetails(req: Request) {
     const members = await GroupMembers.findAll({ where: { groupId } });
 
     // Prepare student details by fetching individually from UnigeMockup
-    const groupMembers = [];
+    let groupMembers: UnigeStudent[] = [];
 
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
     }else {
+        const membersId = [];
         for (const member of members) {
-            const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
-            groupMembers.push({
-                studentId: studentDetail.id,
-                firstName: studentDetail.first_name,
-                lastName: studentDetail.last_name,
-            });
+            membersId.push(member.studentId);
         }
+        groupMembers = await UnigeService.getStudentsUnigeProfiles(membersId);
 
     }
 

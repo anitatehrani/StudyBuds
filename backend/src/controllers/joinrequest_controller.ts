@@ -106,7 +106,6 @@ export async function changeJoinRequestStatus(req: Request) {
             await sendPushNotification(joinRequest.studentId, joinRequestId, fbToken.token,  NotificationType.REJECT, '', group.name);
         return {message: 'Join request rejected successfully'};
     }
-    // TODO
     const currentLimit = await getCurrentMemberList(groupId);
     const membersLimit = group.membersLimit
     if (membersLimit < currentLimit + 1) {
