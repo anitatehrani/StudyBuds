@@ -8,6 +8,7 @@ courses:
     - ADDITIONAL USEFUL KNOWLEDGE
     - COMPUTATIONAL NEUROENGINEERING
     - COMPUTER GRAPHICS
+    - CAPSTONE
     - TOPICS IN COMPUTER SCIENCE
     - DATA WAREHOUSING
     - INTERNET OF THINGS
@@ -69,10 +70,11 @@ students:
           - DEEP LEARNING
           - HIGH PERFORMANCE COMPUTING
           - DATA WAREHOUSING
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
           - NETWORK ANALYSIS
           - DATA WAREHOUSING
+          - CAPSTONE
     - id: 4346002
       first_name: Shelby
       last_name: Bolton
@@ -108,7 +110,7 @@ students:
           - DATA PROTECTION & PRIVACY
           - COMPUTER GRAPHICS
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - MACHINE LEARNING
     - id: 4493407
       first_name: Lori
@@ -137,7 +139,7 @@ students:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - DATA VISUALIZATION
           - VIRTUALIZATION AND CLOUD COMPUTING
-      courses_semester:
+      courses:
           - DATA VISUALIZATION
           - ADVANCED DATA MANAGEMENT
     - id: 4739268
@@ -174,7 +176,7 @@ students:
           - GEOMETRIC MODELING
           - COMPUTER GAMES
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - ADDITIONAL USEFUL KNOWLEDGE
           - GEOMETRIC MODELING
           - DIGITAL SIGNAL & IMAGE PROCESSING
@@ -204,7 +206,7 @@ students:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
       exams_to_take:
           - ADVANCED DATA MANAGEMENT
-      courses_semester:
+      courses:
           - ADVANCED DATA MANAGEMENT
     - id: 4721904
       first_name: Sarah
@@ -235,7 +237,7 @@ students:
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - PREDICTIVE ANALYTICS PROJECT
-      courses_semester:
+      courses:
           - MOBILE DEVELOPMENT
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - PREDICTIVE ANALYTICS PROJECT
@@ -276,7 +278,7 @@ students:
           - INTERNET OF THINGS
           - COMPUTATIONAL VISION
           - DIGITAL FORENSICS
-      courses_semester:
+      courses:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - MULTIAGENT SYSTEMS
@@ -317,7 +319,7 @@ students:
           - PREDICTIVE ANALYTICS PROJECT
           - TOPICS IN COMPUTER SCIENCE
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - HUMAN COMPUTER INTERACTION
           - INTERNET OF THINGS
           - DIGITAL SIGNAL & IMAGE PROCESSING
@@ -357,7 +359,7 @@ students:
           - ADDITIONAL USEFUL KNOWLEDGE
           - MULTIAGENT SYSTEMS
           - MACHINE LEARNING
-      courses_semester:
+      courses:
           - ADDITIONAL USEFUL KNOWLEDGE
           - ADVANCED DATA MANAGEMENT
           - DIGITAL FORENSICS
@@ -389,7 +391,7 @@ students:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - HIGH PERFORMANCE COMPUTING
           - COMPUTER GAMES
-      courses_semester:
+      courses:
           - COMPUTER GAMES
     - id: 4418046
       first_name: Jason
@@ -415,7 +417,7 @@ students:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
       exams_to_take:
           - COMPUTATIONAL VISION
-      courses_semester:
+      courses:
           - COMPUTATIONAL VISION
     - id: 4531676
       first_name: Robin
@@ -455,7 +457,7 @@ students:
           - COMPUTER GRAPHICS
           - DATA WAREHOUSING
           - ADDITIONAL USEFUL KNOWLEDGE
-      courses_semester:
+      courses:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
     - id: 4202977
       first_name: Stephanie
@@ -491,7 +493,7 @@ students:
           - DATA VISUALIZATION
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - NETWORK ANALYSIS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
@@ -523,7 +525,7 @@ students:
           - HIGH PERFORMANCE COMPUTING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - MULTIAGENT SYSTEMS
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
     - id: 4486683
@@ -562,7 +564,7 @@ students:
           - DEEP LEARNING
           - MOBILE DEVELOPMENT
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - MACHINE LEARNING
           - COMPUTER GRAPHICS
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
@@ -601,7 +603,7 @@ students:
           - MACHINE LEARNING AND DATA ANALYSIS
           - MOBILE DEVELOPMENT
           - NETWORK ANALYSIS
-      courses_semester:
+      courses:
           - HUMAN COMPUTER INTERACTION
           - DATA VISUALIZATION
           - NETWORK ANALYSIS
@@ -643,7 +645,7 @@ students:
           - DATA PROTECTION & PRIVACY
           - IT PROJECT MANAGEMENT
           - DIGITAL FORENSICS
-      courses_semester:
+      courses:
           - IT PROJECT MANAGEMENT
           - COMPUTER GAMES
           - TOPICS IN COMPUTER SCIENCE
@@ -673,7 +675,7 @@ students:
       exams_to_take:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
-      courses_semester:
+      courses:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
     - id: 4860757
@@ -708,7 +710,7 @@ students:
           - HIGH PERFORMANCE COMPUTING
           - MULTIAGENT SYSTEMS
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - DATA VISUALIZATION
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - HUMAN COMPUTER INTERACTION
@@ -750,7 +752,7 @@ students:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - VIRTUALIZATION AND CLOUD COMPUTING
           - ADVANCED DATA MANAGEMENT
-      courses_semester:
+      courses:
           - COMPUTATIONAL NEUROENGINEERING
           - DATA PROTECTION & PRIVACY
           - HUMAN COMPUTER INTERACTION
@@ -784,7 +786,7 @@ students:
           - FINAL DISSERTATION
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - DATA VISUALIZATION
-      courses_semester:
+      courses:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
     - id: 4507463
       first_name: Michael
@@ -810,7 +812,7 @@ students:
           - FINAL DISSERTATION
       exams_to_take:
           - DEEP LEARNING
-      courses_semester:
+      courses:
           - DEEP LEARNING
     - id: 4385129
       first_name: Anna
@@ -839,7 +841,7 @@ students:
           - COMPUTER GRAPHICS
           - NETWORK ANALYSIS
           - DEEP LEARNING
-      courses_semester:
+      courses:
           - MACHINE LEARNING AND DATA ANALYSIS
           - DEEP LEARNING
     - id: 4772672
@@ -867,7 +869,7 @@ students:
       exams_to_take:
           - INTERNET OF THINGS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
     - id: 4702972
@@ -898,7 +900,7 @@ students:
           - DISTRIBUTED COMPUTING
           - IT PROJECT MANAGEMENT
           - MULTIAGENT SYSTEMS
-      courses_semester:
+      courses:
           - ADVANCED DATA MANAGEMENT
     - id: 4634639
       first_name: Teresa
@@ -936,7 +938,7 @@ students:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - MOBILE DEVELOPMENT
           - IT PROJECT MANAGEMENT
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - DATA WAREHOUSING
           - DATA PROTECTION & PRIVACY
@@ -980,7 +982,7 @@ students:
           - NETWORK ANALYSIS
           - COMPUTATIONAL NEUROENGINEERING
           - ADVANCED DATA MANAGEMENT
-      courses_semester:
+      courses:
           - AUGMENTED REALITY
           - FINAL DISSERTATION
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
@@ -1020,7 +1022,7 @@ students:
           - MACHINE LEARNING AND DATA ANALYSIS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - MULTIAGENT SYSTEMS
-      courses_semester:
+      courses:
           - COMPUTER GAMES
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
@@ -1051,7 +1053,7 @@ students:
           - COMPUTATIONAL VISION
           - PREDICTIVE ANALYTICS PROJECT
           - IT PROJECT MANAGEMENT
-      courses_semester:
+      courses:
           - COMPUTATIONAL VISION
           - PREDICTIVE ANALYTICS PROJECT
           - IT PROJECT MANAGEMENT
@@ -1090,7 +1092,7 @@ students:
           - NETWORK ANALYSIS
           - TOPICS IN COMPUTER SCIENCE
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
           - ADVANCED DATA MANAGEMENT
     - id: 4841588
@@ -1126,7 +1128,7 @@ students:
           - INTERNET OF THINGS
           - IT PROJECT MANAGEMENT
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - ADDITIONAL USEFUL KNOWLEDGE
           - ADVANCED DATA MANAGEMENT
@@ -1170,7 +1172,7 @@ students:
           - MULTIAGENT SYSTEMS
           - PREDICTIVE ANALYTICS PROJECT
           - DIGITAL FORENSICS
-      courses_semester:
+      courses:
           - NETWORK ANALYSIS
           - DATA WAREHOUSING
           - COMPUTATIONAL VISION
@@ -1211,7 +1213,7 @@ students:
           - ADVANCED DATA MANAGEMENT
           - IT PROJECT MANAGEMENT
           - COMPUTER GRAPHICS
-      courses_semester:
+      courses:
           - DIGITAL SIGNAL & IMAGE PROCESSING
           - INTERNET OF THINGS
           - HUMAN COMPUTER INTERACTION
@@ -1246,7 +1248,7 @@ students:
           - DATA WAREHOUSING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - NETWORK ANALYSIS
-      courses_semester:
+      courses:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - MACHINE LEARNING AND DATA ANALYSIS
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
@@ -1279,7 +1281,7 @@ students:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - GEOMETRIC MODELING
           - HIGH PERFORMANCE COMPUTING
-      courses_semester:
+      courses:
           - COMPUTATIONAL NEUROENGINEERING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
     - id: 4458476
@@ -1320,7 +1322,7 @@ students:
           - ADDITIONAL USEFUL KNOWLEDGE
           - HUMAN COMPUTER INTERACTION
           - ADVANCED DATA MANAGEMENT
-      courses_semester:
+      courses:
           - DIGITAL FORENSICS
           - IT PROJECT MANAGEMENT
           - MACHINE LEARNING AND DATA ANALYSIS
@@ -1362,7 +1364,7 @@ students:
           - COMPUTER GAMES
           - DISTRIBUTED COMPUTING
           - COMPUTATIONAL VISION
-      courses_semester:
+      courses:
           - DEEP LEARNING
           - HUMAN COMPUTER INTERACTION
           - HIGH PERFORMANCE COMPUTING
@@ -1403,7 +1405,7 @@ students:
           - ADVANCED DATA MANAGEMENT
           - MACHINE LEARNING AND DATA ANALYSIS
           - VIRTUALIZATION AND CLOUD COMPUTING
-      courses_semester:
+      courses:
           - ADVANCED DATA MANAGEMENT
           - DEEP LEARNING
           - MACHINE LEARNING
@@ -1443,7 +1445,7 @@ students:
           - DISTRIBUTED COMPUTING
           - GEOMETRIC MODELING
           - DIGITAL SIGNAL & IMAGE PROCESSING
-      courses_semester:
+      courses:
           - COMPUTER GRAPHICS
           - DISTRIBUTED COMPUTING
           - DEEP LEARNING
@@ -1481,7 +1483,7 @@ students:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - GEOMETRIC MODELING
           - MACHINE LEARNING
-      courses_semester:
+      courses:
           - GEOMETRIC MODELING
           - COMPUTATIONAL NEUROENGINEERING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
@@ -1513,7 +1515,7 @@ students:
           - DIGITAL FORENSICS
           - MACHINE LEARNING AND DATA ANALYSIS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
-      courses_semester:
+      courses:
           - DIGITAL FORENSICS
     - id: 4866720
       first_name: Mark
@@ -1540,7 +1542,7 @@ students:
       exams_to_take:
           - DATA WAREHOUSING
           - VIRTUALIZATION AND CLOUD COMPUTING
-      courses_semester:
+      courses:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - DATA WAREHOUSING
     - id: 4356110
@@ -1570,7 +1572,7 @@ students:
           - AUGMENTED REALITY
           - DEEP LEARNING
           - TOPICS IN COMPUTER SCIENCE
-      courses_semester:
+      courses:
           - TOPICS IN COMPUTER SCIENCE
     - id: 4055389
       first_name: Stacy
@@ -1610,7 +1612,7 @@ students:
           - DEEP LEARNING
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - AUGMENTED REALITY
-      courses_semester:
+      courses:
           - DATA WAREHOUSING
           - HUMAN COMPUTER INTERACTION
           - IT PROJECT MANAGEMENT
@@ -1644,7 +1646,7 @@ students:
           - NATURAL LANGUAGE PROCESSING
           - DATA PROTECTION & PRIVACY
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
-      courses_semester:
+      courses:
           - DATA PROTECTION & PRIVACY
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
     - id: 4450387
@@ -1672,7 +1674,7 @@ students:
       exams_to_take:
           - GEOMETRIC MODELING
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
-      courses_semester:
+      courses:
           - GEOMETRIC MODELING
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
     - id: 4547504
@@ -1706,7 +1708,7 @@ students:
           - DIGITAL FORENSICS
           - HIGH PERFORMANCE COMPUTING
           - NATURAL LANGUAGE PROCESSING
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
           - DISTRIBUTED COMPUTING
           - DIGITAL FORENSICS
@@ -1738,7 +1740,7 @@ students:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - NATURAL LANGUAGE PROCESSING
           - ADDITIONAL USEFUL KNOWLEDGE
-      courses_semester:
+      courses:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - NATURAL LANGUAGE PROCESSING
           - DATA VISUALIZATION
@@ -1781,7 +1783,7 @@ students:
           - HUMAN COMPUTER INTERACTION
           - MACHINE LEARNING
           - MOBILE DEVELOPMENT
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - ADDITIONAL USEFUL KNOWLEDGE
     - id: 4715226
@@ -1812,7 +1814,7 @@ students:
           - DIGITAL FORENSICS
           - COMPUTER GRAPHICS
           - GEOMETRIC MODELING
-      courses_semester:
+      courses:
           - GEOMETRIC MODELING
     - id: 4765912
       first_name: Micheal
@@ -1850,7 +1852,7 @@ students:
           - ADVANCED DATA MANAGEMENT
           - FINAL DISSERTATION
           - MULTIAGENT SYSTEMS
-      courses_semester:
+      courses:
           - COMPUTATIONAL NEUROENGINEERING
     - id: 4861255
       first_name: David
@@ -1887,7 +1889,7 @@ students:
           - FINAL DISSERTATION
           - MULTIAGENT SYSTEMS
           - NATURAL LANGUAGE PROCESSING
-      courses_semester:
+      courses:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - FINAL DISSERTATION
     - id: 4425864
@@ -1926,7 +1928,7 @@ students:
           - ADDITIONAL USEFUL KNOWLEDGE
           - AUGMENTED REALITY
           - MACHINE LEARNING
-      courses_semester:
+      courses:
           - ADDITIONAL USEFUL KNOWLEDGE
           - VIRTUALIZATION AND CLOUD COMPUTING
           - GEOMETRIC MODELING
@@ -1957,7 +1959,7 @@ students:
           - COMPUTATIONAL NEUROENGINEERING
           - INTERNET OF THINGS
           - AUGMENTED REALITY
-      courses_semester:
+      courses:
           - COMPUTATIONAL NEUROENGINEERING
           - AUGMENTED REALITY
           - INTERNET OF THINGS
@@ -1998,7 +2000,7 @@ students:
           - MULTIAGENT SYSTEMS
           - DATA PROTECTION & PRIVACY
           - MACHINE LEARNING
-      courses_semester:
+      courses:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - MULTIAGENT SYSTEMS
           - MACHINE LEARNING
@@ -2031,7 +2033,7 @@ students:
           - NETWORK ANALYSIS
           - MULTIAGENT SYSTEMS
           - DATA PROTECTION & PRIVACY
-      courses_semester:
+      courses:
           - NETWORK ANALYSIS
           - MULTIAGENT SYSTEMS
           - DATA PROTECTION & PRIVACY
@@ -2065,7 +2067,7 @@ students:
           - DATA PROTECTION & PRIVACY
           - COMPUTATIONAL VISION
           - TOPICS IN COMPUTER SCIENCE
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
     - id: 4870870
       first_name: Julie
@@ -2091,7 +2093,7 @@ students:
           - MACHINE LEARNING
       exams_to_take:
           - DATA PROTECTION & PRIVACY
-      courses_semester:
+      courses:
           - DATA PROTECTION & PRIVACY
     - id: 4091721
       first_name: Noah
@@ -2121,7 +2123,7 @@ students:
           - HUMAN COMPUTER INTERACTION
           - COMPUTER GRAPHICS
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - COMPUTER GRAPHICS
           - DISTRIBUTED COMPUTING
@@ -2152,7 +2154,7 @@ students:
           - DIGITAL SIGNAL & IMAGE PROCESSING
           - COMPUTER GAMES
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - COMPUTER GAMES
           - MACHINE LEARNING
     - id: 4008796
@@ -2188,7 +2190,7 @@ students:
           - COMPUTER GAMES
           - VIRTUALIZATION AND CLOUD COMPUTING
           - ADVANCED DATA MANAGEMENT
-      courses_semester:
+      courses:
           - MACHINE LEARNING
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - DATA VISUALIZATION
@@ -2223,7 +2225,7 @@ students:
           - MULTIAGENT SYSTEMS
           - HIGH PERFORMANCE COMPUTING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
-      courses_semester:
+      courses:
           - NETWORK ANALYSIS
           - NATURAL LANGUAGE PROCESSING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
@@ -2262,7 +2264,7 @@ students:
           - ADVANCED DATA MANAGEMENT
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - DIGITAL SIGNAL & IMAGE PROCESSING
-      courses_semester:
+      courses:
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
     - id: 4197183
       first_name: Mary
@@ -2296,7 +2298,7 @@ students:
           - DISTRIBUTED COMPUTING
           - MACHINE LEARNING
           - DEEP LEARNING
-      courses_semester:
+      courses:
           - DEEP LEARNING
           - ADVANCED DATA MANAGEMENT
           - HIGH PERFORMANCE COMPUTING
@@ -2337,7 +2339,7 @@ students:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - MOBILE DEVELOPMENT
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - COMPUTER GAMES
           - HIGH PERFORMANCE COMPUTING
     - id: 4264906
@@ -2378,7 +2380,7 @@ students:
           - TOPICS IN COMPUTER SCIENCE
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - DATA VISUALIZATION
-      courses_semester:
+      courses:
           - IT PROJECT MANAGEMENT
     - id: 4761104
       first_name: Frank
@@ -2406,7 +2408,7 @@ students:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - DISTRIBUTED COMPUTING
     - id: 4157599
       first_name: Patricia
@@ -2442,7 +2444,7 @@ students:
           - MACHINE LEARNING AND DATA ANALYSIS
           - DISTRIBUTED COMPUTING
           - DIGITAL SIGNAL & IMAGE PROCESSING
-      courses_semester:
+      courses:
           - AUGMENTED REALITY
           - DATA VISUALIZATION
           - DIGITAL SIGNAL & IMAGE PROCESSING
@@ -2483,7 +2485,7 @@ students:
           - COMPUTATIONAL NEUROENGINEERING
           - DATA VISUALIZATION
           - COMPUTER GAMES
-      courses_semester:
+      courses:
           - MACHINE LEARNING AND DATA ANALYSIS
           - PREDICTIVE ANALYTICS PROJECT
           - HUMAN COMPUTER INTERACTION
@@ -2520,7 +2522,7 @@ students:
           - DIGITAL SIGNAL & IMAGE PROCESSING
           - NETWORK ANALYSIS
           - AUGMENTED REALITY
-      courses_semester:
+      courses:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
     - id: 4884079
@@ -2557,7 +2559,7 @@ students:
           - FINAL DISSERTATION
           - TOPICS IN COMPUTER SCIENCE
           - DEEP LEARNING
-      courses_semester:
+      courses:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - VIRTUALIZATION AND CLOUD COMPUTING
           - FINAL DISSERTATION
@@ -2591,7 +2593,7 @@ students:
           - DATA WAREHOUSING
           - FINAL DISSERTATION
           - DIGITAL FORENSICS
-      courses_semester:
+      courses:
           - DIGITAL FORENSICS
           - DATA PROTECTION & PRIVACY
     - id: 4465652
@@ -2620,7 +2622,7 @@ students:
           - MACHINE LEARNING AND DATA ANALYSIS
           - ADVANCED DATA MANAGEMENT
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
-      courses_semester:
+      courses:
           - ADVANCED DATA MANAGEMENT
           - MACHINE LEARNING AND DATA ANALYSIS
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
@@ -2654,7 +2656,7 @@ students:
           - ADDITIONAL USEFUL KNOWLEDGE
           - DIGITAL SIGNAL & IMAGE PROCESSING
           - INTERNET OF THINGS
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - ADDITIONAL USEFUL KNOWLEDGE
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
@@ -2699,7 +2701,7 @@ students:
           - DIGITAL SIGNAL & IMAGE PROCESSING
           - COMPUTER GAMES
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - AUGMENTED REALITY
           - DATA PROTECTION & PRIVACY
@@ -2727,7 +2729,7 @@ students:
           - COMPUTATIONAL NEUROENGINEERING
       exams_to_take:
           - MOBILE DEVELOPMENT
-      courses_semester:
+      courses:
           - MOBILE DEVELOPMENT
     - id: 4130364
       first_name: Crystal
@@ -2753,7 +2755,7 @@ students:
           - NATURAL LANGUAGE PROCESSING
       exams_to_take:
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - DISTRIBUTED COMPUTING
     - id: 4736738
       first_name: Amanda
@@ -2781,7 +2783,7 @@ students:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - MACHINE LEARNING
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
-      courses_semester:
+      courses:
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - MACHINE LEARNING
     - id: 4360959
@@ -2821,7 +2823,7 @@ students:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - ADVANCED DATA MANAGEMENT
           - DIGITAL SIGNAL & IMAGE PROCESSING
-      courses_semester:
+      courses:
           - NETWORK ANALYSIS
           - COMPUTER GAMES
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
@@ -2854,7 +2856,7 @@ students:
           - IT PROJECT MANAGEMENT
           - COMPUTATIONAL NEUROENGINEERING
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - DISTRIBUTED COMPUTING
           - IT PROJECT MANAGEMENT
           - NETWORK ANALYSIS
@@ -2883,7 +2885,7 @@ students:
           - FINAL DISSERTATION
       exams_to_take:
           - PREDICTIVE ANALYTICS PROJECT
-      courses_semester:
+      courses:
           - PREDICTIVE ANALYTICS PROJECT
     - id: 4044505
       first_name: Mark
@@ -2909,7 +2911,7 @@ students:
           - DISTRIBUTED COMPUTING
       exams_to_take:
           - MACHINE LEARNING AND DATA ANALYSIS
-      courses_semester:
+      courses:
           - MACHINE LEARNING AND DATA ANALYSIS
     - id: 4011145
       first_name: Sandra
@@ -2941,7 +2943,7 @@ students:
           - VIRTUALIZATION AND CLOUD COMPUTING
           - COMPUTATIONAL VISION
           - COMPUTATIONAL NEUROENGINEERING
-      courses_semester:
+      courses:
           - COMPUTATIONAL VISION
           - MACHINE LEARNING
     - id: 4944669
@@ -2980,7 +2982,7 @@ students:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - AUGMENTED REALITY
           - HIGH PERFORMANCE COMPUTING
-      courses_semester:
+      courses:
           - FINAL DISSERTATION
           - MACHINE LEARNING AND DATA ANALYSIS
           - NATURAL LANGUAGE PROCESSING
@@ -3012,7 +3014,7 @@ students:
       exams_to_take:
           - MACHINE LEARNING
           - IT PROJECT MANAGEMENT
-      courses_semester:
+      courses:
           - MACHINE LEARNING
           - IT PROJECT MANAGEMENT
     - id: 4345564
@@ -3053,7 +3055,7 @@ students:
           - COMPUTATIONAL NEUROENGINEERING
           - PREDICTIVE ANALYTICS PROJECT
           - MACHINE LEARNING AND DATA ANALYSIS
-      courses_semester:
+      courses:
           - ADDITIONAL USEFUL KNOWLEDGE
           - DEEP LEARNING
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
@@ -3082,7 +3084,7 @@ students:
       exams_to_take:
           - PREDICTIVE ANALYTICS PROJECT
           - COMPUTATIONAL VISION
-      courses_semester:
+      courses:
           - COMPUTATIONAL VISION
           - PREDICTIVE ANALYTICS PROJECT
     - id: 4204776
@@ -3117,7 +3119,7 @@ students:
           - MOBILE DEVELOPMENT
           - COMPUTER GAMES
           - INTERNET OF THINGS
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - DATA VISUALIZATION
           - MOBILE DEVELOPMENT
@@ -3148,7 +3150,7 @@ students:
           - HUMAN COMPUTER INTERACTION
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
-      courses_semester:
+      courses:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - TOPICS IN COMPUTER SCIENCE
     - id: 4782750
@@ -3180,7 +3182,7 @@ students:
           - GEOMETRIC MODELING
           - DIGITAL FORENSICS
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
-      courses_semester:
+      courses:
           - DISTRIBUTED COMPUTING
           - GEOMETRIC MODELING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
@@ -3219,7 +3221,7 @@ students:
           - AUGMENTED REALITY
           - HUMAN COMPUTER INTERACTION
           - COMPUTATIONAL VISION
-      courses_semester:
+      courses:
           - COMPUTATIONAL VISION
     - id: 4117922
       first_name: Teresa
@@ -3247,7 +3249,7 @@ students:
           - DATA VISUALIZATION
           - MULTIAGENT SYSTEMS
           - DISTRIBUTED COMPUTING
-      courses_semester:
+      courses:
           - DATA VISUALIZATION
     - id: 4898134
       first_name: Michelle
@@ -3276,7 +3278,7 @@ students:
           - INTERNET OF THINGS
           - PREDICTIVE ANALYTICS PROJECT
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
     - id: 4616346
       first_name: Lisa
@@ -3316,7 +3318,7 @@ students:
           - DEEP LEARNING
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - GEOMETRIC MODELING
-      courses_semester:
+      courses:
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - AUGMENTED REALITY
           - IT PROJECT MANAGEMENT
@@ -3353,7 +3355,7 @@ students:
           - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
           - HIGH PERFORMANCE COMPUTING
           - TOPICS IN COMPUTER SCIENCE
-      courses_semester:
+      courses:
           - HIGH PERFORMANCE COMPUTING
     - id: 4924188
       first_name: Kimberly
@@ -3386,7 +3388,7 @@ students:
           - DATA WAREHOUSING
           - IT PROJECT MANAGEMENT
           - DIGITAL SIGNAL & IMAGE PROCESSING
-      courses_semester:
+      courses:
           - IT PROJECT MANAGEMENT
           - VIRTUALIZATION AND CLOUD COMPUTING
           - DATA WAREHOUSING
@@ -3415,7 +3417,7 @@ students:
       exams_to_take:
           - MULTIAGENT SYSTEMS
           - DATA PROTECTION & PRIVACY
-      courses_semester:
+      courses:
           - DATA PROTECTION & PRIVACY
     - id: 4215795
       first_name: Anthony
@@ -3444,7 +3446,7 @@ students:
           - INTERNET OF THINGS
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
           - IT PROJECT MANAGEMENT
-      courses_semester:
+      courses:
           - INTERNET OF THINGS
           - IT PROJECT MANAGEMENT
           - COMPUTER GAMES
@@ -3480,7 +3482,7 @@ students:
           - ADDITIONAL USEFUL KNOWLEDGE
           - DISTRIBUTED COMPUTING
           - MACHINE LEARNING
-      courses_semester:
+      courses:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
           - ADDITIONAL USEFUL KNOWLEDGE
           - NETWORK ANALYSIS
@@ -3522,6 +3524,6 @@ students:
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
           - HUMAN COMPUTER INTERACTION
           - GEOMETRIC MODELING
-      courses_semester:
+      courses:
           - DISTRIBUTED COMPUTING
           - GEOMETRIC MODELING
