@@ -31,8 +31,9 @@ async function getSuggestedGroupsbyCourses(student_id: number) {
 export async function getSuggestedGroupsbyPopularity(): Promise<PopularityResult[]> {
 
     const query = `
+      REFRESH MATERIALIZED VIEW studybuds.group_popularity;
       SELECT  *
-      FROM group_popularity;
+      FROM studybuds.group_popularity;
     `;
     try {
         const results = await sequelize.query<PopularityResult[]>(query, {
