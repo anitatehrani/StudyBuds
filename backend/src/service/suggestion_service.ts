@@ -1,11 +1,14 @@
+import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import { Sequelize } from 'sequelize-typescript';
 import UnigeService from "./unige_service";
 import Group from "../models/Group";
+import { PopularityResult } from "./group_service";
 
 
 
-async function getSuggestedGroupsbyCourses(student_id : number){
+
+async function getSuggestedGroupsbyCourses(student_id: number) {
 
     const student_info = await UnigeService.getUnigeProfile(student_id);
 
@@ -22,6 +25,25 @@ async function getSuggestedGroupsbyCourses(student_id : number){
     });
 
     return data;
+}
+
+
+export async function getSuggestedGroupsbyPopularity(): Promise<PopularityResult[]> {
+
+    const query = `
+      SELECT  *
+      FROM group_popularity;
+    `;
+    try {
+        const results = await sequelize.query<PopularityResult[]>(query, {
+            type: QueryTypes.SELECT,
+        });
+        return results;
+    } catch (error) {
+        console.error(`Failed to execute basic search. Error: ${error.message}`);
+        throw error;
+    }
+
 }
 
 
