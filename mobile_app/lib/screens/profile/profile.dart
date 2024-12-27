@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/models/profile.dart';
 import 'package:study_buds/telegram/telegram_bot.dart';
-
+import 'package:study_buds/utils/auth_utils.dart';
 import '../../blocs/profile/bloc/profile_bloc.dart';
+import '../../widgets/custom_filled_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -148,7 +149,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          if (profile?.telegramAccount == null)
                             Center(
                               child: TextButton.icon(
                                 onPressed: TelegramBot.launchTelegramBot,
@@ -183,6 +183,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity, // Ensure the button takes full width
+                    child: CustomFilledButton(
+                      key: const Key('logout_button'),
+                      isEnabled: true,
+                      label: 'Logout',
+                      backgroundColor: Colors.red, // Red background for "Logout"
+                      foregroundColor: Colors.white, // Light text for contrast
+                      onPressed: () {
+                        AuthUtils.logout(context);
+                      },
                     ),
                   ),
                 ],
