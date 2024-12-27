@@ -1,6 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
+import getSuggestedGroupsbyCourses from "./suggestion_service";
 
 interface GroupData {
   name: string;
@@ -101,7 +102,23 @@ export async function basicSearch(
     throw error;
   }
 }
+
+
+export async function getSuggestedGroups(
+  studentId: number
+): Promise<SearchResult[]> {
+
+  const courses = await getSuggestedGroupsbyCourses(studentId);
+  //console.log(courses);
+
+  return null;
+};
+
+
+
+
 export default {
   createGroup,
   basicSearch,
+  getSuggestedGroups
 };
