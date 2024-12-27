@@ -17,6 +17,9 @@ export interface UnigeStudent {
     email: string;
     id: number;
     password: string;
+    gpa: number;
+    study_plan: Array<string>;
+    exams_to_take: Array<string>;
     courses: Array<string>;
 }
 

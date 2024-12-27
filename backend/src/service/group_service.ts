@@ -1,7 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
-import { validateInt } from "../utils/validation_error";
+import getSuggestedGroupsbyCourses from "./suggestion_service";
 
 interface GroupData {
   name: string;
@@ -108,24 +108,10 @@ export async function getSuggestedGroups(
   studentId: number
 ): Promise<SearchResult[]> {
 
-  return null;
+  const courses = await getSuggestedGroupsbyCourses(studentId);
+  //console.log(courses);
 
-  //for testing, delete later
-  // const query = `
-  //   SELECT *
-  //   FROM
-  //     studybuds.student_group
-    
-  // `;
-  // try {
-  //   const results = await sequelize.query<SearchResult>(query, {
-  //     type: QueryTypes.SELECT,
-  //   });
-  //   return results;
-  // } catch (error) {
-  //   console.error(`Failed to execute suggested Group. Error: ${error.message}`);
-  //   throw error;
-  // }
+  return null;
 };
 
 
