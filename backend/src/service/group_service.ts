@@ -1,7 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
-import getSuggestedGroupsbyCourses from "./suggestion_service";
+import getSuggestedGroupsbyCourses, { getSuggestedGroupsbyPopularity } from "./suggestion_service";
 
 interface GroupData {
   name: string;
@@ -57,6 +57,11 @@ interface SearchResult {
   status: string | null;
 }
 
+export interface PopularityResult {
+  group_id: string;
+  members: number
+}
+
 export async function basicSearch(
   text: string,
   studentId: number
@@ -110,6 +115,8 @@ export async function getSuggestedGroups(
 
   const courses = await getSuggestedGroupsbyCourses(studentId);
   //console.log(courses);
+  const popularity = await getSuggestedGroupsbyPopularity();
+  console.log(popularity);
 
   return null;
 };
@@ -120,5 +127,5 @@ export async function getSuggestedGroups(
 export default {
   createGroup,
   basicSearch,
-  getSuggestedGroups
+  getSuggestedGroups,
 };
