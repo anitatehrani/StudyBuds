@@ -21,7 +21,10 @@ class Student:
     id: int
     first_name: str
     last_name: str
-    courses: list[str]
+    gpa: int
+    study_plan: list[str]
+    exams_to_take: list[str]
+    courses_semester: list[str]
 
 
 @dataclass
@@ -65,6 +68,9 @@ def get_student(student_id: int):
     raise HTTPException(status.HTTP_404_NOT_FOUND)
 
 
+
+
+
 @app.post("/students", dependencies=[Depends(validate_token)])
 def get_students(student_list: list[int]):
     """Get the details of students"""
@@ -83,6 +89,8 @@ def get_students(student_list: list[int]):
 def get_courses():
     """List all the courses available in the university"""
     return DATABASE.courses
+
+
 
 
 if __name__ == "__main__":
