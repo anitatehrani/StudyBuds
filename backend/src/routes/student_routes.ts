@@ -10,4 +10,7 @@ router.get('/all', asyncWrapper(getAllStudents)); // Change the path to avoid ov
 // Route to get a student by ID
 router.get('/:id', asyncWrapper(getStudent));
 
+
+
+
 export default router;
