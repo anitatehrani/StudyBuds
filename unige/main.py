@@ -24,7 +24,7 @@ class Student:
     gpa: int
     study_plan: list[str]
     exams_to_take: list[str]
-    courses_semester: list[str]
+    courses: list[str]
 
 
 @dataclass
@@ -39,7 +39,8 @@ DATABASE = TypeAdapter(Database).validate_python(
 
 
 def print_token():
-    print(jwt.encode({"sub": "study_buds"}, SECRET_KEY, algorithm=ALGORITHM))  # type: ignore
+    print(jwt.encode({"sub": "study_buds"}, SECRET_KEY,
+          algorithm=ALGORITHM))  # type: ignore
 
 
 def validate_token(
@@ -51,7 +52,8 @@ def validate_token(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token.credentials, SECRET_KEY, algorithms=[ALGORITHM])  # type: ignore
+        payload = jwt.decode(token.credentials, SECRET_KEY,
+                             algorithms=[ALGORITHM])  # type: ignore
         username: str = payload.get("sub")
         if username != "study_buds":
             raise credentials_exception
@@ -66,9 +68,6 @@ def get_student(student_id: int):
         if student.id == student_id:
             return student
     raise HTTPException(status.HTTP_404_NOT_FOUND)
-
-
-
 
 
 @app.post("/students", dependencies=[Depends(validate_token)])
@@ -89,8 +88,6 @@ def get_students(student_list: list[int]):
 def get_courses():
     """List all the courses available in the university"""
     return DATABASE.courses
-
-
 
 
 if __name__ == "__main__":
