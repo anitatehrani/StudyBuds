@@ -23,16 +23,29 @@ export interface UnigeStudent {
     courses: Array<string>;
 }
 
+
 export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (
-        await axios_instance.get(`${UNIGEAPI_URL}/student/${studentId}`, {
+    const response = await axios_instance.get(`${UNIGEAPI_URL}/students/${studentId}`, {
+        headers: {
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
+    return response.data;
+}
+
+export async function calculateAverageGpa(studentList: Array<number>): Promise<{ average_gpa: number }> {
+    const response = await axios_instance.post(
+        `${UNIGEAPI_URL}/students/gpa`,
+        { student_list: studentList },
+        {
             headers: {
                 Authorization: `Bearer ${TOKEN}`,
             },
-        })
-    ).data;
+        }
+    );
+    return response.data;
 }
+
 
 const UnigeService = {
     getCourses,

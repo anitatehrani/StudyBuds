@@ -70,6 +70,21 @@ def get_student(student_id: int):
     raise HTTPException(status.HTTP_404_NOT_FOUND)
 
 
+@app.post("/students/gpa", dependencies=[Depends(validate_token)])
+def calculate_average_gpa(student_list: list[int]):
+    """Calculate the average GPA of a list of students"""
+    total_gpa = 0
+    count = 0
+    for student in DATABASE.students:
+        if student.id in student_list:
+            total_gpa += student.gpa
+            count += 1
+    if count == 0:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,
+                            detail="No students found")
+    return {"average_gpa": total_gpa / count}
+
+
 @app.post("/students", dependencies=[Depends(validate_token)])
 def get_students(student_list: list[int]):
     """Get the details of students"""
