@@ -17,8 +17,12 @@ export interface UnigeStudent {
     email: string;
     id: number;
     password: string;
+    gpa: number;
+    study_plan: Array<string>;
+    exams_to_take: Array<string>;
     courses: Array<string>;
 }
+
 
 export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -30,6 +34,19 @@ export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> 
         })
     ).data;
 }
+
+export async function calculateAverageGpa(studentList: Array<number>): Promise<{ average_gpa: number }> {
+    return( await axios_instance.post(
+        `${UNIGEAPI_URL}/students/gpa`,
+        { student_list: studentList },
+        {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        })
+    ).data;
+}
+
 
 const UnigeService = {
     getCourses,
