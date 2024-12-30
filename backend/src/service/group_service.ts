@@ -120,13 +120,15 @@ export async function getSuggestedGroups(
   const courses = await getSuggestedGroupsbyCourses(studentId);
   //console.log(courses);
   const popularity = await getSuggestedGroupsbyPopularity();
-  // console.log(popularity);
+  console.log(popularity);
 
   const friends = await getSuggestedGroupsbyFriends(studentId);
   //console.log(friends);
 
   const gpa = await getSuggestedGroupsByGpa();
-  console.log(gpa);
+  //console.log(gpa);
+
+  //couses > friends > gpa > popularity
 
   return null;
 };
