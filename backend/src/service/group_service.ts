@@ -1,7 +1,7 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
-import getSuggestedGroupsbyCourses, { getSuggestedGroupsbyFriends, getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
 
 interface GroupData {
   name: string;
@@ -33,11 +33,15 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
     adminId,
   } = groupData;
 
+  const student_info = await UnigeService.getUnigeProfile(adminId);
+  const gpa_s = student_info.gpa;
+
   const group = new Group({
     name,
     description,
     course,
     isPublic,
+    gpa_s,
     membersLimit,
     telegramLink,
     adminId,
@@ -119,7 +123,10 @@ export async function getSuggestedGroups(
   // console.log(popularity);
 
   const friends = await getSuggestedGroupsbyFriends(studentId);
-  console.log(friends);
+  //console.log(friends);
+
+  const gpa = await getSuggestedGroupsByGpa();
+  console.log(gpa);
 
   return null;
 };

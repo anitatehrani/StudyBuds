@@ -8,7 +8,7 @@ import { PopularityResult } from "./group_service";
 
 
 
-async function getSuggestedGroupsbyCourses(student_id: number) {
+export async function getSuggestedGroupsbyCourses(student_id: number) {
 
     const student_info = await UnigeService.getUnigeProfile(student_id);
 
@@ -47,13 +47,6 @@ export async function getSuggestedGroupsbyPopularity(): Promise<PopularityResult
 
 }
 
-/*
-friend: a person in the same group as me
-take people inside my groups
-take groups of those people
-add 1 to each of these groups
-
-*/
 
 export async function getSuggestedGroupsbyFriends(student_id: number): Promise<PopularityResult[]> {
 
@@ -87,5 +80,11 @@ export async function getSuggestedGroupsbyFriends(student_id: number): Promise<P
 
 }
 
+export async function getSuggestedGroupsByGpa(): Promise<Group[]> {
 
-export default getSuggestedGroupsbyCourses;
+    const data = await Group.findAll({
+        order: [['gpa', 'DESC']],
+    });
+
+    return data;
+}
