@@ -1,9 +1,9 @@
 import { QueryTypes } from "sequelize";
-import sequelize from "../config/database";
 import { Sequelize } from 'sequelize-typescript';
-import UnigeService from "./unige_service";
+import sequelize from "../config/database";
 import Group from "../models/Group";
 import { PopularityResult } from "./group_service";
+import UnigeService from "./unige_service";
 
 
 
