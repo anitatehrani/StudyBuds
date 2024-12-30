@@ -5,7 +5,7 @@ set search_path to studybuds;
 insert into student (student_id,telegram_account) values (4071780,33);
 insert into student (student_id,telegram_account) values (4669615,34);
 
-insert into student_group (id,name, description, course,admin_id, members_limit) values (100,'CP','description','Capstone',4071780, 10);
+insert into student_group (id,name, description, course,admin_id, members_limit, gpa) values (100,'CP','description','Capstone',4071780, 10);
 insert into student_group (id,name, description, course,admin_id, members_limit,is_public) values (101,'CP2', 'description','Capstone',4669615, 10,false);
 
 insert into group_members (student_id,group_id) values (4071780,100);
