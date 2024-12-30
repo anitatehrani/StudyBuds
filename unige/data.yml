@@ -528,7 +528,7 @@ students:
       courses:
           - HIGH PERFORMANCE COMPUTING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
-    - id: 4486683
+    - id: 4071780
       first_name: Keith
       last_name: Willis
       email: S4486683.@studenti.unige.it
@@ -569,7 +569,7 @@ students:
           - COMPUTER GRAPHICS
           - TRUSTWORTHY ARTIFICIAL INTELLIGENCE
           - SOFTWARE SYSTEMS DESIGN AND MODELLING
-    - id: 4569054
+    - id: 4669615
       first_name: Lauren
       last_name: Johnson
       email: S4569054.@studenti.unige.it
@@ -650,7 +650,7 @@ students:
           - COMPUTER GAMES
           - TOPICS IN COMPUTER SCIENCE
           - HUMAN COMPUTER INTERACTION
-    - id: 4996131
+    - id: 12
       first_name: Ashley
       last_name: Moore
       email: S4996131.@studenti.unige.it
@@ -758,7 +758,7 @@ students:
           - HUMAN COMPUTER INTERACTION
           - DEEP LEARNING
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
-    - id: 4386153
+    - id: 42674
       first_name: Gabriel
       last_name: Jones
       email: S4386153.@studenti.unige.it
@@ -788,7 +788,7 @@ students:
           - DATA VISUALIZATION
       courses:
           - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
-    - id: 4507463
+    - id: 42675
       first_name: Michael
       last_name: Quinn
       email: S4507463.@studenti.unige.it
@@ -872,7 +872,7 @@ students:
       courses:
           - INTERNET OF THINGS
           - SOFTWARE ENGINEERING FOR DATA ANALYTICS
-    - id: 4702972
+    - id: 11
       first_name: Donna
       last_name: Diaz
       email: S4702972.@studenti.unige.it
