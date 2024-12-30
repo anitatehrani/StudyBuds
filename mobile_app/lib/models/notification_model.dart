@@ -5,6 +5,7 @@ class NotificationModel {
   final int joinRequestId;
   final String notificationType;
   final String message;
+  final String joinRequestStatus;
 
   NotificationModel(
       {required this.createdAt,
@@ -12,7 +13,9 @@ class NotificationModel {
       required this.studentId,
       required this.joinRequestId,
       required this.notificationType,
-      required this.message});
+      required this.message,
+      required this.joinRequestStatus
+      });
 
   static List<NotificationModel> fromJsonList(List<dynamic> jsonArray) {
     print(jsonArray);
@@ -32,7 +35,8 @@ class NotificationModel {
         studentId: json['studentId'],
         joinRequestId: json['joinRequestId'],
         message: json['message'] ?? ' ',
+        joinRequestStatus: json['joinRequestStatus'] ?? ' ',
         notificationType: json['notificationType'] ?? ' ',
-        createdAt: DateTime.parse(json['created_at']));
+        createdAt: DateTime.parse(json['createdAt']));
   }
 }

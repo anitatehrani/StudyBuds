@@ -10,12 +10,14 @@ class NotificationCard extends StatelessWidget {
   final Color? backgroundColor;
   final String? buttonLabel;
   final NotificationModel notification;
+  final Function listChanged;
 
   const NotificationCard({
     super.key,
     this.backgroundColor,
     this.buttonLabel,
     required this.notification,
+    required this.listChanged,
   });
 
   @override
@@ -82,7 +84,7 @@ class NotificationCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8),
-                if (notification.notificationType == 'join_request')
+                (notification.notificationType == 'join_request' && notification.joinRequestStatus == 'pending') ?
                   CustomIconButton(
                     key: ValueKey("btn_${notification.id}"),
                     onPressed: () {
@@ -96,13 +98,29 @@ class NotificationCard extends StatelessWidget {
                               acceptButtonLabel: 'Accept',
                               rejectButtonLabel: 'Reject',
                               notification: notification,
+                              listChanged: listChanged,
                             ),
                           );
                         },
                       );
                     },
                     iconData: Icons.chevron_right_outlined,
-                  ),
+                  ) :
+                Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        key: ValueKey(notification.joinRequestId),
+                        notification.joinRequestStatus + 'ed',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: notification.joinRequestStatus == 'accept' ? Colors.green : Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                      ),
+                  ],
+                )
               ],
             )
           ],

@@ -9,12 +9,14 @@ class NotificationPopup extends StatelessWidget {
   final String acceptButtonLabel;
   final String rejectButtonLabel;
   final NotificationModel notification;
+  final Function listChanged;
 
   const NotificationPopup({
     super.key,
     required this.acceptButtonLabel,
     required this.rejectButtonLabel,
     required this.notification,
+    required this.listChanged,
   });
 
   @override
@@ -29,12 +31,14 @@ class NotificationPopup extends StatelessWidget {
                 content: Text(key: Key("success_toast"), state.message),
                 backgroundColor: Colors.green),
           );
+          listChanged.call();
         } else if (state is JoinRequestFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
                 content: Text(key: Key("fail_toast"), state.error),
                 backgroundColor: Colors.red),
           );
+          listChanged.call();
         }
       },
       child: AlertDialog(

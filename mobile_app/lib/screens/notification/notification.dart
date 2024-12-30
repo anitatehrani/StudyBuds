@@ -13,6 +13,12 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   List<NotificationModel> notificationList = [];
+
+  listChangedEvent(){
+    print('---------- notification card');
+    NotificationListBloc()..add(FetchNotificationListEvent(10));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +38,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           body: BlocConsumer<NotificationListBloc, NotificationListState>(
             listener: (context, state) {
               if (state is NotificationListSuccess) {
+                print('============ called');
                 notificationList = state.results;
               } else if (state is NotificationListFailure) {
                 notificationList = [];
@@ -60,6 +67,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       child: NotificationCard(
                         backgroundColor: Colors.white,
                         notification: notification,
+                        listChanged: listChangedEvent,
                       ),
                     );
                   },
