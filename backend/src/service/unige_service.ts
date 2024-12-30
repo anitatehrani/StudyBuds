@@ -25,12 +25,14 @@ export interface UnigeStudent {
 
 
 export async function getUnigeProfile(studentId: number): Promise<UnigeStudent> {
-    const response = await axios_instance.get(`${UNIGEAPI_URL}/students/${studentId}`, {
-        headers: {
-            Authorization: `Bearer ${TOKEN}`,
-        },
-    });
-    return response.data;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return (
+        await axios_instance.get(`${UNIGEAPI_URL}/student/${studentId}`, {
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        })
+    ).data;
 }
 
 export async function calculateAverageGpa(studentList: Array<number>): Promise<{ average_gpa: number }> {
