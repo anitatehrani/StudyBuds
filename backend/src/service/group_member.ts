@@ -1,8 +1,8 @@
 import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
-import UnigeService from "./unige_service";
+import UnigeService, { calculateAverageGpa } from "./unige_service";
 
-export async function getCurrentMemberList(groupId:number) {
+export async function getCurrentMemberCount(groupId: number) {
     const cnt = await GroupMembers.count({
         where: {
             groupId: groupId
@@ -11,24 +11,38 @@ export async function getCurrentMemberList(groupId:number) {
     return cnt;
 }
 
-
-
-export async function joinGroup(studentId:number, groupId:number) {
-
-    const num_old = await getCurrentMemberList(groupId);
-
-    const student_info = await UnigeService.getUnigeProfile(studentId);
-    const gpa_s = student_info.gpa;
-
-    const group = await Group.findOne({
+export async function getCurrentMemberList(groupId: number) {
+    const cnt = await GroupMembers.findAll({
         where: {
-            id: groupId
+            groupId: groupId
         }
     });
+    return cnt.map(member => member.student_id);
+}
 
-    const gpa_g = group.gpa;
 
-    const gpa_new = (gpa_g * num_old + gpa_s) / (num_old + 1);
+
+
+export async function joinGroup(studentId: number, groupId: number) {
+    // old version
+    // const num_old = await getCurrentMemberCount(groupId);
+
+    // const student_info = await UnigeService.getUnigeProfile(studentId);
+    // const gpa_s = student_info.gpa;
+
+    // const group = await Group.findOne({
+    //     where: {
+    //         id: groupId
+    //     }
+    // });
+
+    // const gpa_g = group.gpa;
+
+    // // const gpa_new = (gpa_g * num_old + gpa_s) / (num_old + 1);
+
+    const student_ids = await getCurrentMemberList(groupId);
+    student_ids.push(studentId);
+    const gpa_new = await calculateAverageGpa(student_ids);
 
     await Group.update({
         gpa: gpa_new
