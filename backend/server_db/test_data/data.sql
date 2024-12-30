@@ -63,3 +63,7 @@ insert into student_group (id,name, members_limit, is_public, course,admin_id) v
 
 
 insert into join_request (id,group_id,student_id,status) values (13,7,10,'pending');
+
+
+--- Test getSuggestedGroupsbyFriends function
+insert into group_members (student_id,group_id) values (11,105);
