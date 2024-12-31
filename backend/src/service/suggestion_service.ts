@@ -28,15 +28,18 @@ export async function getSuggestedGroupsbyCourses(student_id: number) {
 }
 
 
-export async function getSuggestedGroupsbyPopularity(): Promise<PopularityResult[]> {
+export async function getSuggestedGroupsbyPopularity(): Promise<Group[]> {
 
     const query = `
       REFRESH MATERIALIZED VIEW studybuds.group_popularity;
-      SELECT  *
-      FROM studybuds.group_popularity;
+      SELECT *
+      FROM (SELECT * 
+            FROM studybuds.group_popularity 
+            ORDER BY members DESC) ordered_view left join studybuds.student_group on ordered_view.group_id = studybuds.student_group.id;
     `;
+
     try {
-        const results = await sequelize.query<PopularityResult[]>(query, {
+        const results = await sequelize.query<Group[]>(query, {
             type: QueryTypes.SELECT,
         });
         return results;
@@ -48,7 +51,7 @@ export async function getSuggestedGroupsbyPopularity(): Promise<PopularityResult
 }
 
 
-export async function getSuggestedGroupsbyFriends(student_id: number): Promise<PopularityResult[]> {
+export async function getSuggestedGroupsbyFriends(student_id: number): Promise<Group[]> {
 
     const query = `
       SELECT group_id, count(*) as tot
@@ -68,7 +71,7 @@ export async function getSuggestedGroupsbyFriends(student_id: number): Promise<P
       GROUP BY group_id ORDER BY tot DESC
     `;
     try {
-        const results = await sequelize.query<PopularityResult[]>(query, {
+        const results = await sequelize.query<Group[]>(query, {
             replacements: { student_id },
             type: QueryTypes.SELECT,
         });
