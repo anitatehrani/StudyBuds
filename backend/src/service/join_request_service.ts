@@ -35,13 +35,14 @@ export async function updateJoinRequestStatus(joinRequestId: number, status: str
 
 
 export async function getJoinRequestByGroupId(studentId: number, groupId: number) {
-    console.log('Fetching join request of the group id:', groupId);
+    console.log('Finding status of the group id:', groupId, "for student id:", studentId);
     const data = await JoinRequest.findOne({
         where: {
             studentId: studentId,
             groupId: groupId
         },
+        attributes: ['status']  // Only return the status field
     });
     console.log('Join request data returned from DB:', data);
-    return data.status;
+    return data;
 }

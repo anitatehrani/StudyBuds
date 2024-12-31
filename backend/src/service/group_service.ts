@@ -121,13 +121,18 @@ export async function getSuggestedGroups(
   studentId: number
 ): Promise<SearchResult[]> {
 
-  //courses > friends > gpa > popularity
+  // how many groups to return
+  const HOW_MANY = 10;
+
+
+  // weights for each suggestion method
   const POPULARITY_WEIGHT = 0.2;
-  const FRIENDS_WEIGHT = 0.4;
-  const GPA_WEIGHT = 0.4;
+  const FRIENDS_WEIGHT = 0.5;
+  const GPA_WEIGHT = 0.3;
 
   const score: Map<number, number> = new Map();
 
+  // Assign points to each group based on the order in the list
   const assignPoints = (group_list: Group[], weight: number) => {
     for (let i = 0; i < group_list.length; ++i) {
       let group_id = group_list[i]['id'];
@@ -135,53 +140,51 @@ export async function getSuggestedGroups(
       let points = score.get(group_id) + weight * (group_list.length - i);
       score.set(group_id, points);
     }
-  }
+  };
 
+  // Get the suggested groups for each method
+  const [courses, popularity, friends, gpa] = await Promise.all([
+    getSuggestedGroupsbyCourses(studentId),
+    getSuggestedGroupsbyPopularity(),
+    getSuggestedGroupsbyFriends(studentId),
+    getSuggestedGroupsByGpa()
+  ]);
 
-  const courses = await getSuggestedGroupsbyCourses(studentId);
-  const popularity = await getSuggestedGroupsbyPopularity();
-  const friends = await getSuggestedGroupsbyFriends(studentId);
-  const gpa = await getSuggestedGroupsByGpa();
+  // Initialize the score for each group to 0
+  courses.forEach(group => score.set(group.id, 0));
 
-  // populate the score mapping
-  courses.forEach((group) => {
-    score.set(group['id'], 0)
-  })
-
-  // assign points to groups based on popularity
+  // Assign points to each group based on the order in the list
   assignPoints(popularity, POPULARITY_WEIGHT);
-
-  // assign points to groups based on friends
   assignPoints(friends, FRIENDS_WEIGHT);
-
-  // assign points to groups based on gpa
   assignPoints(gpa, GPA_WEIGHT);
 
-  // order group ids
-  const ordered_scores = Array.from(score.entries());
-  ordered_scores.sort((a, b) => b[1] - a[1]);
+  // Sort the groups by score
+  const ordered_scores = Array.from(score.entries()).sort((a, b) => b[1] - a[1]);
 
-  const res: SearchResult[] = null;
+  // Return the top HOW_MANY groups
+  const res: SearchResult[] = await Promise.all(
+    ordered_scores.slice(0, HOW_MANY).map(async ([group_id]) => {
+      const group = courses.find(group => group.id === group_id);
+      if (!group) throw new Error(`Group with id ${group_id} not found`);
 
-  // create result
-  ordered_scores.forEach(async (elem) => {
-    let group_id = elem[0];
-    // get group
-    
+      const [memberCount, status] = await Promise.all([
+        getCurrentMemberCount(group_id),
+        getJoinRequestByGroupId(studentId, group_id)
+      ]);
 
-    let memberCount = await getCurrentMemberCount(group_id);
-    let status = await getJoinRequestByGroupId(studentId, group_id);
-    res.push({
-      id: group_id,
-      name: 
+      return {
+        id: group.id,
+        name: group.name,
+        description: group.description,
+        isPublic: group.isPublic,
+        course: group.course,
+        memberCount,
+        status: status ? status.status : null,
+      };
     })
+  );
 
-  })
-
-
-
-
-  return null;
+  return res;
 };
 
 
