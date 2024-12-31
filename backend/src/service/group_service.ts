@@ -2,6 +2,8 @@ import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import { getJoinRequestByGroupId } from "./join_request_service";
+import { getCurrentMemberCount } from "./group_member";
 
 interface GroupData {
   name: string;
@@ -113,22 +115,71 @@ export async function basicSearch(
 }
 
 
+
+
 export async function getSuggestedGroups(
   studentId: number
 ): Promise<SearchResult[]> {
 
+  //courses > friends > gpa > popularity
+  const POPULARITY_WEIGHT = 0.2;
+  const FRIENDS_WEIGHT = 0.4;
+  const GPA_WEIGHT = 0.4;
+
+  const score: Map<number, number> = new Map();
+
+  const assignPoints = (group_list: Group[], weight: number) => {
+    for (let i = 0; i < group_list.length; ++i) {
+      let group_id = group_list[i]['id'];
+      if (!score.has(group_id)) continue;
+      let points = score.get(group_id) + weight * (group_list.length - i);
+      score.set(group_id, points);
+    }
+  }
+
+
   const courses = await getSuggestedGroupsbyCourses(studentId);
-  //console.log(courses);
   const popularity = await getSuggestedGroupsbyPopularity();
-  console.log(popularity);
-
   const friends = await getSuggestedGroupsbyFriends(studentId);
-  //console.log(friends);
-
   const gpa = await getSuggestedGroupsByGpa();
-  //console.log(gpa);
 
-  //couses > friends > gpa > popularity
+  // populate the score mapping
+  courses.forEach((group) => {
+    score.set(group['id'], 0)
+  })
+
+  // assign points to groups based on popularity
+  assignPoints(popularity, POPULARITY_WEIGHT);
+
+  // assign points to groups based on friends
+  assignPoints(friends, FRIENDS_WEIGHT);
+
+  // assign points to groups based on gpa
+  assignPoints(gpa, GPA_WEIGHT);
+
+  // order group ids
+  const ordered_scores = Array.from(score.entries());
+  ordered_scores.sort((a, b) => b[1] - a[1]);
+
+  const res: SearchResult[] = null;
+
+  // create result
+  ordered_scores.forEach(async (elem) => {
+    let group_id = elem[0];
+    // get group
+    
+
+    let memberCount = await getCurrentMemberCount(group_id);
+    let status = await getJoinRequestByGroupId(studentId, group_id);
+    res.push({
+      id: group_id,
+      name: 
+    })
+
+  })
+
+
+
 
   return null;
 };

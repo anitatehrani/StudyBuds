@@ -1,6 +1,6 @@
 import JoinRequest from "../models/JoinRequest";
 
-export async function createJoinRequest(studentId: number, groupId:number) {
+export async function createJoinRequest(studentId: number, groupId: number) {
     const joinGroup = await JoinRequest.create({
         studentId: studentId,
         groupId: groupId,
@@ -21,7 +21,7 @@ export async function getJoinRequestById(joinRequestId: number) {
     return data;
 }
 
-export async function updateJoinRequestStatus(joinRequestId:number, status:string) {
+export async function updateJoinRequestStatus(joinRequestId: number, status: string) {
     console.log('Updating join request with ID:', joinRequestId, 'to status:', status);
     return await JoinRequest.update(
         { status: status },
@@ -31,4 +31,17 @@ export async function updateJoinRequestStatus(joinRequestId:number, status:strin
             },
         }
     );
+}
+
+
+export async function getJoinRequestByGroupId(studentId: number, groupId: number) {
+    console.log('Fetching join request of the group id:', groupId);
+    const data = await JoinRequest.findOne({
+        where: {
+            studentId: studentId,
+            groupId: groupId
+        },
+    });
+    console.log('Join request data returned from DB:', data);
+    return data.status;
 }
