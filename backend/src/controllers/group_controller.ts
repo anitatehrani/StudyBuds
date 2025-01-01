@@ -104,6 +104,7 @@ export async function getGroupDetails(req: Request) {
     const response = {
         groupId: group.id,
         name: group.name,
+        course: group.course,
         description: group.description,
         isPublic: group.isPublic,
         telegramLink: group.telegramLink,
