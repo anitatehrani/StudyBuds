@@ -102,16 +102,16 @@ export async function getGroupDetails(req: Request) {
 
     // Format response
     const response = {
-        groupId: group.id,
+        id: group.id,
         name: group.name,
         course: group.course,
         description: group.description,
         isPublic: group.isPublic,
         telegramLink: group.telegramLink,
-        studentId: group.adminId, // Admin student ID
-        members: members.length, // Current members count
+        ownerId: group.adminId, // Admin student ID
+        membersCount: members.length, // Current members count
         membersLimit: group.membersLimit, // Group member limit
-        groupMembers, // List of student details
+        members: groupMembers, // List of student details
     };
 
     return response;
