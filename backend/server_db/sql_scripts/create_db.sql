@@ -14,6 +14,7 @@ CREATE TABLE student_group (
     description varchar(100),
     members_limit smallint,
     is_public boolean DEFAULT true,
+    gpa numeric(4, 2) NOT NULL,
     course varchar(60) NOT NULL,
     telegram_link varchar(100),
     telegram_id integer,
@@ -57,3 +58,11 @@ CREATE TABLE notification (
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS group_popularity
+AS
+  SELECT group_id, COUNT(*) as members FROM group_members GROUP BY group_id ORDER BY members DESC;
+
+
+REFRESH MATERIALIZED VIEW group_popularity;

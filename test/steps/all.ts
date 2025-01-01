@@ -1,5 +1,6 @@
 import { After, Before, setDefaultTimeout } from "@cucumber/cucumber";
 import { remote } from "webdriverio";
+import { do_logout } from "../utils/utils";
 
 //DOCS:
 
@@ -7,24 +8,13 @@ import { remote } from "webdriverio";
 //native/webapp          https://github.com/appium/appium-uiautomator2-driver
 //flutter-driver         https://github.com/appium/appium-flutter-driver
 
-const osSpecificOps =
-    process.env.APPIUM_OS === "android"
-        ? {
+const osSpecificOps ={
               platformName: "Android",
-              "appium:deviceName": process.env.DEVICE,
-              "appium:app": process.env.APK,
+              "appium:deviceName": process.env.DEVICE || "emulator-5554",
+              "appium:app": process.env.APK || "../mobile_app/build/app/outputs/flutter-apk/app-debug.apk",
               // __dirname +
               // "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
-          }
-        : process.env.APPIUM_OS === "ios"
-          ? {
-                platformName: "iOS",
-                "appium:platformVersion": "12.2",
-                "appium:deviceName": "iPhone X",
-                "appium:noReset": true,
-                "appium:app": __dirname + "/../apps/Runner.zip",
-            }
-          : {};
+          };
 
 const opts = {
     hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
@@ -34,6 +24,7 @@ const opts = {
         "appium:automationName": "Flutter",
         "appium:retryBackoffTime": 500,
         "appium:chromedriverAutodownload": true,
+        "appium:autoGrantPermissions": true
     },
 };
 
@@ -50,6 +41,7 @@ Before(async function () {
 
 After(async function () {
     if (driver) {
+        do_logout();
         await driver.deleteSession();
     }
 });

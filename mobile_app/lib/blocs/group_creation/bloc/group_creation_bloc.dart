@@ -38,9 +38,9 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
       final groupCreation = GroupCreationRequest(event.group);
       final response = await groupCreation.send();
       if (response.isSuccess) {
-        emit(GroupCreationSuccess('The group created successfully'));
+        emit(GroupCreationSuccess('The group created successfully.'));
       } else {
-        emit(GroupCreationFailed('Failed to create group'));
+        emit(GroupCreationFailed('Failed to create group.'));
       }
     } catch (error) {
       emit(GroupCreationFailed('Failed to create group.'));

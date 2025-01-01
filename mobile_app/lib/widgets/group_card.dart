@@ -14,7 +14,7 @@ class GroupCard extends StatelessWidget {
   final Color? backgroundColor;
   final String? buttonLabel;
   final Color? additionalButtonColor;
-  final String? additionalButtonLabel;
+  final String additionalButtonLabel;
 
   const GroupCard(
       {super.key,
@@ -23,7 +23,7 @@ class GroupCard extends StatelessWidget {
         this.backgroundColor,
         this.buttonLabel,
         this.additionalButtonColor,
-        this.additionalButtonLabel});
+        this.additionalButtonLabel = "See more"});
 
   showGroupDetails(BuildContext context) {
     final groupDetailsBloc = context.read<GroupDetailsBloc>();
@@ -40,7 +40,8 @@ class GroupCard extends StatelessWidget {
                 return Center(child: CircularProgressIndicator());
               } else if (state is GroupDetailsSuccess) {
                 return GroupDetailsDialog(
-                  groupDetails: state.groupDetails, group: group,
+                  groupDetails: state.groupDetails,
+                  group: group,
                 );
               } else if (state is GroupDetailsFailure) {
                 return AlertDialog(
@@ -68,6 +69,16 @@ class GroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<JoinGroupBloc, JoinGroupState>(
+      listenWhen: (prev, current) {
+        // Only listen if the current state's groupId matches this card's groupId
+        if (current is JoinGroupRequestSuccess && current.groupId == group.id) {
+          return true;
+        }
+        if (current is JoinGroupRequestFailed && current.groupId == group.id) {
+          return true;
+        }
+        return false;
+      },
       listener: (context, state) {
         if (state is JoinGroupRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -156,30 +167,54 @@ class GroupCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        CustomTextButton(
-                          foregroundColor: additionalButtonColor ??
-                              Theme.of(context).colorScheme.primary,
-                          label: additionalButtonLabel ?? "See more",
-                          onPressed: () {
-                            showGroupDetails(context);
-                          },
-                        ),
+                        if (additionalButtonLabel == "Delete the group") ...[
+                          CustomFilledButton(
+                            key: ValueKey('see_more_$index'), // Unique key for "See More"
+                            backgroundColor: additionalButtonColor ??
+                                Theme.of(context).colorScheme.primary,
+                            label: additionalButtonLabel,
+                            onPressed: () {
+                              if (additionalButtonLabel == "See more") {
+                                showGroupDetails(context);
+                              } else if (additionalButtonLabel ==
+                                  "Delete the group") {
+                                // TODO: Delete the group functionality
+                              }
+                            },
+                          ),
+                        ] else
+                          CustomTextButton(
+                            key: ValueKey('see_more_$index'), // Unique key for "See More"
+                            foregroundColor: additionalButtonColor ??
+                                Theme.of(context).colorScheme.primary,
+                            label: additionalButtonLabel,
+                            onPressed: () {
+                              if (additionalButtonLabel == "See more") {
+                                showGroupDetails(context);
+                              } else if (additionalButtonLabel ==
+                                  "Delete the group") {
+                                // TODO: Delete the group functionality
+                              }
+                            },
+                          ),
                         Container(margin: EdgeInsets.symmetric(horizontal: 5)),
-                        CustomFilledButton(
-                          isEnabled: group.status == null,
-                          label: group.status != null
-                              ? group.status!
-                              : (group.isPublic
-                              ? 'Join the group'
-                              : 'Send a join request'),
-                          backgroundColor:
-                          Theme.of(context).colorScheme.primary,
-                          onPressed: () {
-                            context.read<JoinGroupBloc>().add(
-                              JoinGroupRequestEvent(10, group.id ?? 0),
-                            );
-                          },
-                        ),
+                        if (additionalButtonLabel != "Delete the group")
+                          CustomFilledButton(
+                            key: Key('join_button_${group.id}'),
+                            isEnabled: group.status == null,
+                            label: group.status != null
+                                ? group.status!
+                                : (group.isPublic
+                                ? 'Join the group'
+                                : 'Send a join request'),
+                            backgroundColor:
+                            Theme.of(context).colorScheme.primary,
+                            onPressed: () {
+                              context.read<JoinGroupBloc>().add(
+                                JoinGroupRequestEvent(10, group.id ?? 0),
+                              );
+                            },
+                          ),
                       ],
                     )
                   ],

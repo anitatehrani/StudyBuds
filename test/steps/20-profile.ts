@@ -29,9 +29,12 @@ Then(
     "I see my studentId {string}, fullname {string}, telegram id {string}",
     async function (studentIdValue: string, fullNameValue: string, telegramIdValue: string) {
         _telegramIdValue = telegramIdValue;
-        await waitForElementByValue(driver, fullNameValue);
-        await waitForElementByValue(driver, studentIdValue);
-        await waitForElementByValue(driver, telegramIdValue);
+
+        await Promise.all([
+            waitForElementByValue(driver, fullNameValue),
+            waitForElementByValue(driver, studentIdValue),
+            waitForElementByValue(driver, telegramIdValue),
+        ]);
     }
 );
 
@@ -48,6 +51,8 @@ Then(
         _newTelegramIdValue = newTelegramIdValue;
         await waitForElementByValue(driver, newTelegramIdValue);
         await editTextField(driver, UiId.telegramAccountIdTextField, _telegramIdValue);
+        await go_to_page(driver, BottomBarIcon.home);
+        await go_to_page(driver, BottomBarIcon.profile);
         await waitForElementByValue(driver, _telegramIdValue);
     }
 );

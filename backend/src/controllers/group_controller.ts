@@ -3,7 +3,7 @@ import Group from "../models/Group";
 import GroupMembers from "../models/GroupMembers";
 import Student from "../models/Student";
 import GroupService from "../service/group_service";
-import UnigeService from "../service/unige_service";
+import UnigeService, { UnigeStudent } from "../service/unige_service";
 import { BadRequestError, NotFoundError } from "../utils/api_error";
 
 import { getStudentId } from "../middlewares/auth_middleware";
@@ -47,9 +47,16 @@ export async function createGroup(req: Request) {
         isPublic,
         membersLimit,
         telegramLink,
-        adminId: studentId, // Maps studentId to adminId
+        adminId: studentId,
     });
-
+    let groupId = group.id;
+    if (groupId !== undefined || groupId !== null) {
+        const group_member = new GroupMembers({
+            studentId,
+            groupId
+        })
+        group_member.save()
+    }
     return { message: "Group created successfully", group };
 }
 
@@ -81,41 +88,51 @@ export async function getGroupDetails(req: Request) {
     const members = await GroupMembers.findAll({ where: { groupId } });
 
     // Prepare student details by fetching individually from UnigeMockup
-    const groupMembers = [];
+    let groupMembers: UnigeStudent[] = [];
 
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
     }else {
+        const membersId = [];
         for (const member of members) {
-            const studentDetail = await UnigeService.getUnigeProfile(member.studentId); // Ensure proper import
-            groupMembers.push({
-                studentId: studentDetail.id,
-                firstName: studentDetail.first_name,
-                lastName: studentDetail.last_name,
-            });
+            membersId.push(member.studentId);
         }
+        groupMembers = await UnigeService.getStudentsUnigeProfiles(membersId);
 
     }
 
     // Format response
     const response = {
-        groupId: group.id,
+        id: group.id,
         name: group.name,
+        course: group.course,
         description: group.description,
         isPublic: group.isPublic,
         telegramLink: group.telegramLink,
-        studentId: group.adminId, // Admin student ID
-        members: members.length, // Current members count
+        ownerId: group.adminId, // Admin student ID
+        membersCount: members.length, // Current members count
         membersLimit: group.membersLimit, // Group member limit
-        groupMembers, // List of student details
+        members: groupMembers, // List of student details
     };
 
     return response;
 }
+
+
+
+// Function to get suggested groups based on gpa and studyplan
+export async function getSuggestedGroupList(req: Request) {
+    const student_id = validateInt(req.params, "student_id");
+    const result = await GroupService.getSuggestedGroups(student_id);
+    console.log(result);
+    return result;
+}
+
 
 export default {
     createGroup,
     getAllGroups,
     basicSearchResult,
     getGroupDetails,
+    getSuggestedGroupList
 };
