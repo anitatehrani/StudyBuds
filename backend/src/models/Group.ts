@@ -38,6 +38,12 @@ class Group extends Model {
   })
   public isPublic!: boolean;
   @Column({
+    type: DataTypes.FLOAT,
+    field: "gpa",
+    allowNull: false,
+  })
+  public gpa!: number;
+  @Column({
     type: DataTypes.STRING(60),
     allowNull: false,
   })

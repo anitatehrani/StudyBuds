@@ -14,6 +14,7 @@ CREATE TABLE student_group (
     description varchar(100),
     members_limit smallint,
     is_public boolean DEFAULT true,
+    gpa numeric(4, 2) NOT NULL,
     course varchar(60) NOT NULL,
     telegram_link varchar(100),
     telegram_id integer,

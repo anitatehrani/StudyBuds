@@ -1,7 +1,10 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import Group from "../models/Group";
-import getSuggestedGroupsbyCourses, { getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import { getCurrentMemberCount } from "./group_member";
+import { getJoinRequestByGroupId } from "./join_request_service";
+import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import UnigeService from "./unige_service";
 
 interface GroupData {
   name: string;
@@ -33,11 +36,14 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
     adminId,
   } = groupData;
 
+  const student_info = await UnigeService.getUnigeProfile(adminId);
+  const gpa = student_info.gpa || 0;
   const group = new Group({
     name,
     description,
     course,
     isPublic,
+    gpa,
     membersLimit,
     telegramLink,
     adminId,
@@ -53,8 +59,7 @@ interface SearchResult {
   description: string | null;
   isPublic: boolean;
   course: string;
-  memberCount: number;
-  status: string | null;
+  membersCount: number;
 }
 
 export interface PopularityResult {
@@ -74,8 +79,7 @@ export async function basicSearch(
       sg.description,
       sg.is_public AS "isPublic",
       sg.course,
-      COUNT(gm.student_id) AS "memberCount",
-      jr.status
+      CAST(COUNT(gm.student_id) AS INTEGER) AS "membersCount"
     FROM
       studybuds.student_group sg
     LEFT JOIN
@@ -91,10 +95,9 @@ export async function basicSearch(
       sg.name,
       sg.description,
       sg.is_public,
-      sg.course,
-      jr.status
+      sg.course
     ORDER BY
-      "memberCount" DESC;
+      "membersCount" DESC;
   `;
   try {
     const results = await sequelize.query<SearchResult>(query, {
@@ -109,16 +112,75 @@ export async function basicSearch(
 }
 
 
+
+
 export async function getSuggestedGroups(
   studentId: number
 ): Promise<SearchResult[]> {
 
-  const courses = await getSuggestedGroupsbyCourses(studentId);
-  //console.log(courses);
-  const popularity = await getSuggestedGroupsbyPopularity();
-  console.log(popularity);
+  // how many groups to return
+  const HOW_MANY = 10;
 
-  return null;
+
+  // weights for each suggestion method
+  const POPULARITY_WEIGHT = 0.2;
+  const FRIENDS_WEIGHT = 0.5;
+  const GPA_WEIGHT = 0.3;
+
+  const score: Map<number, number> = new Map();
+
+  // Assign points to each group based on the order in the list
+  const assignPoints = (group_list: Group[], weight: number) => {
+    for (let i = 0; i < group_list.length; ++i) {
+      let group_id = group_list[i]['id'];
+      if (!score.has(group_id)) continue;
+      let points = score.get(group_id) + weight * (group_list.length - i);
+      score.set(group_id, points);
+    }
+  };
+
+  // Get the suggested groups for each method
+  const [courses, popularity, friends, gpa] = await Promise.all([
+    getSuggestedGroupsbyCourses(studentId),
+    getSuggestedGroupsbyPopularity(),
+    getSuggestedGroupsbyFriends(studentId),
+    getSuggestedGroupsByGpa()
+  ]);
+
+  // Initialize the score for each group to 0
+  courses.forEach(group => score.set(group.id, 0));
+
+  // Assign points to each group based on the order in the list
+  assignPoints(popularity, POPULARITY_WEIGHT);
+  assignPoints(friends, FRIENDS_WEIGHT);
+  assignPoints(gpa, GPA_WEIGHT);
+
+  // Sort the groups by score
+  const ordered_scores = Array.from(score.entries()).sort((a, b) => b[1] - a[1]);
+
+  // Return the top HOW_MANY groups
+  const res: SearchResult[] = await Promise.all(
+    ordered_scores.slice(0, HOW_MANY).map(async ([group_id]) => {
+      const group = courses.find(group => group.id === group_id);
+      if (!group) throw new Error(`Group with id ${group_id} not found`);
+
+      const [memberCount, status] = await Promise.all([
+        getCurrentMemberCount(group_id),
+        getJoinRequestByGroupId(studentId, group_id)
+      ]);
+
+      return {
+        id: group.id,
+        name: group.name,
+        description: group.description,
+        isPublic: group.isPublic,
+        course: group.course,
+        membersCount: memberCount,
+      };
+    })
+  );
+
+  return res;
 };
 
 
