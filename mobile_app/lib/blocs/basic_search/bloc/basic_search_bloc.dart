@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -22,6 +24,7 @@ class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
             emit(SearchFailure('Failed to search'));
           }
         } catch (e){
+          print(e);
           emit(SearchFailure('Failed to send request'));
         }
       }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:study_buds/models/group_details_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/group.dart';
@@ -8,13 +7,11 @@ import '../widgets/custom_text_button.dart';
 class GroupDetailsDialog extends StatelessWidget {
   final Group group;
   final bool isOwner;
-  final GroupDetails groupDetails;
 
   const GroupDetailsDialog({
     super.key,
     required this.group,
     this.isOwner = false,
-    required this.groupDetails,
   });
 
   @override
@@ -109,7 +106,7 @@ class GroupDetailsDialog extends StatelessWidget {
                 spacing: 4.0,
                 runSpacing: 4.0,
                 children: List.generate(
-                  group.members > 10 ? 10 : group.members,
+                  group.membersCount > 10 ? 10 : group.membersCount,
                   (index) {
                     return Container(
                       width: 24.0,
@@ -133,7 +130,7 @@ class GroupDetailsDialog extends StatelessWidget {
                     );
                   },
                 )..addAll(
-                    group.members > 10
+                    group.membersCount > 10
                         ? [
                             Container(
                               width: 24.0,
@@ -174,7 +171,7 @@ class GroupDetailsDialog extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 12),
-              if (groupDetails.isPublic) ...[
+              if (group.isPublic) ...[
                 Text(
                   'Telegram Link ',
                   style: TextStyle(
@@ -185,7 +182,7 @@ class GroupDetailsDialog extends StatelessWidget {
                 const SizedBox(height: 4),
                 GestureDetector(
                   onTap: () async {
-                    final url = Uri.parse(groupDetails.telegramLink);
+                    final url = Uri.parse(group.telegramLink!);
                     if (await canLaunchUrl(url)) {
                       await launchUrl(url);
                     } else {
@@ -193,7 +190,7 @@ class GroupDetailsDialog extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    groupDetails.telegramLink,
+                    group.telegramLink!,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.w500,
