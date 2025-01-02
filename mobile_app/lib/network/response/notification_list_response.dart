@@ -1,4 +1,4 @@
-import 'package:study_buds/models/notification_model.dart';
+import 'package:study_buds/models/notification.dart';
 
 import '../../network/base_http_response.dart';
 
