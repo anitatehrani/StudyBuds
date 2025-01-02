@@ -25,12 +25,12 @@ async function getAllJoinedGroupList(
       "isPublic",
       "adminId",
       [
-        literal(`(
+        literal(`CAST((
           SELECT COUNT(*)
           FROM studybuds.group_members AS gm
           WHERE gm.group_id = "Group".id
-        )`),
-        "memberCount",
+        ) AS INTEGER)`),
+        "membersCount",
       ],
     ],
     include: {
@@ -43,7 +43,7 @@ async function getAllJoinedGroupList(
 
   return result.map((group: any) => ({
     ...group.toJSON(),
-    membersCount: group.getDataValue("memberCount"),
+    membersCount: group.getDataValue("membersCount"),
   }));
 }
 
