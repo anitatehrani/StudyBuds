@@ -43,9 +43,9 @@ export async function joinGroup(studentId: number, groupId: number) {
     const student_ids = await getCurrentMemberList(groupId);
     student_ids.push(studentId);
     const gpa_new = await calculateAverageGpa(student_ids);
-
+    const gpa = gpa_new.average_gpa;
     await StudentGroup.update({
-        gpa: gpa_new
+        gpa: gpa
     }, {
         where: {
             id: groupId
