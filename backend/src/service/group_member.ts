@@ -1,6 +1,6 @@
 import { GroupMembers } from "../models/GroupMembers";
 import { StudentGroup } from "../models/StudentGroup";
-import UnigeService, { calculateAverageGpa } from "./unige_service";
+import { calculateAverageGpa } from "./unige_service";
 
 export async function getCurrentMemberCount(groupId: number) {
     const cnt = await GroupMembers.count({
@@ -17,7 +17,7 @@ export async function getCurrentMemberList(groupId: number) {
             groupId: groupId
         }
     });
-    return cnt.map(member => member.student_id);
+    return cnt.map(member => member.studentId);
 }
 
 
