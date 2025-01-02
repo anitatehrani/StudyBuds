@@ -97,3 +97,5 @@ appium-server:
 physical-acceptance-test *args='': appium-server 
     docker compose up -d --force-recreate postgres && cd test && npx cucumber-js {{args}}
 
+generate-schema:
+    docker compose run --rm --build generate-schema

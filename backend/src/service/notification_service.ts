@@ -2,8 +2,15 @@ import admin from 'firebase-admin';
 import { camelCase } from 'lodash';
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
-import Notification, { NotificationType } from '../models/Notification';
 import { getErrorMessage } from '../utils/api_error';
+import { Notification } from '../models/Notification';
+
+export enum NotificationType{
+    JOIN_REQUEST="join_request",
+    ACCEPT="accept",
+    REJECT="reject",
+}
+
 
 const NOTIFICATION_TEMPLATES:{[key in NotificationType]: {title:string,body:string}}={
     [NotificationType.JOIN_REQUEST]: {
@@ -71,7 +78,7 @@ export async function getStudentNotifications(studentId: number): Promise<Notifi
     });
 }
 
-export async function saveNotification(studentId:number, joinRequestId:number, notificationType:string, message: string) {
+export async function saveNotification(studentId:number, joinRequestId:number, notificationType:NotificationType, message: string) {
     const result = await Notification.create({
         studentId: studentId,
         joinRequestId: joinRequestId,

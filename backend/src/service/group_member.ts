@@ -1,5 +1,5 @@
-import Group from "../models/Group";
-import GroupMembers from "../models/GroupMembers";
+import { GroupMembers } from "../models/GroupMembers";
+import { StudentGroup } from "../models/StudentGroup";
 import UnigeService, { calculateAverageGpa } from "./unige_service";
 
 export async function getCurrentMemberCount(groupId: number) {
@@ -44,7 +44,7 @@ export async function joinGroup(studentId: number, groupId: number) {
     student_ids.push(studentId);
     const gpa_new = await calculateAverageGpa(student_ids);
 
-    await Group.update({
+    await StudentGroup.update({
         gpa: gpa_new
     }, {
         where: {
