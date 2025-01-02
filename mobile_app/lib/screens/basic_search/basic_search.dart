@@ -105,8 +105,8 @@ class _SearchResults extends StatelessWidget {
         } else if (state is SearchLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is SearchSuccess) {
-          final results = state.results;
-          if (results.isEmpty) {
+          final groups = state.groups;
+          if (groups.isEmpty) {
             return Column(
               key: Key('no_results_column'),
               children: [
@@ -128,9 +128,9 @@ class _SearchResults extends StatelessWidget {
           }
           return ListView.builder(
             key: Key('search_results'),
-            itemCount: results.length,
+            itemCount: groups.length,
             itemBuilder: (context, index) {
-              final group = results[index];
+              final group = groups[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
