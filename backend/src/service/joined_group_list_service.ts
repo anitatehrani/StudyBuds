@@ -25,7 +25,7 @@ async function getAllJoinedGroupList(
           SELECT COUNT(*)
           FROM studybuds.group_members AS gm
           WHERE gm.group_id = "StudentGroup".id
-        ) AS INTEGER`),
+        ) AS INTEGER)`),
         "memberCount",
       ],
     ],
