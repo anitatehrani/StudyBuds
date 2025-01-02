@@ -12,8 +12,8 @@ class SearchLoading extends BasicSearchState {
 }
 
 class SearchSuccess extends BasicSearchState {
-  final List<Group> results;
-  SearchSuccess(this.results);
+  final List<Group> groups;
+  SearchSuccess(this.groups);
 }
 
 class SearchFailure extends BasicSearchState {

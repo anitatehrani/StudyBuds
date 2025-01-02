@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buds/models/profile.dart';
 import 'package:study_buds/telegram/telegram_bot.dart';
 import 'package:study_buds/utils/auth_utils.dart';
 import '../../blocs/profile/bloc/profile_bloc.dart';
+import '../../models/student.dart';
 import '../../widgets/custom_filled_button.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String? telegramAccountId;
-  Profile? profile;
+  Student? student;
   late TextEditingController telegramController;
 
   @override
@@ -50,8 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           listener: (context, state) {
             if (state is ProfileLoaded) {
               setState(() {
-                profile = state.profile;
-                telegramController.text = profile!.telegramAccount.toString();
+                student = state.student;
+                telegramController.text = student!.telegramId.toString();
               });
             }
             if (state is ProfileSaveSuccess) {
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (profile == null) {
+            if (student == null) {
               return const Center(child: Text('No profile data available.'));
             }
 
@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             key: ValueKey('full_name_text_field'),
                             controller: TextEditingController(
                                 text:
-                                    '${profile!.firstName} ${profile!.lastName}'),
+                                    '${student!.firstName} ${student!.lastName}'),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Full Name',
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           TextField(
                             key: ValueKey('student_id_text_field'),
                             controller: TextEditingController(
-                                text: profile!.studentId.toString()),
+                                text: student!.id.toString()),
                             readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Student ID',
