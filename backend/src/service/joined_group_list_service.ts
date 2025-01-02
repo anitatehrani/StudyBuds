@@ -25,11 +25,11 @@ async function getAllJoinedGroupList(
       "isPublic",
       "adminId",
       [
-        literal(`(
+        literal(`CAST((
           SELECT COUNT(*)
           FROM studybuds.group_members AS gm
           WHERE gm.group_id = "Group".id
-        )`),
+        ) AS INTEGER)`),
         "membersCount",
       ],
     ],
