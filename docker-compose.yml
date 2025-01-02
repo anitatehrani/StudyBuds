@@ -16,6 +16,9 @@ services:
             - "4723:4723"
       environment:
             APPIUM_ADDITIONAL_PARAMS: --allow-insecure chromedriver_autodownload
+      volumes:
+          - ./mobile_app/build/app/outputs/flutter-apk:/apk:ro
+          - /home/androidusr/.android
 
     emulator:
         init: true
@@ -33,7 +36,7 @@ services:
         devices:
             - /dev/kvm
         volumes:
-            - ./build/app/outputs/flutter-apk:/apk:ro
+            - ./mobile_app/build/app/outputs/flutter-apk:/apk:ro
             - /home/androidusr
         depends_on:
             - backend
@@ -41,7 +44,7 @@ services:
     build-apk:
         build: ./mobile_app
         volumes:
-            - ./build/app/outputs/flutter-apk:/app/build/app/outputs/flutter-apk
+            - ./mobile_app/build/app/outputs/flutter-apk:/app/build/app/outputs/flutter-apk
             - /app/build
             - /root/.gradle
         environment:
@@ -51,11 +54,11 @@ services:
     acceptance-tests:
         build: ./test
         environment:
-            APPIUM_HOST: ${APPIUM_HOST:-"emulator"}
-            APPIUM_PORT: "4723"
-            DEVICE: ${DEVICE_NAME:-"emulator-5554"}
-            APK: ${APPIUM_APK:-"/apk/app-debug.apk"}
-            CHROMEDRIVER_PATH : ${CHROMEDRIVER_PATH:-"disabled"}
+            APPIUM_HOST: ${APPIUM_HOST:-emulator}
+            APPIUM_PORT: ${APPIUM_PORT:-4723}
+            APPIUM_DEVICE: ${APPIUM_DEVICE:-emulator-5554}
+            APPIUM_APK: ${APPIUM_APK:-/apk/app-debug.apk}
+            APPIUM_CHROMEDRIVER_PATH : ${APPIUM_CHROMEDRIVER_PATH:-disabled}
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
