@@ -4,6 +4,7 @@ import Group from "../models/Group";
 import { getCurrentMemberCount } from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import UnigeService from "./unige_service";
 
 interface GroupData {
   name: string;
