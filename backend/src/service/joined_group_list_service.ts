@@ -6,8 +6,8 @@ interface JoinedGroupList {
 }
 
 import { literal } from "sequelize";
-import { StudentGroup } from "../models/StudentGroup";
 import { GroupMembers } from "../models/GroupMembers";
+import { StudentGroup } from "../models/StudentGroup";
 
 async function getAllJoinedGroupList(
   studentId: number
@@ -26,7 +26,7 @@ async function getAllJoinedGroupList(
           FROM studybuds.group_members AS gm
           WHERE gm.group_id = "StudentGroup".id
         ) AS INTEGER)`),
-        "memberCount",
+        "membersCount",
       ],
     ],
     include: {
