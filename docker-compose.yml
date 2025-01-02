@@ -8,10 +8,18 @@ services:
             OUTPUT: /data/plot.svg
             GH_TOKEN: ${GH_TOKEN:-lol}
 
+    appium:
+      init: true
+      image: docker.io/appium/appium
+      privileged: true
+      ports:
+            - "4723:4723"
+      environment:
+            APPIUM_ADDITIONAL_PARAMS: --allow-insecure chromedriver_autodownload
+
     emulator:
         init: true
         build: ./emulator
-        #image: docker.io/budtmo/docker-android:emulator_11.0
         ports:
             - "6080:6080"
             - "4723:4723"

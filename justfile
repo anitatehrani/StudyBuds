@@ -73,6 +73,9 @@ checkout branch: (switch-branch branch) restart-backend run-apk
 run-apk:
     cd mobile_app && flutter run --dart-define-from-file ../.env
 
+run-apk-driver:
+    cd mobile_app && flutter run --dart-define DRIVER=true --dart-define-from-file ../.env
+
 run-apk-release:
     cd mobile_app && flutter run --release --dart-define-from-file ../.env
 
