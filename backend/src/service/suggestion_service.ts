@@ -1,9 +1,10 @@
 import { QueryTypes } from "sequelize";
 import { Sequelize } from 'sequelize-typescript';
 import sequelize from "../config/database";
-import Group from "../models/Group";
 import { PopularityResult } from "./group_service";
 import UnigeService from "./unige_service";
+import { StudentGroup } from "../models/StudentGroup";
+import { getErrorMessage } from "../utils/api_error";
 
 
 
@@ -14,7 +15,7 @@ export async function getSuggestedGroupsbyCourses(student_id: number) {
 
     const courses = student_info.courses;
 
-    const data = await Group.findAll({
+    const data = await StudentGroup.findAll({
         where: {
             course: {
                 [Sequelize.Op.iLike]: {
@@ -28,7 +29,7 @@ export async function getSuggestedGroupsbyCourses(student_id: number) {
 }
 
 
-export async function getSuggestedGroupsbyPopularity(): Promise<Group[]> {
+export async function getSuggestedGroupsbyPopularity(): Promise<StudentGroup[]> {
 
     const query = `
       REFRESH MATERIALIZED VIEW studybuds.group_popularity;
@@ -39,19 +40,19 @@ export async function getSuggestedGroupsbyPopularity(): Promise<Group[]> {
     `;
 
     try {
-        const results = await sequelize.query<Group[]>(query, {
+        const results = await sequelize.query<StudentGroup[]>(query, {
             type: QueryTypes.SELECT,
         });
         return results;
     } catch (error) {
-        console.error(`Failed to execute basic search. Error: ${error.message}`);
+        console.error(`Failed to execute basic search. Error: ${getErrorMessage(error)}`);
         throw error;
     }
 
 }
 
 
-export async function getSuggestedGroupsbyFriends(student_id: number): Promise<Group[]> {
+export async function getSuggestedGroupsbyFriends(student_id: number): Promise<StudentGroup[]> {
 
     const query = `
       SELECT group_id, count(*) as tot
@@ -71,21 +72,21 @@ export async function getSuggestedGroupsbyFriends(student_id: number): Promise<G
       GROUP BY group_id ORDER BY tot DESC
     `;
     try {
-        const results = await sequelize.query<Group[]>(query, {
+        const results = await sequelize.query<StudentGroup[]>(query, {
             replacements: { student_id },
             type: QueryTypes.SELECT,
         });
         return results;
     } catch (error) {
-        console.error(`Failed to execute get suggested groups by friends. Error: ${error.message}`);
+        console.error(`Failed to execute get suggested groups by friends. Error: ${getErrorMessage(error)}`);
         throw error;
     }
 
 }
 
-export async function getSuggestedGroupsByGpa(): Promise<Group[]> {
+export async function getSuggestedGroupsByGpa(): Promise<StudentGroup[]> {
 
-    const data = await Group.findAll({
+    const data = await StudentGroup.findAll({
         order: [['gpa', 'DESC']],
     });
 
