@@ -1,4 +1,5 @@
 import { byText, byValueKey } from "appium-flutter-finder";
+import {driver} from "../steps/all.ts";
 
 export enum BottomBarIcon {
     search = "icon_search",
@@ -105,9 +106,6 @@ export async function clickDropdownItemByValue(driver: WebdriverIO.Browser, valu
 }
 
 export async function do_logout(driver: WebdriverIO.Browser) {
-    console.log("Logging out...");
-    const logoutButton = byValueKey("logout_button");
-    await waitForElement(driver, logoutButton);
-    await driver.elementClick(logoutButton);
-    console.log("Logout successful.");
+    const logout_button = byValueKey('logout_button');
+    await driver.elementClick(logout_button);
 }

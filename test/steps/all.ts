@@ -1,23 +1,25 @@
 import { After, Before, setDefaultTimeout } from "@cucumber/cucumber";
 import { remote } from "webdriverio";
 import { do_logout } from "../utils/utils";
+import chromedriver from "chromedriver";
 
-// DOCS:
-// webdriverio            https://webdriver.io/docs/selectors
-// native/webapp          https://github.com/appium/appium-uiautomator2-driver
-// flutter-driver         https://github.com/appium/appium-flutter-driver
+//DOCS:
 
-// Device and APK configuration
+//webdriverio            https://webdriver.io/docs/selectors
+//native/webapp          https://github.com/appium/appium-uiautomator2-driver
+//flutter-driver         https://github.com/appium/appium-flutter-driver
+
 const osSpecificOps = {
     platformName: "Android",
-    "appium:deviceName": process.env.DEVICE || "67cbd329", // Ensure this matches your physical device ADB ID
-    "appium:app": process.env.APK || "D:\\Orange\\New folder\\StudyBuds\\mobile_app\\build\\app\\outputs\\flutter-apk\\app-debug.apk", // Updated to absolute Windows path
+    "appium:deviceName": process.env.DEVICE || "emulator-5554",
+    "appium:app": process.env.APK || "../mobile_app/build/app/outputs/flutter-apk/app-debug.apk",
+    // __dirname +
+    // "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
 };
 
-// Appium server options
 const opts = {
-    hostname: process.env.APPIUM_HOST || "192.168.13.234", // Ensure this matches your Appium server host
-    port: Number.parseInt(process.env.APPIUM_PORT || "4723", 10),
+    hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
+    port: Number.parseInt(process.env.APPIUM_PORT ? process.env.APPIUM_PORT : "4723"),
     path: "/",
     capabilities: {
         ...osSpecificOps,
@@ -31,29 +33,24 @@ const opts = {
     },
 };
 
-// Test timeout
 const SECONDS_TIMEOUT = 30_000; // 30 seconds
 
-// WebDriverIO driver instance
 export let driver: WebdriverIO.Browser;
 setDefaultTimeout(SECONDS_TIMEOUT);
 
-// Before hook: Start WebDriver session
 Before(async function () {
     driver = await remote(opts);
     driver.implicitWait(5_000);
     await driver.switchContext("FLUTTER");
 });
 
-// After hook: Clean up WebDriver session
 After(async function () {
     if (driver) {
-        await do_logout(driver);
+        // do_logout();
         await driver.deleteSession();
     }
 });
 
-// Function to get the current driver
 export function getDriver() {
     return driver;
 }
