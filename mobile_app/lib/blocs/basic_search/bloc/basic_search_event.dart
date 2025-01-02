@@ -7,9 +7,8 @@ sealed class BasicSearchEvent extends Equatable {
 class SearchQueryChanged extends BasicSearchEvent {
 
   final String queryString;
-  final int studentId;
 
-  const SearchQueryChanged(this.queryString, this.studentId);
+  const SearchQueryChanged(this.queryString);
   
   @override
   // TODO: implement props

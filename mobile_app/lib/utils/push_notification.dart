@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +36,7 @@ class PushNotificationService {
     await FirebaseMessaging.instance.requestPermission();
 
     var token = await FirebaseMessaging.instance.getToken();
-    print(token);
     if(token != null){
-      log(token.toString());
       var oldToken = await SharedPreferencesHelper.getPushNotificationToken();
       if(oldToken != token){
         _hasToSendTokenToServer = true;

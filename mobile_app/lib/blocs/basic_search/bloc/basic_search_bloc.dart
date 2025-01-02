@@ -13,7 +13,7 @@ class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
       if (event is SearchQueryChanged) {
         emit(SearchLoading());
         try {
-          final basicSearchRequest = BasicSearchRequest(query: event.queryString, studentId: event.studentId);
+          final basicSearchRequest = BasicSearchRequest(query: event.queryString);
           final response = await basicSearchRequest.send();
           if (response.isSuccess) {
             final List<Group> groups = Group.fromJsonList(response.data ?? []);

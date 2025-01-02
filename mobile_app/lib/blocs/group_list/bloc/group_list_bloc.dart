@@ -13,7 +13,7 @@ class GroupListBloc extends Bloc<GroupListEvent, GroupListState> {
     on<FetchMyGroupListEvent>((event, emit) async {
       emit(GroupListLoading());
     try {
-      final fetchNotificationRequest = FetchMyGroupListRequest(event.studentId);
+      final fetchNotificationRequest = FetchMyGroupListRequest();
       final response = await fetchNotificationRequest.send();
       if (response.isSuccess) {
         if (response.data != null) {
