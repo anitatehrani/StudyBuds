@@ -115,6 +115,14 @@ services:
             - unigeapi
             - unigelogin
 
+    generate-schema:
+        build: ./backend
+        command: npm exec -- sequelize-auto -h postgres -d postgres -u postgres -x password -p 5432 -o /out -c sequelize-auto-options.json
+        volumes:
+          - ./backend/src/models:/out
+        depends_on:
+          - postgres
+
     api-testing:
         build: ./backend/api_testing
         depends_on:

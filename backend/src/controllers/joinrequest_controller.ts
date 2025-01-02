@@ -1,10 +1,9 @@
 import { Request } from 'express';
-import { NotificationType } from '../models/Notification';
 import { getStudentFirebaseToken } from '../service/firebase_token_service';
 import { getCurrentMemberCount, joinGroup } from '../service/group_member';
 import { getGroupById } from '../service/group_service';
 import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '../service/join_request_service';
-import { sendPushNotification } from '../service/notification_service';
+import { NotificationType, sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { getUnigeProfile } from '../service/unige_service';
 import { NotFoundError, ValidationError } from '../utils/api_error';
@@ -80,7 +79,7 @@ export async function changeJoinRequestStatus(req: Request) {
         throw new NotFoundError('JoinRequest not found')
     }
 
-    if (joinRequest.status != 'pending') {
+    if (joinRequest.status !== 'pending') {
         console.log('Admin student has already managed the join request');
         throw new ValidationError('You have already managed the request');
     }
