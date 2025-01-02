@@ -38,7 +38,6 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
 
   const student_info = await UnigeService.getUnigeProfile(adminId);
   const gpa = student_info.gpa || 0;
-
   const group = new Group({
     name,
     description,
