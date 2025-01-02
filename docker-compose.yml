@@ -43,12 +43,11 @@ services:
     acceptance-tests:
         build: ./test
         environment:
-            APPIUM_OS: android
-            APK: /apk/app-debug.apk
-            DEVICE: "emulator-5554"
-            APPIUM_HOST: "emulator"
+            APPIUM_HOST: ${APPIUM_HOST:-"emulator"}
             APPIUM_PORT: "4723"
-
+            DEVICE: ${DEVICE_NAME:-"emulator-5554"}
+            APK: ${APPIUM_APK:-"/apk/app-debug.apk"}
+            CHROMEDRIVER_PATH : ${CHROMEDRIVER_PATH:-"disabled"}
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres

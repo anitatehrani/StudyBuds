@@ -17,14 +17,18 @@ const osSpecificOps = {
     // "/../../frontend/build/app/outputs/apk/debug/app-debug.apk",
 };
 
+const chromedriverOps = process.env.CHROMEDRIVER_PATH && process.env.CHROMEDRIVER_PATH !== "disabled" ? {
+    "appium:chromedriverExecutable": process.env.CHROMEDRIVER_PATH
+} : {};
+
 const opts = {
     hostname: process.env.APPIUM_HOST ? process.env.APPIUM_HOST : "127.0.0.1",
     port: Number.parseInt(process.env.APPIUM_PORT ? process.env.APPIUM_PORT : "4723"),
     path: "/",
     capabilities: {
         ...osSpecificOps,
+        ...chromedriverOps,
         "appium:automationName": "Flutter",
-        "appium:chromedriverExecutable": "C:/Users/anita/AppData/Roaming/npm/node_modules/chromedriver/lib/chromedriver/chromedriver.exe", // Update with the correct path
         "appium:chromedriverAutodownload": true, // Enables automatic ChromeDriver download
         "appium:autoGrantPermissions": true, // Automatically grant app permissions
         "appium:webviewConnectRetries": 10, // Retries for WebView connection
