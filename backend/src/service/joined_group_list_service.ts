@@ -30,7 +30,7 @@ async function getAllJoinedGroupList(
           FROM studybuds.group_members AS gm
           WHERE gm.group_id = "Group".id
         )`),
-        "memberCount",
+        "membersCount",
       ],
     ],
     include: {
@@ -43,7 +43,7 @@ async function getAllJoinedGroupList(
 
   return result.map((group: any) => ({
     ...group.toJSON(),
-    membersCount: group.getDataValue("memberCount"),
+    membersCount: group.getDataValue("membersCount"),
   }));
 }
 
