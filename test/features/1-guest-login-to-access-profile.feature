@@ -1,5 +1,6 @@
 Feature: Guest Login to Access Profile
 
+@guest-login-to-access-profile
 Scenario: User login
 Given I am on the home page not logged in
 When I click on the login button

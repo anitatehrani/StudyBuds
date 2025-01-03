@@ -60,7 +60,7 @@ def main(id: int | None):
             continue
         _, gherkin = body.split(START)
         gherkin = GHERKIN_TEMPLATE.format(title, gherkin)
-        # gherkin = add_tags(gherkin, tag_name)
+        gherkin = add_tags(gherkin, tag_name)
         print(gherkin)
         (OUTPUT_DIR / filename).write_text(gherkin)
 
