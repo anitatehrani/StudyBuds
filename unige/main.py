@@ -92,7 +92,7 @@ def get_students(student_list: list[int]):
         {
             "first_name": student.first_name,
             "last_name": student.last_name,
-            "student_id": student.id,
+            "id": student.id,
         }
         for student in DATABASE.students
         if student.id in student_list
