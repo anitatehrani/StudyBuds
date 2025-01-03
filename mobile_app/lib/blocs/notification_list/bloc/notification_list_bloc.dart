@@ -23,8 +23,15 @@ class NotificationListBloc
       if (response.isSuccess) {
         if (response.data != null && response.data!.isNotEmpty) {
           final List<NotificationModel> result =
-              NotificationModel.fromJsonList(response.data!);
-          emit(NotificationListSuccess(result));
+              NotificationModel.fromJsonList(response.data ?? []);
+
+          List<NotificationModel> receivedList = [];
+          List<NotificationModel> responseList = [];
+          if (result != null) {
+            receivedList = result.where((notification) => notification.notificationType == 'join_request').toList();
+            responseList = result.where((notification) => notification.notificationType != 'join_request').toList();
+          }
+          emit(NotificationListSuccess(receivedList, responseList));
         }
       } else {
         emit(NotificationListFailure('Failed to load notification list'));
