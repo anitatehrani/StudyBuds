@@ -54,6 +54,7 @@ services:
     acceptance-tests:
         build: ./test
         environment:
+            DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             APPIUM_HOST: ${APPIUM_HOST:-emulator}
             APPIUM_PORT: ${APPIUM_PORT:-4723}
             APPIUM_DEVICE: ${APPIUM_DEVICE:-emulator-5554}

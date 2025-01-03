@@ -12,14 +12,6 @@ Before(() => {
     driver = getDriver();
 });
 
-// Given step - User is on the search page
-Given("I am on the search page and logged in", async function () {
-    await login_guest(driver);
-    await go_to_page(driver, BottomBarIcon.search);
-
-    // Add navigation logic to ensure the user is on the search page, if necessary
-});
-
 // When step - User types a keyword in the search bar and clicks search
 When("I type {string} in the search bar", async function (searchTerm: string) {
     const searchBar = byValueKey("search_bar");

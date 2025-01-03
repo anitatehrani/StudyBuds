@@ -4,11 +4,6 @@ import { driver } from "./all";
 import { BottomBarIcon, go_to_page, waitForElementByValue, login_guest } from "../utils/utils";
 
 
-Given("I am on the search page and logged in", async () => {
-  await login_guest(driver);
-  await go_to_page(driver, BottomBarIcon.search);
-});
-
 Given("I type {string} in the search bar", async function (groupName: string) {
   const searchBar = byValueKey("search_bar");
   await driver.elementSendKeys(searchBar, groupName);
