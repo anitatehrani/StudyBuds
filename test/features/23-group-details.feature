@@ -11,3 +11,5 @@ Scenario: Open group description
     And I see the group type
     And I see the full group description
     And I see the group course
+    And I go to the profile page
+    And I do the logout

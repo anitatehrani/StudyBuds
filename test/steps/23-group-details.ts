@@ -33,16 +33,7 @@ When("I type {string} in the search bar", async function (searchTerm: string) {
 Then(
     "I see all groups where {string} is inside their group name or course",
     async function (searchTerm: string) {
-        const searchResults = byValueKey("search_results");
-
-        // Get the render object diagnostics for the ListView
-        // Get the render object diagnostics for the ListView
-        await driver.execute("flutter:getRenderObjectDiagnostics", searchResults, {
-            includeProperties: true,
-            subtreeDepth: 2,
-        });
-        // Extract children count
-        const itemCount = 1; //renderObjectDiagnostics.children.length;
+        const itemCount = 1;
 
         let matchFound = false;
 

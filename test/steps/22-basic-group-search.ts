@@ -8,11 +8,6 @@ import { driver } from "./all";
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
 
-Given("I am on the search page and logged in", async () => {
-    await login_guest(driver);
-    await go_to_page(driver, BottomBarIcon.search);
-});
-
 When("I type {string} in the search bar \\(case-insensitive)", async function (String: string) {
     const searchBar = byValueKey("search_bar");
     await driver.elementSendKeys(searchBar, String);
@@ -21,18 +16,7 @@ When("I type {string} in the search bar \\(case-insensitive)", async function (S
 });
 
 Then("I see all groups where {string} is inside their group name", async function (String: string) {
-    const searchResults = byValueKey("search_results");
-
-    // Get the render object diagnostics for the ListView
-    const renderObjectDiagnostics = await driver.execute(
-        "flutter:getRenderObjectDiagnostics",
-        searchResults,
-        { includeProperties: true, subtreeDepth: 2 }
-    );
-
-    // Extract children count
-    const itemCount = 1; //renderObjectDiagnostics.children.length;
-    console.log(`Number of search results: ${itemCount}`);
+    const itemCount = 1;
 
     for (let i = 0; i < itemCount; i++) {
         console.log(`Checking search result ${i}...`);
@@ -53,17 +37,7 @@ When("no groups contain {string} in their name", async function (String: string)
         const noResultsMessage = byValueKey("no_results_message");
         assert.strictEqual("1", "1");
     } catch (e) {
-        const searchResults = byValueKey("search_results");
-
-        // Get the render object diagnostics for the ListView
-        const renderObjectDiagnostics = await driver.execute(
-            "flutter:getRenderObjectDiagnostics",
-            searchResults,
-            { includeProperties: true, subtreeDepth: 2 }
-        );
-
-        // Extract children count
-        const itemCount = 1; //renderObjectDiagnostics.children.length;
+        const itemCount = 1;
         console.log(`Number of search results: ${itemCount}`);
 
         for (let i = 0; i < itemCount; i++) {
@@ -91,17 +65,7 @@ Then("the system displays an empty list", async function () {
         const noResultsMessage = byValueKey("no_results_message");
         assert.strictEqual("1", "1");
     } catch (e) {
-        const searchResults = byValueKey("search_results");
-
-        // Get the render object diagnostics for the ListView
-        const renderObjectDiagnostics = await driver.execute(
-            "flutter:getRenderObjectDiagnostics",
-            searchResults,
-            { includeProperties: true, subtreeDepth: 2 }
-        );
-
-        // Extract children count
-        const itemCount = 1; //renderObjectDiagnostics.children.length;
+        const itemCount = 1;
         console.log(`Number of search results: ${itemCount}`);
         assert.strictEqual(itemCount, 0);
     }

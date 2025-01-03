@@ -2,6 +2,7 @@ import { byValueKey, byText } from "appium-flutter-finder";
 import { BottomBarIcon, go_to_page, login_guest } from "./../utils/utils";
 import { Given, When, Then } from "@cucumber/cucumber";
 import { driver } from "./all";
+import { do_logout } from "../utils/utils";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
@@ -74,3 +75,7 @@ When(
         }
     }
 );
+
+Then("I do the logout", async () => {
+    await do_logout(driver);
+});

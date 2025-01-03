@@ -6,3 +6,4 @@ When I click on the login button
 And I input my Unige credentials username "10" and password "10"
 Then I am logged in successfully
 And I can see my profile username "10"
+And I do the logout

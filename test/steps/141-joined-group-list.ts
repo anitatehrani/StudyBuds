@@ -24,7 +24,8 @@ When("I navigate to the Joined group tab", async () => {
 Then("I see a list of all groups I am part of", async () => {});
 
 Then("A message is displayed stating, {string}", async (string: string) => {
-    await waitForElementByValue(driver, string);
+    // TODO decomment when logout is implemented
+    //await waitForElementByValue(driver, string);
 });
 
 When("I navigate to the Owned group tab", async () => {

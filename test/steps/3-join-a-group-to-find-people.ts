@@ -1,31 +1,20 @@
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, Then } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { driver } from "./all";
-import { BottomBarIcon, go_to_page, waitForElementByValue, login_guest } from "../utils/utils";
+import { BottomBarIcon, go_to_page, waitForElementByValue } from "../utils/utils";
 
+Given("I already have sent a join request to the group", async function () {});
 
-Given("I am on the search page and logged in", async () => {
-  await login_guest(driver);
-  await go_to_page(driver, BottomBarIcon.search);
+Then(
+    "The {string} button is displayed to indicate that a request is already pending",
+    async function (buttonLabel: string) {
+        await waitForElementByValue(driver, buttonLabel);
+    }
+);
+
+Then("I go to the profile page", async function () {
+    await go_to_page(driver, BottomBarIcon.profile);
 });
-
-Given("I type {string} in the search bar", async function (groupName: string) {
-  const searchBar = byValueKey("search_bar");
-  await driver.elementSendKeys(searchBar, groupName);
-  const searchButton = byValueKey("search_button");
-  await driver.elementClick(searchButton);
-});
-
-Given("I already have sent a join request to the group", async function () { });
-
-
-Then("The {string} button is displayed to indicate that a request is already pending", async function (buttonLabel: string) {
-  await waitForElementByValue(driver, buttonLabel);
-});
-
-
-
-
 
 // When("I attempt to send another join request", async function () {
 //   const joinRequestButton = byValueKey("send_join_request_btn");
@@ -38,7 +27,6 @@ Then("The {string} button is displayed to indicate that a request is already pen
 // }
 // });
 
-
 //   const joinRequestButton = byValueKey("send_join_request_btn");
 
 //   const buttonText = await driver.getElementText(joinRequestButton);
@@ -49,7 +37,3 @@ Then("The {string} button is displayed to indicate that a request is already pen
 //   );
 //   console.log(The ${buttonLabel} button is correctly disabled and displays "Pending...".);
 // });
-
-
-
-

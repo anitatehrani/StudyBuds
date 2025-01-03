@@ -5,4 +5,6 @@ Scenario: Duplicate join request
     And I type "aya" in the search bar                                
     And I already have sent a join request to the group
     When I attempt to send another join request
-    Then The "pending" button is displayed to indicate that a request is already pending.
+    Then The "pending" button is displayed to indicate that a request is already pending
+    And I go to the profile page
+    And I do the logout

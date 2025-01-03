@@ -1,5 +1,5 @@
 import { byText, byValueKey } from "appium-flutter-finder";
-import {driver} from "../steps/all.ts";
+import { driver } from "../steps/all.ts";
 
 export enum BottomBarIcon {
     search = "icon_search",
@@ -69,12 +69,11 @@ export async function login(driver: WebdriverIO.Browser, username: string, passw
     console.log("Switching to web context:", webContext);
     await driver.switchContext(webContext);
 
-
     // Fill in login form and submit
     console.log("Locating web page elements...");
     const usernameField = await driver.$('input[name="username"]');
     const passwordField = await driver.$('input[name="password"]');
-    const submitButton = await driver.$('button'); // Adjust selector based on your HTML
+    const submitButton = await driver.$("button"); // Adjust selector based on your HTML
 
     console.log("Filling username and password fields...");
     await usernameField.setValue(username);
@@ -96,16 +95,16 @@ export async function waitForElementByValue(driver: WebdriverIO.Browser, value: 
 }
 
 export async function editTextField(driver: WebdriverIO.Browser, key: Key, value: Value) {
-  const textField = byValueKey(key);
-  await driver.elementSendKeys(textField, value);
+    const textField = byValueKey(key);
+    await driver.elementSendKeys(textField, value);
 }
 
 export async function clickDropdownItemByValue(driver: WebdriverIO.Browser, value: string) {
-  const item = byText(value);
-  await driver.elementClick(item);
+    const item = byText(value);
+    await driver.elementClick(item);
 }
 
 export async function do_logout(driver: WebdriverIO.Browser) {
-    const logout_button = byValueKey('logout_button');
+    const logout_button = byValueKey("logout_button");
     await driver.elementClick(logout_button);
 }
