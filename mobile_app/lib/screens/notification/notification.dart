@@ -84,34 +84,38 @@ class _NotificationScreenState extends State<NotificationScreen> {
 class NotificationListTab extends StatelessWidget {
   final List<NotificationModel> models;
 
-  const NotificationListTab(
-    {super.key, required this.models}
-  );
+  const NotificationListTab({super.key, required this.models});
 
-  listChangedEvent(){
-    NotificationListBloc()..add(FetchNotificationListEvent(10));
+  void listChangedEvent(BuildContext context) {
+    BlocProvider.of<NotificationListBloc>(context)
+        .add(FetchNotificationListEvent(10));
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ListView.builder(
-        itemCount: models.length,
-        itemBuilder: (context, index) {
-          final notification = models[index];
-          return Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 2.0,
-                  horizontal: 16.0,
-                ),
-              child: NotificationCard(
-                  backgroundColor: Colors.white,
-                  notification: notification,
-                  listChanged: listChangedEvent,
-              ),
-          );
+      child: RefreshIndicator(
+        onRefresh: () async {
+          listChangedEvent(context);
         },
+        child: ListView.builder(
+          itemCount: models.length,
+          itemBuilder: (context, index) {
+            final notification = models[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2.0,
+                horizontal: 16.0,
+              ),
+              child: NotificationCard(
+                backgroundColor: Colors.white,
+                notification: notification,
+                listChanged: () => listChangedEvent(context),
+              ),
+            );
+          },
         ),
+      ),
     );
   }
 }
