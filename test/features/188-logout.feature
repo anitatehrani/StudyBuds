@@ -1,6 +1,6 @@
-Feature: Logout Functionality
+Feature: Logout
 
-  Scenario: Successful logout
+Scenario: Successful logout
     Given I am logged in
     And I am on the profile page
     When I click on the logout button
