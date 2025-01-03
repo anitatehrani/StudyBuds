@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/blocs/notification_list/bloc/notification_list_bloc.dart';
-import 'package:study_buds/models/notification_model.dart';
+import 'package:study_buds/models/notification.dart';
 import 'package:study_buds/widgets/notification_card.dart';
 
 class NotificationScreen extends StatefulWidget {
