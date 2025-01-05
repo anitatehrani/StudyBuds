@@ -200,16 +200,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Confirm Logout'),
+                                key: const Key('logout_confirmation_dialog'),
+                                title: const Text('Confirm Logout'),
                               content: const Text('Are you sure you want to log out?'),
                               actions: [
                                 TextButton(
+                                  key: const Key('cancel_button'),
                                   onPressed: () {
                                     Navigator.of(context).pop(); // Close the dialog
                                   },
                                   child: const Text('Cancel'),
                                 ),
                                 TextButton(
+                                  key: const Key('confirm_logout'),
                                   onPressed: () {
                                     Navigator.of(context).pop(); // Close the dialog
                                     AuthUtils.logout(context); // Perform logout
