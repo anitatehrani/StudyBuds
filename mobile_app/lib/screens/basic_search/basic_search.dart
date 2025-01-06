@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/blocs/basic_search/bloc/basic_search_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/widgets/group_card.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/group_details/bloc/group_details_bloc.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +25,7 @@ class MyApp extends StatelessWidget {
 class BasicSearchPage extends StatelessWidget {
   const BasicSearchPage({super.key, required this.title});
   final String title;
+  // final bool is_searched;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,8 @@ class BasicSearchPage extends StatelessWidget {
               Expanded(
                 child: MultiProvider(
                   providers: [
-                    Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
+                    Provider<GroupDetailsBloc>(
+                        create: (_) => GroupDetailsBloc()),
                     Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
                   ],
                   child: _SearchResults(),
@@ -100,8 +105,78 @@ class _SearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BasicSearchBloc, BasicSearchState>(
       builder: (context, state) {
+        if (state is SuggestedGroup) {
+          return Center(
+              child: Column(children: [
+            Text("Suggested groups for you",
+                style: TextStyle(color: Colors.orange)),
+            const SizedBox(height: 20),
+            Text("this will be the swiper")
+          ]));
+        }
         if (state is SearchInitial) {
           return Center(child: Text('Enter a query to search for groups.'));
+        } else if (state is SearchLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is SearchSuccess) {
+          final groups = state.groups;
+          if (groups.isEmpty) {
+            return Column(
+              key: Key('no_results_column'),
+              children: [
+                Center(
+                  key: Key('no_results_message'),
+                  child: Text('No results found.'),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    key: Key('search_results'),
+                    itemCount: 0,
+                    itemBuilder: (context, index) {
+                      return SizedBox.shrink();
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
+          return ListView.builder(
+            key: Key('search_results'),
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              final group = groups[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GroupCard(group: group, index: index),
+                  Divider(),
+                ],
+              );
+            },
+          );
+        } else if (state is SearchFailure) {
+          return Center(child: Text('Error: ${state.error}'));
+        } else {
+          return Center(child: Text(''));
+        }
+      },
+    );
+  }
+}
+
+class _SuggestedGroups extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BasicSearchBloc, BasicSearchState>(
+      builder: (context, state) {
+        if (state is SuggestedGroup) {
+          return Center(
+              child: Column(children: [
+            Text("Suggested groups for you",
+                style: TextStyle(color: Colors.orange)),
+            const SizedBox(height: 20),
+            Text("this will be the swiper")
+          ]));
         } else if (state is SearchLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is SearchSuccess) {
