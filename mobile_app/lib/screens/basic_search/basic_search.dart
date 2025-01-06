@@ -105,7 +105,7 @@ class _SearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BasicSearchBloc, BasicSearchState>(
       builder: (context, state) {
-        if (state is SuggestedGroup) {
+        if (state is SuggestedGroupListSuccess) {
           return Center(
               child: Column(children: [
             Text("Suggested groups for you",
@@ -164,63 +164,63 @@ class _SearchResults extends StatelessWidget {
   }
 }
 
-class _SuggestedGroups extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<BasicSearchBloc, BasicSearchState>(
-      builder: (context, state) {
-        if (state is SuggestedGroup) {
-          return Center(
-              child: Column(children: [
-            Text("Suggested groups for you",
-                style: TextStyle(color: Colors.orange)),
-            const SizedBox(height: 20),
-            Text("this will be the swiper")
-          ]));
-        } else if (state is SearchLoading) {
-          return Center(child: CircularProgressIndicator());
-        } else if (state is SearchSuccess) {
-          final groups = state.groups;
-          if (groups.isEmpty) {
-            return Column(
-              key: Key('no_results_column'),
-              children: [
-                Center(
-                  key: Key('no_results_message'),
-                  child: Text('No results found.'),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    key: Key('search_results'),
-                    itemCount: 0,
-                    itemBuilder: (context, index) {
-                      return SizedBox.shrink();
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-          return ListView.builder(
-            key: Key('search_results'),
-            itemCount: groups.length,
-            itemBuilder: (context, index) {
-              final group = groups[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GroupCard(group: group, index: index),
-                  Divider(),
-                ],
-              );
-            },
-          );
-        } else if (state is SearchFailure) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return Center(child: Text(''));
-        }
-      },
-    );
-  }
-}
+// class _SuggestedGroups extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<BasicSearchBloc, BasicSearchState>(
+//       builder: (context, state) {
+//         if (state is SuggestedGroupListSuccess) {
+//           return Center(
+//               child: Column(children: [
+//             Text("Suggested groups for you",
+//                 style: TextStyle(color: Colors.orange)),
+//             const SizedBox(height: 20),
+//             Text("this will be the swiper")
+//           ]));
+//         } else if (state is SearchLoading) {
+//           return Center(child: CircularProgressIndicator());
+//         } else if (state is SearchSuccess) {
+//           final groups = state.groups;
+//           if (groups.isEmpty) {
+//             return Column(
+//               key: Key('no_results_column'),
+//               children: [
+//                 Center(
+//                   key: Key('no_results_message'),
+//                   child: Text('No results found.'),
+//                 ),
+//                 Expanded(
+//                   child: ListView.builder(
+//                     key: Key('search_results'),
+//                     itemCount: 0,
+//                     itemBuilder: (context, index) {
+//                       return SizedBox.shrink();
+//                     },
+//                   ),
+//                 ),
+//               ],
+//             );
+//           }
+//           return ListView.builder(
+//             key: Key('search_results'),
+//             itemCount: groups.length,
+//             itemBuilder: (context, index) {
+//               final group = groups[index];
+//               return Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   GroupCard(group: group, index: index),
+//                   Divider(),
+//                 ],
+//               );
+//             },
+//           );
+//         } else if (state is SearchFailure) {
+//           return Center(child: Text('Error: ${state.error}'));
+//         } else {
+//           return Center(child: Text(''));
+//         }
+//       },
+//     );
+//   }
+// }

@@ -8,7 +8,7 @@ class SuggestedGroupsRequest
   SuggestedGroupsRequest({required int studentId})
       : super(
           httpVerb: HttpVerb.GET,
-          endPoint: "/groups/sugged_groups/$studentId",
+          endPoint: "/groups/group_suggestions/$studentId",
           responseBuilder: SuggestedGroupsResponseBuilder(),
         );
 }

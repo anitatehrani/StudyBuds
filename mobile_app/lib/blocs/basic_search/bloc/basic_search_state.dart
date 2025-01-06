@@ -19,7 +19,14 @@ class SearchFailure extends BasicSearchState {
   SearchFailure(this.error);
 }
 
-class SuggestedGroup extends BasicSearchState {
+class SuggestedGroupListLoading extends BasicSearchState {}
+
+class SuggestedGroupListSuccess extends BasicSearchState {
   final List<Group> suggested_groups;
-  SuggestedGroup(this.suggested_groups);
+  SuggestedGroupListSuccess(this.suggested_groups);
+}
+
+class SuggestedGroupListFailure extends BasicSearchState {
+  final String error;
+  SuggestedGroupListFailure(this.error);
 }

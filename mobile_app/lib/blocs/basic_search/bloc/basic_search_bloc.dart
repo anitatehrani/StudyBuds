@@ -14,19 +14,24 @@ part 'basic_search_state.dart';
 class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
   BasicSearchBloc() : super(BasicSearchInitial()) {
     on<BasicSearchEvent>((event, emit) async {
-      if (event is ShowSuggestedGroups) {
+        emit(SuggestedGroupListLoading());
         try {
           final suggestedGroupsRequest = SuggestedGroupsRequest(studentId: event.studentId);
           final response = await suggestedGroupsRequest.send();
           if (response.isSuccess) {
             final List<Group> suggestedGroups =
                 Group.fromJsonList(response.data ?? []);
-            emit(SuggestedGroup(suggestedGroups));
+            emit(SuggestedGroupListSuccess(suggestedGroups));
+          }
+        else {
+            emit(SuggestedGroupListFailure('Failed to get Suggested Group list'));
           }
         } catch (e) {
           print(e);
+          emit(SuggestedGroupListFailure('Failed to send Suggested Group list request'));
         }
-      } else if (event is SearchQueryChanged) {
+
+     if (event is SearchQueryChanged) {
         emit(SearchLoading());
         try {
           final basicSearchRequest = BasicSearchRequest(
