@@ -16,6 +16,8 @@ Then("I go to the {string} page", async function (page: string) {
     await go_to_page(driver, getBottomBarIcon(page));
 });
 
+Given("I already have sent a join request to the group", async function () {});
+
 // When("I attempt to send another join request", async function () {
 //   const joinRequestButton = byValueKey("send_join_request_btn");
 

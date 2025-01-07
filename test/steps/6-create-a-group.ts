@@ -42,7 +42,7 @@ When("I set the group type as {string}", async function (groupType: string) {
     }
 });
 
-When("I click the create group button", async function () {
+When("I click the create button", async function () {
     // scroll
     driver.execute("flutter:scrollUntilVisible", byType("SingleChildScrollView"), {
         item: byValueKey(UiId.createGroupButton),
@@ -53,8 +53,7 @@ When("I click the create group button", async function () {
 });
 
 
-Then(
-    "The system creates the private group successfully and displays a confirmation message",
+Then("The system creates the group successfully and displays a confirmation message",
     async function () {
         await waitForElement(driver, UiId.successSnackbar);
         const actualMessage = await getText(driver, UiId.successSnackbar);
