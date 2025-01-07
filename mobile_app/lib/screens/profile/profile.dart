@@ -210,6 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: const Text('Cancel'),
                                 ),
                                 TextButton(
+                                  key: const Key('confirm_logout'),
                                   onPressed: () {
                                     Navigator.of(context).pop(); // Close the dialog
                                     AuthUtils.logout(context); // Perform logout
