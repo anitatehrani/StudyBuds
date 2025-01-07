@@ -1,10 +1,9 @@
 import { Request } from 'express';
-import { NotificationType } from '../models/Notification';
 import { getStudentFirebaseToken } from '../service/firebase_token_service';
-import { getCurrentMemberList, joinGroup } from '../service/group_member';
+import { getCurrentMemberCount, joinGroup } from '../service/group_member';
 import { getGroupById } from '../service/group_service';
 import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '../service/join_request_service';
-import { sendPushNotification } from '../service/notification_service';
+import { NotificationType, sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { getUnigeProfile } from '../service/unige_service';
 import { NotFoundError, ValidationError } from '../utils/api_error';
@@ -36,7 +35,7 @@ export async function joinTheGroup(req: Request) {
         throw new ValidationError('You are trying to join your group');
     }
 
-    const memberCount = await getCurrentMemberList(groupId);
+    const memberCount = await getCurrentMemberCount(groupId);
     const membersLimit = group.membersLimit;
     if (memberCount >= membersLimit) {
         throw new ValidationError('The group has reached its member limit.');
@@ -45,7 +44,7 @@ export async function joinTheGroup(req: Request) {
     const isPublic = group.isPublic;
     if (isPublic) {
         await joinGroup(studentId, groupId);
-        return {message: 'Student added to the group successfully'};
+        return { message: 'Student added to the group successfully' };
     } else {
         const joinRequest = await createJoinRequest(studentId, groupId);
         const joinRequestId = joinRequest.id;
@@ -55,15 +54,15 @@ export async function joinTheGroup(req: Request) {
         const fbToken = await getStudentFirebaseToken(adminId);
         if (fbToken === null) {
             console.log('Firebase token not found for the student');
-            throw new ValidationError('Student has not registered a device for notifications.');
+            // throw new ValidationError('Student has not registered a device for notifications.');
+        } else {
+
+            const student = await getUnigeProfile(studentId);
+
+            const token = fbToken.token;
+            await sendPushNotification(adminId, joinRequestId, token, NotificationType.JOIN_REQUEST, student.first_name + ' ' + student.last_name, group.name);
         }
-
-        const student = await getUnigeProfile(studentId);
-
-        const token = fbToken.token;
-        await sendPushNotification(adminId, joinRequestId, token, NotificationType.JOIN_REQUEST, student.first_name + ' ' + student.last_name, group.name);
-
-        return {message: 'Join request submitted successfully'};
+        return { message: 'Join request submitted successfully' };
     }
 };
 
@@ -80,7 +79,7 @@ export async function changeJoinRequestStatus(req: Request) {
         throw new NotFoundError('JoinRequest not found')
     }
 
-    if (joinRequest.status != 'pending'){
+    if (joinRequest.status !== 'pending') {
         console.log('Admin student has already managed the join request');
         throw new ValidationError('You have already managed the request');
     }
@@ -103,11 +102,10 @@ export async function changeJoinRequestStatus(req: Request) {
         if (fbToken === null)
             console.log('Could not find the firebase token of requested student');
         else
-            await sendPushNotification(joinRequest.studentId, joinRequestId, fbToken.token,  NotificationType.REJECT, '', group.name);
-        return {message: 'Join request rejected successfully'};
+            await sendPushNotification(joinRequest.studentId, joinRequestId, fbToken.token, NotificationType.REJECT, '', group.name);
+        return { message: 'Join request rejected successfully' };
     }
-    // TODO
-    const currentLimit = await getCurrentMemberList(groupId);
+    const currentLimit = await getCurrentMemberCount(groupId);
     const membersLimit = group.membersLimit
     if (membersLimit < currentLimit + 1) {
         console.log('The group is already reached the limit of members')
@@ -117,6 +115,6 @@ export async function changeJoinRequestStatus(req: Request) {
     if (fbToken === null)
         console.log('Could not find the firebase token of requested student');
     else
-        await sendPushNotification(joinRequest.studentId, joinRequestId, fbToken.token,  NotificationType.ACCEPT, '', group.name);
-    return {message: 'Join request accepted successfully'};
+        await sendPushNotification(joinRequest.studentId, joinRequestId, fbToken.token, NotificationType.ACCEPT, '', group.name);
+    return { message: 'Join request accepted successfully' };
 }

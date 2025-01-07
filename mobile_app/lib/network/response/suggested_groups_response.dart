@@ -1,10 +1,8 @@
-import 'package:study_buds/models/notification.dart';
-
 import '../../network/base_http_response.dart';
 
-class NotificationListResponseBuilder
+class SuggestedGroupsResponseBuilder
     extends BaseHttpResponseBuilder<List<dynamic>> {
-  NotificationListResponseBuilder()
+  SuggestedGroupsResponseBuilder()
       : super(dataFactory: (jsonObject) {
           return jsonObject;
         });
