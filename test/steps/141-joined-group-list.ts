@@ -1,5 +1,5 @@
 import { byValueKey } from "appium-flutter-finder";
-import { waitForElement, waitForElementByValue } from "./../utils/utils";
+import { waitForElement, getUiId } from "./../utils/utils";
 import { When, Then } from "@cucumber/cucumber";
 import { driver } from "./all";
 
@@ -16,22 +16,13 @@ import { driver } from "./all";
 
 */
 
-When("I navigate to the Joined group tab", async () => {
-    const joinedGroupTab = await byValueKey("joined_groups_tab");
+When("I navigate to the {string} tab", async (tab:string) => {
+    const joinedGroupTab = await byValueKey(getUiId(tab));
     await driver.elementClick(joinedGroupTab);
 });
 
 Then("I see a list of all groups I am part of", async () => {});
 
-Then("A message is displayed stating, {string}", async (string: string) => {
-    // TODO decomment when logout is implemented
-    //await waitForElementByValue(driver, string);
-});
-
-When("I navigate to the Owned group tab", async () => {
-    const ownedGroupTab = await byValueKey("owned_groups_tab");
-    await driver.elementClick(ownedGroupTab);
-});
 
 Then("The groups I own are there", async () => {
     await waitForElement(driver, "group_name_0");

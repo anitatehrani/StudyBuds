@@ -1,5 +1,5 @@
 import { byValueKey, byText } from "appium-flutter-finder";
-import { BottomBarIcon, go_to_page, login_guest } from "./../utils/utils";
+import { BottomBarIcon, go_to_page, login_guest, UiId } from "./../utils/utils";
 import { Given, When, Then } from "@cucumber/cucumber";
 import { driver } from "./all";
 import { do_logout } from "../utils/utils";
@@ -8,7 +8,7 @@ import { do_logout } from "../utils/utils";
 // Before(()=>driver=getDriver())
 
 Given("I am on the home page not logged in", async () => {
-    const homePage = byValueKey("login_page");
+    const homePage = byValueKey(UiId.loginPage);
     await driver.execute("flutter:waitFor", homePage);
 });
 

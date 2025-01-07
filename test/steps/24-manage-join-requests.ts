@@ -26,10 +26,10 @@ When("I go to the notifications page", async function () {
     await go_to_page(driver, BottomBarIcon.notifications);
 });
 
-Then("I see the notification with the notification message", async function () {
-    const notification = byValueKey(1);
+Then("I see the notification with id {string} with the {string} message", async function (id: string, message: string) {
+    const notification = byValueKey(id);
     const itemText = await driver.getElementText(notification);
-    assert.ok(itemText === "Nona has requested to join the Capstone project");
+    assert.ok(itemText === message);
 });
 
 When("I open the notification with id {string}", async function (id: string) {

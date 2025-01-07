@@ -9,6 +9,8 @@ import {
     clickDropdownItemByValue,
     editTextField,
     login_guest,
+    getUiId,
+    UiId,
 } from "../utils/utils";
 import { getDriver } from "./all";
 import assert from "assert";
@@ -23,44 +25,39 @@ Given("The student is on the group creation page", async function () {
     await waitForElement(driver, "create_group_button");
 });
 
-When(
-    "The student fills out the group name, description, sets the member limit, selects a lesson, and sets the group type",
-    async function () {
-        await Promise.all([
-            editTextField(driver, "group_name_field", "amirparsa"),
-            editTextField(
-                driver,
-                "group_description_field",
-                "A group for capstone project collaboration"
-            ),
-        ]);
+When("I fill out the {string} with {string}", async function (field: string, value: string) {
+    await editTextField(driver, getUiId(field), value);
+});
 
-        await waitForElement(driver, "course_dropdown_field");
-        await clickButton(driver, "course_dropdown_field");
-        await waitForElementByValue(driver, "MACHINE LEARNING");
-        await clickDropdownItemByValue(driver, "MACHINE LEARNING");
+When("I select the {string} course", async function (course:string) {
+    await waitForElement(driver, UiId.courseDropdownField);
+    await clickButton(driver, UiId.courseDropdownField);
+    await waitForElementByValue(driver, course);
+    await clickDropdownItemByValue(driver, course);
+});
 
-        await Promise.all([
-            editTextField(driver, "members_limit_field", "23"),
-            editTextField(driver, "telegram_group_link_field", "https://t.me/amirparsa"),
-            clickButton(driver, "is_private_group_switch"),
-        ]);
-
-        // scroll
-        driver.execute("flutter:scrollUntilVisible", byType("SingleChildScrollView"), {
-            item: byValueKey("create_group_button"),
-            dyScroll: -400,
-        });
-
-        await clickButton(driver, "create_group_button");
+When("I set the group type as {string}", async function (groupType: string) {
+    if (groupType === "private") {
+        await clickButton(driver, UiId.isPrivateGroupSwitch);
     }
-);
+});
+
+When("I click the create group button", async function () {
+    // scroll
+    driver.execute("flutter:scrollUntilVisible", byType("SingleChildScrollView"), {
+        item: byValueKey(UiId.createGroupButton),
+        dyScroll: -400,
+    });
+
+    await clickButton(driver, UiId.createGroupButton);
+});
+
 
 Then(
     "The system creates the private group successfully and displays a confirmation message",
     async function () {
-        await waitForElement(driver, "success_snackbar");
-        const actualMessage = await getText(driver, "success_snackbar");
+        await waitForElement(driver, UiId.successSnackbar);
+        const actualMessage = await getText(driver, UiId.successSnackbar);
 
         const expectedMessage = "The group created successfully.";
         assert.strictEqual(actualMessage, expectedMessage, "The success message did not match");
@@ -70,23 +67,20 @@ Then(
 When(
     "The student attempts to create a group without filling in one or more required fields",
     async function () {
-        // scroll
         driver.execute("flutter:scrollUntilVisible", byType("SingleChildScrollView"), {
-            item: byValueKey("create_group_button"),
+            item: byValueKey(UiId.createGroupButton),
             dyScroll: -400,
         });
-
-        await waitForElement(driver, "create_group_button");
-
-        await clickButton(driver, "create_group_button");
+    
+        await clickButton(driver, UiId.createGroupButton);
     }
 );
 
 Then(
     "The system displays an error message prompting the student to complete all required fields",
     async function () {
-        await waitForElement(driver, "error_snackbar");
-        const actualMessage = await getText(driver, "error_snackbar");
+        await waitForElement(driver, UiId.errorSnackbar);
+        const actualMessage = await getText(driver, UiId.errorSnackbar);
 
         const expectedMessage = "Failed to create group.";
         assert.strictEqual(actualMessage, expectedMessage, "The error message did not match");

@@ -51,7 +51,7 @@ When("no groups contain {string} in their name", async function (String: string)
     }
 });
 
-Then("a message appears saying {string}", async function (String: string) {
+Then("a message appears telling {string}", async function (String: string) {
     const noResultsMessage = byValueKey("no_results_message");
     await driver.execute("flutter:waitFor", noResultsMessage);
     //Center isn't supported by getText

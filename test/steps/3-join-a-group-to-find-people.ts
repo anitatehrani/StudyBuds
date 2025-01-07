@@ -1,7 +1,7 @@
 import { Given, Then } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { driver } from "./all";
-import { BottomBarIcon, go_to_page, waitForElementByValue } from "../utils/utils";
+import { getBottomBarIcon, go_to_page, waitForElementByValue } from "../utils/utils";
 
 Given("I already have sent a join request to the group", async function () {});
 
@@ -12,8 +12,8 @@ Then(
     }
 );
 
-Then("I go to the profile page", async function () {
-    await go_to_page(driver, BottomBarIcon.profile);
+Then("I go to the {string} page", async function (page: string) {
+    await go_to_page(driver, getBottomBarIcon(page));
 });
 
 // When("I attempt to send another join request", async function () {

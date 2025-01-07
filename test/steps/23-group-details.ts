@@ -3,7 +3,7 @@ import assert from "assert";
 import { BottomBarIcon, getText } from "../utils/utils";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
 import { getDriver } from "./all";
-import { go_to_page, login_guest } from "../utils/utils";
+import { go_to_page, login_guest, ordinalToNumber, getUiId, UiId } from "../utils/utils";
 
 let driver: WebdriverIO.Browser;
 
@@ -70,10 +70,11 @@ Then(
 );
 
 // When step - User clicks on "see more" of the first group
-When('I click on "see more" of the first group', async function () {
+When('I click on "see more" of the {string} group', async function (num: string) {
     // Target the first group card using the dynamic key
-    const firstGroupCard = byValueKey("group_card_0"); // Unique key for the first group card
-    const seeMoreButton = byValueKey("see_more_0"); // Target the See More button in the first card
+    const id: number = ordinalToNumber(num) -1; // Convert ordinal to number and adjust for zero-based index
+    const firstGroupCard = byValueKey("group_card_" + id); // Unique key for the first group card
+    const seeMoreButton = byValueKey("see_more_" + id); // Target the See More button in the first card
 
     // Click on "See More" button
     await driver.elementClick(seeMoreButton);
@@ -93,18 +94,14 @@ Then("The group description dialog opens", async function () {
 });
 
 // Then step - Verify the group details are displayed
-Then("I see the group name", async function () {
-    const groupName = await getText(driver, "group_details_name");
-    assert.ok(groupName, "Group name is not displayed.");
+Then("I see the {string}", async function (field: string) {
+    const groupName = await getText(driver, getUiId(field));
+    assert.ok(groupName, field + " is not displayed.");
 });
 
-Then("I see the group members number", async function () {
-    const membersCount = await getText(driver, "group_details_members_count");
-    assert.ok(membersCount, "Group members count is not displayed.");
-});
 
 Then("I see the group type", async function () {
-    const publicIcon = byValueKey("group_details_type_icon"); // Key for group type icon
+    const publicIcon = byValueKey(UiId.groupDetailsTypeIcon); // Key for group type icon
 
     // Wait for the icon to exist in the widget tree
     await driver.execute("flutter:waitFor", publicIcon);
@@ -112,14 +109,4 @@ Then("I see the group type", async function () {
     // Assert the element exists
     const isIconDisplayed = await driver.execute("flutter:checkHealth");
     assert.ok(isIconDisplayed, "Group type icon (public/private) is not displayed.");
-});
-
-Then("I see the full group description", async function () {
-    const description = await getText(driver, "group_details_description");
-    assert.ok(description, "Group description is not displayed.");
-});
-
-Then("I see the group course", async function () {
-    const courseName = await getText(driver, "group_details_course");
-    assert.ok(courseName, "Group course is not displayed.");
 });

@@ -9,10 +9,73 @@ export enum BottomBarIcon {
     home = "icon_home",
 }
 
+const pageNameToIconMap: { [key: string]: BottomBarIcon } = {
+    profile: BottomBarIcon.profile,
+    search: BottomBarIcon.search,
+    "group creation": BottomBarIcon.add,
+    notifications: BottomBarIcon.notifications,
+    home: BottomBarIcon.home,
+};
+
+
+export function getBottomBarIcon(pageName: string): BottomBarIcon {
+    return pageNameToIconMap[pageName];
+}
+
 export enum UiId {
     telegramAccountIdTextField = "telegram_account_id_text_field",
     fullNameTextField = "full_name_text_field",
     studentIdTextField = "student_id_text_field",
+    loginPage = "login_page",
+    groupNameTextField = "group_name_field",
+    groupDescriptionTextField = "group_description_field",
+    membersLimitTextField = "members_limit_field",
+    telegramGroupLinkTextField = "telegram_group_link_field",
+    isPrivateGroupSwitch = "is_private_group_switch",
+    createGroupButton = "create_group_button",
+    successSnackbar = "success_snackbar",
+    errorSnackbar = "error_snackbar",
+    courseDropdownField = "course_dropdown_field",
+    groupDetailsName = "group_details_name",
+    groupDetailsMembersCount = "group_details_members_count",
+    groupDetailsTypeIcon = "group_details_type_icon",
+    groupDetailsDescription = "group_details_description",
+    groupDetailsCourse = "group_details_course",
+    joinedGroupTab = "joined_groups_tab",
+    ownedGroupTab = "owned_groups_tab",
+}
+
+const fieldNameToUiIdMap: { [key: string]: UiId } = {
+    "group name": UiId.groupNameTextField,
+    "description": UiId.groupDescriptionTextField,
+    "member limit": UiId.membersLimitTextField,
+    "telegram group link": UiId.telegramGroupLinkTextField,
+    "telegramId": UiId.telegramAccountIdTextField,
+    "group details name": UiId.groupDetailsName,
+    "group details members count": UiId.groupDetailsMembersCount,
+    "group details type icon": UiId.groupDetailsTypeIcon,
+    "group details description": UiId.groupDetailsDescription,
+    "group details course": UiId.groupDetailsCourse,
+    "Joined goup": UiId.joinedGroupTab,
+    "Owned group": UiId.ownedGroupTab,
+};
+
+export function getUiId(fieldName: string): UiId {
+    return fieldNameToUiIdMap[fieldName];
+}
+
+// Function to map ordinal numbers to their corresponding numeric values
+export function ordinalToNumber(ordinal: string): number {
+    const ordinals: { [key: string]: number } = {
+        first: 1,
+        second: 2,
+        third: 3,
+        fourth: 4,
+        fifth: 5,
+        // Add more mappings as needed
+    };
+
+    return ordinals[ordinal.toLowerCase()] || 0; // Return 0 if the ordinal is not found
 }
 
 type Key = string | number;
