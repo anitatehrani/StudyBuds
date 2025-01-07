@@ -6,8 +6,10 @@ Scenario: Group creation
     When I fill out the "group name" with "amirparsa",
     And I fill out the "description" with "A group for capstone project collaboration"
     And I fill out the "member limit" with "23"
+    And I fill out the "telegram group link" with "https://t.me/amirparsa"
     And I select the "MACHINE LEARNING" course
     And I set the group type as "private"
+    And I click on the create button
     Then The system creates the group successfully and displays a confirmation message
     And I go to the "profile" page
     And I do the logout
