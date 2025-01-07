@@ -52,6 +52,7 @@ class AuthUtils {
     Navigator.pushReplacementNamed(context, '/login');
   }
 
+  // Persistence Login Logic
   static Future<bool> isAuthenticated() async {
     final token = await _storage.read(key: 'session_token');
     return token != null && token.isNotEmpty;
