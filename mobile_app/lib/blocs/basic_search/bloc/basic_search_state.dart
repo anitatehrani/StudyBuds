@@ -19,6 +19,8 @@ class SearchFailure extends BasicSearchState {
   SearchFailure(this.error);
 }
 
+class SuggestedGroupListInitial extends BasicSearchState {}
+
 class SuggestedGroupListLoading extends BasicSearchState {}
 
 class SuggestedGroupListSuccess extends BasicSearchState {
