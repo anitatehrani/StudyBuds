@@ -9,7 +9,7 @@ import 'package:study_buds/utils/push_notification.dart';
 import 'package:study_buds/utils/static_env.dart';
 
 void main() async {
-  if (DRIVER) enableFlutterDriverExtension();
+  if (DRIVER) enableFlutterDriverExtension(); // Keep DRIVER testing logic
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -43,10 +43,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Quicksand',
         useMaterial3: false,
       ),
-      // Dynamically set the initial screen based on the authentication status
-      home: isAuthenticated
-          ? const MainScreen()
-          : const Login(key: Key("login_page"), title: "Login"),
+      // Dynamically set the initial route based on authentication state
+      initialRoute: isAuthenticated ? '/home' : '/login',
       routes: {
         '/home': (context) => const MainScreen(),
         '/login': (context) =>
