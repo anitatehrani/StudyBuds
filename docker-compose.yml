@@ -54,6 +54,7 @@ services:
     acceptance-tests:
         build: ./test
         environment:
+            DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             APPIUM_HOST: ${APPIUM_HOST:-emulator}
             APPIUM_PORT: ${APPIUM_PORT:-4723}
             APPIUM_DEVICE: ${APPIUM_DEVICE:-emulator-5554}
@@ -85,7 +86,6 @@ services:
             - /tmp
         volumes:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
-            - ./backend/server_db/test_data/data.sql:/docker-entrypoint-initdb.d/data.sql:ro
         ports:
             - "5432:5432"
 

@@ -1,12 +1,26 @@
 import { BottomBarIcon } from "./../utils/utils";
 import assert from "assert";
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { go_to_page, login_guest } from "../utils/utils";
 import { driver } from "./all";
+import { initDB } from "../utils/mock-data";
+import { StudentGroup } from "../utils/models/StudentGroup";
+import { GroupMembers } from "../utils/models/GroupMembers";
+import { Student } from "../utils/models/Student";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
+
+Before({tags: "@search"},async function () {
+    const student1=10;
+    const group1=36;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:36}),
+        new StudentGroup({id:group1,name:"adm",description:"test description",course:"Capstone",adminId:student1,membersLimit:10,isPublic:false,gpa:18}),
+        new GroupMembers({studentId: student1,groupId: group1}),
+    ])
+});
 
 When("I type {string} in the search bar \\(case-insensitive)", async function (String: string) {
     const searchBar = byValueKey("search_bar");

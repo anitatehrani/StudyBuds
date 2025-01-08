@@ -1,5 +1,6 @@
 Feature: Join a group to find people
 
+@join-a-group-to-find-people
 Scenario: Duplicate join request
     Given I do the login as guest
     And I go to the "search" page

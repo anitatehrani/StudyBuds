@@ -1,27 +1,26 @@
-import { Given, When, Then } from "@cucumber/cucumber";
-import {
-    BottomBarIcon,
-    clickButton,
-    getText,
-    go_to_page,
-    waitForElement,
-    waitForElementByValue,
-    clickDropdownItemByValue,
-    editTextField,
-    login_guest,
-    getUiId,
-    UiId,
-} from "../utils/utils";
+import {Given, When, Then, Before} from "@cucumber/cucumber";
+import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement, waitForElementByValue, clickDropdownItemByValue, editTextField, getUiId, UiId } from "../utils/utils";
 import { driver } from "./all";
 import assert from "assert";
-import { byType, byValueKey } from "appium-flutter-finder";
+import {initDB} from "../utils/mock-data.ts";
+import {Student} from "../utils/models/Student.ts";
+import {byType, byValueKey} from "appium-flutter-finder";
 
+
+
+Before({tags: "@create-a-group"},async function () {
+    const student1=10;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:4848})
+    ])
+});
 
 When("I fill out the {string} with {string}", async function (field: string, value: string) {
     console.log("Filling out the field: " + field);
     console.log("With the value: " + value);
     console.log("UiId: " + getUiId(field));
     await editTextField(driver, getUiId(field), value);
+
 });
 
 When("I select the {string} course", async function (course:string) {

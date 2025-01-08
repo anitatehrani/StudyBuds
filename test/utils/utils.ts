@@ -1,5 +1,6 @@
 import { byText, byValueKey } from "appium-flutter-finder";
-import { driver } from "../steps/all.ts";
+import {driver} from "../steps/all.ts";
+import { exec } from "child_process";
 
 export enum BottomBarIcon {
     search = "icon_search",
@@ -170,4 +171,14 @@ export async function clickDropdownItemByValue(driver: WebdriverIO.Browser, valu
 export async function do_logout(driver: WebdriverIO.Browser) {
     const logout_button = byValueKey("logout_button");
     await driver.elementClick(logout_button);
+}
+/**
+ * Clears the cache and data for the Chrome browser on the connected Android device.
+ */
+
+export async function clearChromeCacheFlutterCompatible() {
+    console.log("Clearing Chrome cache using ADB (Flutter-Compatible)...");
+    await driver.switchContext("NATIVE_APP")
+    await driver.executeScript("mobile: shell",[{"command":"am kill com.android.chrome"}]);
+    await driver.switchContext("FLUTTER")
 }

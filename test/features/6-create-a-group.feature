@@ -1,5 +1,6 @@
 Feature: Create a group
 
+@create-a-group
 Scenario: Group creation
     Given I do the login as guest
     And I go to the "group creation" page
@@ -14,6 +15,7 @@ Scenario: Group creation
     And I go to the "profile" page
     And I do the logout
 
+@create-a-group
 Scenario: Validation for required fields
     Given I do the login as guest
     And I go to the "group creation" page
@@ -22,6 +24,7 @@ Scenario: Validation for required fields
     And I go to the "profile" page
     And I do the logout
 
+@create-a-group
 Scenario: Telegram account is not linked
     Given I do the login as guest
     And I go to the "profile" page

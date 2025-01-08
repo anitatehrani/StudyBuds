@@ -1,5 +1,6 @@
 Feature: Joined group list
 
+@joined-group-list
 Scenario: View All Groups
     Given I do the login as guest
     When I navigate to the "Joined group" tab
@@ -7,6 +8,7 @@ Scenario: View All Groups
     And I go to the "profile" page
     And I do the logout
 
+@joined-group-list
 Scenario: Empty State When No Groups Exist
     Given I do the login as guest
     When I navigate to the "Joined group" tab
@@ -14,6 +16,7 @@ Scenario: Empty State When No Groups Exist
     And I go to the "profile" page
     And I do the logout
 
+@joined-group-list
 Scenario: Highlight Groups I Own
     Given I do the login as guest
     When I navigate to the "Owned group" tab

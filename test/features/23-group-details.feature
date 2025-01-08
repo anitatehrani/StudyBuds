@@ -1,5 +1,6 @@
-Feature: Group Details
+Feature: Group details
 
+@group-details
 Scenario: Open group description
     Given I do the login as guest
     When I go to the "search" page

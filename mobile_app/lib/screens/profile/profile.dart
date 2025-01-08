@@ -195,7 +195,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       backgroundColor: Colors.red, // Red background for "Logout"
                       foregroundColor: Colors.white, // Light text for contrast
                       onPressed: () {
-                        AuthUtils.logout(context);
+                       // AuthUtils.logout(context);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                                key: const Key('logout_confirmation_dialog'),
+                                title: const Text('Confirm Logout'),
+                              content: const Text('Are you sure you want to log out?'),
+                              actions: [
+                                TextButton(
+                                  key: const Key('cancel_button'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  key: const Key('confirm_logout'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Close the dialog
+                                    AuthUtils.logout(context); // Perform logout
+                                  },
+                                  style: TextButton.styleFrom(foregroundColor: Colors.red),
+                                  child: const Text('Logout'),
+                                ),
+                              ]
+                            );
+                          }
+                        );
                       },
                     ),
                   ),

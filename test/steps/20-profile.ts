@@ -1,6 +1,6 @@
 import { byValueKey } from 'appium-flutter-finder';
 import assert from "assert";
-import { Given, When, Then } from "@cucumber/cucumber";
+import {Given, When, Then, Before} from "@cucumber/cucumber";
 import {
     BottomBarIcon,
     editTextField,
@@ -10,9 +10,18 @@ import {
     login_guest,
 } from "../utils/utils";
 import { driver } from "./all";
+import {initDB} from "../utils/mock-data.ts";
+import {Student} from "../utils/models/Student.ts";
 
 // let driver: WebdriverIO.Browser;
 // Before(() => driver = getDriver())
+
+Before({tags: "@profile"},async function () {
+    const student1=10;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:36})
+    ])
+});
 
 
 Given("I do the login as guest", async () => {

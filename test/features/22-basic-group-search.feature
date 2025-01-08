@@ -1,5 +1,6 @@
 Feature: Basic group search
 
+@basic-group-search
 Scenario: Search for some groups
     Given I do the login as guest
     When I go to the "search" page
@@ -8,6 +9,7 @@ Scenario: Search for some groups
     And I go to the "profile" page
     And I do the logout
 
+@basic-group-search
 Scenario: Search returns no results
     Given I do the login as guest
     When I go to the "search" page
