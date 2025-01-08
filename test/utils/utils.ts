@@ -44,6 +44,9 @@ export enum UiId {
     groupDetailsCourse = "group_details_course",
     joinedGroupTab = "joined_groups_tab",
     ownedGroupTab = "owned_groups_tab",
+    logoutButton = "logout_button",
+    logoutConfirmationDialog = "logout_confirmation_dialog",
+    confirmLogout = "confirm_logout",
 }
 
 const fieldNameToUiIdMap: { [key: string]: UiId } = {
@@ -169,8 +172,13 @@ export async function clickDropdownItemByValue(driver: WebdriverIO.Browser, valu
 }
 
 export async function do_logout(driver: WebdriverIO.Browser) {
-    const logout_button = byValueKey("logout_button");
+    const logout_button = byValueKey(UiId.logoutButton);
     await driver.elementClick(logout_button);
+    const logout_confirmation_dialog = byValueKey(UiId.logoutConfirmationDialog);
+    await driver.execute("flutter:waitFor", logout_confirmation_dialog);
+    const confirm_logout = byValueKey(UiId.confirmLogout);
+    await driver.elementClick(confirm_logout);
+    await clearChromeCacheFlutterCompatible();
 }
 /**
  * Clears the cache and data for the Chrome browser on the connected Android device.
