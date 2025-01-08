@@ -56,7 +56,7 @@ const fieldNameToUiIdMap: { [key: string]: UiId } = {
     "group details type icon": UiId.groupDetailsTypeIcon,
     "group details description": UiId.groupDetailsDescription,
     "group details course": UiId.groupDetailsCourse,
-    "Joined goup": UiId.joinedGroupTab,
+    "Joined group": UiId.joinedGroupTab,
     "Owned group": UiId.ownedGroupTab,
 };
 

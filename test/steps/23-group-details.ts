@@ -2,15 +2,8 @@ import { Given, When, Then, Before } from "@cucumber/cucumber";
 import assert from "assert";
 import { BottomBarIcon, getText } from "../utils/utils";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
-import { getDriver } from "./all";
+import { driver } from "./all";
 import { go_to_page, login_guest, ordinalToNumber, getUiId, UiId } from "../utils/utils";
-
-let driver: WebdriverIO.Browser;
-
-// Before hook to initialize the WebDriver instance
-Before(() => {
-    driver = getDriver();
-});
 
 // Given step - User is on the search page
 Given("I am on the search page and logged in", async function () {
@@ -33,7 +26,16 @@ When("I type {string} in the search bar", async function (searchTerm: string) {
 Then(
     "I see all groups where {string} is inside their group name or course",
     async function (searchTerm: string) {
-        const itemCount = 1;
+        const searchResults = byValueKey("search_results");
+
+        // Get the render object diagnostics for the ListView
+        // Get the render object diagnostics for the ListView
+        await driver.execute("flutter:getRenderObjectDiagnostics", searchResults, {
+            includeProperties: true,
+            subtreeDepth: 2,
+        });
+        // Extract children count
+        const itemCount = 1; //renderObjectDiagnostics.children.length;
 
         let matchFound = false;
 

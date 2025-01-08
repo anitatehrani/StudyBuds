@@ -17,8 +17,8 @@ import { driver } from "./all";
 */
 
 When("I navigate to the {string} tab", async (tab:string) => {
-    const joinedGroupTab = await byValueKey(getUiId(tab));
-    await driver.elementClick(joinedGroupTab);
+    const groupTab = await byValueKey(getUiId(tab));
+    await driver.elementClick(groupTab);
 });
 
 Then("I see a list of all groups I am part of", async () => {});

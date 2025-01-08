@@ -46,7 +46,7 @@ Then(
 );
 
 Then(
-    "all fields are locked or disabled from editing except the telegram user id",
+    "all fields are locked or disabled from editing except the telegramId",
     async function () {
         try {
             await editTextField(driver, UiId.fullNameTextField, "New Name");

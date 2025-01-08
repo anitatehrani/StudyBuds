@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import { getDriver, driver } from "./all";
+import { driver } from "./all";
 import { byValueKey } from "appium-flutter-finder";
 import assert from "assert";
 import {

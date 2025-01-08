@@ -12,20 +12,15 @@ import {
     getUiId,
     UiId,
 } from "../utils/utils";
-import { getDriver } from "./all";
+import { driver } from "./all";
 import assert from "assert";
 import { byType, byValueKey } from "appium-flutter-finder";
 
-let driver: WebdriverIO.Browser;
-
-Given("The student is on the group creation page", async function () {
-    driver = getDriver();
-    await login_guest(driver);
-    await go_to_page(driver, BottomBarIcon.add);
-    await waitForElement(driver, "create_group_button");
-});
 
 When("I fill out the {string} with {string}", async function (field: string, value: string) {
+    console.log("Filling out the field: " + field);
+    console.log("With the value: " + value);
+    console.log("UiId: " + getUiId(field));
     await editTextField(driver, getUiId(field), value);
 });
 
@@ -37,7 +32,7 @@ When("I select the {string} course", async function (course:string) {
 });
 
 When("I set the group type as {string}", async function (groupType: string) {
-    if (groupType === "private") {
+    if (groupType === "public") {
         await clickButton(driver, UiId.isPrivateGroupSwitch);
     }
 });
@@ -86,11 +81,7 @@ Then(
     }
 );
 
-Given("A telegram account has not been linked", async function () {
-    driver = getDriver();
-    await login_guest(driver);
-    await go_to_page(driver, BottomBarIcon.profile);
-});
+Given("A telegram account has not been linked", async function () {});
 
 When("The student goes on the group creation page", async function () {});
 

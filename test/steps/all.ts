@@ -51,7 +51,3 @@ After(async function () {
         await driver.deleteSession();
     }
 });
-
-export function getDriver() {
-    return driver;
-}
