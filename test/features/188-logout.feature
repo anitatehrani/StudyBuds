@@ -1,5 +1,6 @@
 Feature: Logout
 
+@logout
   Scenario: Successful logout
     Given I am logged in with credentials
     And I am on the profile page

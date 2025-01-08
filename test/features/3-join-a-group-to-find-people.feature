@@ -1,5 +1,6 @@
 Feature: Join a group to find people
 
+@join-a-group-to-find-people
 Scenario: Duplicate join request
     Given I am on the search page and logged in
     And I type "aya" in the search bar                                

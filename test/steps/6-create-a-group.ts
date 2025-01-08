@@ -1,9 +1,18 @@
-import { Given, When, Then } from "@cucumber/cucumber";
+import {Given, When, Then, Before} from "@cucumber/cucumber";
 import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement, waitForElementByValue, clickDropdownItemByValue, editTextField, login_guest } from "../utils/utils";
 import { getDriver } from "./all";
 import assert from "assert";
+import {initDB} from "../utils/mock-data.ts";
+import {Student} from "../utils/models/Student.ts";
 
 let driver: WebdriverIO.Browser;
+
+Before({tags: "@create-a-group"},async function () {
+    const student1=10;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:4848})
+    ])
+});
 
 Given("The student is on the group creation page", async function () {
   driver = getDriver();

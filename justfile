@@ -26,5 +26,8 @@ acceptance-tests *args='': build-apk-driver
     docker compose exec appium adb install /apk/app-debug.apk
     APPIUM_HOST="{{ip}}" docker compose run --rm --build acceptance-tests {{args}}
 
+acceptance-tests-only *args='':
+    APPIUM_HOST="{{ip}}" docker compose run --rm --build acceptance-tests {{args}}
+
 generate-schema:
     docker compose run --rm --build generate-schema

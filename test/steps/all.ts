@@ -1,5 +1,6 @@
-import { After, Before, setDefaultTimeout } from "@cucumber/cucumber";
+import {After, Before, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
 import { remote } from "webdriverio";
+import {initData} from "../utils/mock-data.ts";
 
 //DOCS:
 
@@ -50,6 +51,10 @@ Before(async function () {
   driver = await remote(opts);
   driver.implicitWait(5_000);
   await driver.switchContext("FLUTTER");
+});
+
+BeforeAll(function(){
+  return initData();
 });
 
 After(async function () {
