@@ -12,6 +12,7 @@ COPY server.ts tsconfig.json ./
 COPY ./src ./src
 COPY studybuds-116d5.json ./studybuds-116d5.json
 COPY sequelize-auto-options.json ./
+COPY server_db/test_data ./server_db/test_data
 
 EXPOSE 3000
 

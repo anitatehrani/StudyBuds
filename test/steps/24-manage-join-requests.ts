@@ -1,4 +1,4 @@
-import { Given, Then, When } from "@cucumber/cucumber";
+import {Before, Given, Then, When} from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import assert from "assert";
 import {
@@ -10,9 +10,33 @@ import {
     login_guest,
 } from "../utils/utils";
 import { driver } from "./all";
+import {initDB} from "../utils/mock-data.ts";
+import {Student} from "../utils/models/Student.ts";
+import {StudentGroup} from "../utils/models/StudentGroup.ts";
+import {GroupMembers} from "../utils/models/GroupMembers.ts";
+import {JoinRequest} from "../utils/models/JoinRequest.ts";
+import {Notification} from "../utils/models/Notification.ts";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
+
+Before({tags: "@manage-join-requests"},async function () {
+    const student=10;
+    const student1=12;
+    const group1=103;
+    const joinRequestId = 11;
+    // const joinRequestId2 = 12;
+    await initDB([
+        new Student({studentId: student,telegramAccount:35}),
+        new StudentGroup({id:group1,name:"joinrequest",description:"description",course:"Capstone",adminId:student,membersLimit:100,isPublic:false,gpa:18}),
+        new GroupMembers({studentId: student,groupId: group1}),
+        new Student({studentId: student1,telegramAccount:37}),
+        new JoinRequest({id:joinRequestId,groupId:group1,studentId:student1,status:"pending"}),
+        new Notification({id:1,studentId:student,joinRequestId:joinRequestId,notificationType:"join_request",message:"Nona has requested to join the Capstone project"}),
+        // new JoinRequest({id:joinRequestId2,groupId:group1,studentId:student1,status:"pending"}),
+        // new Notification({studentId:student,joinRequestId:joinRequestId2,notificationType:"join_request",message:"Nona has requested to join the Capstone project"})
+    ])
+});
 
 Given("I am logged in", async function () {
     await login_guest(driver);
