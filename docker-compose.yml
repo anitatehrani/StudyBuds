@@ -86,7 +86,6 @@ services:
             - /tmp
         volumes:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
-            - ./backend/server_db/test_data/data.sql:/docker-entrypoint-initdb.d/data.sql:ro
         ports:
             - "5432:5432"
 

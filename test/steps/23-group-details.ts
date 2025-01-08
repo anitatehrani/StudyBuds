@@ -1,15 +1,23 @@
-import { Given, When, Then, Before } from "@cucumber/cucumber";
+import { When, Then, Before } from "@cucumber/cucumber";
 import assert from "assert";
-import { BottomBarIcon, getText } from "../utils/utils";
+import { getText } from "../utils/utils";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
-import { getDriver } from "./all";
-import { go_to_page, login_guest } from "../utils/utils";
-
-let driver: WebdriverIO.Browser;
+import { driver } from "./all";
+import {initDB} from "../utils/mock-data.ts";
+import {Student} from "../utils/models/Student.ts";
+import {StudentGroup} from "../utils/models/StudentGroup.ts";
+import {GroupMembers} from "../utils/models/GroupMembers.ts";
 
 // Before hook to initialize the WebDriver instance
-Before(() => {
-    driver = getDriver();
+
+Before({tags: "@group-details"},async function () {
+    const student1=10;
+    const group1=36;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:36}),
+        new StudentGroup({id:group1,name:"adm",description:"test description",course:"Capstone",adminId:student1,membersLimit:10,isPublic:false,gpa:18}),
+        new GroupMembers({studentId: student1,groupId: group1}),
+    ])
 });
 
 // When step - User types a keyword in the search bar and clicks search

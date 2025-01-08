@@ -1,20 +1,16 @@
 import { BottomBarIcon } from "./../utils/utils";
 import assert from "assert";
-import { Given, When, Then, Before, BeforeAll } from "@cucumber/cucumber";
+import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { go_to_page, login_guest } from "../utils/utils";
 import { driver } from "./all";
-import { initData, initDB } from "../utils/mock-data";
+import { initDB } from "../utils/mock-data";
 import { StudentGroup } from "../utils/models/StudentGroup";
 import { GroupMembers } from "../utils/models/GroupMembers";
 import { Student } from "../utils/models/Student";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
-
-BeforeAll(function(){
-    return initData();
-});
 
 Before({tags: "@search"},async function () {
     const student1=10;
