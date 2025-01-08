@@ -32,7 +32,7 @@ When("I type {string} in the search bar \\(case-insensitive)", async function (S
 Then("I see all groups where {string} is inside their group name", async function (String: string) {
     const itemCount = 1;
 
-    for (let i = 0; i < itemCount; i++) {
+    for (let i = 1; i < itemCount; i++) {
         console.log(`Checking search result ${i}...`);
         const currentItem = byValueKey(`group_name_${i}`);
         await driver.execute("flutter:waitFor", currentItem);

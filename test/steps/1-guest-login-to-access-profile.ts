@@ -1,11 +1,22 @@
 import { byValueKey, byText } from "appium-flutter-finder";
 import { BottomBarIcon, go_to_page, login_guest, UiId } from "./../utils/utils";
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { driver } from "./all";
 import { do_logout } from "../utils/utils";
+import { initDB } from "../utils/mock-data";
+import { Student } from "../utils/models/Student";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
+
+
+Before({tags: "@guest-login-to-access-profile"},async function () {
+    const student1=10;
+    await initDB([
+        new Student({studentId: student1,telegramAccount:36})
+    ])
+});
+
 
 Given("I am on the home page not logged in", async () => {
     const homePage = byValueKey(UiId.loginPage);

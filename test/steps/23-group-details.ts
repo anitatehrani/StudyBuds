@@ -1,3 +1,4 @@
+import { exec } from 'child_process';
 import { When, Then, Before } from "@cucumber/cucumber";
 import assert from "assert";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
@@ -13,16 +14,20 @@ import {GroupMembers} from "../utils/models/GroupMembers.ts";
 Before({tags: "@group-details"},async function () {
     const student1=10;
     const group1=36;
+    const group2=37;
     await initDB([
         new Student({studentId: student1,telegramAccount:36}),
         new StudentGroup({id:group1,name:"adm",description:"test description",course:"Capstone",adminId:student1,membersLimit:10,isPublic:false,gpa:18}),
+        new StudentGroup({id:group2,name:"capstone",description:"test description",course:"Capstone",adminId:student1,membersLimit:10,isPublic:false,gpa:18}),
         new GroupMembers({studentId: student1,groupId: group1}),
+        new GroupMembers({studentId: student1,groupId: group2}),
     ])
 });
 
 // When step - User types a keyword in the search bar and clicks search
 When("I type {string} in the search bar", async function (searchTerm: string) {
     const searchBar = byValueKey("search_bar");
+    await driver.execute("flutter:waitFor", searchBar);
     await driver.elementSendKeys(searchBar, searchTerm);
 
     const searchButton = byValueKey("search_button");

@@ -47,6 +47,7 @@ export enum UiId {
     logoutButton = "logout_button",
     logoutConfirmationDialog = "logout_confirmation_dialog",
     confirmLogout = "confirm_logout",
+    guestButton = "guest_button",
 }
 
 const fieldNameToUiIdMap: { [key: string]: UiId } = {
