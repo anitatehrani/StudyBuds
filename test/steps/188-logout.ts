@@ -1,8 +1,14 @@
 import {Given, When, Then} from "@cucumber/cucumber";
-import { getDriver,driver } from "./all";
+import { driver } from "./all";
 import { byValueKey } from "appium-flutter-finder";
-import assert from "assert";
-import {login, BottomBarIcon, do_logout, getText, go_to_page, waitForElement, waitForElementByValue} from "../utils/utils.ts";
+import {
+    login,
+    BottomBarIcon,
+    do_logout,
+    go_to_page,
+    waitForElementByValue,
+    clearChromeCacheFlutterCompatible
+} from "../utils/utils.ts";
 
 // Ensure the driver is available
 
@@ -39,6 +45,8 @@ When("I click on the confirm button", async function () {
 });
 
 Then("I should be logged out and be redirected to the login screen", async function () {
+    await clearChromeCacheFlutterCompatible();
+
     await waitForElementByValue(driver, 'Continue as a guest');
 
 });
