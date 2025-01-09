@@ -23,6 +23,14 @@ When("I {string} the application", async function (command:string) {
     }
 });
 
+Given("I do the login as {string} {string}", async function (username: string, password: string) {
+    const loginPage = byValueKey(UiId.loginPage);
+    await driver.execute("flutter:waitFor", loginPage);
+    const loginButton = byValueKey(UiId.loginButton);
+    await driver.elementClick(loginButton);
+    await login(driver, username, password);
+});
+
 
 Then("The login screen is skipped", async function () {
     let loginScreenIsPresent = false;

@@ -51,7 +51,7 @@ When("I go to the notifications page", async function () {
 });
 
 Then("I see the notification with id {string} with the {string} message", async function (id: string, message: string) {
-    const notification = byValueKey(id);
+    const notification = await byValueKey("notification_"+id);
     const itemText = await driver.getElementText(notification);
     assert.ok(itemText === message);
 });
@@ -74,6 +74,7 @@ When("I click refuse", async function () {
 });
 
 Then("The user receives the invitation link of Telegram group", async function () {});
+
 Then("a notification is sent to him", async function () {
     await waitForElement(driver, "success_toast");
     const actual = await getText(driver, "success_toast");

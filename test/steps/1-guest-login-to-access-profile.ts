@@ -19,19 +19,18 @@ Before({tags: "@guest-login-to-access-profile"},async function () {
 
 
 Given("I am on the home page not logged in", async () => {
-    const homePage = byValueKey(UiId.loginPage);
-    await driver.execute("flutter:waitFor", homePage);
+    const loginPage = byValueKey(UiId.loginPage);
+    await driver.execute("flutter:waitFor", loginPage);
 });
 
 When("I click on the login button", async () => {
-    login_guest(driver);
-    //const loginButton = byValueKey("login_button"); TODO CHANGEME WHEN LOGOUT IS AVAILABLE
-    //await driver.elementClick(loginButton);
+    //login_guest(driver);
+    const loginButton = byValueKey("login_button");
+    await driver.elementClick(loginButton);
 });
 
 Then("I am logged in successfully", async () => {
-    // const homePage = byValueKey("home_page");
-    // await driver.execute("flutter:waitFor", homePage);
+    await driver.execute("flutter:waitFor", byValueKey(UiId.joinedGroupTab), 5000);
 });
 
 Then("I can see my profile username {string}", async (username: string) => {
@@ -46,12 +45,7 @@ Then("I can see my profile username {string}", async (username: string) => {
 When(
     "I input my Unige credentials username {string} and password {string}",
     async (username: string, password: string) => {
-        /*
-            TODO
-            WHEN LOGOUT IS IMPLEMENTED REMOVE THE IF
-        */
-
-        if (false) {
+    
             await driver.waitUntil(
                 async () => {
                     const contexts = await driver.getContexts();
@@ -69,7 +63,7 @@ When(
             ]);
             const button = await driver.$('//button[contains(text(), "Login")]');
 
-            driver.$('//input[@id="password"]').addValue("\uE007");
+            //await driver.$('//input[@id="password"]').addValue("\uE007");
 
             //await button.waitForEnabled()
             await button.click();
@@ -83,7 +77,7 @@ When(
             );
 
             await driver.switchContext("FLUTTER");
-        }
+        
     }
 );
 

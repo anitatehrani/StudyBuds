@@ -1,8 +1,7 @@
-import { BottomBarIcon } from "./../utils/utils";
+import { BottomBarIcon, UiId } from "./../utils/utils";
 import assert from "assert";
 import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
-import { go_to_page, login_guest } from "../utils/utils";
 import { driver } from "./all";
 import { initDB } from "../utils/mock-data";
 import { StudentGroup } from "../utils/models/StudentGroup";
@@ -23,9 +22,9 @@ Before({tags: "@search"},async function () {
 });
 
 When("I type {string} in the search bar \\(case-insensitive)", async function (String: string) {
-    const searchBar = byValueKey("search_bar");
+    const searchBar = byValueKey(UiId.searchBar);
     await driver.elementSendKeys(searchBar, String);
-    const searchButton = byValueKey("search_button");
+    const searchButton = byValueKey(UiId.searchButton);
     await driver.elementClick(searchButton);
 });
 
@@ -48,7 +47,7 @@ Then("I see all groups where {string} is inside their group name", async functio
 
 When("no groups contain {string} in their name", async function (String: string) {
     try {
-        const noResultsMessage = byValueKey("no_results_message");
+        const noResultsMessage = byValueKey(UiId.noResultsMessage);
         assert.strictEqual("1", "1");
     } catch (e) {
         const itemCount = 1;
@@ -66,7 +65,7 @@ When("no groups contain {string} in their name", async function (String: string)
 });
 
 Then("a message appears telling {string}", async function (String: string) {
-    const noResultsMessage = byValueKey("no_results_message");
+    const noResultsMessage = byValueKey(UiId.noResultsMessage);
     await driver.execute("flutter:waitFor", noResultsMessage);
     //Center isn't supported by getText
     // const messageText = await driver.getElementText(noResultsMessage);
@@ -76,7 +75,7 @@ Then("a message appears telling {string}", async function (String: string) {
 
 Then("the system displays an empty list", async function () {
     try {
-        const noResultsMessage = byValueKey("no_results_message");
+        const noResultsMessage = byValueKey(UiId.noResultsMessage);
         assert.strictEqual("1", "1");
     } catch (e) {
         const itemCount = 1;

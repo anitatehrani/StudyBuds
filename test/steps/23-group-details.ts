@@ -87,12 +87,13 @@ Then(
 When('I click on "see more" of the {string} group', async function (num: string) {
     // Target the first group card using the dynamic key
     const id: number = ordinalToNumber(num) -1; // Convert ordinal to number and adjust for zero-based index
-    const firstGroupCard = byValueKey("group_card_" + id); // Unique key for the first group card
+    console.log(`Clicking on "see more" of the ${num} group`);
+    //const firstGroupCard = byValueKey("group_card_" + id); // Unique key for the first group card
     const seeMoreButton = byValueKey("see_more_" + id); // Target the See More button in the first card
 
     // Click on "See More" button
     await driver.elementClick(seeMoreButton);
-    await driver.elementClick(firstGroupCard);
+    //await driver.elementClick(firstGroupCard);
 });
 
 // Then step - Verify the group description page opens
@@ -111,6 +112,11 @@ Then("The group description dialog opens", async function () {
 Then("I see the {string}", async function (field: string) {
     const groupName = await getText(driver, getUiId(field));
     assert.ok(groupName, field + " is not displayed.");
+});
+
+Then("I close the group description dialog", async function () {
+    const closeButton = byValueKey(UiId.groupDetailsCloseButton); 
+    await driver.elementClick(closeButton);
 });
 
 

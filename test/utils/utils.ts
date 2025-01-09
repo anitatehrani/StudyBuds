@@ -39,6 +39,7 @@ export enum UiId {
     courseDropdownField = "course_dropdown_field",
     groupDetailsName = "group_details_name",
     groupDetailsMembersCount = "group_details_members_count",
+    groupDetailsCloseButton = "group_details_close_button",
     groupDetailsTypeIcon = "group_details_type_icon",
     groupDetailsDescription = "group_details_description",
     groupDetailsCourse = "group_details_course",
@@ -48,6 +49,10 @@ export enum UiId {
     logoutConfirmationDialog = "logout_confirmation_dialog",
     confirmLogout = "confirm_logout",
     guestButton = "guest_button",
+    loginButton = "login_button",
+    searchBar = "search_bar",
+    searchButton = "search_button",
+    noResultsMessage = "no_results_message"
 }
 
 const fieldNameToUiIdMap: { [key: string]: UiId } = {
@@ -139,13 +144,17 @@ export async function login(driver: WebdriverIO.Browser, username: string, passw
 
     // Fill in login form and submit
     console.log("Locating web page elements...");
-    const usernameField = await driver.$('input[name="username"]');
-    const passwordField = await driver.$('input[name="password"]');
-    const submitButton = await driver.$("button"); // Adjust selector based on your HTML
+    const [usernameField, passwordField, submitButton] = await Promise.all([
+        driver.$('input[name="username"]'),
+        driver.$('input[name="password"]'),
+        driver.$("button"),
+    ]);
 
     console.log("Filling username and password fields...");
-    await usernameField.setValue(username);
-    await passwordField.setValue(password);
+    await Promise.all([
+        usernameField.setValue(username),
+        passwordField.setValue(password),
+    ]);
 
     console.log("Clicking submit button...");
     await submitButton.click();
