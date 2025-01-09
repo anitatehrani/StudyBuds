@@ -1,8 +1,8 @@
 import { Model } from "sequelize";
-import sequelize from "./database";
 import {
   initModels,
-} from "./models/init-models";
+} from "../../backend/src/models/init-models";
+import sequelize from "../../backend/src/config/database";
 
 export function initData(){
     return initModels(sequelize);

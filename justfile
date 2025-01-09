@@ -5,7 +5,7 @@ switch-branch branch:
     git checkout {{branch}}
 
 restart-backend:
-    docker compose up --build -d --force-recreate backend postgres
+    BACKEND_CALLBACK=http://{{ip}}:5000/login/ IDP_ENTRYPOINT=http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php docker compose up --build -d --force-recreate backend postgres database-data
 
 checkout branch: (switch-branch branch) restart-backend run-apk
 
@@ -24,10 +24,10 @@ screenshare:
 acceptance-tests *args='': build-apk-driver
     docker compose up -d appium
     docker compose exec appium adb install /apk/app-debug.apk
-    APPIUM_HOST="{{ip}}" docker compose run --rm --build acceptance-tests {{args}}
+    APPIUM_HOST="{{ip}}" APPIUM_DEVICE=disabled docker compose run --rm --build acceptance-tests {{args}}
 
 acceptance-tests-only *args='':
-    APPIUM_HOST="{{ip}}" docker compose run --rm --build acceptance-tests {{args}}
+    APPIUM_HOST="{{ip}}" APPIUM_DEVICE=disabled docker compose run --rm --build acceptance-tests {{args}}
 
 generate-schema:
     docker compose run --rm --build generate-schema

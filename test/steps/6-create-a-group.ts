@@ -3,7 +3,7 @@ import { BottomBarIcon, clickButton, getText, go_to_page, waitForElement, waitFo
 import { getDriver } from "./all";
 import assert from "assert";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
+import { Student } from "../../backend/src/models/Student.ts";
 
 let driver: WebdriverIO.Browser;
 
