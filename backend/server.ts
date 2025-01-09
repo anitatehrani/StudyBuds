@@ -1,12 +1,12 @@
 import express from 'express';
 import admin from 'firebase-admin';
+import { readFileSync } from 'fs';
 import sequelize from './src/config/database';
+import { FB_PKEY } from './src/config/secrets';
 import { errorHandler } from './src/middlewares/error_handler';
+import { initModels } from './src/models/init-models';
 import indexRouter from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
-import { FB_PKEY } from './src/config/secrets';
-import { readFileSync } from 'fs';
-import { initModels } from './src/models/init-models';
 
 
 const app = express();
