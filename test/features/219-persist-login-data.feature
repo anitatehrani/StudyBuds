@@ -1,7 +1,7 @@
 Feature: Persist login data
 
 Scenario: Login persisted
-Given I do the login as guest
+Given I do the login as "10" "10"
 When I "close" the application
 And I "open" the application
 Then The login screen is skipped

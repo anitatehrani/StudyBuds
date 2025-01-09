@@ -13,5 +13,6 @@ Scenario: Open group description
     And I see the group type
     And I see the "group details description"
     And I see the "group details course"
+    And I close the group description dialog
     And I go to the "profile" page
     And I do the logout
