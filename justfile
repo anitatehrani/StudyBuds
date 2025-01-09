@@ -5,7 +5,7 @@ switch-branch branch:
     git checkout {{branch}}
 
 restart-backend:
-    docker compose up --build -d --force-recreate backend postgres
+    BACKEND_CALLBACK=http://{{ip}}:5000/login/ IDP_ENTRYPOINT=http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php docker compose up --build -d --force-recreate backend postgres
 
 checkout branch: (switch-branch branch) restart-backend run-apk
 
