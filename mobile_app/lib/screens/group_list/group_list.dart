@@ -41,7 +41,7 @@ class GroupList extends StatelessWidget {
                 listener: (context, state) {
                   if (state is GroupListSuccess) {
                     joinedGroupList = state.joinedGroups;
-                    ownedGroupList = state.myGroups;
+                    ownedGroupList = state.ownedGroups;
                   }
                 },
                 builder: (context, state) {

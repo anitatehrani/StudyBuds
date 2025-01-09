@@ -1,6 +1,8 @@
 CREATE SCHEMA IF NOT EXISTS studybuds;
 set search_path to studybuds;
 
+create type notification_type as enum ('join_request','accept','reject');
+
 CREATE TABLE student (
     student_id int PRIMARY KEY,
     telegram_account int,
@@ -26,7 +28,7 @@ CREATE TABLE student_group (
 
 CREATE TABLE group_members (
     student_id int NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
-    group_id serial NOT NULL REFERENCES student_group(id) ON UPDATE CASCADE,
+    group_id int NOT NULL REFERENCES student_group(id) ON UPDATE CASCADE,
     PRIMARY KEY(student_id, group_id),
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP
@@ -34,7 +36,7 @@ CREATE TABLE group_members (
 
 CREATE TABLE join_request (
     id serial PRIMARY KEY,
-    group_id serial NOT NULL REFERENCES student_group(id) ON UPDATE CASCADE,
+    group_id integer NOT NULL REFERENCES student_group(id) ON UPDATE CASCADE,
     student_id integer NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
     status varchar(20),
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -53,7 +55,7 @@ CREATE TABLE notification (
     id serial PRIMARY KEY,
     student_id integer NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
     join_request_id integer NOT NULL REFERENCES join_request(id) ON UPDATE CASCADE,
-    notification_type varchar(20) NOT NULL,
+    notification_type notification_type NOT NULL,
     message varchar(50) NOT NULL,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP

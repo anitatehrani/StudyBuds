@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +8,7 @@ import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/widgets/group_card.dart';
 
 import '../../blocs/group_details/bloc/group_details_bloc.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,38 +26,45 @@ class MyApp extends StatelessWidget {
 class BasicSearchPage extends StatelessWidget {
   const BasicSearchPage({super.key, required this.title});
   final String title;
-
-  @override
+   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => BasicSearchBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Search for a study group',
-            style: TextStyle(fontWeight: FontWeight.w600),
+    return MultiProvider(
+      providers: [
+        Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
+        Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
+      ],
+      child: BlocProvider(
+        create: (_) => BasicSearchBloc()..add(SuggestedGroupsEvent(10)),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Search for a study group',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            centerTitle: true,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            elevation: 0,
+            foregroundColor: Theme.of(context).primaryColor,
           ),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0,
-          foregroundColor: Theme.of(context).primaryColor,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              _SearchBar(),
-              const SizedBox(height: 20),
-              Expanded(
-                child: MultiProvider(
-                  providers: [
-                    Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
-                    Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
-                  ],
-                  child: _SearchResults(),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                _SearchBar(),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: BlocBuilder<BasicSearchBloc, BasicSearchState>(
+                    builder: (context, state) {
+                      if (state is SearchSuccess || state is SearchLoading) {
+                        return _SearchResults();
+                      } else {
+                        return _SuggestedGroups();
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -95,53 +105,115 @@ class _SearchBar extends StatelessWidget {
     );
   }
 }
-
 class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BasicSearchBloc, BasicSearchState>(
+     return BlocBuilder<BasicSearchBloc, BasicSearchState>(
       builder: (context, state) {
         if (state is SearchInitial) {
           return Center(child: Text('Enter a query to search for groups.'));
         } else if (state is SearchLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is SearchSuccess) {
-          final results = state.results;
-          if (results.isEmpty) {
-            return Column(
-              key: Key('no_results_column'),
-              children: [
-                Center(
-                  key: Key('no_results_message'),
-                  child: Text('No results found.'),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    key: Key('search_results'),
-                    itemCount: 0,
-                    itemBuilder: (context, index) {
-                      return SizedBox.shrink();
-                    },
-                  ),
-                ),
-              ],
-            );
+          final groups = state.groups;
+          if (groups.isEmpty) {
+            return Center(key: Key('no_results_message'), child: Text('No results found.'));
           }
           return ListView.builder(
             key: Key('search_results'),
-            itemCount: results.length,
+            itemCount: groups.length,
             itemBuilder: (context, index) {
-              final group = results[index];
+              final group = groups[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GroupCard(group: group, index: index),
+                  GroupCard(group: group, index: index), 
                   Divider(),
                 ],
               );
             },
           );
         } else if (state is SearchFailure) {
+          return Center(child: Text('Error: ${state.error}'));
+        } else {
+          return Center(child: Text(''));
+        }
+      },
+    );
+  }
+}
+
+class _SuggestedGroups extends StatefulWidget {
+  @override
+  State<_SuggestedGroups> createState() => _SuggestedGroupsState();
+}
+
+class _SuggestedGroupsState extends State<_SuggestedGroups> {
+  int _currentIndex = 0; // The current Swiper index
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BasicSearchBloc, BasicSearchState>(
+      builder: (context, state) {
+        if (state is SuggestedGroupListLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is SuggestedGroupListSuccess) {
+          final suggestedGroups = state.suggested_groups;
+
+          if (suggestedGroups.isEmpty) {
+            return Center(child: Text('No results found.'));
+          }
+
+          return  Column(
+            children: [
+              const SizedBox(height: 50),
+              Text(
+                "Suggested groups for you",
+                style: TextStyle(color: Colors.orange, fontSize: 18),
+
+              ),
+              const SizedBox(height: 50),
+              // Swiper containing the cards
+              SizedBox(
+                height: 200,
+                child: Swiper(
+                  itemCount: suggestedGroups.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final group = suggestedGroups[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GroupCard(group: group, index: index),
+                    );
+                  },
+                  viewportFraction: 0.9,
+                  scale: 0.95, 
+                  onIndexChanged: (int index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  pagination: null,
+                  ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  suggestedGroups.length,
+                  (index) => Container(
+                    width: 10,
+                    height: 10,
+                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndex == index ? Colors.black : Colors.grey, 
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else if (state is SuggestedGroupListFailure) {
           return Center(child: Text('Error: ${state.error}'));
         } else {
           return Center(child: Text(''));

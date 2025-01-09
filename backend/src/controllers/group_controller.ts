@@ -1,7 +1,4 @@
 import { Request } from "express";
-import Group from "../models/Group";
-import GroupMembers from "../models/GroupMembers";
-import Student from "../models/Student";
 import GroupService from "../service/group_service";
 import UnigeService, { UnigeStudent } from "../service/unige_service";
 import { BadRequestError, NotFoundError } from "../utils/api_error";
@@ -15,6 +12,9 @@ import {
     validateInt,
     validateString,
 } from "../utils/validation_error";
+import { Student } from "../models/Student";
+import { StudentGroup } from "../models/StudentGroup";
+import { GroupMembers } from "../models/GroupMembers";
 
 // Function to create a group
 export async function createGroup(req: Request) {
@@ -34,7 +34,7 @@ export async function createGroup(req: Request) {
     }
 
     // Check if the telegramLink already exists
-    const existingGroup = await Group.findOne({ where: { telegramLink } });
+    const existingGroup = await StudentGroup.findOne({ where: { telegramLink } });
     if (existingGroup) {
         throw new BadRequestError("This Telegram link already exists");
     }
@@ -62,7 +62,7 @@ export async function createGroup(req: Request) {
 
 // Function to get all groups
 export async function getAllGroups(req: Request) {
-    return await Group.findAll();
+    return await StudentGroup.findAll();
 }
 
 export async function basicSearchResult(req: Request) {
@@ -78,7 +78,7 @@ export async function getGroupDetails(req: Request) {
     const groupId = validateInt(req.params, "groupId");
 
     // Fetch group information
-    const group = await Group.findByPk(groupId);
+    const group = await StudentGroup.findByPk(groupId);
 
     if (!group) {
         throw new NotFoundError("Group not found");

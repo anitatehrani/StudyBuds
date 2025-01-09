@@ -1,6 +1,6 @@
-import Group from "../models/Group";
-import GroupMembers from "../models/GroupMembers";
-import UnigeService, { calculateAverageGpa } from "./unige_service";
+import { GroupMembers } from "../models/GroupMembers";
+import { StudentGroup } from "../models/StudentGroup";
+import { calculateAverageGpa } from "./unige_service";
 
 export async function getCurrentMemberCount(groupId: number) {
     const cnt = await GroupMembers.count({
@@ -17,7 +17,7 @@ export async function getCurrentMemberList(groupId: number) {
             groupId: groupId
         }
     });
-    return cnt.map(member => member.student_id);
+    return cnt.map(member => member.studentId);
 }
 
 
@@ -43,9 +43,9 @@ export async function joinGroup(studentId: number, groupId: number) {
     const student_ids = await getCurrentMemberList(groupId);
     student_ids.push(studentId);
     const gpa_new = await calculateAverageGpa(student_ids);
-
-    await Group.update({
-        gpa: gpa_new
+    const gpa = gpa_new.average_gpa;
+    await StudentGroup.update({
+        gpa: gpa
     }, {
         where: {
             id: groupId

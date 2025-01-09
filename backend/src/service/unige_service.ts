@@ -49,9 +49,9 @@ export async function getStudentsUnigeProfiles(studentIds: Array<number>): Promi
 }
 
 export async function calculateAverageGpa(studentList: Array<number>): Promise<{ average_gpa: number }> {
-    return( await axios_instance.post(
+    return( await axios.post(
         `${UNIGEAPI_URL}/students/gpa`,
-        { student_list: studentList },
+        studentList,
         {
             headers: {
                 Authorization: `Bearer ${TOKEN}`,

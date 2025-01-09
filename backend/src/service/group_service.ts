@@ -1,9 +1,11 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
-import Group from "../models/Group";
 import { getCurrentMemberCount } from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
+import { StudentGroup } from "../models/StudentGroup";
+import UnigeService from "./unige_service";
+import { getErrorMessage } from "../utils/api_error";
 
 interface GroupData {
   name: string;
@@ -16,7 +18,7 @@ interface GroupData {
 }
 
 export async function getGroupById(groupId: number) {
-  const data = await Group.findOne({
+  const data = await StudentGroup.findOne({
     where: {
       id: groupId,
     },
@@ -24,7 +26,7 @@ export async function getGroupById(groupId: number) {
   return data;
 }
 
-export async function createGroup(groupData: GroupData): Promise<Group> {
+export async function createGroup(groupData: GroupData): Promise<StudentGroup> {
   const {
     name,
     description,
@@ -36,14 +38,13 @@ export async function createGroup(groupData: GroupData): Promise<Group> {
   } = groupData;
 
   const student_info = await UnigeService.getUnigeProfile(adminId);
-  const gpa_s = student_info.gpa;
-
-  const group = new Group({
+  const gpa = student_info.gpa || 0;
+  const group = new StudentGroup({
     name,
     description,
     course,
     isPublic,
-    gpa_s,
+    gpa,
     membersLimit,
     telegramLink,
     adminId,
@@ -106,7 +107,7 @@ export async function basicSearch(
     });
     return results;
   } catch (error) {
-    console.error(`Failed to execute basic search. Error: ${error.message}`);
+    console.error(`Failed to execute basic search. Error: ${getErrorMessage(error)}`);
     throw error;
   }
 }
@@ -130,7 +131,7 @@ export async function getSuggestedGroups(
   const score: Map<number, number> = new Map();
 
   // Assign points to each group based on the order in the list
-  const assignPoints = (group_list: Group[], weight: number) => {
+  const assignPoints = (group_list: StudentGroup[], weight: number) => {
     for (let i = 0; i < group_list.length; ++i) {
       let group_id = group_list[i]['id'];
       if (!score.has(group_id)) continue;

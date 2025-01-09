@@ -1,11 +1,12 @@
 import express from 'express';
 import admin from 'firebase-admin';
-import { readFileSync } from 'fs';
 import sequelize from './src/config/database';
-import { FB_PKEY } from './src/config/secrets';
 import { errorHandler } from './src/middlewares/error_handler';
-import { loginRouter, router } from './src/routes/index';
+import indexRouter from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
+import { FB_PKEY } from './src/config/secrets';
+import { readFileSync } from 'fs';
+import { initModels } from './src/models/init-models';
 
 
 const app = express();
@@ -15,8 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Mount all routes without "/api" prefix
-app.use('/', loginRouter);
-app.use('/', router);
+app.use('/', indexRouter);
+
 // Test database connection
 sequelize.authenticate()
     .then(() => {
@@ -25,6 +26,8 @@ sequelize.authenticate()
     .catch((error) => {
         console.error('Unable to connect to the database:', getErrorMessage(error));
     });
+
+initModels(sequelize)
 
 // Error handling middleware
 app.use(errorHandler)
