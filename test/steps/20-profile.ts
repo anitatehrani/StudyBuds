@@ -10,7 +10,7 @@ import {
 } from "../utils/utils";
 import { driver } from "./all";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
+import { Student } from "../../backend/src/models/Student.ts";
 
 // let driver: WebdriverIO.Browser;
 // Before(() => driver = getDriver())
