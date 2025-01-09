@@ -52,7 +52,9 @@ services:
             DRIVER: ${DRIVER:-false}
 
     acceptance-tests:
-        build: ./test
+        build:
+          context: ./
+          dockerfile: ./test/Dockerfile
         environment:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             APPIUM_HOST: ${APPIUM_HOST:-emulator}
@@ -91,10 +93,11 @@ services:
             - "5432:5432"
 
     database-data:
-        build: ./backend
+        build:
+          context: ./
+          dockerfile: ./backend/server_db/test_data/Dockerfile
         environment:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
-        command: "npx ts-node-transpile-only server_db/test_data/demo-data.ts"
         depends_on:
             - postgres
 
