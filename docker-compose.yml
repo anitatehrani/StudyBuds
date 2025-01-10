@@ -52,7 +52,9 @@ services:
             DRIVER: ${DRIVER:-false}
 
     acceptance-tests:
-        build: ./test
+        build:
+          context: ./
+          dockerfile: ./test/Dockerfile
         environment:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             APPIUM_HOST: ${APPIUM_HOST:-emulator}
@@ -74,6 +76,7 @@ services:
             - postgres_data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+        restart: unless-stopped
 
     postgres:
         image: postgres
@@ -88,6 +91,23 @@ services:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
         ports:
             - "5432:5432"
+
+    database-data:
+        build:
+          context: ./
+          dockerfile: ./backend/server_db/test_data/Dockerfile
+        environment:
+            DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
+        depends_on:
+            - postgres
+
+    duckdns:
+      image: lscr.io/linuxserver/duckdns:latest
+      container_name: duckdns
+      environment:
+        - SUBDOMAINS=studybuds
+        - TOKEN=${DUCKDNS_TOKEN:-changeme}
+      restart: unless-stopped
 
     # migration container
     migration:
@@ -114,6 +134,7 @@ services:
         depends_on:
             - unigeapi
             - unigelogin
+        restart: unless-stopped
 
     generate-schema:
         build: ./backend
@@ -143,6 +164,7 @@ services:
         depends_on:
             yaml:
                 condition: service_completed_successfully
+        restart: unless-stopped
 
     yaml:
         build:
@@ -166,6 +188,7 @@ services:
         environment:
             SECRET_KEY: ${SECRET_KEY:-changeme}
             DATABASE: /data/data.yml
+        restart: unless-stopped
 
 volumes:
     unigedata:

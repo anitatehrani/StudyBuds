@@ -4,14 +4,14 @@ import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { byValueKey } from "appium-flutter-finder";
 import { driver } from "./all";
 import { initDB } from "../utils/mock-data";
-import { StudentGroup } from "../utils/models/StudentGroup";
-import { GroupMembers } from "../utils/models/GroupMembers";
-import { Student } from "../utils/models/Student";
+import { Student } from "../../backend/src/models/Student";
+import { StudentGroup } from "../../backend/src/models/StudentGroup";
+import { GroupMembers } from "../../backend/src/models/GroupMembers";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
 
-Before({tags: "@search"},async function () {
+Before({tags: "@basic-group-search"},async function () {
     const student1=10;
     const group1=36;
     await initDB([

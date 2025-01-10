@@ -20,4 +20,4 @@ jobs:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
       - name: Remote deployment
-        run: ssh ${{secrets.SSH_HOST}} 'cd orange/StudyBuds && git pull && docker compose up -d --build --force-recreate backend postgres unigelogin unigeapi'
+        run: ssh ${{secrets.SSH_HOST}} 'bash deploy.sh'

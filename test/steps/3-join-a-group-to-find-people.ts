@@ -4,10 +4,10 @@ import { byValueKey } from "appium-flutter-finder";
 import { driver } from "./all";
 import { waitForElementByValue,getBottomBarIcon,go_to_page } from "../utils/utils";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
-import {StudentGroup} from "../utils/models/StudentGroup.ts";
-import {GroupMembers} from "../utils/models/GroupMembers.ts";
-import {JoinRequest} from "../utils/models/JoinRequest.ts";
+import { Student } from "../../backend/src/models/Student.ts";
+import { StudentGroup } from "../../backend/src/models/StudentGroup.ts";
+import { GroupMembers } from "../../backend/src/models/GroupMembers.ts";
+import { JoinRequest } from "../../backend/src/models/JoinRequest.ts";
 
 Before({tags: "@join-a-group-to-find-people"},async function () {
   const student1=10;

@@ -11,11 +11,11 @@ import {
 } from "../utils/utils";
 import { driver } from "./all";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
-import {StudentGroup} from "../utils/models/StudentGroup.ts";
-import {GroupMembers} from "../utils/models/GroupMembers.ts";
-import {JoinRequest} from "../utils/models/JoinRequest.ts";
-import {Notification} from "../utils/models/Notification.ts";
+import { Student } from "../../backend/src/models/Student.ts";
+import { StudentGroup } from "../../backend/src/models/StudentGroup.ts";
+import { GroupMembers } from "../../backend/src/models/GroupMembers.ts";
+import { JoinRequest } from "../../backend/src/models/JoinRequest.ts";
+import { Notification } from "../../backend/src/models/Notification.ts";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
@@ -33,8 +33,6 @@ Before({tags: "@manage-join-requests"},async function () {
         new Student({studentId: student1,telegramAccount:37}),
         new JoinRequest({id:joinRequestId,groupId:group1,studentId:student1,status:"pending"}),
         new Notification({id:1,studentId:student,joinRequestId:joinRequestId,notificationType:"join_request",message:"Nona has requested to join the Capstone project"}),
-        // new JoinRequest({id:joinRequestId2,groupId:group1,studentId:student1,status:"pending"}),
-        // new Notification({studentId:student,joinRequestId:joinRequestId2,notificationType:"join_request",message:"Nona has requested to join the Capstone project"})
     ])
 });
 

@@ -5,9 +5,9 @@ import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessa
 import { driver } from "./all";
 import { ordinalToNumber, getUiId, UiId, getText } from "../utils/utils";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
-import {StudentGroup} from "../utils/models/StudentGroup.ts";
-import {GroupMembers} from "../utils/models/GroupMembers.ts";
+import { Student } from "../../backend/src/models/Student.ts";
+import { StudentGroup } from "../../backend/src/models/StudentGroup.ts";
+import { GroupMembers } from "../../backend/src/models/GroupMembers.ts";
 
 // Before hook to initialize the WebDriver instance
 
