@@ -117,7 +117,7 @@ services:
         image: docker.io/migrate/migrate
         volumes:
             - ./backend/server_db/migrations:/migrations
-        entrypoint: migrate -database ${DB_URL:-postgres://postgres:password@postgres:5432/postgres?sslmode=disable} -path migrations
+        entrypoint: migrate -database ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}?sslmode=disable -path migrations
         command: up
         read_only: true
 
