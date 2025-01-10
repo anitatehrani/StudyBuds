@@ -52,7 +52,8 @@ export enum UiId {
     loginButton = "login_button",
     searchBar = "search_bar",
     searchButton = "search_button",
-    noResultsMessage = "no_results_message"
+    noResultsMessage = "no_results_message",
+    sendJoinRequestButton = "send_join_request_button"
 }
 
 const fieldNameToUiIdMap: { [key: string]: UiId } = {
