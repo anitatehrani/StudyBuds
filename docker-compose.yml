@@ -176,6 +176,7 @@ services:
             - "8080:8080"
         tmpfs:
             - /var/lock
+            - /var/run
         volumes:
             - unigedata:/data:ro
         depends_on:
