@@ -1,7 +1,5 @@
-import { QueryTypes } from "sequelize";
-import { Sequelize } from 'sequelize-typescript';
+import { QueryTypes, Op } from "sequelize";
 import sequelize from "../config/database";
-import { PopularityResult } from "./group_service";
 import UnigeService from "./unige_service";
 import { StudentGroup } from "../models/StudentGroup";
 import { getErrorMessage } from "../utils/api_error";
@@ -18,8 +16,8 @@ export async function getSuggestedGroupsbyCourses(student_id: number) {
     const data = await StudentGroup.findAll({
         where: {
             course: {
-                [Sequelize.Op.iLike]: {
-                    [Sequelize.Op.any]: courses,
+                [Op.iLike]: {
+                    [Op.any]: courses,
                 },
             },
         },

@@ -91,6 +91,7 @@ services:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
         ports:
             - "5432:5432"
+        read_only: true
 
     database-data:
         build:
@@ -104,9 +105,10 @@ services:
     duckdns:
       image: lscr.io/linuxserver/duckdns:latest
       environment:
-        - SUBDOMAINS=studybuds,unigelogin
-        - TOKEN=${DUCKDNS_TOKEN:-changeme}
+        SUBDOMAINS: studybuds,unigelogin
+        TOKEN: ${DUCKDNS_TOKEN:-changeme}
       restart: unless-stopped
+      read_only: true
 
     # migration container
     migration:
@@ -134,14 +136,25 @@ services:
             - unigeapi
             - unigelogin
         restart: unless-stopped
+        read_only: true
 
     generate-schema:
-        build: ./backend
-        command: npm exec -- sequelize-auto -h postgres -d postgres -u postgres -x password -p 5432 -o /out -c sequelize-auto-options.json
+        build:
+          context: ./backend
+          dockerfile: ./schema.dockerfile
+        command: 
         volumes:
             - ./backend/src/models:/out
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+            POSTGRES_USER: ${POSTGRES_USER:-postgres}
+            POSTGRES_DB: ${POSTGRES_DB:-postgres}
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: 5432
+            OUT: /out
         depends_on:
             - postgres
+        read_only: true
 
     api-testing:
         build: ./backend/api_testing
@@ -164,6 +177,7 @@ services:
             yaml:
                 condition: service_completed_successfully
         restart: unless-stopped
+        read_only: true
 
     yaml:
         build:
@@ -175,6 +189,7 @@ services:
         environment:
             IN: /in/data.yml
             OUT: /out/data.json
+        read_only: true
 
     # docker compose run --rm unigeapi python -m main
     # to get the authorization token
@@ -188,6 +203,7 @@ services:
             SECRET_KEY: ${SECRET_KEY:-changeme}
             DATABASE: /data/data.yml
         restart: unless-stopped
+        read_only: true
 
     caddy:
       image: docker.io/caddy
@@ -197,6 +213,7 @@ services:
       volumes:
         - ./Caddyfile:/etc/caddy/Caddyfile:ro
       restart: unless-stopped
+      read_only: true
 
 volumes:
     unigedata:
