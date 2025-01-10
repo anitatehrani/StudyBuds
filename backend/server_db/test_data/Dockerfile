@@ -1,8 +1,8 @@
-FROM node:20.18.0-alpine3.19
+FROM node:18-slim
 
 WORKDIR /app/backend
-COPY ./backend/package.json /app/backend/package.json
-RUN npm install
+COPY ./backend/package.json ./backend/package-lock.json /app/backend/
+RUN npm install --omit=dev --no-package-lock
 COPY ./backend/tsconfig.json /app/backend/tsconfig.json
 COPY ./test/utils /app/test/utils
 COPY ./backend/src /app/backend/src
