@@ -190,6 +190,15 @@ services:
             DATABASE: /data/data.yml
         restart: unless-stopped
 
+    caddy:
+      image: docker.io/caddy
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      restart: unless-stopped
+
 volumes:
     unigedata:
     postgres_data:
