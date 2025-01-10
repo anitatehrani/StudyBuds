@@ -13,10 +13,9 @@ class SuggestedGroupsEvent extends BasicSearchEvent {
 
 class SearchQueryChanged extends BasicSearchEvent {
   final String queryString;
-  final int studentId;
 
-  SearchQueryChanged(this.queryString, this.studentId);
+  SearchQueryChanged(this.queryString);
 
   @override
-  List<Object?> get props => [queryString, studentId];
+  List<Object?> get props => [queryString];
 }

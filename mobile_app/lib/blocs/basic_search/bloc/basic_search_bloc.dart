@@ -1,6 +1,3 @@
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -39,7 +36,7 @@ class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
       emit(SearchLoading());
       try {
         final basicSearchRequest = BasicSearchRequest(
-            query: event.queryString, studentId: event.studentId);
+            query: event.queryString);
         final response = await basicSearchRequest.send();
         if (response.isSuccess) {
           final List<Group> groups = Group.fromJsonList(response.data ?? []);
