@@ -203,6 +203,7 @@ class GroupDetailsDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CustomTextButton(
+                    key: const ValueKey('group_details_close_button'),
                     label: 'Close',
                     onPressed: () {
                       Navigator.pop(context);

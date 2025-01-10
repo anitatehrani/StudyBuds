@@ -4,33 +4,31 @@ import assert from "assert";
 import {
     BottomBarIcon,
     do_logout,
-    go_to_page, login, waitForElement
+    go_to_page, login, UiId, waitForElement
 } from "../utils/utils";
 import { driver } from "./all";
 
-Given("I am logged in with credentials", async function () {
-    console.log("Waiting for the login button to be visible...");
-    const loginButton = byValueKey("login_button");
-    await driver.execute("flutter:waitFor", loginButton);
 
-    console.log("Clicking the login button...");
+When("I {string} the application", async function (command:string) {
+    if(command === "close") {
+        console.log("Start to terminate");
+        await driver.terminateApp("com.orange.mobile_app");
+        console.log("Application has been terminated");
+    } else if(command === "open") {
+        console.log("Start to open");
+        await driver.activateApp("com.orange.mobile_app");
+        console.log("Application has been activated");
+    }else{
+        console.log("Invalid command");
+    }
+});
+
+Given("I do the login as {string} {string}", async function (username: string, password: string) {
+    const loginPage = byValueKey(UiId.loginPage);
+    await driver.execute("flutter:waitFor", loginPage);
+    const loginButton = byValueKey(UiId.loginButton);
     await driver.elementClick(loginButton);
-
-    await login(driver, "10", "10");
-
-    console.log("Successfully logged in and returned to the app.");
-});
-
-When("I close the application", async function () {
-    console.log("Start to terminate");
-    await driver.terminateApp("com.orange.mobile_app");
-    console.log("Application has been terminated");
-});
-
-When("I reopen it", async function () {
-    console.log("Start to reopen");
-    await driver.activateApp("com.orange.mobile_app");
-    console.log("Application has been reactivated");
+    await login(driver, username, password);
 });
 
 
@@ -39,7 +37,7 @@ Then("The login screen is skipped", async function () {
 
     try {
         // If flutter:waitFor doesn't throw, it means the guest_button is present
-        await driver.execute("flutter:waitFor", byValueKey("guest_button"), 3000);
+        await driver.execute("flutter:waitFor", byValueKey(UiId.guestButton), 3000);
         loginScreenIsPresent = true;
     } catch (err) {
         console.log(err);
@@ -54,7 +52,7 @@ Then("The login screen is skipped", async function () {
 Then("I am on the joined groups screen", async function () {
     try {
         // Wait up to 5 seconds for the "joined_groups_tab" to appear
-        await driver.execute("flutter:waitFor", byValueKey("joined_groups_tab"), 5000);
+        await driver.execute("flutter:waitFor", byValueKey(UiId.joinedGroupTab), 5000);
 
         // If waitFor did not time out, then "joined_groups_tab" is present
         console.log("Verified that 'joined_groups_tab' is visible. We are on the joined groups screen.");
@@ -65,15 +63,3 @@ Then("I am on the joined groups screen", async function () {
     }
 });
 
-Then("I go to the profile page", async function () {
-    await go_to_page(driver, BottomBarIcon.profile);
-    console.log("Navigated to the profile page");
-});
-
-Then("I do the logout", async function () {
-    await do_logout(driver);
-
-    //click on confirm logout
-    const confirm_logout = byValueKey("confirm_logout");
-    await driver.elementClick(confirm_logout);
-});

@@ -48,10 +48,10 @@ When("I go to the notifications page", async function () {
     await go_to_page(driver, BottomBarIcon.notifications);
 });
 
-Then("I see the notification with the notification message", async function () {
-    const notification = byValueKey(1);
+Then("I see the notification with id {string} with the {string} message", async function (id: string, message: string) {
+    const notification = await byValueKey("notification_"+id);
     const itemText = await driver.getElementText(notification);
-    assert.ok(itemText === "Nona has requested to join the Capstone project");
+    assert.ok(itemText === message);
 });
 
 When("I open the notification with id {string}", async function (id: string) {
@@ -72,6 +72,7 @@ When("I click refuse", async function () {
 });
 
 Then("The user receives the invitation link of Telegram group", async function () {});
+
 Then("a notification is sent to him", async function () {
     await waitForElement(driver, "success_toast");
     const actual = await getText(driver, "success_toast");

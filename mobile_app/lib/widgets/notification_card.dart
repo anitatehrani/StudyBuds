@@ -72,7 +72,7 @@ class NotificationCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        key: ValueKey(notification.id),
+                        key: ValueKey("notification_${notification.id}"),
                         notification.message,
                         style: TextStyle(
                           fontSize: 16,
@@ -84,43 +84,46 @@ class NotificationCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8),
-                (notification.notificationType == 'join_request' && notification.joinRequestStatus == 'pending') ?
-                  CustomIconButton(
-                    key: ValueKey("btn_${notification.id}"),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return BlocProvider(
-                            create: (_) => JoinRequestBloc(),
-                            child: NotificationPopup(
-                              key: ValueKey("popup"),
-                              acceptButtonLabel: 'Accept',
-                              rejectButtonLabel: 'Reject',
-                              notification: notification,
-                              listChanged: listChanged,
-                            ),
+                (notification.notificationType == 'join_request' &&
+                        notification.joinRequestStatus == 'pending')
+                    ? CustomIconButton(
+                        key: ValueKey("btn_${notification.id}"),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return BlocProvider(
+                                create: (_) => JoinRequestBloc(),
+                                child: NotificationPopup(
+                                  key: ValueKey("popup"),
+                                  acceptButtonLabel: 'Accept',
+                                  rejectButtonLabel: 'Reject',
+                                  notification: notification,
+                                  listChanged: listChanged,
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    iconData: Icons.chevron_right_outlined,
-                  ) :
-                Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        key: ValueKey(notification.joinRequestId),
-                        notification.joinRequestStatus + 'ed',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: notification.joinRequestStatus == 'accept' ? Colors.green : Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
-                      ),
-                  ],
-                )
+                        iconData: Icons.chevron_right_outlined,
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            key: ValueKey(notification.joinRequestId),
+                            notification.joinRequestStatus + 'ed',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: notification.joinRequestStatus == 'accept'
+                                  ? Colors.green
+                                  : Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            softWrap: true,
+                          ),
+                        ],
+                      )
               ],
             )
           ],

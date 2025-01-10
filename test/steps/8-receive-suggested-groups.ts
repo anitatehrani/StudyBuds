@@ -3,9 +3,9 @@ import assert from "assert";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
 import { driver } from "./all";
 import {initDB} from "../utils/mock-data.ts";
-import {Student} from "../utils/models/Student.ts";
-import {StudentGroup} from "../utils/models/StudentGroup.ts";
-import {GroupMembers} from "../utils/models/GroupMembers.ts";
+import {Student} from "../../backend/src/models/Student.ts";
+import {StudentGroup} from "../../backend/src/models/StudentGroup.ts";
+import {GroupMembers} from "../../backend/src/models/GroupMembers.ts";
 
 Before({tags: "@receive-suggested-groups"},async function () {
     const student=11;
