@@ -9,16 +9,16 @@ services:
             GH_TOKEN: ${GH_TOKEN:-lol}
 
     appium:
-      init: true
-      image: docker.io/appium/appium
-      privileged: true
-      ports:
+        init: true
+        image: docker.io/appium/appium
+        privileged: true
+        ports:
             - "4723:4723"
-      environment:
-            APPIUM_ADDITIONAL_PARAMS: --allow-insecure chromedriver_autodownload
-      volumes:
-          - ./mobile_app/build/app/outputs/flutter-apk:/apk:ro
-          - /home/androidusr/.android
+        environment:
+            APPIUM_ADDITIONAL_PARAMS: --allow-insecure chromedriver_autodownload,adb_shell
+        volumes:
+            - ./mobile_app/build/app/outputs/flutter-apk:/apk:ro
+            - /home/androidusr/.android
 
     emulator:
         init: true
@@ -32,7 +32,7 @@ services:
             EMULATOR_DEVICE: "Samsung Galaxy S10"
             WEB_VNC: true
             APPIUM: true
-            APPIUM_ADDITIONAL_ARGS: --allow-insecure chromedriver_autodownload
+            APPIUM_ADDITIONAL_ARGS: --allow-insecure chromedriver_autodownload,adb_shell
         devices:
             - /dev/kvm
         volumes:
@@ -52,14 +52,16 @@ services:
             DRIVER: ${DRIVER:-false}
 
     acceptance-tests:
-        build: ./test
+        build:
+          context: ./
+          dockerfile: ./test/Dockerfile
         environment:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
             APPIUM_HOST: ${APPIUM_HOST:-emulator}
             APPIUM_PORT: ${APPIUM_PORT:-4723}
             APPIUM_DEVICE: ${APPIUM_DEVICE:-emulator-5554}
             APPIUM_APK: ${APPIUM_APK:-/apk/app-debug.apk}
-            APPIUM_CHROMEDRIVER_PATH : ${APPIUM_CHROMEDRIVER_PATH:-disabled}
+            APPIUM_CHROMEDRIVER_PATH: ${APPIUM_CHROMEDRIVER_PATH:-disabled}
 
     # the .env should be created manually by each of you in backend/server_db/.env
     # command to run just postgres: docker-compose --env-file backend/server_db/.env up -d postgres
@@ -74,6 +76,7 @@ services:
             - postgres_data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
+        restart: unless-stopped
 
     postgres:
         image: postgres
@@ -88,6 +91,22 @@ services:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
         ports:
             - "5432:5432"
+
+    database-data:
+        build:
+          context: ./
+          dockerfile: ./backend/server_db/test_data/Dockerfile
+        environment:
+            DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
+        depends_on:
+            - postgres
+
+    duckdns:
+      image: lscr.io/linuxserver/duckdns:latest
+      environment:
+        - SUBDOMAINS=studybuds,unigelogin
+        - TOKEN=${DUCKDNS_TOKEN:-changeme}
+      restart: unless-stopped
 
     # migration container
     migration:
@@ -114,14 +133,15 @@ services:
         depends_on:
             - unigeapi
             - unigelogin
+        restart: unless-stopped
 
     generate-schema:
         build: ./backend
         command: npm exec -- sequelize-auto -h postgres -d postgres -u postgres -x password -p 5432 -o /out -c sequelize-auto-options.json
         volumes:
-          - ./backend/src/models:/out
+            - ./backend/src/models:/out
         depends_on:
-          - postgres
+            - postgres
 
     api-testing:
         build: ./backend/api_testing
@@ -143,6 +163,7 @@ services:
         depends_on:
             yaml:
                 condition: service_completed_successfully
+        restart: unless-stopped
 
     yaml:
         build:
@@ -166,6 +187,16 @@ services:
         environment:
             SECRET_KEY: ${SECRET_KEY:-changeme}
             DATABASE: /data/data.yml
+        restart: unless-stopped
+
+    caddy:
+      image: docker.io/caddy
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      restart: unless-stopped
 
 volumes:
     unigedata:

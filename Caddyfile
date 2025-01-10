@@ -1,0 +1,12 @@
+{
+    acme_ca https://acme-v02.api.letsencrypt.org/directory
+    email   studybuds.orange@gmail.com
+}
+
+studybuds.duckdns.org {
+    reverse_proxy backend:5000
+}
+
+unigelogin.duckdns.org {
+    reverse_proxy unigelogin:8080
+}

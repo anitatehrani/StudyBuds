@@ -182,11 +182,15 @@ class _SuggestedGroupsState extends State<_SuggestedGroups> {
                     final group = suggestedGroups[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: GroupCard(group: group, index: index),
+                      child: GroupCard(
+                        key: Key('suggested_group_name_$index'),
+                        group: group,
+                        index: index,
+                      ),
                     );
                   },
                   viewportFraction: 0.9,
-                  scale: 0.95, 
+                  scale: 0.95,
                   onIndexChanged: (int index) {
                     setState(() {
                       _currentIndex = index;
@@ -206,7 +210,7 @@ class _SuggestedGroupsState extends State<_SuggestedGroups> {
                     margin: const EdgeInsets.symmetric(horizontal: 4.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _currentIndex == index ? Colors.black : Colors.grey, 
+                      color: _currentIndex == index ? Colors.black : Colors.grey,
                     ),
                   ),
                 ),
