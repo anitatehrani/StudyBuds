@@ -5,7 +5,7 @@ import sequelize from './src/config/database';
 import { FB_PKEY } from './src/config/secrets';
 import { errorHandler } from './src/middlewares/error_handler';
 import { initModels } from './src/models/init-models';
-import indexRouter from './src/routes/index';
+import { loginRouter, router } from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
 
 
@@ -16,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Mount all routes without "/api" prefix
-app.use('/', indexRouter);
+app.use('/', loginRouter);
+app.use('/', router);
 
 // Test database connection
 sequelize.authenticate()
