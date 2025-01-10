@@ -4,7 +4,7 @@ import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { driver } from "./all";
 import { do_logout } from "../utils/utils";
 import { initDB } from "../utils/mock-data";
-import { Student } from "../utils/models/Student";
+import { Student } from "../../backend/src/models/Student";
 
 // let driver:WebdriverIO.Browser;
 // Before(()=>driver=getDriver())
