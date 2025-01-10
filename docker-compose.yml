@@ -87,6 +87,7 @@ services:
             PGDATA: /tmp/data
         tmpfs:
             - /tmp
+            - /var/run
         volumes:
             - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
         ports:
@@ -108,6 +109,8 @@ services:
         SUBDOMAINS: studybuds,unigelogin
         TOKEN: ${DUCKDNS_TOKEN:-changeme}
       restart: unless-stopped
+      tmpfs:
+        - /run:exec
       read_only: true
 
     # migration container
@@ -171,6 +174,10 @@ services:
             DATA: /data/data.json
         ports:
             - "8080:8080"
+        tmpfs:
+            - /var/lock
+            - /var/run
+            - /tmp
         volumes:
             - unigedata:/data:ro
         depends_on:
@@ -199,6 +206,8 @@ services:
             - "8000:8000"
         volumes:
             - ./unige:/data:ro
+        tmpfs:
+            - /tmp
         environment:
             SECRET_KEY: ${SECRET_KEY:-changeme}
             DATABASE: /data/data.yml
@@ -212,6 +221,7 @@ services:
         - "443:443"
       volumes:
         - ./Caddyfile:/etc/caddy/Caddyfile:ro
+        - /data
       restart: unless-stopped
       read_only: true
 
