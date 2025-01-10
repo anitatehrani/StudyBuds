@@ -177,6 +177,7 @@ services:
         tmpfs:
             - /var/lock
             - /var/run
+            - /tmp
         volumes:
             - unigedata:/data:ro
         depends_on:
