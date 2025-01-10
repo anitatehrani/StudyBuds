@@ -108,6 +108,8 @@ services:
         SUBDOMAINS: studybuds,unigelogin
         TOKEN: ${DUCKDNS_TOKEN:-changeme}
       restart: unless-stopped
+      tmpfs:
+        - /run:exec
       read_only: true
 
     # migration container
@@ -212,6 +214,7 @@ services:
         - "443:443"
       volumes:
         - ./Caddyfile:/etc/caddy/Caddyfile:ro
+        - /data
       restart: unless-stopped
       read_only: true
 
