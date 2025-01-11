@@ -72,7 +72,6 @@ services:
             POSTGRES_USER: ${POSTGRES_USER:-postgres}
             POSTGRES_DB: ${POSTGRES_DB:-postgres}
         volumes:
-            - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
             - postgres_data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
@@ -88,8 +87,6 @@ services:
         tmpfs:
             - /tmp
             - /var/run
-        volumes:
-            - ./backend/server_db/sql_scripts/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql:ro
         ports:
             - "5432:5432"
         read_only: true
@@ -101,7 +98,10 @@ services:
         environment:
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
         depends_on:
-            - postgres
+            postgres:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
 
     duckdns:
       image: lscr.io/linuxserver/duckdns:latest
@@ -113,14 +113,13 @@ services:
         - /run:exec
       read_only: true
 
-    # migration container
     migration:
         image: docker.io/migrate/migrate
         volumes:
             - ./backend/server_db/migrations:/migrations
-        command: -database ${DB_URL:-postgres://postgres:password@postgres:5432/postgres?sslmode=disable} -path migrations up
-        depends_on:
-            - postgres
+        entrypoint: migrate -database ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}?sslmode=disable -path migrations
+        command: up
+        read_only: true
 
     backend:
         build: ./backend
