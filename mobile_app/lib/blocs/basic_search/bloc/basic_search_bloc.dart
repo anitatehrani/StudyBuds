@@ -14,7 +14,7 @@ class BasicSearchBloc extends Bloc<BasicSearchEvent, BasicSearchState> {
       emit(SuggestedGroupListLoading());
       try {
         final suggestedGroupsRequest =
-            SuggestedGroupsRequest(studentId: event.studentId);
+            SuggestedGroupsRequest();
         final response = await suggestedGroupsRequest.send();
         if (response.isSuccess) {
           final List<Group> suggestedGroups =

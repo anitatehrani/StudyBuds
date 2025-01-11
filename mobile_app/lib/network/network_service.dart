@@ -21,7 +21,7 @@ class NetworkService {
       'Content-Type': 'application/json',
     };
     final Uri url = Uri.parse("$API_URL$endPoint");
-
+    print(url);
     if (httpVerb == HttpVerb.GET) {
       return http.get(url, headers: headers);
     } else if (httpVerb == HttpVerb.POST) {
