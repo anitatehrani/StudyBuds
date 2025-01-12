@@ -3,7 +3,7 @@ import { getStudentId } from '../middlewares/auth_middleware';
 import { getStudentFirebaseToken } from '../service/firebase_token_service';
 import { getCurrentMemberCount, joinGroup } from '../service/group_member';
 import { getGroupById } from '../service/group_service';
-import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '../service/join_request_service';
+import { createJoinRequest, getJoinRequestById, getPendingJoinRequestByGroupId, updateJoinRequestStatus } from '../service/join_request_service';
 import { NotificationType, sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { getUnigeProfile } from '../service/unige_service';
@@ -34,6 +34,12 @@ export async function joinTheGroup(req: Request) {
 
     if (group.adminId == studentId) {
         throw new ValidationError('You are trying to join your group');
+    }
+
+    const joinRequest = await getPendingJoinRequestByGroupId(studentId, groupId);
+    if (joinRequest != null) {
+        console.log('Already sent join request');
+        throw new ValidationError('You already sent join request');
     }
 
     const memberCount = await getCurrentMemberCount(groupId);

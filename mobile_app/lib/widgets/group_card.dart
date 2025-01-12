@@ -203,10 +203,14 @@ class GroupCard extends StatelessWidget {
                         if (additionalButtonLabel != "Delete the group")
                           CustomFilledButton(
                             key: Key('join_button_${group.id}'),
-                            isEnabled: true,
-                            label: group.isPublic
-                                ? 'Join the group'
-                                : 'Send a join request',
+                            isEnabled: group.joinRequestStatus == '',
+                            label: buttonLabel != null
+                              ? buttonLabel!
+                              : ( group.joinRequestStatus != ''
+                                ? group.joinRequestStatus!
+                                : (group.isPublic
+                                  ? 'Join the group'
+                                  : 'Send a join request')),
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
                             onPressed: () {

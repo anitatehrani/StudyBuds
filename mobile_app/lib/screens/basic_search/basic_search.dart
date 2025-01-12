@@ -106,7 +106,7 @@ class _SearchBar extends StatelessWidget {
 class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     return BlocBuilder<BasicSearchBloc, BasicSearchState>(
+    return BlocBuilder<BasicSearchBloc, BasicSearchState>(
       builder: (context, state) {
         if (state is SearchInitial) {
           return Center(child: Text('Enter a query to search for groups.'));
@@ -125,7 +125,7 @@ class _SearchResults extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GroupCard(group: group, index: index), 
+                  GroupCard(group: group, index: index),
                   Divider(),
                 ],
               );

@@ -11,6 +11,7 @@ class Group {
   final int? membersLimit;
   final int membersCount;
   final List<Student>? members;
+  final String joinRequestStatus;
 
   Group(
       {this.id,
@@ -22,6 +23,7 @@ class Group {
       required this.ownerId,
       required this.membersLimit,
       this.membersCount = 1,
+      this.joinRequestStatus = '',
       required this.members});
 
   factory Group.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class Group {
       isPublic: json['isPublic'],
       telegramLink: json['telegramLink'] ?? '',
       ownerId: json['ownerId'],
+      joinRequestStatus: json['requestStatus'] ?? '',
       membersLimit: json['membersLimit'],
       membersCount: json['membersCount'],
       members: json['members'] != null

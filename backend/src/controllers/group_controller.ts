@@ -89,7 +89,9 @@ export async function getGroupDetails(req: Request) {
 
     // Prepare student details by fetching individually from UnigeMockup
     let groupMembers: UnigeStudent[] = [];
-
+    
+    console.log(members.length);
+    console.log(members);
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
     }else {
@@ -98,6 +100,7 @@ export async function getGroupDetails(req: Request) {
             membersId.push(member.studentId);
         }
         groupMembers = await UnigeService.getStudentsUnigeProfiles(membersId);
+        console.log(`result ${groupMembers}`);
 
     }
 
