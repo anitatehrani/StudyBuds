@@ -5,7 +5,6 @@ import 'package:study_buds/models/notification.dart';
 import 'package:study_buds/network/request/notification_list_request.dart';
 
 part 'notification_list_event.dart';
-
 part 'notification_list_state.dart';
 
 class NotificationListBloc
@@ -18,7 +17,7 @@ class NotificationListBloc
       Emitter<NotificationListState> emit) async {
     emit(NotificationListLoading());
     try {
-      final fetchNotificationRequest = NotificationListRequest(event.studentId);
+      final fetchNotificationRequest = NotificationListRequest();
       final response = await fetchNotificationRequest.send();
       if (response.isSuccess) {
         if (response.data != null && response.data!.isNotEmpty) {

@@ -1,8 +1,9 @@
 import { Request } from 'express';
+import { getStudentId } from '../middlewares/auth_middleware';
+import { Notification } from '../models/Notification';
 import { getStudentFirebaseToken, saveFbToken, updateFbToken } from '../service/firebase_token_service';
 import { getStudentNotifications, testNotification } from '../service/notification_service';
-import { checkInt, checkString, validateInt } from '../utils/validation_error';
-import { Notification } from '../models/Notification';
+import { checkInt, checkString } from '../utils/validation_error';
 
 
 
@@ -11,7 +12,7 @@ export async function getAllNotification(req: Request) {
 };
 
 export async function getStudentsAllNotification(req: Request) {
-    const studentId = validateInt(req.params, "studentId");
+    const studentId = getStudentId(req);
     const result = await getStudentNotifications(studentId)
     console.log(result)
     return result

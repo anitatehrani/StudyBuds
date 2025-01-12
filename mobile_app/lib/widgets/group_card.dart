@@ -211,7 +211,7 @@ class GroupCard extends StatelessWidget {
                                 Theme.of(context).colorScheme.primary,
                             onPressed: () {
                               context.read<JoinGroupBloc>().add(
-                                    JoinGroupRequestEvent(10, group.id ?? 0),
+                                    JoinGroupRequestEvent(group.id ?? 0),
                                   );
                             },
                           ),

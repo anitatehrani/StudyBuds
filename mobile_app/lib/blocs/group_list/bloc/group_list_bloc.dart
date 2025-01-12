@@ -14,9 +14,7 @@ class GroupListBloc extends Bloc<GroupListEvent, GroupListState> {
       try {
         final fetchNotificationRequest =
             FetchMyGroupListRequest();
-        print('====================');
         final response = await fetchNotificationRequest.send();
-        print('sent');
         if (response.isSuccess) {
           dynamic data = response.data;
           if (data != null) {

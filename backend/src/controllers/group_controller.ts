@@ -4,6 +4,9 @@ import UnigeService, { UnigeStudent } from "../service/unige_service";
 import { BadRequestError, NotFoundError } from "../utils/api_error";
 
 import { getStudentId } from "../middlewares/auth_middleware";
+import { GroupMembers } from "../models/GroupMembers";
+import { Student } from "../models/Student";
+import { StudentGroup } from "../models/StudentGroup";
 import {
     checkBoolean,
     checkInt,
@@ -12,9 +15,6 @@ import {
     validateInt,
     validateString,
 } from "../utils/validation_error";
-import { Student } from "../models/Student";
-import { StudentGroup } from "../models/StudentGroup";
-import { GroupMembers } from "../models/GroupMembers";
 
 // Function to create a group
 export async function createGroup(req: Request) {
@@ -67,7 +67,7 @@ export async function getAllGroups(req: Request) {
 
 export async function basicSearchResult(req: Request) {
     const text = validateString(req.params, "text");
-    const student_id = validateInt(req.params, "student_id");
+    const student_id = getStudentId(req);
     const result = await GroupService.basicSearch(text, student_id);
     console.log(result);
     return result;
@@ -122,7 +122,7 @@ export async function getGroupDetails(req: Request) {
 
 // Function to get suggested groups based on gpa and studyplan
 export async function getSuggestedGroupList(req: Request) {
-    const student_id = validateInt(req.params, "student_id");
+    const student_id = getStudentId(req);
     const result = await GroupService.getSuggestedGroups(student_id);
     console.log(result);
     return result;

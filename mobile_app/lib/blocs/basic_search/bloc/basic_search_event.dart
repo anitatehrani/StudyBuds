@@ -3,12 +3,10 @@ part of 'basic_search_bloc.dart';
 sealed class BasicSearchEvent extends Equatable {}
 
 class SuggestedGroupsEvent extends BasicSearchEvent {
-  final int studentId;
-
-  SuggestedGroupsEvent(this.studentId);
+  SuggestedGroupsEvent();
 
   @override
-  List<Object?> get props => [studentId];
+  List<Object?> get props => [];
 }
 
 class SearchQueryChanged extends BasicSearchEvent {

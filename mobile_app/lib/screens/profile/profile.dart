@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buds/telegram/telegram_bot.dart';
 import 'package:study_buds/utils/auth_utils.dart';
+
 import '../../blocs/profile/bloc/profile_bloc.dart';
 import '../../models/student.dart';
 import '../../widgets/custom_filled_button.dart';
@@ -45,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         foregroundColor: Theme.of(context).primaryColor,
       ),
       body: BlocProvider(
-        create: (_) => ProfileBloc()..add(FetchProfileDetailsEvent(10)),
+        create: (_) => ProfileBloc()..add(FetchProfileDetailsEvent()),
         child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
             if (state is ProfileLoaded) {
@@ -173,7 +174,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context
                               .read<ProfileBloc>()
                               .add(SaveProfileDetailsEvent(
-                                10,
                                 int.parse(telegramAccountId!),
                               ));
                         }

@@ -49,7 +49,7 @@ class NotificationPopup extends StatelessWidget {
             key: ValueKey("reject"),
             onPressed: () {
               context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
-                  10, notification.joinRequestId, false));
+                notification.joinRequestId, false));
               Navigator.of(context).pop();
             },
             label: rejectButtonLabel,
@@ -61,7 +61,7 @@ class NotificationPopup extends StatelessWidget {
             key: ValueKey("accept"),
             onPressed: () {
               context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
-                  10, notification.joinRequestId, true));
+                  notification.joinRequestId, true));
               Navigator.of(context).pop();
             },
             iconData: Icons.check_circle_rounded,
