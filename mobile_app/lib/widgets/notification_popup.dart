@@ -39,6 +39,14 @@ class NotificationPopup extends StatelessWidget {
                 backgroundColor: Colors.red),
           );
           listChanged.call();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text(
+                    "Impossible Error BUG - Failed to change join request status."),
+                backgroundColor: Colors.red),
+          );
+          listChanged.call();
         }
       },
       child: AlertDialog(
@@ -49,7 +57,7 @@ class NotificationPopup extends StatelessWidget {
             key: ValueKey("reject"),
             onPressed: () {
               context.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
-                notification.joinRequestId, false));
+                  notification.joinRequestId, false));
               Navigator.of(context).pop();
             },
             label: rejectButtonLabel,
