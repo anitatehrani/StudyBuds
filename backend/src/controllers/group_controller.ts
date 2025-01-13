@@ -6,6 +6,7 @@ import { BadRequestError, NotFoundError } from "../utils/api_error";
 import {
     checkBoolean,
     checkInt,
+    checkNonEmptyString,
     checkString,
     IndexSignature,
     validateInt,
@@ -18,11 +19,11 @@ import { GroupMembers } from "../models/GroupMembers";
 // Function to create a group
 export async function createGroup(req: Request) {
     const body = req.body as IndexSignature;
-    const name = checkString(body, "name");
-    const description = checkString(body, "description");
-    const course = checkString(body, "course");
+    const name = checkNonEmptyString(body, "name");
+    const description = checkNonEmptyString(body, "description");
+    const course = checkNonEmptyString(body, "course");
     const membersLimit = checkInt(body, "membersLimit");
-    const telegramLink = checkString(body, "telegramLink");
+    const telegramLink = checkNonEmptyString(body, "telegramLink");
     const studentId = checkInt(body, "studentId");
     const isPublic = checkBoolean(body, "isPublic");
 
