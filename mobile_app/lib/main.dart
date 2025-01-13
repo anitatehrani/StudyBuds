@@ -7,7 +7,7 @@ import 'package:study_buds/screens/main.dart';
 import 'package:study_buds/utils/auth_utils.dart';
 import 'package:study_buds/utils/push_notification.dart';
 import 'package:study_buds/utils/static_env.dart';
-
+import 'telegram/telegram_bot.dart';
 void main() async {
   if (DRIVER) enableFlutterDriverExtension(); // Keep DRIVER testing logic
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +16,9 @@ void main() async {
   // Initialize Push Notifications
   PushNotificationService.instance.retrievePushNotificationToken();
 
+  //Start Telegram Bot
+  TelegramBot.getTelegramId();
+  
   // Check if the user is authenticated
   final isAuthenticated = await AuthUtils.isAuthenticated();
 
