@@ -5,7 +5,7 @@ interface JoinedGroupList {
   joinedGroups: Partial<StudentGroup>[];
 }
 
-import { literal } from "sequelize";
+import { literal, Op } from "sequelize";
 import { GroupMembers } from "../models/GroupMembers";
 import { StudentGroup } from "../models/StudentGroup";
 
@@ -34,7 +34,7 @@ async function getAllJoinedGroupList(
       required: true,
       attributes: [],
       as: "groupMembers",
-      // where: { studentId: { [Op.eq]: studentId } },
+      where: { studentId: { [Op.eq]: studentId } },
     },
   });
 

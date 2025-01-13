@@ -8,11 +8,39 @@ import { BACKEND_URL, getToken } from "./utils";
 
 test("empty", async () => {
   initData();
-  const student = new Student({ studentId: 4943369 });
-  await initDB([student]);
+  const student = new Student({ studentId: 10 });
+  const student1 = new Student({ studentId: 4943369 });
+  const student2 = new Student({ studentId: 4943370 });
+  const group1 = new StudentGroup({
+    id: 1,
+    name: "CP",
+    gpa: 0,
+    course: "Capstone",
+    adminId: student1.studentId,
+  });
+  const group2 = new StudentGroup({
+    id: 2,
+    name: "CP2",
+    gpa: 0,
+    course: "Capstone",
+    adminId: student2.studentId,
+  });
+  await initDB([
+    student,
+    student1,
+    student2,
+    group1,
+    group2,
+    new GroupMembers({ studentId: student1.studentId, groupId: group1.id }),
+    new GroupMembers({ studentId: student2.studentId, groupId: group1.id }),
+    new GroupMembers({ studentId: student1.studentId, groupId: group2.id }),
+    new GroupMembers({ studentId: student2.studentId, groupId: group2.id }),
+  ]);
   const expected = { joinedGroups: [], ownedGroups: [] };
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student.studentId)}`}})
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`, {
+      headers: { Authorization: `Bearer ${getToken(student.studentId)}` },
+    })
   ).data;
   expect(actual).toEqual(expected);
 });
@@ -67,8 +95,11 @@ test("data", async () => {
       },
     ],
   };
+  console.error(`${BACKEND_URL}/groups/joined_groups`);
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student1.studentId)}`}})
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`, {
+      headers: { Authorization: `Bearer ${getToken(student1.studentId)}` },
+    })
   ).data;
   expect(actual).toEqual(expected);
 });
@@ -124,7 +155,9 @@ test("data2", async () => {
     ],
   };
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student2.studentId)}`}})
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`, {
+      headers: { Authorization: `Bearer ${getToken(student2.studentId)}` },
+    })
   ).data;
   expect(actual).toEqual(expected);
 });

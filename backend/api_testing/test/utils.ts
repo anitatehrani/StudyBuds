@@ -7,5 +7,5 @@ export const axios_instance = axios.create({
 });
 
 export function getToken(user:number):string{
-    return generateToken(user);
+    return generateToken({uid:user});
 }
