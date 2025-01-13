@@ -33,7 +33,7 @@ generate-schema:
     docker compose run --rm --build generate-schema
 
 up-all-local:
-    BACKEND_CALLBACK="http://{{ip}}:5000/login/" IDP_ENTRYPOINT="http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php" docker compose up -d --build postgres backend unigeapi unigelogin
+    BACKEND_CALLBACK="http://{{ip}}:5000/login/" IDP_ENTRYPOINT="http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php" docker compose up -d --build database-data backend unigeapi unigelogin
 
 down:
     docker compose down
