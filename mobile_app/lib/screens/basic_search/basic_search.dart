@@ -23,8 +23,10 @@ class MyApp extends StatelessWidget {
 
 class BasicSearchPage extends StatelessWidget {
   const BasicSearchPage({super.key, required this.title});
+
   final String title;
-   @override
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -103,6 +105,7 @@ class _SearchBar extends StatelessWidget {
     );
   }
 }
+
 class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -115,7 +118,9 @@ class _SearchResults extends StatelessWidget {
         } else if (state is SearchSuccess) {
           final groups = state.groups;
           if (groups.isEmpty) {
-            return Center(key: Key('no_results_message'), child: Text('No results found.'));
+            return Center(
+                key: Key('no_results_message'),
+                child: Text('No results found.'));
           }
           return ListView.builder(
             key: Key('search_results'),
@@ -162,15 +167,18 @@ class _SuggestedGroupsState extends State<_SuggestedGroups> {
             return Center(child: Text('No results found.'));
           }
 
-          return  Column(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
               Text(
-                "Suggested groups for you",
-                style: TextStyle(color: Colors.orange, fontSize: 18),
-
+                "Maybe you'd like to join...",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 5),
               // Swiper containing the cards
               SizedBox(
                 height: 200,
@@ -195,20 +203,22 @@ class _SuggestedGroupsState extends State<_SuggestedGroups> {
                     });
                   },
                   pagination: null,
-                  ),
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   suggestedGroups.length,
                   (index) => Container(
-                    width: 10,
-                    height: 10,
+                    width: 7,
+                    height: 7,
                     margin: const EdgeInsets.symmetric(horizontal: 4.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _currentIndex == index ? Colors.black : Colors.grey,
+                      color: _currentIndex == index
+                          ? Theme.of(context).primaryColor
+                          : Colors.grey,
                     ),
                   ),
                 ),
