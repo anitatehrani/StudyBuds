@@ -13,15 +13,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Initialize Push Notifications
-  PushNotificationService.instance.retrievePushNotificationToken();
+    // Initialize Push Notifications
+    PushNotificationService.instance.retrievePushNotificationToken();
 
   //Start Telegram Bot
   TelegramBot.getTelegramId();
   
   // Check if the user is authenticated
   final isAuthenticated = await AuthUtils.isAuthenticated();
-
   runApp(MyApp(isAuthenticated: isAuthenticated));
 }
 

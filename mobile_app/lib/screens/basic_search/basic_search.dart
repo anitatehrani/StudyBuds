@@ -1,13 +1,12 @@
-import 'dart:ffi';
-
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:study_buds/blocs/basic_search/bloc/basic_search_bloc.dart';
 import 'package:study_buds/blocs/join_group/bloc/join_group_bloc.dart';
 import 'package:study_buds/widgets/group_card.dart';
-import 'package:provider/provider.dart';
+
 import '../../blocs/group_details/bloc/group_details_bloc.dart';
-import 'package:card_swiper/card_swiper.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +34,7 @@ class BasicSearchPage extends StatelessWidget {
         Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
       ],
       child: BlocProvider(
-        create: (_) => BasicSearchBloc()..add(SuggestedGroupsEvent(10)),
+        create: (_) => BasicSearchBloc()..add(SuggestedGroupsEvent()),
         child: Scaffold(
           appBar: AppBar(
             title: const Text(
@@ -82,7 +81,7 @@ class _SearchBar extends StatelessWidget {
       key: Key('search_bar'),
       controller: _searchController,
       onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query, 10));
+        context.read<BasicSearchBloc>().add(SearchQueryChanged(query));
       },
       decoration: InputDecoration(
         hintText: 'Search...',
@@ -96,7 +95,7 @@ class _SearchBar extends StatelessWidget {
           onPressed: () {
             context
                 .read<BasicSearchBloc>()
-                .add(SearchQueryChanged(_searchController.text, 10));
+                .add(SearchQueryChanged(_searchController.text));
           },
         ),
         border: OutlineInputBorder(

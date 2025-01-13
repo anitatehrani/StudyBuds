@@ -35,7 +35,7 @@ class GroupList extends StatelessWidget {
             ),
           ),
           body: BlocProvider(
-            create: (_) => GroupListBloc()..add(FetchMyGroupListEvent(10)),
+            create: (_) => GroupListBloc()..add(FetchMyGroupListEvent()),
             child: Scaffold(
               body: BlocConsumer<GroupListBloc, GroupListState>(
                 listener: (context, state) {

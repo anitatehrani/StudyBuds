@@ -46,3 +46,16 @@ export async function getJoinRequestByGroupId(studentId: number, groupId: number
     console.log('Join request data returned from DB:', data);
     return data;
 }
+
+export async function getPendingJoinRequestByGroupId(studentId: number, groupId: number) {
+    console.log('Fetching pending join rewuest by groupId:', groupId);
+    const data = await JoinRequest.findOne({
+        where: {
+            groupId: groupId,
+            studentId: studentId,
+            status: "pending"
+        },
+    });
+    console.log('Join request data returned from DB:', data);
+    return data;
+}

@@ -91,7 +91,7 @@ class GroupDetailsDialog extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '• ${group.members} members',
+                    '• ${group.membersCount} members',
                     key: ValueKey('group_details_members_count'),
                     // Key for group members count
                     style: TextStyle(

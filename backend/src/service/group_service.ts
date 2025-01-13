@@ -1,11 +1,11 @@
 import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
+import { StudentGroup } from "../models/StudentGroup";
+import { getErrorMessage } from "../utils/api_error";
 import { getCurrentMemberCount } from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
-import { StudentGroup } from "../models/StudentGroup";
 import UnigeService from "./unige_service";
-import { getErrorMessage } from "../utils/api_error";
 
 interface GroupData {
   name: string;
@@ -61,6 +61,7 @@ interface SearchResult {
   isPublic: boolean;
   course: string;
   membersCount: number;
+  requestStatus: string | null;
 }
 
 export interface PopularityResult {
@@ -80,7 +81,8 @@ export async function basicSearch(
       sg.description,
       sg.is_public AS "isPublic",
       sg.course,
-      CAST(COUNT(gm.student_id) AS INTEGER) AS "membersCount"
+      CAST(COUNT(gm.student_id) AS INTEGER) AS "membersCount",
+      jr.status AS "requestStatus"
     FROM
       studybuds.student_group sg
     LEFT JOIN
@@ -96,7 +98,8 @@ export async function basicSearch(
       sg.name,
       sg.description,
       sg.is_public,
-      sg.course
+      sg.course,
+      jr.status
     ORDER BY
       "membersCount" DESC;
   `;

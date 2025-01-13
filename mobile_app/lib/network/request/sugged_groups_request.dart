@@ -5,10 +5,10 @@ import '../../network/base_http_request.dart';
 
 class SuggestedGroupsRequest
     extends BaseHttpRequest<SuggestedGroupsResponseBuilder, List<dynamic>> {
-  SuggestedGroupsRequest({required int studentId})
+  SuggestedGroupsRequest()
       : super(
           httpVerb: HttpVerb.GET,
-          endPoint: "/groups/group_suggestions/$studentId",
+          endPoint: "/groups/group_suggestions",
           responseBuilder: SuggestedGroupsResponseBuilder(),
         );
 }

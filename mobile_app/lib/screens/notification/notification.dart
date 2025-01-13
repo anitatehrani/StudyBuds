@@ -16,7 +16,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   List<NotificationModel> joinRequestResult = [];
 
   listChangedEvent(){
-    NotificationListBloc()..add(FetchNotificationListEvent(10));
+    NotificationListBloc()..add(FetchNotificationListEvent());
   }
 
   @override
@@ -45,7 +45,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             foregroundColor: Theme.of(context).primaryColor,
           ),
           body: BlocProvider(
-            create: (_) => NotificationListBloc()..add(FetchNotificationListEvent(10)),
+            create: (_) => NotificationListBloc()..add(FetchNotificationListEvent()),
             child: Scaffold(
               body: BlocConsumer<NotificationListBloc, NotificationListState>(
                 listener: (context, state) {
@@ -88,7 +88,7 @@ class NotificationListTab extends StatelessWidget {
 
   void listChangedEvent(BuildContext context) {
     BlocProvider.of<NotificationListBloc>(context)
-        .add(FetchNotificationListEvent(10));
+        .add(FetchNotificationListEvent());
   }
 
   @override

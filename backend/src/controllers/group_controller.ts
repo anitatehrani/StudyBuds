@@ -3,6 +3,10 @@ import GroupService from "../service/group_service";
 import UnigeService, { UnigeStudent } from "../service/unige_service";
 import { BadRequestError, NotFoundError } from "../utils/api_error";
 
+import { getStudentId } from "../middlewares/auth_middleware";
+import { GroupMembers } from "../models/GroupMembers";
+import { Student } from "../models/Student";
+import { StudentGroup } from "../models/StudentGroup";
 import {
     checkBoolean,
     checkInt,
@@ -12,9 +16,6 @@ import {
     validateInt,
     validateString,
 } from "../utils/validation_error";
-import { Student } from "../models/Student";
-import { StudentGroup } from "../models/StudentGroup";
-import { GroupMembers } from "../models/GroupMembers";
 
 // Function to create a group
 export async function createGroup(req: Request) {
@@ -24,7 +25,7 @@ export async function createGroup(req: Request) {
     const course = checkNonEmptyString(body, "course");
     const membersLimit = checkInt(body, "membersLimit");
     const telegramLink = checkNonEmptyString(body, "telegramLink");
-    const studentId = checkInt(body, "studentId");
+    const studentId = getStudentId(req);
     const isPublic = checkBoolean(body, "isPublic");
 
     // Validate if the student exists
@@ -67,7 +68,7 @@ export async function getAllGroups(req: Request) {
 
 export async function basicSearchResult(req: Request) {
     const text = validateString(req.params, "text");
-    const student_id = validateInt(req.params, "student_id");
+    const student_id = getStudentId(req);
     const result = await GroupService.basicSearch(text, student_id);
     console.log(result);
     return result;
@@ -90,6 +91,8 @@ export async function getGroupDetails(req: Request) {
     // Prepare student details by fetching individually from UnigeMockup
     let groupMembers: UnigeStudent[] = [];
 
+    console.log(members.length);
+    console.log(members);
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
     }else {
@@ -98,6 +101,7 @@ export async function getGroupDetails(req: Request) {
             membersId.push(member.studentId);
         }
         groupMembers = await UnigeService.getStudentsUnigeProfiles(membersId);
+        console.log(`result ${groupMembers}`);
 
     }
 
@@ -122,7 +126,7 @@ export async function getGroupDetails(req: Request) {
 
 // Function to get suggested groups based on gpa and studyplan
 export async function getSuggestedGroupList(req: Request) {
-    const student_id = validateInt(req.params, "student_id");
+    const student_id = getStudentId(req);
     const result = await GroupService.getSuggestedGroups(student_id);
     console.log(result);
     return result;

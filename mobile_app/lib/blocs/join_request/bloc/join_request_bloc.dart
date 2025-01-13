@@ -12,7 +12,7 @@ class JoinRequestBloc extends Bloc<JoinRequestEvent, JoinRequestState> {
       emit(JoinRequestLoading());
       try {
         final changeJoinRequestStatus = UpdateJoinRequest(
-            event.studentId, event.joinRequestId, event.isAccepted);
+            event.joinRequestId, event.isAccepted);
         final response = await changeJoinRequestStatus.send();
         if (response.isSuccess) {
           emit(JoinRequestSuccess(response.data));

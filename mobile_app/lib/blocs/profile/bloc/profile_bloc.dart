@@ -18,7 +18,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       FetchProfileDetailsEvent event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
-      final request = ProfileRequest(event.studentId);
+      final request = ProfileRequest();
       final response = await request.send();
 
       if (response.isSuccess) {
@@ -35,8 +35,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       SaveProfileDetailsEvent event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileSaving());
-      final request = UpdateTelegramAccountRequest(
-          event.studentId, event.telegramAccountId);
+      final request = UpdateTelegramAccountRequest(event.telegramAccountId);
       final response = await request.send();
       if (response.isSuccess) {
         emit(ProfileSaveSuccess(response.data));

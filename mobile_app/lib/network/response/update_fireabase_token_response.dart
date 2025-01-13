@@ -1,8 +1,8 @@
 import '../../network/base_http_response.dart';
 
-class NotificationListResponseBuilder
+class UpdateFireabaseTokenResponseBuilder
     extends BaseHttpResponseBuilder<List<dynamic>> {
-  NotificationListResponseBuilder()
+  UpdateFireabaseTokenResponseBuilder()
       : super(dataFactory: (jsonObject) {
           return jsonObject;
         });

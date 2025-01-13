@@ -1,16 +1,17 @@
 import { Request } from 'express';
+import { getStudentId } from '../middlewares/auth_middleware';
 import { getStudentFirebaseToken } from '../service/firebase_token_service';
 import { getCurrentMemberCount, joinGroup } from '../service/group_member';
 import { getGroupById } from '../service/group_service';
-import { createJoinRequest, getJoinRequestById, updateJoinRequestStatus } from '../service/join_request_service';
+import { createJoinRequest, getJoinRequestById, getPendingJoinRequestByGroupId, updateJoinRequestStatus } from '../service/join_request_service';
 import { NotificationType, sendPushNotification } from '../service/notification_service';
 import { getStudentById } from '../service/student_service';
 import { getUnigeProfile } from '../service/unige_service';
 import { NotFoundError, ValidationError } from '../utils/api_error';
-import { checkBoolean, checkInt, GenericIndexSignature } from '../utils/validation_error';
+import { checkBoolean, checkInt } from '../utils/validation_error';
 
 export async function joinTheGroup(req: Request) {
-    const studentId = checkInt(req.body as GenericIndexSignature, "studentId");
+    const studentId = getStudentId(req);
     const groupId = checkInt(req.body, "groupId");
     console.log(`studentId:${studentId}`);
     console.log(`groupId:${groupId}`);
@@ -33,6 +34,12 @@ export async function joinTheGroup(req: Request) {
 
     if (group.adminId == studentId) {
         throw new ValidationError('You are trying to join your group');
+    }
+
+    const joinRequest = await getPendingJoinRequestByGroupId(studentId, groupId);
+    if (joinRequest != null) {
+        console.log('Already sent join request');
+        throw new ValidationError('You already sent join request');
     }
 
     const memberCount = await getCurrentMemberCount(groupId);
@@ -67,7 +74,7 @@ export async function joinTheGroup(req: Request) {
 };
 
 export async function changeJoinRequestStatus(req: Request) {
-    const adminId = checkInt(req.body, "adminId");
+    const adminId = getStudentId(req);
     const joinRequestId = checkInt(req.body, "joinRequestId");
     const isAccepted = checkBoolean(req.body, "isAccepted");
 

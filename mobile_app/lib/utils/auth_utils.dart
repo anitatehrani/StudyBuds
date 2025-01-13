@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:study_buds/utils/push_notification.dart';
 import 'package:study_buds/utils/static_env.dart';
-import 'package:http/http.dart' as http;
 
 class AuthUtils {
   static final _storage = FlutterSecureStorage();
@@ -21,6 +21,7 @@ class AuthUtils {
         await _storage.write(key: 'session_token', value: token);
         // Token is saved, Push the home page, (Go to home page)
         Navigator.pushReplacementNamed(context, '/home');
+        PushNotificationService.instance.sendNotificationTokenToServer();
       } else {
         // Show error
         _showError(context, 'Authentication Failed: Token not received');
