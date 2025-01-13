@@ -42,8 +42,7 @@ router.get("/", passport.authenticate("saml"));
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 router.post("/", passport.authenticate("saml", { session: false }), (req: Request, res: Response) => {
-    const user=validateInt(req,"user");
-    const token = generateToken(user);
+    const token = generateToken(req.user);
     // res.redirect(`myapp://auth?token=${token}`);
     res.send(`
         <!DOCTYPE html>

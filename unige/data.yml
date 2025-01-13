@@ -75,11 +75,11 @@ students:
           - NETWORK ANALYSIS
           - DATA WAREHOUSING
           - CAPSTONE
-    - id: 4346002
+    - id: 12
       first_name: Shelby
       last_name: Bolton
       email: S4346002.@studenti.unige.it
-      password: X8Yqwf
+      password: 12
       gpa: 27
       study_plan:
           - COMPUTATIONAL NEUROENGINEERING
@@ -112,11 +112,11 @@ students:
           - DISTRIBUTED COMPUTING
       courses:
           - MACHINE LEARNING
-    - id: 4493407
+    - id: 42674
       first_name: Lori
       last_name: Hernandez
       email: S4493407.@studenti.unige.it
-      password: 2jVw8K
+      password: 42674
       gpa: 25
       study_plan:
           - VIRTUALIZATION AND CLOUD COMPUTING
@@ -142,11 +142,11 @@ students:
       courses:
           - DATA VISUALIZATION
           - ADVANCED DATA MANAGEMENT
-    - id: 4739268
+    - id: 42675
       first_name: Cynthia
       last_name: Cooper
       email: S4739268.@studenti.unige.it
-      password: l7ShK2
+      password: 42675
       gpa: 23
       study_plan:
           - MULTIAGENT SYSTEMS
