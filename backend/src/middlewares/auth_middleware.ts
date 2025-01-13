@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import assert from 'node:assert';
-import { JWT_SECRET } from '../config/secrets';
 import { BadRequestError, getErrorMessage, UnhautorizedError } from '../utils/api_error';
 import { validateInt } from '../utils/validation_error';
+import { JWT_SECRET } from '../config/jwt';
 
 
 export default function authMiddleware(req: Request, res: Response, next: NextFunction){

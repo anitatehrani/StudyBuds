@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
 import { initData, initDB } from "../../../test/utils/mock-data";
 import axios from "axios";
-import { BACKEND_URL } from "./utils";
 import { Student } from "../../src/models/Student";
 import { StudentGroup } from "../../src/models/StudentGroup";
 import { GroupMembers } from "../../src/models/GroupMembers";
+import { BACKEND_URL, getToken } from "./utils";
 
 test("empty", async () => {
   initData();
@@ -12,7 +12,7 @@ test("empty", async () => {
   await initDB([student]);
   const expected = { joinedGroups: [], ownedGroups: [] };
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups/${student.studentId}`)
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student.studentId)}`}})
   ).data;
   expect(actual).toEqual(expected);
 });
@@ -68,7 +68,7 @@ test("data", async () => {
     ],
   };
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups/${student1.studentId}`)
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student1.studentId)}`}})
   ).data;
   expect(actual).toEqual(expected);
 });
@@ -124,7 +124,7 @@ test("data2", async () => {
     ],
   };
   const actual = (
-    await axios.get(`${BACKEND_URL}/groups/joined_groups/${student2.studentId}`)
+    await axios.get(`${BACKEND_URL}/groups/joined_groups`,{headers:{Authorization:`Bearer ${getToken(student2.studentId)}`}})
   ).data;
   expect(actual).toEqual(expected);
 });
