@@ -13,12 +13,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Initialize Push Notifications
-  PushNotificationService.instance.retrievePushNotificationToken();
+    // Initialize Push Notifications
+    PushNotificationService.instance.retrievePushNotificationToken();
 
   // Check if the user is authenticated
   final isAuthenticated = await AuthUtils.isAuthenticated();
-
   runApp(MyApp(isAuthenticated: isAuthenticated));
 }
 

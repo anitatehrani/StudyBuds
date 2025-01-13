@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:study_buds/network/request/update_firebase_token.dart';
 import 'package:study_buds/utils/shared_preference_helper.dart';
 
 class PushNotificationService {
@@ -56,8 +57,8 @@ class PushNotificationService {
       return;
 
     // TODO: send update notification token request
-    // var response = await UpdateNotificationTokenRequest(token: token).send();
-    var response;
+    var response = await UpdateFirebaseToken(token).send();
+    // var response;
     if(response.statusCode == 200)
       print("TOKEN SAVED");
   }

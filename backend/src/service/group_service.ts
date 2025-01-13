@@ -85,9 +85,9 @@ export async function basicSearch(
       jr.status AS "requestStatus"
     FROM
       studybuds.student_group sg
-    JOIN
+    LEFT JOIN
       studybuds.group_members gm ON sg.id = gm.group_id
-    JOIN
+    LEFT JOIN
       studybuds.join_request jr ON sg.id = jr.group_id AND jr.student_id = :studentId
     WHERE
       sg.name ILIKE :searchText
