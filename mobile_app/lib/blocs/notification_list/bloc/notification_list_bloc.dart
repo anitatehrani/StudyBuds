@@ -26,9 +26,15 @@ class NotificationListBloc
 
           List<NotificationModel> receivedList = [];
           List<NotificationModel> responseList = [];
-          if (result != null) {
-            receivedList = result.where((notification) => notification.notificationType == 'join_request').toList();
-            responseList = result.where((notification) => notification.notificationType != 'join_request').toList();
+          if (result.isNotEmpty) {
+            receivedList = result
+                .where((notification) =>
+                    notification.notificationType == 'join_request')
+                .toList();
+            responseList = result
+                .where((notification) =>
+                    notification.notificationType != 'join_request')
+                .toList();
           }
           emit(NotificationListSuccess(receivedList, responseList));
         }
