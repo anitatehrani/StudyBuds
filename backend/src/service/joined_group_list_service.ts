@@ -20,6 +20,7 @@ async function getAllJoinedGroupList(
       "course",
       "isPublic",
       "adminId",
+      "telegramLink",
       [
         literal(`CAST((
           SELECT COUNT(*)
