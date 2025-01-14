@@ -12,6 +12,8 @@ class Group {
   final int membersCount;
   final List<Student>? members;
   final String joinRequestStatus;
+  final bool isGroupAdmin;
+  final bool isGroupMember;
 
   Group({
     this.id,
@@ -25,6 +27,8 @@ class Group {
     this.membersCount = 1,
     this.joinRequestStatus = '',
     required this.members,
+    this.isGroupAdmin = false,
+    this.isGroupMember = false,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) {
@@ -39,6 +43,8 @@ class Group {
       joinRequestStatus: json['requestStatus'] ?? '',
       membersLimit: json['membersLimit'],
       membersCount: json['membersCount'],
+      isGroupAdmin: json['isGroupAdmin'] ?? false,
+      isGroupMember: json['isGroupMember'] ?? false,
       members: json['members'] != null
           ? (json['members'] as List<dynamic>)
               .map((member) => Student.fromJson(member))
