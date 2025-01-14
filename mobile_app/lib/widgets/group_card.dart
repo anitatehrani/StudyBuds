@@ -204,7 +204,6 @@ class GroupCard extends StatelessWidget {
                         if (additionalButtonLabel != "Delete the group")
                           CustomFilledButton(
                             key: Key('join_button_${group.id}'),
-                            isEnabled: group.joinRequestStatus == '',
                             label: buttonLabel != null
                                 ? buttonLabel!
                                 : (group.joinRequestStatus != ''
@@ -214,6 +213,8 @@ class GroupCard extends StatelessWidget {
                                         : 'Send a join request')),
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
+                            isEnabled: buttonLabel != "pending" ||
+                                group.joinRequestStatus == '',
                             onPressed: () {
                               context.read<JoinGroupBloc>().add(
                                     JoinGroupRequestEvent(group.id ?? 0),
