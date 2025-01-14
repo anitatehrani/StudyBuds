@@ -13,18 +13,19 @@ class Group {
   final List<Student>? members;
   final String joinRequestStatus;
 
-  Group(
-      {this.id,
-      required this.name,
-      required this.description,
-      required this.course,
-      required this.isPublic,
-      required this.telegramLink,
-      required this.ownerId,
-      required this.membersLimit,
-      this.membersCount = 1,
-      this.joinRequestStatus = '',
-      required this.members});
+  Group({
+    this.id,
+    required this.name,
+    required this.description,
+    required this.course,
+    required this.isPublic,
+    required this.telegramLink,
+    required this.ownerId,
+    required this.membersLimit,
+    this.membersCount = 1,
+    this.joinRequestStatus = '',
+    required this.members,
+  });
 
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
@@ -33,7 +34,7 @@ class Group {
       description: json['description'] ?? '',
       course: json['course'] ?? '',
       isPublic: json['isPublic'],
-      telegramLink: json['telegramLink'] ?? '',
+      telegramLink: json['telegramLink'],
       ownerId: json['ownerId'],
       joinRequestStatus: json['requestStatus'] ?? '',
       membersLimit: json['membersLimit'],

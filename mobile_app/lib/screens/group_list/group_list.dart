@@ -84,28 +84,29 @@ class GroupListTab extends StatelessWidget {
               itemBuilder: (context, index) {
                 final group = groups[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 2.0, horizontal: 16.0),
-                  // Add vertical and horizontal padding
-                  child: MultiProvider(
-                  providers: [
-                    Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
-                    Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc())],
-                    child: GroupCard(
-                      backgroundColor: Colors.white,
-                      buttonLabel: isJoinedScreen
-                          ? "Leave the group"
-                          : "Change settings",
-                      additionalButtonLabel:
-                          isJoinedScreen ? "See more" : "Delete the group",
-                      additionalButtonColor: isJoinedScreen
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.red,
-                      group: group,
-                      index: index,
-                    ),
-                  )
-                  );
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 2.0, horizontal: 16.0),
+                    // Add vertical and horizontal padding
+                    child: MultiProvider(
+                      providers: [
+                        Provider<GroupDetailsBloc>(
+                            create: (_) => GroupDetailsBloc()),
+                        Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc())
+                      ],
+                      child: GroupCard(
+                        backgroundColor: Colors.white,
+                        buttonLabel: isJoinedScreen
+                            ? "Leave the group"
+                            : "Change settings",
+                        additionalButtonLabel:
+                            isJoinedScreen ? "See more" : "Delete the group",
+                        additionalButtonColor: isJoinedScreen
+                            ? Theme.of(context).colorScheme.primary
+                            : Colors.red,
+                        group: group,
+                        index: index,
+                      ),
+                    ));
               },
             )
           : Padding(
