@@ -54,6 +54,7 @@ test("data", async () => {
     name: "CP",
     gpa: 0,
     course: "Capstone",
+    telegramLink: "https://t.me/joinrequest",
     adminId: student1.studentId,
   });
   const group2 = new StudentGroup({
@@ -61,6 +62,7 @@ test("data", async () => {
     name: "CP2",
     gpa: 0,
     course: "Capstone",
+    telegramLink: "https://t.me/joinrequest2",
     adminId: student2.studentId,
   });
   await initDB([
@@ -80,6 +82,7 @@ test("data", async () => {
         name: group1.name,
         description: null,
         course: group1.course,
+        telegramLink: group1.telegramLink,
         isPublic: true,
         membersCount: 2,
       },
@@ -90,6 +93,7 @@ test("data", async () => {
         name: group2.name,
         description: null,
         course: group2.course,
+        telegramLink: group2.telegramLink,
         isPublic: true,
         membersCount: 2,
       },
@@ -113,6 +117,7 @@ test("data2", async () => {
     name: "CP",
     gpa: 0,
     course: "Capstone",
+    telegramLink: "https://t.me/joinrequest",
     adminId: student1.studentId,
   });
   const group2 = new StudentGroup({
@@ -120,6 +125,7 @@ test("data2", async () => {
     name: "CP2",
     gpa: 0,
     course: "Capstone",
+    telegramLink: "https://t.me/joinrequest2",
     adminId: student2.studentId,
   });
   await initDB([
@@ -139,6 +145,7 @@ test("data2", async () => {
         name: group2.name,
         description: null,
         course: group2.course,
+        telegramLink: group2.telegramLink,
         isPublic: true,
         membersCount: 2,
       },
@@ -149,6 +156,7 @@ test("data2", async () => {
         name: group1.name,
         description: null,
         course: group1.course,
+        telegramLink: group1.telegramLink,
         isPublic: true,
         membersCount: 2,
       },

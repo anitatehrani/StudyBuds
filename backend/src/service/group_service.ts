@@ -81,8 +81,10 @@ export async function basicSearch(
       sg.description,
       sg.is_public AS "isPublic",
       sg.course,
+      sg.telegram_link AS "telegramLink",
       CAST(COUNT(gm.student_id) AS INTEGER) AS "membersCount",
-      jr.status AS "requestStatus"
+      jr.status AS "requestStatus",
+      BOOL_OR(gm.student_id = :studentId) AS "hasJoined"
     FROM
       studybuds.student_group sg
     LEFT JOIN
@@ -99,6 +101,7 @@ export async function basicSearch(
       sg.description,
       sg.is_public,
       sg.course,
+      sg.telegram_link,
       jr.status
     ORDER BY
       "membersCount" DESC;
@@ -107,6 +110,12 @@ export async function basicSearch(
     const results = await sequelize.query<SearchResult>(query, {
       replacements: { searchText, studentId },
       type: QueryTypes.SELECT,
+    });
+    results.forEach(element => {
+      if (!element.hasJoined){
+        delete element.telegramLink;
+      }
+      delete element.hasJoined;
     });
     return results;
   } catch (error) {
