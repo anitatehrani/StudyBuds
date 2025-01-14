@@ -13,7 +13,6 @@ Scenario: Empty State When No Groups Exist
     Given I do the login as "10" "10"
     When I navigate to the "Joined group" tab
     Then a message appears telling "No groups found."
-    And I type "gaoghofdu" in the search bar
     And I go to the "profile" page
     And I do the logout
 
