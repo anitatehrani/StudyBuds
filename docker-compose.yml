@@ -118,9 +118,6 @@ services:
         entrypoint: migrate -database ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}?sslmode=disable -path migrations
         command: up
         read_only: true
-        depends_on:
-            postgres:
-                condition: service_started
 
     backend:
         build: ./backend
