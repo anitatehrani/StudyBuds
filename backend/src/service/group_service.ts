@@ -2,7 +2,7 @@ import { QueryTypes } from "sequelize";
 import sequelize from "../config/database";
 import { StudentGroup } from "../models/StudentGroup";
 import { getErrorMessage } from "../utils/api_error";
-import { getCurrentMemberCount } from "./group_member";
+import {getCurrentMemberCount, getCurrentMemberList} from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
 import UnigeService from "./unige_service";
@@ -14,6 +14,8 @@ interface GroupData {
   isPublic: boolean;
   membersLimit: number;
   telegramLink?: string;
+  isGroupAdmin?: boolean;
+  isGroupMember?: boolean;
   adminId: number; // Maps studentId to adminId
 }
 
@@ -62,6 +64,7 @@ interface SearchResult {
   course: string;
   membersCount: number;
   requestStatus: string | null;
+  isGroupAdmin: boolean;
 }
 
 export interface PopularityResult {
@@ -84,7 +87,20 @@ export async function basicSearch(
       sg.telegram_link AS "telegramLink",
       CAST(COUNT(gm.student_id) AS INTEGER) AS "membersCount",
       jr.status AS "requestStatus",
-      BOOL_OR(gm.student_id = :studentId) AS "hasJoined"
+      BOOL_OR(gm.student_id = :studentId) AS "hasJoined",
+      CASE
+        WHEN sg.admin_id = :studentId THEN true
+        ELSE false
+        END AS "isGroupAdmin",
+      CASE
+        WHEN EXISTS (
+          SELECT 1
+          FROM studybuds.group_members gm_sub
+          WHERE gm_sub.group_id = sg.id
+            AND gm_sub.student_id = :studentId
+        ) THEN true
+        ELSE false
+        END AS "isGroupMember"
     FROM
       studybuds.student_group sg
     LEFT JOIN
@@ -182,6 +198,9 @@ export async function getSuggestedGroups(
         getJoinRequestByGroupId(studentId, group_id)
       ]);
 
+      const isGroupAdmin = group.adminId === studentId;
+      const isGroupMember = (await getCurrentMemberList(group_id)).some(member => member === studentId);
+
       return {
         id: group.id,
         name: group.name,
@@ -189,6 +208,8 @@ export async function getSuggestedGroups(
         isPublic: group.isPublic,
         course: group.course,
         membersCount: memberCount,
+        isGroupAdmin: isGroupAdmin,
+        isGroupMember: isGroupMember,
       };
     })
   );
