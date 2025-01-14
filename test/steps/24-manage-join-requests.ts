@@ -7,7 +7,7 @@ import {
     getText,
     go_to_page,
     waitForElement,
-    login_guest,
+    login,
 } from "../utils/utils";
 import { driver } from "./all";
 import {initDB} from "../utils/mock-data.ts";
@@ -34,10 +34,6 @@ Before({tags: "@manage-join-requests"},async function () {
         new JoinRequest({id:joinRequestId,groupId:group1,studentId:student1,status:"pending"}),
         new Notification({id:1,studentId:student,joinRequestId:joinRequestId,notificationType:"join_request",message:"Nona has requested to join the Capstone project"}),
     ])
-});
-
-Given("I am logged in", async function () {
-    await login_guest(driver);
 });
 
 Given("I am a SuperStudent of a group", async function () {});

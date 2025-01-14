@@ -2,7 +2,7 @@ Feature: Basic group search
 
 @basic-group-search
 Scenario: Search for some groups
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     When I go to the "search" page
     When I type "adm" in the search bar (case-insensitive)
     Then I see all groups where "adm" is inside their group name
@@ -11,7 +11,7 @@ Scenario: Search for some groups
 
 @basic-group-search
 Scenario: Search returns no results
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     When I go to the "search" page
     When I type "orange" in the search bar (case-insensitive)
     And no groups contain "orange" in their name

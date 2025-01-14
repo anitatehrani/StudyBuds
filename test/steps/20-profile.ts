@@ -7,7 +7,6 @@ import {
     go_to_page,
     UiId,
     waitForElementByValue,
-    login_guest,
 } from "../utils/utils";
 import { driver } from "./all";
 import {initDB} from "../utils/mock-data.ts";
@@ -23,10 +22,6 @@ Before({tags: "@profile"},async function () {
     ])
 });
 
-
-Given("I do the login as guest", async () => {
-    await login_guest(driver);
-});
 
 Then(
     "I see my {string} {string}",

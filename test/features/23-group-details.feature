@@ -2,7 +2,7 @@ Feature: Group details
 
 @group-details
 Scenario: Open group description
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     When I go to the "search" page
     And I type "Capstone" in the search bar
     Then I see all groups where "Capstone" is inside their group name or course

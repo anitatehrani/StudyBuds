@@ -1,6 +1,6 @@
 import {After, Before, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
 import { remote } from "webdriverio";
-import { do_logout, go_to_page, BottomBarIcon } from "../utils/utils";
+import { do_logout, go_to_page, BottomBarIcon, clearChromeCacheFlutterCompatible } from "../utils/utils";
 import {initData} from "../utils/mock-data.ts";
 
 //DOCS:
@@ -45,6 +45,7 @@ Before(async function () {
     driver = await remote(opts);
     driver.implicitWait(5_000);
     await driver.switchContext("FLUTTER");
+    await clearChromeCacheFlutterCompatible();
 });
 
 BeforeAll(function(){

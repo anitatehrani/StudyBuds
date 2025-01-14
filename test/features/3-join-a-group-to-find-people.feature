@@ -2,7 +2,7 @@ Feature: Join a group to find people
 
 @join-a-group-to-find-people
 Scenario: Duplicate join request
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I go to the "search" page
     And I type "aya" in the search bar                                
     And I already have sent a join request to the group

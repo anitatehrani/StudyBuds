@@ -1,5 +1,5 @@
 import { byValueKey, byText } from "appium-flutter-finder";
-import { BottomBarIcon, go_to_page, login_guest, UiId } from "./../utils/utils";
+import { BottomBarIcon, go_to_page, UiId } from "./../utils/utils";
 import { Given, When, Then, Before } from "@cucumber/cucumber";
 import { driver } from "./all";
 import { do_logout } from "../utils/utils";
@@ -24,7 +24,6 @@ Given("I am on the home page not logged in", async () => {
 });
 
 When("I click on the login button", async () => {
-    //login_guest(driver);
     const loginButton = byValueKey("login_button");
     await driver.elementClick(loginButton);
 });

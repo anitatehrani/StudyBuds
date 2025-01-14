@@ -115,11 +115,6 @@ export async function waitForElement(driver: WebdriverIO.Browser, key: Key) {
     await driver.execute("flutter:waitFor", element);
 }
 
-export async function login_guest(driver: WebdriverIO.Browser) {
-    const guestButton = byValueKey("guest_button");
-    await driver.elementClick(guestButton);
-}
-
 export async function login(driver: WebdriverIO.Browser, username: string, password: string) {
     // Switch to the WebView context
     console.log("Getting available contexts...");
