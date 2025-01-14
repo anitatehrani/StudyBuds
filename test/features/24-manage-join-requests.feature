@@ -2,7 +2,7 @@ Feature: Manage join requests
 
 @manage-join-requests
 Scenario: See join request
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I am a SuperStudent of a group
     And a student sends a join request to that group
     When I go to the "notifications" page
@@ -12,7 +12,7 @@ Scenario: See join request
 
 @manage-join-requests
 Scenario: Accept join request
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I am a SuperStudent of a group
     And a student sends a join request to that group
     When I go to the "notifications" page
@@ -25,7 +25,7 @@ Scenario: Accept join request
 
 @manage-join-requests
 Scenario: Refuse join request
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I am a SuperStudent of a group
     And a student sends a join request to that group
     When I go to the "notifications" page

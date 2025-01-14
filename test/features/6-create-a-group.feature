@@ -2,7 +2,7 @@ Feature: Create a group
 
 @create-a-group
 Scenario: Group creation
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I go to the "group creation" page
     When I fill out the "group name" with "amirparsa"
     And I fill out the "description" with "A group for capstone project collaboration"
@@ -17,7 +17,7 @@ Scenario: Group creation
 
 @create-a-group
 Scenario: Validation for required fields
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I go to the "group creation" page
     When The student attempts to create a group without filling in one or more required fields
     Then The system displays an error message prompting the student to complete all required fields
@@ -26,7 +26,7 @@ Scenario: Validation for required fields
 
 @create-a-group
 Scenario: Telegram account is not linked
-    Given I do the login as guest
+    Given I do the login as "10" "10"
     And I go to the "profile" page
     And A telegram account has not been linked
     And I go to the "group creation" page
