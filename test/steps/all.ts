@@ -1,4 +1,4 @@
-import {After, Before, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
+import {After, AfterAll, Before, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
 import { remote } from "webdriverio";
 import { do_logout, go_to_page, BottomBarIcon, clearChromeCacheFlutterCompatible } from "../utils/utils";
 import {initData} from "../utils/mock-data.ts";
@@ -41,19 +41,33 @@ const SECONDS_TIMEOUT = 30_000; // 30 seconds
 export let driver: WebdriverIO.Browser;
 setDefaultTimeout(SECONDS_TIMEOUT);
 
-Before(async function () {
-    driver = await remote(opts);
-    driver.implicitWait(5_000);
-    await driver.switchContext("FLUTTER");
-    await clearChromeCacheFlutterCompatible();
-});
-
 BeforeAll(function(){
   return initData();
 });
 
-After(async function () {
-    if (driver) {
-        await driver.deleteSession();
-    }
-});
+if(process.env.FAST==="yes"){
+    BeforeAll(async function () {
+        driver = await remote(opts);
+        driver.implicitWait(5_000);
+        await driver.switchContext("FLUTTER");
+        await clearChromeCacheFlutterCompatible();
+    });
+    AfterAll(async function () {
+        if (driver) {
+            await driver.deleteSession();
+        }
+    });
+}
+else{
+    Before(async function () {
+        driver = await remote(opts);
+        driver.implicitWait(5_000);
+        await driver.switchContext("FLUTTER");
+        await clearChromeCacheFlutterCompatible();
+    });
+    After(async function () {
+        if (driver) {
+            await driver.deleteSession();
+        }
+    });
+}
