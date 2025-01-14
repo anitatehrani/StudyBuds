@@ -16,14 +16,15 @@ class GroupCard extends StatelessWidget {
   final Color? additionalButtonColor;
   final String additionalButtonLabel;
 
-  const GroupCard(
-      {super.key,
-      required this.group,
-      required this.index,
-      this.backgroundColor,
-      this.buttonLabel,
-      this.additionalButtonColor,
-      this.additionalButtonLabel = "See more"});
+  const GroupCard({
+    super.key,
+    required this.group,
+    required this.index,
+    this.backgroundColor,
+    this.buttonLabel,
+    this.additionalButtonColor,
+    this.additionalButtonLabel = "See more",
+  });
 
   showGroupDetails(BuildContext context) {
     final groupDetailsBloc = context.read<GroupDetailsBloc>();
@@ -205,12 +206,12 @@ class GroupCard extends StatelessWidget {
                             key: Key('join_button_${group.id}'),
                             isEnabled: group.joinRequestStatus == '',
                             label: buttonLabel != null
-                              ? buttonLabel!
-                              : ( group.joinRequestStatus != ''
-                                ? group.joinRequestStatus!
-                                : (group.isPublic
-                                  ? 'Join the group'
-                                  : 'Send a join request')),
+                                ? buttonLabel!
+                                : (group.joinRequestStatus != ''
+                                    ? group.joinRequestStatus!
+                                    : (group.isPublic
+                                        ? 'Join the group'
+                                        : 'Send a join request')),
                             backgroundColor:
                                 Theme.of(context).colorScheme.primary,
                             onPressed: () {

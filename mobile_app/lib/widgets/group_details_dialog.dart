@@ -171,7 +171,7 @@ class GroupDetailsDialog extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 12),
-              if (group.isPublic) ...[
+              if (group.telegramLink != null) ...[
                 Text(
                   'Telegram Link ',
                   style: TextStyle(

@@ -27,6 +27,7 @@ async function main() {
       membersLimit: 100,
       isPublic: false,
       gpa: 18,
+      telegramLink: "https://t.me/joinrequest",
     }),
     new GroupMembers({ studentId: student, groupId: group1 }),
     new Student({ studentId: student1, telegramAccount: 37 }),
@@ -54,8 +55,10 @@ async function main() {
       membersLimit: 10,
       isPublic: false,
       gpa: 20,
+      telegramLink: "https://t.me/joinrequest",
     }),
     new GroupMembers({ studentId: student2, groupId: group2 }),
+    new GroupMembers({ studentId: student, groupId: group2 }),
     new StudentGroup({
       id: group3,
       name: "groupof10",
@@ -65,6 +68,7 @@ async function main() {
       membersLimit: 100,
       isPublic: false,
       gpa: 18,
+      telegramLink: "https://t.me/joinrequest",
     }),
     new GroupMembers({ studentId: student2, groupId: group3 }),
     new GroupMembers({ studentId: student, groupId: group3 }),
@@ -77,9 +81,11 @@ async function main() {
       membersLimit: 10,
       isPublic: false,
       gpa: 18,
+      telegramLink: "https://t.me/joinrequest",
     }),
     new GroupMembers({ studentId: student1, groupId: group4 }),
   ]);
+
 }
 
 main().catch(console.error);
