@@ -26,24 +26,18 @@ class NotificationPopup extends StatelessWidget {
         if (state is JoinRequestLoading) {
           // do nothing
         } else if (state is JoinRequestSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(ScaffoldMessenger.maybeOf(context)!.context)
+              .showSnackBar(
             SnackBar(
                 content: Text(key: Key("success_toast"), state.message),
                 backgroundColor: Colors.green),
           );
           listChanged.call();
         } else if (state is JoinRequestFailed) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(ScaffoldMessenger.maybeOf(context)!.context)
+              .showSnackBar(
             SnackBar(
                 content: Text(key: Key("fail_toast"), state.error),
-                backgroundColor: Colors.red),
-          );
-          listChanged.call();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text(
-                    "Impossible Error BUG - Failed to change join request status."),
                 backgroundColor: Colors.red),
           );
           listChanged.call();
