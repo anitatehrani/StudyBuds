@@ -1,4 +1,3 @@
-import { exec } from 'child_process';
 import { When, Then, Before } from "@cucumber/cucumber";
 import assert from "assert";
 import { byValueKey } from "appium-flutter-finder"; // Adjust imports as necessary
