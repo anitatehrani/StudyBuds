@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS notification (
     student_id integer NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
     join_request_id integer NOT NULL REFERENCES join_request(id) ON UPDATE CASCADE,
     notification_type notification_type NOT NULL,
-    message varchar(50) NOT NULL,
+    message varchar(100) NOT NULL,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
