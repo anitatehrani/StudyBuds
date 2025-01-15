@@ -39,7 +39,7 @@ async function main() {
         }),
 
         new Notification({
-            id: 1,
+            id: 100,
             studentId: student,
             joinRequestId: joinRequestId,
             notificationType: "join_request",
@@ -99,14 +99,14 @@ async function main() {
             status: "pending",
         }),
         new Notification({
-            id: 2,
+            id: 102,
             studentId: student,
             joinRequestId: 12,
             notificationType: "join_request",
             message: "Nona2 has requested to join the Capstone project",
         }),
         new Notification({
-            id: 3,
+            id: 103,
             studentId: student,
             joinRequestId: 13,
             notificationType: "join_request",
@@ -144,7 +144,7 @@ async function main() {
         }),
 
         new Notification({
-            id: 4,
+            id: 104,
             studentId: student,
             joinRequestId: 14,
             notificationType: "join_request",
@@ -152,7 +152,7 @@ async function main() {
         }),
 
         new Notification({
-            id: 5,
+            id: 105,
             studentId: student,
             joinRequestId: 15,
             notificationType: "join_request",
@@ -160,7 +160,7 @@ async function main() {
         }),
 
         new Notification({
-            id: 6,
+            id: 106,
             studentId: student,
             joinRequestId: 16,
             notificationType: "join_request",
@@ -168,7 +168,7 @@ async function main() {
         }),
 
         new Notification({
-            id: 7,
+            id: 107,
             studentId: student,
             joinRequestId: 17,
             notificationType: "join_request",

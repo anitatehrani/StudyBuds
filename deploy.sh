@@ -8,4 +8,4 @@ docker compose up -d caddy duckdns
 docker compose up -d --build backend unigelogin unigeapi postgres
 docker compose run --rm migration
 docker compose run --rm --build database-data
-docker system prune -af
+# docker system prune -af
