@@ -1,8 +1,10 @@
 import { Request } from 'express';
 import { getStudentId } from '../middlewares/auth_middleware';
 import { Notification } from '../models/Notification';
+import { Student } from '../models/Student';
 import { getStudentFirebaseToken, saveFbToken, updateFbToken } from '../service/firebase_token_service';
 import { getStudentNotifications, testNotification } from '../service/notification_service';
+import { getStudentById } from '../service/student_service';
 import { checkString } from '../utils/validation_error';
 
 
@@ -26,6 +28,13 @@ export async function saveToken(req: Request) {
     const fbTokenModel = await getStudentFirebaseToken(studentId);
 
     if (fbTokenModel === null) {
+        let student = await getStudentById(studentId);
+        if (student === null){
+            student = await Student.create({
+                    studentId: studentId
+                });
+            student.save();
+        }
         await saveFbToken(studentId, token);
         console.log('done');
         return { message: "Successfully saved the student's Firebase token" };

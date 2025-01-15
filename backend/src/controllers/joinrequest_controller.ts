@@ -118,7 +118,10 @@ export async function changeJoinRequestStatus(req: Request) {
         console.log('The group is already reached the limit of members')
         throw new ValidationError('The group is already reached the limit of members');
     }
+
+    const studentId = joinRequest.studentId;
     await updateJoinRequestStatus(joinRequestId, NotificationType.ACCEPT)
+    await joinGroup(studentId, groupId);
     if (fbToken === null)
         console.log('Could not find the firebase token of requested student');
     else
