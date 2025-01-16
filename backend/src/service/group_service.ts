@@ -1,4 +1,4 @@
-import { QueryTypes } from "sequelize";
+import { Op, QueryTypes, Sequelize } from "sequelize";
 import sequelize from "../config/database";
 import { StudentGroup } from "../models/StudentGroup";
 import { getErrorMessage } from "../utils/api_error";
@@ -6,6 +6,7 @@ import {getCurrentMemberCount, getCurrentMemberList} from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
 import UnigeService from "./unige_service";
+import { GroupMembers } from "../models/GroupMembers";
 
 interface GroupData {
   name: string;
@@ -155,6 +156,7 @@ export async function getSuggestedGroups(
   const POPULARITY_WEIGHT = 0.2;
   const FRIENDS_WEIGHT = 0.5;
   const GPA_WEIGHT = 0.3;
+  const COURSES_WEIGHT=1;
 
   const score: Map<number, number> = new Map();
 
@@ -177,9 +179,17 @@ export async function getSuggestedGroups(
   ]);
 
   // Initialize the score for each group to 0
-  courses.forEach(group => score.set(group.id, 0));
+  const query=`select * from studybuds.student_group where (id NOT IN (
+    SELECT student_group.id FROM studybuds.student_group
+    JOIN studybuds.group_members ON group_members.group_id=student_group.id
+    WHERE group_members.student_id = '${studentId}'
+  ))`
+  const groups=await sequelize.query<StudentGroup>(query,{type: QueryTypes.SELECT});
+  console.log("ALL GROUPS FOUND",groups);
+  groups.forEach(group => score.set(group.id, 0));
 
   // Assign points to each group based on the order in the list
+  assignPoints(courses,COURSES_WEIGHT);
   assignPoints(popularity, POPULARITY_WEIGHT);
   assignPoints(friends, FRIENDS_WEIGHT);
   assignPoints(gpa, GPA_WEIGHT);
@@ -190,7 +200,7 @@ export async function getSuggestedGroups(
   // Return the top HOW_MANY groups
   const res: SearchResult[] = await Promise.all(
     ordered_scores.slice(0, HOW_MANY).map(async ([group_id]) => {
-      const group = courses.find(group => group.id === group_id);
+      const group = groups.find(group => group.id === group_id);
       if (!group) throw new Error(`Group with id ${group_id} not found`);
 
       const [memberCount, status] = await Promise.all([
@@ -205,7 +215,7 @@ export async function getSuggestedGroups(
         id: group.id,
         name: group.name,
         description: group.description,
-        isPublic: group.isPublic,
+        isPublic: group.is_public,
         course: group.course,
         membersCount: memberCount,
         isGroupAdmin: isGroupAdmin,

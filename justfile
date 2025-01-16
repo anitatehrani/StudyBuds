@@ -8,6 +8,9 @@ restart-backend:
     BACKEND_CALLBACK="http://{{ip}}:5000/login/" IDP_ENTRYPOINT="http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php" docker compose up --build -d --force-recreate backend postgres
     docker compose run --rm --build database-data
 
+backend:
+    BACKEND_CALLBACK="http://{{ip}}:5000/login/" IDP_ENTRYPOINT="http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php" docker compose up --build -d backend
+
 checkout branch: (switch-branch branch) restart-backend run-apk
 
 run-apk:
