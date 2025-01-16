@@ -32,6 +32,6 @@ When("I click on the confirm button", async function () {
 Then("I should be logged out and be redirected to the login screen", async function () {
     await clearChromeCacheFlutterCompatible();
 
-    await waitForElementByValue(driver, 'Continue as a guest');
+    await waitForElementByValue(driver, 'Login using UniGe credentials');
 
 });
