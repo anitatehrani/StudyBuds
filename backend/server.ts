@@ -7,7 +7,9 @@ import { errorHandler } from './src/middlewares/error_handler';
 import { initModels } from './src/models/init-models';
 import { loginRouter, router } from './src/routes/index';
 import { getErrorMessage } from './src/utils/api_error';
+import {getJoinLink} from './src/telegram/main';
 
+console.log(getJoinLink)
 
 const app = express();
 
