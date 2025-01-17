@@ -133,6 +133,7 @@ services:
             UNIGEAPI_URL: ${UNIGEAPI_URL:-http://unigeapi:8000}
             ENTITY_ID: saml-poc
             FB_PKEY: ${FB_PKEY:-test}
+            TELEGRAM_TOKEN: ${TELEGRAM_TOKEN:-changeme}
         depends_on:
             - unigeapi
             - unigelogin

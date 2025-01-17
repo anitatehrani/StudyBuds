@@ -5,6 +5,8 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   { files: ["**/*.{js,mjs,cjs,ts}"] },
   { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
   {
     rules: {
       "@typescript-eslint/no-non-null-assertion": "error",
@@ -23,10 +25,9 @@ export default tseslint.config(
         "error",
         { ignoreRestSiblings: true },
       ],
+      "@typescript-eslint/no-misused-promises":"off"
     },
   },
-  pluginJs.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
   {
     languageOptions: {
       parserOptions: {
