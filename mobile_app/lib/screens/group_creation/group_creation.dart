@@ -69,10 +69,16 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                 }
               },
               builder: (context, state) {
+                bool isTelegramIdCheckPassed = false;
                 if (state.isLoading) {
                   return const Center(
                       child: CircularProgressIndicator(
                           key: Key('loading_indicator')));
+                } else if (state is TelegramIdCheckPassed) {
+                  isTelegramIdCheckPassed = true;
+                  context
+                      .read<GroupCreationBloc>()
+                      .add(FetchCoursesListEvent());
                 }
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -81,6 +87,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextField(
+                          enabled: isTelegramIdCheckPassed,
                           controller: nameController,
                           decoration: InputDecoration(
                               labelText: 'Name',
@@ -103,6 +110,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: isTelegramIdCheckPassed,
                           controller: descriptionController,
                           maxLines: 3,
                           decoration: const InputDecoration(
@@ -130,6 +138,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         DropdownSearch<String>(
+                          enabled: isTelegramIdCheckPassed,
                           items: (filter, loadProps) => state.courses,
                           // items: state.courses,
                           selectedItem: selectedCourse,
@@ -156,6 +165,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: isTelegramIdCheckPassed,
                           controller: membersLimitController,
                           decoration: InputDecoration(
                             labelText: 'Members Limit',
@@ -182,6 +192,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: isTelegramIdCheckPassed,
                           controller: telegramLinkController,
                           decoration: InputDecoration(
                             labelText: 'Telegram Group Link',
@@ -217,17 +228,20 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             Switch(
                               value: isPrivateGroup,
                               key: Key('is_private_group_switch'),
-                              onChanged: (value) {
-                                setState(() {
-                                  isPrivateGroup = value;
-                                });
-                              },
+                              onChanged: isTelegramIdCheckPassed
+                                  ? (value) {
+                                      setState(() {
+                                        isPrivateGroup = value;
+                                      });
+                                    }
+                                  : null,
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                         Center(
                           child: CustomFilledButton(
+                            isEnabled: isTelegramIdCheckPassed,
                             label: 'Create the study group',
                             key: Key('create_group_button'),
                             iconData: Icons.add,
