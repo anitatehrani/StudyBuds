@@ -37,10 +37,20 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
           foregroundColor: Theme.of(context).primaryColor,
         ),
         body: BlocProvider(
-          create: (_) => GroupCreationBloc()..add(FetchCoursesListEvent()),
+          create: (_) => GroupCreationBloc()..add(TelegramIdCheckEvent()),
           child: Scaffold(
             body: BlocConsumer<GroupCreationBloc, GroupCreationState>(
               listener: (context, state) {
+                if (state is TelegramIdCheckNotPassed) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text(
+                          "telegram id check not passed",
+                          key: Key('success_snackbar'),
+                        ),
+                        backgroundColor: Colors.green),
+                  );
+                }
                 if (state is GroupCreationSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -230,9 +240,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                         description: descriptionController.text,
                                         course: selectedCourse,
                                         membersLimit: membersLimitController
-                                            .text.isNotEmpty
+                                                .text.isNotEmpty
                                             ? int.parse(
-                                            membersLimitController.text)
+                                                membersLimitController.text)
                                             : 2,
                                         members: [],
                                         telegramLink:

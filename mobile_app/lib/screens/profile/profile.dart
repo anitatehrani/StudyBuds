@@ -52,7 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (state is ProfileLoaded) {
               setState(() {
                 student = state.student;
-                telegramController.text = (student!.telegramId??"").toString();
+                telegramController.text =
+                    (student!.telegramId ?? "").toString();
               });
             }
             if (state is ProfileSaveSuccess) {
@@ -128,6 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             controller: telegramController,
                             decoration: InputDecoration(
                               labelText: 'Telegram Account ID',
+                              hintText: "needed for creating groups",
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               border: const OutlineInputBorder(),
@@ -150,17 +152,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                            Center(
-                              child: TextButton.icon(
-                                onPressed: TelegramBot.launchTelegramBot,
-                                icon: const Icon(Icons.telegram),
-                                label: const Text('Get Telegram ID via Bot'),
-                                style: TextButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).primaryColor,
-                                ),
+                          Center(
+                            child: TextButton.icon(
+                              onPressed: TelegramBot.launchTelegramBot,
+                              icon: const Icon(Icons.telegram),
+                              label: const Text('Get Telegram ID via Bot'),
+                              style: TextButton.styleFrom(
+                                foregroundColor: Theme.of(context).primaryColor,
                               ),
                             ),
+                          ),
                         ],
                       ),
                     ),
@@ -187,43 +188,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                    width: double.infinity, // Ensure the button takes full width
+                    width:
+                        double.infinity, // Ensure the button takes full width
                     child: CustomFilledButton(
                       key: const Key('logout_button'),
                       isEnabled: true,
                       label: 'Logout',
-                      backgroundColor: Colors.red, // Red background for "Logout"
+                      backgroundColor:
+                          Colors.red, // Red background for "Logout"
                       foregroundColor: Colors.white, // Light text for contrast
                       onPressed: () {
-                       // AuthUtils.logout(context);
+                        // AuthUtils.logout(context);
                         showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                                key: const Key('logout_confirmation_dialog'),
-                                title: const Text('Confirm Logout'),
-                              content: const Text('Are you sure you want to log out?'),
-                              actions: [
-                                TextButton(
-                                  key: const Key('cancel_button'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // Close the dialog
-                                  },
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  key: const Key('confirm_logout'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // Close the dialog
-                                    AuthUtils.logout(context); // Perform logout
-                                  },
-                                  style: TextButton.styleFrom(foregroundColor: Colors.red),
-                                  child: const Text('Logout'),
-                                ),
-                              ]
-                            );
-                          }
-                        );
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  key: const Key('logout_confirmation_dialog'),
+                                  title: const Text('Confirm Logout'),
+                                  content: const Text(
+                                      'Are you sure you want to log out?'),
+                                  actions: [
+                                    TextButton(
+                                      key: const Key('cancel_button'),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      key: const Key('confirm_logout'),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pop(); // Close the dialog
+                                        AuthUtils.logout(
+                                            context); // Perform logout
+                                      },
+                                      style: TextButton.styleFrom(
+                                          foregroundColor: Colors.red),
+                                      child: const Text('Logout'),
+                                    ),
+                                  ]);
+                            });
                       },
                     ),
                   ),

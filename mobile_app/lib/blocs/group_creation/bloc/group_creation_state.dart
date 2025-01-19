@@ -27,7 +27,6 @@ class GroupCreationState extends Equatable {
   List<Object?> get props => [courses, isLoading, errorMessage];
 }
 
-
 class FetchCoursesListEvent extends GroupCreationEvent {
   @override
   List<Object?> get props => throw UnimplementedError();
@@ -59,4 +58,21 @@ class GroupCreationSuccess extends GroupCreationState {
 class GroupCreationFailed extends GroupCreationState {
   final String error;
   GroupCreationFailed(this.error);
+}
+
+class TelegramIdCheckLoading extends GroupCreationState {}
+
+class TelegramIdCheckInitial extends GroupCreationState {}
+
+class TelegramIdCheckPassed extends GroupCreationState {
+  TelegramIdCheckPassed();
+}
+
+class TelegramIdCheckNotPassed extends GroupCreationState {
+  TelegramIdCheckNotPassed();
+}
+
+class TelegramIdCheckFailed extends GroupCreationState {
+  final String error;
+  TelegramIdCheckFailed(this.error);
 }
