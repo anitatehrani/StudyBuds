@@ -6,6 +6,7 @@ class Group {
   final String description;
   final String course;
   final bool isPublic;
+  final int? telegramId;
   final String? telegramLink;
   final int? ownerId;
   final int? membersLimit;
@@ -21,7 +22,8 @@ class Group {
     required this.description,
     required this.course,
     required this.isPublic,
-    required this.telegramLink,
+    this.telegramId,
+    this.telegramLink,
     required this.ownerId,
     required this.membersLimit,
     this.membersCount = 1,
@@ -64,6 +66,7 @@ class Group {
       'description': description,
       'course': course,
       'isPublic': isPublic,
+      'telegramId': telegramId,
       'telegramLink': telegramLink,
       'ownerId': 123,
       'membersLimit': membersLimit,

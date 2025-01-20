@@ -18,7 +18,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController membersLimitController = TextEditingController();
-  final TextEditingController telegramLinkController = TextEditingController();
+  final TextEditingController telegramIdController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
 
@@ -206,23 +206,44 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         const SizedBox(height: 16),
                         TextField(
                           enabled: state.isTelegramIdChecked,
-                          controller: telegramLinkController,
+                          controller: telegramIdController,
                           decoration: InputDecoration(
-                            labelText: 'Telegram Group Link',
-                            hintText: 'https://t.me/example_group',
+                            labelText: 'Telegram Group Id',
+                            hintText: '1234567890',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                             fillColor: Colors.white,
-                            // Set the fill color
-                            labelStyle: TextStyle(
-                                color: Colors
-                                    .black), // Make the label white for visibility
+                            labelStyle: TextStyle(color: Colors.black),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.info_outline, color: Colors.blue),
+                              tooltip: 'Click for more information',
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('To get Telegram Group ID'),
+                                    content: Text(
+                                      '1. First, create your group on Telegram.\n'
+                                      '2. Add our bot "studybuds" to the group and grant it administrative privileges.\n'
+                                      '3. Send the message "/start" to the group.\n'
+                                      '4. The bot will reply with the Telegram Group ID.\n\n'
+                                      'Copy the Group ID and enter it in the field.'
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('Close'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                           key: Key('telegram_group_link_field'),
-                          style: const TextStyle(
-                              color: Colors.black), // Make the text color white
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(color: Colors.black),
                         ),
                         const SizedBox(height: 4),
                         const Text(
@@ -272,8 +293,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                                 membersLimitController.text)
                                             : 2,
                                         members: [],
-                                        telegramLink:
-                                            telegramLinkController.text,
+                                        telegramId:
+                                            int.parse(telegramIdController.text),
                                         isPublic: !isPrivateGroup,
                                         ownerId: 10),
                                   ));
