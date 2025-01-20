@@ -72,6 +72,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         backgroundColor: Colors.green),
                   );
+                  Navigator.pushReplacementNamed(context, '/home');
                 } else if (state is GroupCreationFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
