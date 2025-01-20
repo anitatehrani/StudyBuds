@@ -42,13 +42,25 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
             body: BlocConsumer<GroupCreationBloc, GroupCreationState>(
               listener: (context, state) {
                 if (state is TelegramIdCheckNotPassed) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Profile Update Required'),
                         content: Text(
-                          "telegram id check not passed",
-                          key: Key('success_snackbar'),
+                          "For creating groups, add telegram ID in your profile.",
+                          key: Key('telegram_id_popup'),
                         ),
-                        backgroundColor: Colors.green),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 }
                 if (state is GroupCreationSuccess) {
@@ -69,13 +81,11 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                 }
               },
               builder: (context, state) {
-                bool isTelegramIdCheckPassed = false;
                 if (state.isLoading) {
                   return const Center(
                       child: CircularProgressIndicator(
                           key: Key('loading_indicator')));
                 } else if (state is TelegramIdCheckPassed) {
-                  isTelegramIdCheckPassed = true;
                   context
                       .read<GroupCreationBloc>()
                       .add(FetchCoursesListEvent());
@@ -87,7 +97,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextField(
-                          enabled: isTelegramIdCheckPassed,
+                          enabled: state.isTelegramIdChecked,
                           controller: nameController,
                           decoration: InputDecoration(
                               labelText: 'Name',
@@ -110,7 +120,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
-                          enabled: isTelegramIdCheckPassed,
+                          enabled: state.isTelegramIdChecked,
                           controller: descriptionController,
                           maxLines: 3,
                           decoration: const InputDecoration(
@@ -127,7 +137,6 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                     .black), // Make the label white for visibility
                           ),
                           style: const TextStyle(color: Colors.black),
-                          // Make t
                           key: Key(
                               'group_description_field'), // he text color white
                         ),
@@ -138,7 +147,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         DropdownSearch<String>(
-                          enabled: isTelegramIdCheckPassed,
+                          enabled: state.isTelegramIdChecked,
                           items: (filter, loadProps) => state.courses,
                           // items: state.courses,
                           selectedItem: selectedCourse,
@@ -165,7 +174,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
-                          enabled: isTelegramIdCheckPassed,
+                          enabled: state.isTelegramIdChecked,
                           controller: membersLimitController,
                           decoration: InputDecoration(
                             labelText: 'Members Limit',
@@ -192,7 +201,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
-                          enabled: isTelegramIdCheckPassed,
+                          enabled: state.isTelegramIdChecked,
                           controller: telegramLinkController,
                           decoration: InputDecoration(
                             labelText: 'Telegram Group Link',
@@ -228,7 +237,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             Switch(
                               value: isPrivateGroup,
                               key: Key('is_private_group_switch'),
-                              onChanged: isTelegramIdCheckPassed
+                              onChanged: state.isTelegramIdChecked
                                   ? (value) {
                                       setState(() {
                                         isPrivateGroup = value;
@@ -241,7 +250,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         const SizedBox(height: 16),
                         Center(
                           child: CustomFilledButton(
-                            isEnabled: isTelegramIdCheckPassed,
+                            isEnabled: state.isTelegramIdChecked,
                             label: 'Create the study group',
                             key: Key('create_group_button'),
                             iconData: Icons.add,
