@@ -3,30 +3,34 @@ part of 'group_creation_bloc.dart';
 class GroupCreationState extends Equatable {
   final List<String> courses;
   final bool isLoading;
+  final bool isTelegramIdChecked;
   final String? errorMessage;
 
   const GroupCreationState({
     this.courses = const <String>[],
     this.isLoading = false,
+    this.isTelegramIdChecked = true,
     this.errorMessage,
   });
 
   GroupCreationState copyWith({
     List<String>? courses,
     bool? isLoading,
+    bool? isTelegramIdChecked,
     String? errorMessage,
   }) {
     return GroupCreationState(
       courses: courses ?? this.courses,
       isLoading: isLoading ?? this.isLoading,
+      isTelegramIdChecked: isTelegramIdChecked ?? this.isTelegramIdChecked,
       errorMessage: errorMessage,
     );
   }
 
   @override
-  List<Object?> get props => [courses, isLoading, errorMessage];
+  List<Object?> get props =>
+      [courses, isLoading, isTelegramIdChecked, errorMessage];
 }
-
 
 class FetchCoursesListEvent extends GroupCreationEvent {
   @override
@@ -59,4 +63,21 @@ class GroupCreationSuccess extends GroupCreationState {
 class GroupCreationFailed extends GroupCreationState {
   final String error;
   GroupCreationFailed(this.error);
+}
+
+class TelegramIdCheckLoading extends GroupCreationState {}
+
+class TelegramIdCheckInitial extends GroupCreationState {}
+
+class TelegramIdCheckPassed extends GroupCreationState {
+  TelegramIdCheckPassed() : super(isTelegramIdChecked: true);
+}
+
+class TelegramIdCheckNotPassed extends GroupCreationState {
+  TelegramIdCheckNotPassed() : super(isTelegramIdChecked: false);
+}
+
+class TelegramIdCheckFailed extends GroupCreationState {
+  final String error;
+  TelegramIdCheckFailed(this.error);
 }

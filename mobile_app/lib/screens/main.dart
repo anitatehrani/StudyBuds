@@ -7,14 +7,16 @@ import 'package:study_buds/screens/notification/notification.dart';
 import 'package:study_buds/screens/profile/profile.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final int selectedIndex;
+
+  const MainScreen({super.key, required this.selectedIndex});
 
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   static const List<Widget> _widgetOptions = <Widget>[
     GroupList(key: Key("home_page")),
@@ -23,6 +25,13 @@ class _MainScreenState extends State<MainScreen> {
     NotificationScreen(key: Key("notifications_page")),
     ProfileScreen(key: Key("profile_page"))
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize `_selectedIndex` with the value passed to the widget.
+    _selectedIndex = widget.selectedIndex;
+  }
 
   void _onItemTapped(int index) {
     setState(() {

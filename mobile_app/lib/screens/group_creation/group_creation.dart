@@ -37,10 +37,34 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
           foregroundColor: Theme.of(context).primaryColor,
         ),
         body: BlocProvider(
-          create: (_) => GroupCreationBloc()..add(FetchCoursesListEvent()),
+          create: (_) => GroupCreationBloc()..add(TelegramIdCheckEvent()),
           child: Scaffold(
             body: BlocConsumer<GroupCreationBloc, GroupCreationState>(
               listener: (context, state) {
+                if (state is TelegramIdCheckNotPassed) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Profile Update Required'),
+                        content: Text(
+                          "For creating groups, add telegram ID in your profile.",
+                          key: Key('telegram_id_popup'),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, '/profile');
+                              // Navigator.of(context).pop();
+                            },
+                            child: Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
                 if (state is GroupCreationSuccess) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -64,7 +88,12 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                   return const Center(
                       child: CircularProgressIndicator(
                           key: Key('loading_indicator')));
+                } else if (state is TelegramIdCheckPassed) {
+                  context
+                      .read<GroupCreationBloc>()
+                      .add(FetchCoursesListEvent());
                 }
+                
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(
@@ -72,6 +101,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextField(
+                          enabled: state.isTelegramIdChecked,
                           controller: nameController,
                           decoration: InputDecoration(
                               labelText: 'Name',
@@ -94,6 +124,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: state.isTelegramIdChecked,
                           controller: descriptionController,
                           maxLines: 3,
                           decoration: const InputDecoration(
@@ -110,7 +141,6 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                     .black), // Make the label white for visibility
                           ),
                           style: const TextStyle(color: Colors.black),
-                          // Make t
                           key: Key(
                               'group_description_field'), // he text color white
                         ),
@@ -121,6 +151,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         DropdownSearch<String>(
+                          enabled: state.isTelegramIdChecked,
                           items: (filter, loadProps) => state.courses,
                           // items: state.courses,
                           selectedItem: selectedCourse,
@@ -147,6 +178,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: state.isTelegramIdChecked,
                           controller: membersLimitController,
                           decoration: InputDecoration(
                             labelText: 'Members Limit',
@@ -173,6 +205,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         TextField(
+                          enabled: state.isTelegramIdChecked,
                           controller: telegramLinkController,
                           decoration: InputDecoration(
                             labelText: 'Telegram Group Link',
@@ -208,17 +241,20 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             Switch(
                               value: isPrivateGroup,
                               key: Key('is_private_group_switch'),
-                              onChanged: (value) {
-                                setState(() {
-                                  isPrivateGroup = value;
-                                });
-                              },
+                              onChanged: state.isTelegramIdChecked
+                                  ? (value) {
+                                      setState(() {
+                                        isPrivateGroup = value;
+                                      });
+                                    }
+                                  : null,
                             ),
                           ],
                         ),
                         const SizedBox(height: 16),
                         Center(
                           child: CustomFilledButton(
+                            isEnabled: state.isTelegramIdChecked,
                             label: 'Create the study group',
                             key: Key('create_group_button'),
                             iconData: Icons.add,
