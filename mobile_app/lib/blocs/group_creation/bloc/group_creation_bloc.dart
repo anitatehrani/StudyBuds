@@ -15,26 +15,17 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     on<CreateGroupEvent>(_onCreateGroup);
   }
 
-  /*
-    Make the call to the profile on the backend
-    If the user has not telegram id the group creation page is grayed out
-    And a text suggesting the user to add their telegram id in the profile should be present
-  */
   Future<void> _onTelegramIdCheck(
       TelegramIdCheckEvent event, Emitter<GroupCreationState> emit) async {
     emit(TelegramIdCheckLoading());
     try {
       final profileRequest = ProfileRequest();
       final response = await profileRequest.send();
-      print("------");
-      print(response.data.telegramId);
-      print("-----------");
       if (response.isSuccess) {
         if (response.data != null) {
           if (response.data.telegramId != null) {
             print("emit telegram id check passed");
             emit(TelegramIdCheckPassed());
-            
           } else {
             print("emit telegram id check not passed");
             emit(TelegramIdCheckNotPassed());

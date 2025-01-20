@@ -9,7 +9,7 @@ class GroupCreationState extends Equatable {
   const GroupCreationState({
     this.courses = const <String>[],
     this.isLoading = false,
-    this.isTelegramIdChecked = false,
+    this.isTelegramIdChecked = true,
     this.errorMessage,
   });
 

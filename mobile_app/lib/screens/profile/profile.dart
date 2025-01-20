@@ -144,6 +144,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (value) {
                               setState(() {
                                 telegramAccountId = value;
+                                if (value == "") {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'You can\'t leave telegram account id empty!'),
+                                        backgroundColor: Colors.red),
+                                  );
+                                }
                               });
                             },
                             inputFormatters: [
@@ -171,12 +179,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        if (telegramAccountId != null) {
+                        if (telegramAccountId != "") {
                           context
                               .read<ProfileBloc>()
                               .add(SaveProfileDetailsEvent(
                                 int.parse(telegramAccountId!),
                               ));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'You can\'t leave telegram account id empty!'),
+                                backgroundColor: Colors.red),
+                          );
                         }
                       },
                       icon: const Icon(Icons.save),

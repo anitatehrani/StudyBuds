@@ -30,8 +30,7 @@ async function main() {
             telegramLink: "https://t.me/joinrequest",
         }),
         new GroupMembers({ studentId: student, groupId: group1 }),
-        // new Student({ studentId: student1, telegramAccount: 37 }),
-        new Student({ studentId: student1 }),
+        new Student({ studentId: student1, telegramAccount: 37 }),
         new JoinRequest({
             id: joinRequestId,
             groupId: group1,

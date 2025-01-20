@@ -54,7 +54,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pushReplacementNamed(
+                                  context, '/profile');
+                              // Navigator.of(context).pop();
                             },
                             child: Text('Ok'),
                           ),
@@ -91,6 +93,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       .read<GroupCreationBloc>()
                       .add(FetchCoursesListEvent());
                 }
+                
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(

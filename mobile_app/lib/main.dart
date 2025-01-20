@@ -4,6 +4,7 @@ import 'package:flutter_driver/driver_extension.dart';
 import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/main.dart';
+import 'package:study_buds/screens/profile/profile.dart';
 import 'package:study_buds/utils/auth_utils.dart';
 import 'package:study_buds/utils/push_notification.dart';
 import 'package:study_buds/utils/static_env.dart';
@@ -45,9 +46,10 @@ class MyApp extends StatelessWidget {
       // Dynamically set the initial route based on authentication state
       initialRoute: isAuthenticated ? '/home' : '/login',
       routes: {
-        '/home': (context) => const MainScreen(),
+        '/home': (context) => const MainScreen(selectedIndex: 0),
         '/login': (context) =>
             const Login(key: Key("login_page"), title: "Login"),
+        '/profile': (context) => const MainScreen(selectedIndex: 4),
       },
     );
   }
