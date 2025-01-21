@@ -32,3 +32,22 @@ class SuggestedGroupListFailure extends BasicSearchState {
   final String error;
   SuggestedGroupListFailure(this.error);
 }
+
+class TelegramIdCheckInitialInsideBasicSearch extends BasicSearchState {}
+
+class TelegramIdCheckLoadingInsideBasicSearch extends BasicSearchState {}
+
+class TelegramIdCheckPassedInsideBasicSearch extends BasicSearchState {
+  final bool isTelegramIdChecked = true;
+  TelegramIdCheckPassedInsideBasicSearch();
+}
+
+class TelegramIdCheckNotPassedInsideBasicSearch extends BasicSearchState {
+  final bool isTelegramIdChecked = false;
+  TelegramIdCheckNotPassedInsideBasicSearch();
+}
+
+class TelegramIdCheckFailedInsideBasicSearch extends BasicSearchState {
+  final String error;
+  TelegramIdCheckFailedInsideBasicSearch(this.error);
+}

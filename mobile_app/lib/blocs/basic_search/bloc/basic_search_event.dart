@@ -17,3 +17,8 @@ class SearchQueryChanged extends BasicSearchEvent {
   @override
   List<Object?> get props => [queryString];
 }
+
+class TelegramIdCheckEvent extends BasicSearchEvent {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

@@ -18,7 +18,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late int _selectedIndex;
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     GroupList(key: Key("home_page")),
     BasicSearchPage(title: 'Basic Search', key: Key("search_page")),
     GroupCreationScreen(key: Key("add_page")),
