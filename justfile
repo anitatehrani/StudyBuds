@@ -40,5 +40,10 @@ up-all-local:
     BACKEND_CALLBACK="http://{{ip}}:5000/login/" IDP_ENTRYPOINT="http://{{ip}}:8080/simplesaml/saml2/idp/SSOService.php" docker compose up --build -d --force-recreate backend postgres
     docker compose run --rm --build database-data
     
+api-testing:
+    docker compose up -d backend postgres --force-recreate
+    docker compose run --rm migration 
+    docker compose run --build --rm api-testing
+
 down:
     docker compose down

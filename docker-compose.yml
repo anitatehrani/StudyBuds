@@ -164,6 +164,7 @@ services:
             dockerfile: ./backend/api_testing/Dockerfile
         depends_on:
             - backend
+            - postgres
         environment:
             BACKEND_URL: ${API_URL:-http://backend:5000}
             DB_URL: ${DB_URL:-postgres://postgres:password@postgres:5432/postgres}
