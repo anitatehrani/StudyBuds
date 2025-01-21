@@ -1,7 +1,10 @@
 part of 'basic_search_bloc.dart';
 
 @immutable
-sealed class BasicSearchState {}
+sealed class BasicSearchState {
+  final bool isTelegramIdChecked;
+  const BasicSearchState({this.isTelegramIdChecked = true});
+}
 
 final class BasicSearchInitial extends BasicSearchState {}
 
@@ -31,4 +34,22 @@ class SuggestedGroupListSuccess extends BasicSearchState {
 class SuggestedGroupListFailure extends BasicSearchState {
   final String error;
   SuggestedGroupListFailure(this.error);
+}
+
+class TelegramIdCheckInitialInsideBasicSearch extends BasicSearchState {}
+
+class TelegramIdCheckLoadingInsideBasicSearch extends BasicSearchState {}
+
+class TelegramIdCheckPassedInsideBasicSearch extends BasicSearchState {
+  TelegramIdCheckPassedInsideBasicSearch() : super(isTelegramIdChecked: true);
+}
+
+class TelegramIdCheckNotPassedInsideBasicSearch extends BasicSearchState {
+  TelegramIdCheckNotPassedInsideBasicSearch()
+      : super(isTelegramIdChecked: false);
+}
+
+class TelegramIdCheckFailedInsideBasicSearch extends BasicSearchState {
+  final String error;
+  TelegramIdCheckFailedInsideBasicSearch(this.error);
 }

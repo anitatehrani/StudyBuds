@@ -25,50 +25,83 @@ class BasicSearchPage extends StatelessWidget {
   const BasicSearchPage({super.key, required this.title});
 
   final String title;
+  // bool checkedPassed = false;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
-        Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
-      ],
-      child: BlocProvider(
-        create: (_) => BasicSearchBloc()..add(SuggestedGroupsEvent()),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Search for a study group',
-              style: TextStyle(fontWeight: FontWeight.w600),
+        providers: [
+          Provider<GroupDetailsBloc>(create: (_) => GroupDetailsBloc()),
+          Provider<JoinGroupBloc>(create: (_) => JoinGroupBloc()),
+        ],
+        child: BlocProvider(
+          create: (_) => BasicSearchBloc()..add(TelegramIdCheckEvent()),
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Search for a study group',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              centerTitle: true,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              elevation: 0,
+              foregroundColor: Theme.of(context).primaryColor,
             ),
-            centerTitle: true,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            elevation: 0,
-            foregroundColor: Theme.of(context).primaryColor,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                _SearchBar(),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: BlocBuilder<BasicSearchBloc, BasicSearchState>(
-                    builder: (context, state) {
-                      if (state is SearchSuccess || state is SearchLoading) {
-                        return _SearchResults();
-                      } else {
-                        return _SuggestedGroups();
-                      }
-                    },
-                  ),
+            body: BlocConsumer<BasicSearchBloc, BasicSearchState>(
+                listener: (context, state) {
+              if (state is TelegramIdCheckNotPassedInsideBasicSearch) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Profile Update Required'),
+                      content: Text(
+                        "For searching groups, add telegram ID in your profile.",
+                        key: Key('telegram_id_popup'),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/profile');
+                            // Navigator.of(context).pop();
+                          },
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            }, builder: (context, state) {
+              if (state is TelegramIdCheckPassedInsideBasicSearch) {
+                context.read<BasicSearchBloc>().add(SuggestedGroupsEvent());
+                // checkedPassed = true;
+              }
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    // _SearchBar(checkedPassed),
+                    _SearchBar(),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: BlocBuilder<BasicSearchBloc, BasicSearchState>(
+                        builder: (context, state) {
+                          if (state is SearchSuccess ||
+                              state is SearchLoading) {
+                            return _SearchResults();
+                          } else {
+                            return _SuggestedGroups();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            }),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -77,32 +110,37 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      key: Key('search_bar'),
-      controller: _searchController,
-      onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query));
-      },
-      decoration: InputDecoration(
-        hintText: 'Search...',
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => _searchController.clear(),
-        ),
-        prefixIcon: IconButton(
-          key: Key('search_button'),
-          icon: Icon(Icons.search),
-          onPressed: () {
-            context
-                .read<BasicSearchBloc>()
-                .add(SearchQueryChanged(_searchController.text));
-          },
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-      ),
-    );
+    return BlocConsumer<BasicSearchBloc, BasicSearchState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return TextField(
+            key: Key('search_bar'),
+            controller: _searchController,
+            onSubmitted: (String query) {
+              context.read<BasicSearchBloc>().add(SearchQueryChanged(query));
+            },
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              enabled: state.isTelegramIdChecked,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () => _searchController.clear(),
+              ),
+              prefixIcon: IconButton(
+                key: Key('search_button'),
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  context
+                      .read<BasicSearchBloc>()
+                      .add(SearchQueryChanged(_searchController.text));
+                },
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          );
+        });
   }
 }
 
