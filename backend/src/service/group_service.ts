@@ -2,11 +2,12 @@ import { Op, QueryTypes, Sequelize } from "sequelize";
 import sequelize from "../config/database";
 import { StudentGroup } from "../models/StudentGroup";
 import { getErrorMessage } from "../utils/api_error";
-import {getCurrentMemberCount, getCurrentMemberList} from "./group_member";
+import { getCurrentMemberCount, getCurrentMemberList } from "./group_member";
 import { getJoinRequestByGroupId } from "./join_request_service";
 import { getSuggestedGroupsbyCourses, getSuggestedGroupsbyFriends, getSuggestedGroupsByGpa, getSuggestedGroupsbyPopularity } from "./suggestion_service";
 import UnigeService from "./unige_service";
 import { GroupMembers } from "../models/GroupMembers";
+import { getJoinLink } from "../telegram/main";
 
 interface GroupData {
   name: string;
@@ -15,6 +16,7 @@ interface GroupData {
   isPublic: boolean;
   membersLimit: number;
   telegramLink?: string;
+  telegramId: number;
   isGroupAdmin?: boolean;
   isGroupMember?: boolean;
   adminId: number; // Maps studentId to adminId
@@ -36,12 +38,15 @@ export async function createGroup(groupData: GroupData): Promise<StudentGroup> {
     course,
     isPublic,
     membersLimit,
-    telegramLink,
+    telegramId,
     adminId,
   } = groupData;
 
   const student_info = await UnigeService.getUnigeProfile(adminId);
+
   const gpa = student_info.gpa || 0;
+  const telegramLink = await getJoinLink(telegramId);
+  // const telegramLink = await getJoinLink(telegramId);
   const group = new StudentGroup({
     name,
     description,
@@ -50,6 +55,7 @@ export async function createGroup(groupData: GroupData): Promise<StudentGroup> {
     gpa,
     membersLimit,
     telegramLink,
+    telegramId,
     adminId,
   });
 
@@ -129,7 +135,7 @@ export async function basicSearch(
       type: QueryTypes.SELECT,
     });
     results.forEach(element => {
-      if (!element.hasJoined){
+      if (!element.hasJoined) {
         delete element.telegramLink;
       }
       delete element.hasJoined;
@@ -156,7 +162,7 @@ export async function getSuggestedGroups(
   const POPULARITY_WEIGHT = 0.2;
   const FRIENDS_WEIGHT = 0.5;
   const GPA_WEIGHT = 0.3;
-  const COURSES_WEIGHT=1;
+  const COURSES_WEIGHT = 1;
 
   const score: Map<number, number> = new Map();
 
@@ -179,17 +185,17 @@ export async function getSuggestedGroups(
   ]);
 
   // Initialize the score for each group to 0
-  const query=`select * from studybuds.student_group where (id NOT IN (
+  const query = `select * from studybuds.student_group where (id NOT IN (
     SELECT student_group.id FROM studybuds.student_group
     JOIN studybuds.group_members ON group_members.group_id=student_group.id
     WHERE group_members.student_id = '${studentId}'
   ))`
-  const groups=await sequelize.query<StudentGroup>(query,{type: QueryTypes.SELECT});
-  console.log("ALL GROUPS FOUND",groups);
+  const groups = await sequelize.query<StudentGroup>(query, { type: QueryTypes.SELECT });
+  console.log("ALL GROUPS FOUND", groups);
   groups.forEach(group => score.set(group.id, 0));
 
   // Assign points to each group based on the order in the list
-  assignPoints(courses,COURSES_WEIGHT);
+  assignPoints(courses, COURSES_WEIGHT);
   assignPoints(popularity, POPULARITY_WEIGHT);
   assignPoints(friends, FRIENDS_WEIGHT);
   assignPoints(gpa, GPA_WEIGHT);

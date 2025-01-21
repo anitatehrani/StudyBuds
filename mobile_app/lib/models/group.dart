@@ -7,6 +7,7 @@ class Group {
   final String course;
   final bool isPublic;
   final String? telegramLink;
+  final int? telegramId;
   final int? ownerId;
   final int? membersLimit;
   final int membersCount;
@@ -21,7 +22,8 @@ class Group {
     required this.description,
     required this.course,
     required this.isPublic,
-    required this.telegramLink,
+    this.telegramLink,
+    required this.telegramId,
     required this.ownerId,
     required this.membersLimit,
     this.membersCount = 1,
@@ -39,6 +41,7 @@ class Group {
       course: json['course'] ?? '',
       isPublic: json['isPublic'],
       telegramLink: json['telegramLink'],
+      telegramId: json['telegramId'],
       ownerId: json['ownerId'],
       joinRequestStatus: json['requestStatus'] ?? '',
       membersLimit: json['membersLimit'],
@@ -65,6 +68,7 @@ class Group {
       'course': course,
       'isPublic': isPublic,
       'telegramLink': telegramLink,
+      'telegramId': telegramId,
       'ownerId': 123,
       'membersLimit': membersLimit,
       'membersCount': membersCount,

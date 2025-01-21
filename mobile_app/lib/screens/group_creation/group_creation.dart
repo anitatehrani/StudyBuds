@@ -18,7 +18,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController membersLimitController = TextEditingController();
-  final TextEditingController telegramLinkController = TextEditingController();
+  final TextEditingController telegramGroupChatIdController =
+      TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
 
@@ -93,7 +94,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       .read<GroupCreationBloc>()
                       .add(FetchCoursesListEvent());
                 }
-                
+
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(
@@ -206,10 +207,10 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         const SizedBox(height: 16),
                         TextField(
                           enabled: state.isTelegramIdChecked,
-                          controller: telegramLinkController,
+                          controller: telegramGroupChatIdController,
                           decoration: InputDecoration(
-                            labelText: 'Telegram Group Link',
-                            hintText: 'https://t.me/example_group',
+                            labelText: 'Telegram Group Chat Id',
+                            hintText: 'chat id',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -226,7 +227,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 4),
                         const Text(
-                          'You have to create your Telegram group and add its link here.',
+                          'You have to create your Telegram group and add its id here.',
                           style: TextStyle(fontSize: 12, color: Colors.black),
                         ),
                         const SizedBox(height: 16),
@@ -259,6 +260,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             key: Key('create_group_button'),
                             iconData: Icons.add,
                             onPressed: () {
+                              
                               context
                                   .read<GroupCreationBloc>()
                                   .add(CreateGroupEvent(
@@ -272,8 +274,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                                 membersLimitController.text)
                                             : 2,
                                         members: [],
-                                        telegramLink:
-                                            telegramLinkController.text,
+                                
+                                        telegramId:
+                                            int.parse(telegramGroupChatIdController.text),
                                         isPublic: !isPrivateGroup,
                                         ownerId: 10),
                                   ));
