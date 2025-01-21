@@ -20,7 +20,6 @@ import { getJoinLink } from "../telegram/main";
 
 // Function to create a group
 export async function createGroup(req: Request) {
-
     const body = req.body as IndexSignature;
     const name = checkNonEmptyString(body, "name");
     const description = checkNonEmptyString(body, "description");
@@ -37,13 +36,23 @@ export async function createGroup(req: Request) {
         throw new NotFoundError("Student not found");
     }
 
+    //check if student have telegram account id
+    if (student.telegramAccount === null) {
+        throw new BadRequestError("Student does not have a telegram account");
+    }
+
     // Check if the telegramLink already exists
     const existingGroup = await StudentGroup.findOne({ where: { telegramId } });
     if (existingGroup) {
-        throw new BadRequestError("This Telegram link already exists");
+        throw new BadRequestError("This Telegram Id already exists");
     }
 
-    const telegramLink = await getJoinLink(telegramId);
+    let telegramLink;
+    try {
+        telegramLink = await getJoinLink(telegramId);
+    } catch (error) {
+        throw new BadRequestError("Failed to get Telegram link");
+    }
     // Create the group using GroupService
     const group = await GroupService.createGroup({
         name,
@@ -59,9 +68,9 @@ export async function createGroup(req: Request) {
     if (groupId !== undefined || groupId !== null) {
         const group_member = new GroupMembers({
             studentId,
-            groupId
-        })
-        group_member.save()
+            groupId,
+        });
+        group_member.save();
     }
 
     return { message: "Group created successfully", group };
@@ -108,7 +117,6 @@ export async function getGroupDetails(req: Request) {
         }
         groupMembers = await UnigeService.getStudentsUnigeProfiles(membersId);
         console.log(`result ${groupMembers}`);
-
     }
 
     // Format response
@@ -128,8 +136,6 @@ export async function getGroupDetails(req: Request) {
     return response;
 }
 
-
-
 // Function to get suggested groups based on gpa and studyplan
 export async function getSuggestedGroupList(req: Request) {
     const student_id = getStudentId(req);
@@ -138,11 +144,10 @@ export async function getSuggestedGroupList(req: Request) {
     return result;
 }
 
-
 export default {
     createGroup,
     getAllGroups,
     basicSearchResult,
     getGroupDetails,
-    getSuggestedGroupList
+    getSuggestedGroupList,
 };
