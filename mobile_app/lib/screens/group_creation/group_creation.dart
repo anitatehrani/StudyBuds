@@ -260,6 +260,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             key: Key('create_group_button'),
                             iconData: Icons.add,
                             onPressed: () {
+                              
                               context
                                   .read<GroupCreationBloc>()
                                   .add(CreateGroupEvent(
@@ -273,8 +274,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                                 membersLimitController.text)
                                             : 2,
                                         members: [],
-                                        telegramLink:
-                                            telegramGroupChatIdController.text,
+                                
+                                        telegramId:
+                                            int.parse(telegramGroupChatIdController.text),
                                         isPublic: !isPrivateGroup,
                                         ownerId: 10),
                                   ));
