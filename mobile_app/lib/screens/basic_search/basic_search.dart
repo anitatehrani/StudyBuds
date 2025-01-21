@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
 }
 
 class BasicSearchPage extends StatelessWidget {
-  BasicSearchPage({super.key, required this.title});
+  const BasicSearchPage({super.key, required this.title});
 
   final String title;
-  bool checkedPassed = false;
+  // bool checkedPassed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +75,14 @@ class BasicSearchPage extends StatelessWidget {
             }, builder: (context, state) {
               if (state is TelegramIdCheckPassedInsideBasicSearch) {
                 context.read<BasicSearchBloc>().add(SuggestedGroupsEvent());
-                checkedPassed = true;
+                // checkedPassed = true;
               }
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    _SearchBar(checkedPassed),
+                    // _SearchBar(checkedPassed),
+                    _SearchBar(),
                     const SizedBox(height: 20),
                     Expanded(
                       child: BlocBuilder<BasicSearchBloc, BasicSearchState>(
@@ -106,38 +107,40 @@ class BasicSearchPage extends StatelessWidget {
 
 class _SearchBar extends StatelessWidget {
   final TextEditingController _searchController = TextEditingController();
-  final bool checkedPassed;
-  _SearchBar(this.checkedPassed);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      key: Key('search_bar'),
-      controller: _searchController,
-      onSubmitted: (String query) {
-        context.read<BasicSearchBloc>().add(SearchQueryChanged(query));
-      },
-      decoration: InputDecoration(
-        hintText: 'Search...',
-        enabled: checkedPassed,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => _searchController.clear(),
-        ),
-        prefixIcon: IconButton(
-          key: Key('search_button'),
-          icon: Icon(Icons.search),
-          onPressed: () {
-            context
-                .read<BasicSearchBloc>()
-                .add(SearchQueryChanged(_searchController.text));
-          },
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-      ),
-    );
+    return BlocConsumer<BasicSearchBloc, BasicSearchState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return TextField(
+            key: Key('search_bar'),
+            controller: _searchController,
+            onSubmitted: (String query) {
+              context.read<BasicSearchBloc>().add(SearchQueryChanged(query));
+            },
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              enabled: state.isTelegramIdChecked,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () => _searchController.clear(),
+              ),
+              prefixIcon: IconButton(
+                key: Key('search_button'),
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  context
+                      .read<BasicSearchBloc>()
+                      .add(SearchQueryChanged(_searchController.text));
+                },
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          );
+        });
   }
 }
 

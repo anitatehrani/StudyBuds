@@ -1,7 +1,10 @@
 part of 'basic_search_bloc.dart';
 
 @immutable
-sealed class BasicSearchState {}
+sealed class BasicSearchState {
+  final bool isTelegramIdChecked;
+  const BasicSearchState({this.isTelegramIdChecked = true});
+}
 
 final class BasicSearchInitial extends BasicSearchState {}
 
@@ -38,13 +41,12 @@ class TelegramIdCheckInitialInsideBasicSearch extends BasicSearchState {}
 class TelegramIdCheckLoadingInsideBasicSearch extends BasicSearchState {}
 
 class TelegramIdCheckPassedInsideBasicSearch extends BasicSearchState {
-  final bool isTelegramIdChecked = true;
-  TelegramIdCheckPassedInsideBasicSearch();
+  TelegramIdCheckPassedInsideBasicSearch() : super(isTelegramIdChecked: true);
 }
 
 class TelegramIdCheckNotPassedInsideBasicSearch extends BasicSearchState {
-  final bool isTelegramIdChecked = false;
-  TelegramIdCheckNotPassedInsideBasicSearch();
+  TelegramIdCheckNotPassedInsideBasicSearch()
+      : super(isTelegramIdChecked: false);
 }
 
 class TelegramIdCheckFailedInsideBasicSearch extends BasicSearchState {
