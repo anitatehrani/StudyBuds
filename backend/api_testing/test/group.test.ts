@@ -107,7 +107,7 @@ test("group creation with student without telegramId", async () => {
     initData();
     const student = new Student({ studentId: 4943369 });
     await initDB([student]);
-    const actual = await axios.post(
+    const actual = axios.post(
         `${BACKEND_URL}/groups/create`,
         {
             name: "CP",
@@ -122,7 +122,7 @@ test("group creation with student without telegramId", async () => {
     );
 
     //console.error("HTTP Error:", actual);
-    expect(actual).rejects.toThrowError("Request failed with status code 400");
+    await expect(actual).rejects.toThrowError("Request failed with status code 400");
 });
 
 test("basic search test", async () => {
