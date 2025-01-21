@@ -41,6 +41,7 @@ class Group {
       course: json['course'] ?? '',
       isPublic: json['isPublic'],
       telegramLink: json['telegramLink'],
+      telegramId: json['telegramId'],
       ownerId: json['ownerId'],
       joinRequestStatus: json['requestStatus'] ?? '',
       membersLimit: json['membersLimit'],

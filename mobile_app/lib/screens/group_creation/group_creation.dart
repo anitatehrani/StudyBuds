@@ -93,7 +93,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       .read<GroupCreationBloc>()
                       .add(FetchCoursesListEvent());
                 }
-                
+
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(
@@ -247,7 +247,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 4),
                         const Text(
-                          'You have to create your Telegram group and add its link here.',
+                          'You have to create your Telegram group and add its id here.',
                           style: TextStyle(fontSize: 12, color: Colors.black),
                         ),
                         const SizedBox(height: 16),

@@ -82,84 +82,84 @@ export class StudentGroup extends Model<StudentGroupAttributes, StudentGroupCrea
 
   static initModel(sequelize: Sequelize.Sequelize): typeof StudentGroup {
     return StudentGroup.init({
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING(40),
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    membersLimit: {
-      type: DataTypes.SMALLINT,
-      allowNull: true,
-      field: 'members_limit'
-    },
-    isPublic: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-      defaultValue: true,
-      field: 'is_public'
-    },
-    gpa: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    course: {
-      type: DataTypes.STRING(60),
-      allowNull: false
-    },
-    telegramLink: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      field: 'telegram_link'
-    },
-    telegramId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'telegram_id'
-    },
-    adminId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'student',
-        key: 'student_id'
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
       },
-      field: 'admin_id'
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'created_at'
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'updated_at'
-    }
-  }, {
-    sequelize,
-    tableName: 'student_group',
-    schema: 'studybuds',
-    timestamps: false,
-    indexes: [
-      {
-        name: "student_group_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
+      name: {
+        type: DataTypes.STRING(40),
+        allowNull: false
       },
-    ]
-  });
+      description: {
+        type: DataTypes.STRING(100),
+        allowNull: true
+      },
+      membersLimit: {
+        type: DataTypes.SMALLINT,
+        allowNull: true,
+        field: 'members_limit'
+      },
+      isPublic: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: true,
+        field: 'is_public'
+      },
+      gpa: {
+        type: DataTypes.DECIMAL,
+        allowNull: false
+      },
+      course: {
+        type: DataTypes.STRING(60),
+        allowNull: false
+      },
+      telegramLink: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        field: 'telegram_link'
+      },
+      telegramId: {
+        type: Sequelize.BIGINT,
+        allowNull: true,
+        field: 'telegram_id'
+      },
+      adminId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'student',
+          key: 'student_id'
+        },
+        field: 'admin_id'
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        field: 'created_at'
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        field: 'updated_at'
+      }
+    }, {
+      sequelize,
+      tableName: 'student_group',
+      schema: 'studybuds',
+      timestamps: false,
+      indexes: [
+        {
+          name: "student_group_pkey",
+          unique: true,
+          fields: [
+            { name: "id" },
+          ]
+        },
+      ]
+    });
   }
 }

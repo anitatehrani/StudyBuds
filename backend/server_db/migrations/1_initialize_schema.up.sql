@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS student_group (
     gpa numeric(4, 2) NOT NULL,
     course varchar(60) NOT NULL,
     telegram_link varchar(100),
-    telegram_id integer,
+    telegram_id bigint,
     admin_id int NOT NULL REFERENCES Student(student_id) ON UPDATE CASCADE,
     CHECK (members_limit BETWEEN 2 AND 100),
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,

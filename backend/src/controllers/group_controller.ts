@@ -16,15 +16,18 @@ import {
     validateInt,
     validateString,
 } from "../utils/validation_error";
+import { getJoinLink } from "../telegram/main";
 
 // Function to create a group
 export async function createGroup(req: Request) {
+
     const body = req.body as IndexSignature;
     const name = checkNonEmptyString(body, "name");
     const description = checkNonEmptyString(body, "description");
     const course = checkNonEmptyString(body, "course");
     const membersLimit = checkInt(body, "membersLimit");
-    const telegramLink = checkNonEmptyString(body, "telegramLink");
+    // const telegramLink = checkNonEmptyString(body, "telegramLink");
+    const telegramId = checkInt(body, "telegramId");
     const studentId = getStudentId(req);
     const isPublic = checkBoolean(body, "isPublic");
 
@@ -35,19 +38,21 @@ export async function createGroup(req: Request) {
     }
 
     // Check if the telegramLink already exists
-    const existingGroup = await StudentGroup.findOne({ where: { telegramLink } });
+    const existingGroup = await StudentGroup.findOne({ where: { telegramId } });
     if (existingGroup) {
         throw new BadRequestError("This Telegram link already exists");
     }
 
+    const telegramLink = await getJoinLink(telegramId);
     // Create the group using GroupService
     const group = await GroupService.createGroup({
         name,
         description,
         course,
         isPublic,
-        membersLimit,
         telegramLink,
+        membersLimit,
+        telegramId,
         adminId: studentId,
     });
     let groupId = group.id;
@@ -58,6 +63,7 @@ export async function createGroup(req: Request) {
         })
         group_member.save()
     }
+
     return { message: "Group created successfully", group };
 }
 
@@ -95,7 +101,7 @@ export async function getGroupDetails(req: Request) {
     console.log(members);
     if (members.length === 0) {
         // throw new NotFoundError("Group members not found");
-    }else {
+    } else {
         const membersId = [];
         for (const member of members) {
             membersId.push(member.studentId);
