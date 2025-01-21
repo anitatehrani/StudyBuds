@@ -1,4 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
+import { removeUserFromGroup } from "../service/group_member";
 
 function assert(condition: boolean, msg: string): asserts condition {
     if (!condition) {
@@ -11,18 +12,27 @@ const token = process.env["TELEGRAM_TOKEN"];
 assert(token !== undefined, "TELEGRAM_TOKEN environment variable not present");
 const bot = new TelegramBot(token, { polling: true });
 
-async function removeUserFromGroup(telegramUserId: number, telegramGroupId: number) {}
-
 bot.on("left_chat_member", async (msg) => {
     console.log("A user left the group:", msg);
     const chat = msg["chat"];
-    if (chat.type !== "group") return;
+    let isGroup = chat.type === "group" || chat.type === "supergroup";
+    if (!isGroup) return;
+    console.log("chat is a group");
     const groupId = chat.id;
     const member = msg["left_chat_member"];
     assert(member !== undefined, "");
     const userId = member.id;
-    await removeUserFromGroup(userId, groupId);
-    console.log("Removed user", userId, "from group", groupId);
+    await bot.sendMessage(chat.id, `User with ID ${userId} has left the group with ID ${groupId}`);
+    //call the function to remove the user from the group
+    const result = await removeUserFromGroup(userId, groupId);
+    if (result.success) {
+        await bot.sendMessage(
+            chat.id,
+            `User with ID ${userId} has successfully been removed from ${groupId} Group`
+        );
+    } else {
+        await bot.sendMessage(chat.id, "Error removing user from the group");
+    }
 });
 
 bot.onText(/\/start/, async (msg) => {
