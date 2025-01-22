@@ -16,9 +16,10 @@ class GroupCreationScreen extends StatefulWidget {
 
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController membersLimitController = TextEditingController();
+  final TextEditingController membersLimitController = TextEditingController()
+    ..text = "2";
   final TextEditingController telegramIdController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
 
@@ -195,8 +196,31 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10),
+                            LengthLimitingTextInputFormatter(3),
                           ],
+                          onChanged: (value) {
+                            // Limit input value between 2 and 100
+                            if (value.isNotEmpty) {
+                              int? parsedValue = int.tryParse(value);
+                              if (parsedValue != null && (parsedValue < 2)) {
+                                // Show a message or update the state if the value is out of range
+                                membersLimitController.text =
+                                    '2'; // Reset to 2 if out of range
+                                membersLimitController.selection =
+                                    TextSelection.collapsed(
+                                        offset: 1); // Keep cursor at the end
+                              }
+
+                              if (parsedValue != null && (parsedValue > 100)) {
+                                // Show a message or update the state if the value is out of range
+                                membersLimitController.text =
+                                    '100'; // Reset to 100 if out of range
+                                membersLimitController.selection =
+                                    TextSelection.collapsed(
+                                        offset: 3); // Keep cursor at the end
+                              }
+                            }
+                          },
                         ),
                         const SizedBox(height: 4),
                         const Text(
@@ -212,11 +236,13 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                             hintText: '1234567890',
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
                             fillColor: Colors.white,
                             labelStyle: TextStyle(color: Colors.black),
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.info_outline, color: Colors.blue),
+                              icon:
+                                  Icon(Icons.info_outline, color: Colors.blue),
                               tooltip: 'Click for more information',
                               onPressed: () {
                                 showDialog(
@@ -224,12 +250,11 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                   builder: (context) => AlertDialog(
                                     title: Text('To get Telegram Group ID'),
                                     content: Text(
-                                      '1. First, create your group on Telegram.\n'
-                                      '2. Add our bot "studybuds" to the group and grant it administrative privileges.\n'
-                                      '3. Send the message "/start" to the group.\n'
-                                      '4. The bot will reply with the Telegram Group ID.\n\n'
-                                      'Copy the Group ID and enter it in the field.'
-                                    ),
+                                        '1. First, create your group on Telegram.\n'
+                                        '2. Add our bot "studybuds" to the group and grant it administrative privileges.\n'
+                                        '3. Send the message "/start" to the group.\n'
+                                        '4. The bot will reply with the Telegram Group ID.\n\n'
+                                        'Copy the Group ID and enter it in the field.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(context),
@@ -293,8 +318,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                                 membersLimitController.text)
                                             : 2,
                                         members: [],
-                                        telegramId:
-                                            int.parse(telegramIdController.text),
+                                        telegramId: int.parse(
+                                            telegramIdController.text),
                                         isPublic: !isPrivateGroup,
                                         ownerId: 10),
                                   ));
