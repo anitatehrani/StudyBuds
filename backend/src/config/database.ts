@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize';
 import { getEnvironmentVariable } from '../utils/config_error';
 
+require('pg').defaults.parseInt8 = true;
+
 
 // Create a Sequelize instance
 const sequelize = new Sequelize(

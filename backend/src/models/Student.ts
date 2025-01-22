@@ -6,6 +6,7 @@ import type { JoinRequest, JoinRequestId } from './JoinRequest';
 import type { Notification, NotificationId } from './Notification';
 import type { StudentGroup, StudentGroupId } from './StudentGroup';
 
+
 export interface StudentAttributes {
   studentId: number;
   telegramAccount?: number;
