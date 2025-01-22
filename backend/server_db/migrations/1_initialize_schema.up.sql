@@ -7,7 +7,7 @@ create type notification_type as enum ('join_request','accept','reject');
 
 CREATE TABLE IF NOT EXISTS student (
     student_id int PRIMARY KEY,
-    telegram_account int,
+    telegram_account bigint,
     created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
