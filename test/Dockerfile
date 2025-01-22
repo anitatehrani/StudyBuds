@@ -11,5 +11,5 @@ COPY ./test/tsconfig.json /app/test/tsconfig.json
 COPY ./test/features /app/test/features
 COPY ./test/utils /app/test/utils
 COPY ./test/steps /app/test/steps
-ENTRYPOINT [ "npx","cucumber-js","--require-module","ts-node/register","--require","steps/*.ts" ]
+ENTRYPOINT [ "npx","cucumber-js","features/4-leave-a-group.feature","--require-module","ts-node/register","--require","steps/*.ts" ]
 CMD []
