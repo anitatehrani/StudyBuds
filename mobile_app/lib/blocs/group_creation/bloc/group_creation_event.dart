@@ -17,3 +17,20 @@ class TelegramIdCheckEvent extends GroupCreationEvent {
   @override
   List<Object?> get props => throw UnimplementedError();
 }
+
+class ValidateFieldsEvent extends GroupCreationEvent {
+  final String name;
+  final String description;
+  final String membersLimit;
+  final String telegramGroupId;
+
+  const ValidateFieldsEvent({
+    required this.name,
+    required this.description,
+    required this.membersLimit,
+    required this.telegramGroupId,
+  });
+
+  @override
+  List<Object?> get props => [name, description, membersLimit, telegramGroupId];
+}

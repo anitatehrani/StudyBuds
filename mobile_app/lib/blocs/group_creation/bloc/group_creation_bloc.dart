@@ -13,6 +13,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     on<TelegramIdCheckEvent>(_onTelegramIdCheck);
     on<FetchCoursesListEvent>(_onFetchCourses);
     on<CreateGroupEvent>(_onCreateGroup);
+    on<ValidateFieldsEvent>(_onValidateFields);
   }
 
   Future<void> _onTelegramIdCheck(
@@ -76,4 +77,28 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
       emit(GroupCreationFailed('Failed to create group.'));
     }
   }
+
+  Future<void> _onValidateFields(
+     ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
+    final errors = <String, String>{};
+
+    if (event.name.isEmpty) {
+      errors['name'] = 'Name cannot be empty';
+    }
+    if (event.description.isEmpty) {
+      errors['description'] = 'Description cannot be empty';
+    }
+    final membersLimit = int.tryParse(event.membersLimit);
+    if (membersLimit == null || membersLimit < 2 || membersLimit > 100) {
+      errors['membersLimit'] = 'Members limit must be between 2 and 100';
+    }
+    if (event.telegramGroupId.isEmpty) {
+    errors['telegramId'] = 'Telegram Group ID must contain only digits';  // validation of TelegramGroupId field
+  }
+    emit(state.copyWith(
+      validationErrors: errors,
+      isFormValid: errors.isEmpty,
+    ));
+
+}
 }
