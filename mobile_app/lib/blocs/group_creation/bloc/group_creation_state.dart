@@ -6,11 +6,17 @@ class GroupCreationState extends Equatable {
   final bool isTelegramIdChecked;
   final String? errorMessage;
 
+ final Map<String, String> validationErrors; 
+final bool isFormValid; 
+
+
   const GroupCreationState({
     this.courses = const <String>[],
     this.isLoading = false,
     this.isTelegramIdChecked = true,
     this.errorMessage,
+    this.validationErrors = const <String, String>{},
+    this.isFormValid = false,
   });
 
   GroupCreationState copyWith({
@@ -18,18 +24,26 @@ class GroupCreationState extends Equatable {
     bool? isLoading,
     bool? isTelegramIdChecked,
     String? errorMessage,
+
+    Map<String, String>? validationErrors,
+    bool? isFormValid,
   }) {
     return GroupCreationState(
       courses: courses ?? this.courses,
       isLoading: isLoading ?? this.isLoading,
       isTelegramIdChecked: isTelegramIdChecked ?? this.isTelegramIdChecked,
       errorMessage: errorMessage,
+
+       validationErrors: validationErrors ?? this.validationErrors,
+      isFormValid: isFormValid ?? this.isFormValid,
+
     );
   }
 
   @override
   List<Object?> get props =>
-      [courses, isLoading, isTelegramIdChecked, errorMessage];
+      [courses, isLoading, isTelegramIdChecked, errorMessage,  
+     validationErrors, isFormValid];
 }
 
 class FetchCoursesListEvent extends GroupCreationEvent {
