@@ -17,8 +17,7 @@ class GroupCreationScreen extends StatefulWidget {
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController membersLimitController = TextEditingController()
-    ..text = "2";
+  final TextEditingController membersLimitController = TextEditingController();
   final TextEditingController telegramGroupIdController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
@@ -167,6 +166,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         _buildTextField(
                           enabled: state.isTelegramIdChecked,
                           label: 'Members Limit',
+                          hint: '2',
                         controller: membersLimitController,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
