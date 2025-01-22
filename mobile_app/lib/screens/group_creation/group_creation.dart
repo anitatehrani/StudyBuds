@@ -17,7 +17,8 @@ class GroupCreationScreen extends StatefulWidget {
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController membersLimitController = TextEditingController();
+  final TextEditingController membersLimitController = TextEditingController()
+    ..text = "2";
   final TextEditingController telegramGroupIdController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';

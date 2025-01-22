@@ -144,14 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (value) {
                               setState(() {
                                 telegramAccountId = value;
-                                if (value == "") {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'You can\'t leave telegram account id empty!'),
-                                        backgroundColor: Colors.red),
-                                  );
-                                }
                               });
                             },
                             inputFormatters: [
