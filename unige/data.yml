@@ -3807,3 +3807,34 @@ students:
           - BINARY ANALYSIS AND SECURE CODING
           - CAPSTONE PROJECT
           - DECENTRALIZED SYSTEMS
+    - id: 5856985
+      first_name: Adil
+      last_name: Mukhametzhan
+      email: S5856985.@studenti.unige.it
+      password: 5856985
+      gpa: 24
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
