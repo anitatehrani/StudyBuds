@@ -71,7 +71,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
       if (response.isSuccess) {
         emit(GroupCreationSuccess('The group created successfully.'));
       } else {
-        emit(GroupCreationFailed('Failed to create group.'));
+        emit(GroupCreationFailed(response.data['message']));
       }
     } catch (error) {
       emit(GroupCreationFailed('Failed to create group.'));
@@ -79,7 +79,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
   }
 
   Future<void> _onValidateFields(
-     ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
+    ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
     final errors = <String, String>{};
 
     if (event.name.isEmpty) {
