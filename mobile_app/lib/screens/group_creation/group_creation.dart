@@ -54,8 +54,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, '/profile');
+                            Navigator.of(context).pushNamedAndRemoveUntil('/profile', (route) => false);
                               // Navigator.of(context).pop();
                             },
                             child: Text('Ok'),
