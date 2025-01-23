@@ -37,9 +37,9 @@ courses:
     - BINARY ANALYSIS AND SECURE CODING
 students:
     - id: 10
-      first_name: Noah
-      last_name: White
-      email: S4919418.@studenti.unige.it
+      first_name: Mexican
+      last_name: Bonora
+      email: S10.@studenti.unige.it
       password: 10
       gpa: 18
       study_plan:
@@ -3534,6 +3534,254 @@ students:
       email: S4943369.@studenti.unige.it
       password: 4943369
       gpa: 30
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 5973490
+      first_name: Robert
+      last_name: Tetteh Ashley
+      email: S5973490.@studenti.unige.it
+      password: 5973490
+      gpa: 29
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 6042752
+      first_name: Romena
+      last_name: idontknow
+      email: S6042752.@studenti.unige.it
+      password: 6042752
+      gpa: 25
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 6019532
+      first_name: Mohammad
+      last_name: oneofthemany
+      email: S6019532.@studenti.unige.it
+      password: 6019532
+      gpa: 30
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 5145768
+      first_name: Gabriel
+      last_name: Monti
+      email: S5145768.@studenti.unige.it
+      password: 5145768
+      gpa: 18
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 1111111
+      first_name: Diba
+      last_name: Diba
+      email: S1111111.@studenti.unige.it
+      password: 1111111
+      gpa: 27
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 1234567
+      first_name: Sobhan
+      last_name: Diba
+      email: S1234567.@studenti.unige.it
+      password: 1234567
+      gpa: 21
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 2222222
+      first_name: Barekat
+      last_name: Sobhan
+      email: S2222222.@studenti.unige.it
+      password: 2222222
+      gpa: 23
+      study_plan:
+          - MACHINE LEARNING AND DATA ANALYSIS
+          - VIRTUALIZATION AND CLOUD COMPUTING
+          - DATA PROTECTION & PRIVACY
+          - DISTRIBUTED COMPUTING
+          - PRINCIPLES AND PARADIGMS OF PROGRAMMING LANGUAGES
+          - IOT
+          - DIGITAL FORENSICS
+          - MOBILE DEVELOPMENT
+          - FUNCTIONAL AND SECURITY TESTING TECHNIQUES
+          - NETWORK ANALYSIS
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - HIGH PERFORMANCE COMPUTING
+          - FINAL DISSERTATION
+      exams_to_take:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+          - FINAL DISSERTATION
+      courses:
+          - BINARY ANALYSIS AND SECURE CODING
+          - CAPSTONE PROJECT
+          - DECENTRALIZED SYSTEMS
+    - id: 3333333
+      first_name: Musse
+      last_name: Robert
+      email: S3333333.@studenti.unige.it
+      password: 3333333
+      gpa: 25
       study_plan:
           - MACHINE LEARNING AND DATA ANALYSIS
           - VIRTUALIZATION AND CLOUD COMPUTING
