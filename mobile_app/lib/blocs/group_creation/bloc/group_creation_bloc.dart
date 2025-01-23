@@ -104,7 +104,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     errors['telegramId'] = 'Telegram Group ID must contain only digits';  // validation of TelegramGroupId field
   }
   if (event.courseList.isEmpty) {
-    errors['courseList'] = 'Please select a course.';
+    errors['courseList'] = 'Course cannot be empty. Please select a course from the list';
   }
     emit(state.copyWith(
       validationErrors: errors,
