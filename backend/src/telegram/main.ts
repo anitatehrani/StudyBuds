@@ -17,7 +17,7 @@ function suppressErrors<T>(
 ): (_: T) => Promise<void> {
   return async (msg) => {
     try {
-        return f(msg);
+        return await f(msg);
     } catch (e) {
       console.error("Error handling telegram message:",e);
     }
