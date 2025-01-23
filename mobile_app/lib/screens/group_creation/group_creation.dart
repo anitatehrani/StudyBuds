@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 import '../../blocs/group_creation/bloc/group_creation_bloc.dart';
 import '../../models/group.dart';
 import '../../widgets/custom_filled_button.dart';
 
+
 class GroupCreationScreen extends StatefulWidget {
   const GroupCreationScreen({Key? key}) : super(key: key);
+
 
   @override
   State<GroupCreationScreen> createState() => _GroupCreationScreenState();
 }
+
 
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
@@ -21,6 +25,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController telegramGroupIdController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +98,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                       .add(FetchCoursesListEvent());
                 }
 
+
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SingleChildScrollView(
@@ -104,7 +110,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           controller: nameController,
                           label: 'Name',
                           hint: 'Capstone Project',
-                          errorText: state.validationErrors['name'], 
+                          errorText: state.validationErrors['name'],
                           onChanged: (value) {
                           _validateFields(context);
                         },
@@ -122,7 +128,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         hint: 'A study group for people who...',
                         controller: descriptionController,
                         maxLines: 3,
-                        errorText: state.validationErrors['description'], 
+                        errorText: state.validationErrors['description'],
                         onChanged: (value) {
                           _validateFields(context);
                         },
@@ -141,26 +147,58 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           // items: state.courses,
                           selectedItem: selectedCourse,
                           onChanged: (value) {
-                            selectedCourse = value!;
+                            //selectedCourse = value!;
+                            setState(() {
+                                selectedCourse = value ?? '';
+                              });
+                              _validateFields(context);
                           },
                           key: Key('course_dropdown_field'),
-                          decoratorProps: const DropDownDecoratorProps(
+                          decoratorProps: DropDownDecoratorProps(
                             decoration: InputDecoration(
                               labelText: 'Course',
                               hintText: 'Select a course',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
-                              border: OutlineInputBorder(),
-                              labelStyle: TextStyle(color: Colors.black),
+                              border: OutlineInputBorder( borderSide: BorderSide(
+                                color: state.validationErrors['courseList'] != null
+                                    ? Colors.red
+                                    : Colors.grey,
+                              ),),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: state.validationErrors['courseList'] != null
+                                      ? Colors.red
+                                      : Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: state.validationErrors['courseList'] != null
+                                    ? Colors.red
+                                    : Colors.grey,
+                              ),
+                            ),
+                              labelStyle: const TextStyle(color: Colors.black),
                               fillColor: Colors.white,
                             ),
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
-                          'Choose a course from the list.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
-                        ),
+                        // const Text(
+                        //   'Choose a course from the list.',
+                        //   style: TextStyle(fontSize: 12, color: Colors.black),
+                        // ),
+                        if (state.validationErrors['courseList'] != null)
+                            Text(
+                              state.validationErrors['courseList']!,
+                              style: const TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          const Text(
+                            'Choose a course from the list.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
                         const SizedBox(height: 16),
                         _buildTextField(
                           enabled: state.isTelegramIdChecked,
@@ -287,6 +325,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
         ));
   }
 
+
 void _validateFields(BuildContext context) {
     context.read<GroupCreationBloc>().add(
           ValidateFieldsEvent(
@@ -294,9 +333,11 @@ void _validateFields(BuildContext context) {
             description: descriptionController.text,
             membersLimit: membersLimitController.text,
             telegramGroupId: telegramGroupIdController.text,
+            courseList: selectedCourse.isNotEmpty ? [selectedCourse] : [],
           ),
         );
   }
+
 
   Widget _buildTextField({
   required String label,
@@ -352,5 +393,6 @@ void _validateFields(BuildContext context) {
     ),
   );
 }
+
 
 }
