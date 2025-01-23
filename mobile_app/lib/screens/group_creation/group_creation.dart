@@ -17,7 +17,7 @@ class GroupCreationScreen extends StatefulWidget {
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController membersLimitController = TextEditingController();
+  final TextEditingController membersLimitController = TextEditingController(text: '2');
   final TextEditingController telegramGroupIdController = TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
@@ -119,7 +119,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         const SizedBox(height: 16),
                         _buildTextField(
                         enabled: state.isTelegramIdChecked,
-                         label: 'Description',
+                        label: 'Description',
                         hint: 'A study group for people who...',
                         controller: descriptionController,
                         maxLines: 3,
@@ -173,7 +173,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           FilteringTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(10),
                         ],
-                        errorText: state.validationErrors['membersLimit'], 
+                        errorText: state.validationErrors['membersLimit'],
                         onChanged: (value) {
                           _validateFields(context);
                         },
@@ -192,9 +192,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                               keyboardType: TextInputType.number,
                               errorText: state.validationErrors['telegramId'],
                               onChanged: (value) {
-                                _validateFields(context); 
+                                _validateFields(context);
                               },
-                              enabled: state.isTelegramIdChecked, 
+                              enabled: state.isTelegramIdChecked,
                               key: const Key('telegram_group_link_field'),
                               suffixIcon: IconButton(
                                 icon: const Icon(Icons.info_outline, color: Colors.blue),
@@ -341,7 +341,7 @@ void _validateFields(BuildContext context) {
           color: errorText != null ? Colors.red : Colors.grey,
         ),
       ),
-      errorText: errorText, 
+      errorText: errorText,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 12,
         vertical: 12,
@@ -349,7 +349,7 @@ void _validateFields(BuildContext context) {
       filled: true,
       fillColor: Colors.white,
       labelStyle: const TextStyle(color: Colors.black),
-      suffixIcon: suffixIcon, 
+      suffixIcon: suffixIcon,
     ),
   );
 }
