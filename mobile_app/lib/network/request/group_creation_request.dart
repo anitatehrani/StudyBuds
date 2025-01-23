@@ -16,7 +16,6 @@ class GroupCreationRequest
             'course': group.course,
             'description': group.description,
             'isPublic': group.isPublic,
-            // 'telegramLink': group.telegramLink,
             'telegramId': group.telegramId,
             'studentId': group.ownerId,
             'membersCount': group.membersCount,

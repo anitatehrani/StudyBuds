@@ -59,12 +59,14 @@ export async function joinTheGroup(req: Request) {
         const adminId = group.adminId;
 
         const fbToken = await getStudentFirebaseToken(adminId);
+
+        const student = await getUnigeProfile(studentId);
         if (fbToken === null) {
             console.log('Firebase token not found for the student');
+            await sendPushNotification(adminId, joinRequestId, '', NotificationType.JOIN_REQUEST, student.first_name + ' ' + student.last_name, group.name);
             // throw new ValidationError('Student has not registered a device for notifications.');
         } else {
 
-            const student = await getUnigeProfile(studentId);
 
             const token = fbToken.token;
             await sendPushNotification(adminId, joinRequestId, token, NotificationType.JOIN_REQUEST, student.first_name + ' ' + student.last_name, group.name);

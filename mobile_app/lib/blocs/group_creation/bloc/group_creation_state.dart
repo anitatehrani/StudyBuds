@@ -6,8 +6,8 @@ class GroupCreationState extends Equatable {
   final bool isTelegramIdChecked;
   final String? errorMessage;
 
- final Map<String, String> validationErrors; 
-final bool isFormValid; 
+  final Map<String, String> validationErrors;
+final bool isFormValid;
 
 
   const GroupCreationState({
@@ -34,7 +34,7 @@ final bool isFormValid;
       isTelegramIdChecked: isTelegramIdChecked ?? this.isTelegramIdChecked,
       errorMessage: errorMessage,
 
-       validationErrors: validationErrors ?? this.validationErrors,
+      validationErrors: validationErrors ?? this.validationErrors,
       isFormValid: isFormValid ?? this.isFormValid,
 
     );
@@ -42,8 +42,8 @@ final bool isFormValid;
 
   @override
   List<Object?> get props =>
-      [courses, isLoading, isTelegramIdChecked, errorMessage,  
-     validationErrors, isFormValid];
+      [courses, isLoading, isTelegramIdChecked, errorMessage,
+      validationErrors, isFormValid];
 }
 
 class FetchCoursesListEvent extends GroupCreationEvent {
