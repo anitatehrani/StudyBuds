@@ -52,23 +52,34 @@ async function isUserInGroup(userId: string, groupId: string): Promise<boolean> 
     }
 }
 
-
+//get the group title from the bot
 async function getGroupTitleFromBot(groupId: string): Promise<string> {
-
     try {
-        const response = await axios.get(TELEGRAM_API_BASE, {
-            params: {
-                chat_id: groupId,
-            },
-        });
-        if (response.data.ok) {
-            return response.data.result.title;
-        } else {
-            throw new Error(`Failed to get group title: ${response.data.description}`);
-        }
+        console.log(`Getting group title for group ${groupId}...`);
+        
+        const response = await axios.get(
+            `${TELEGRAM_API_BASE}/getChat`,
+            {
+                params: {
+                    chat_id: groupId,
+                },
+            }
+        );
+
+        console.log("Response:", response.data);
+        
+        //get the title of the group
+        const title = response.data.result.title;
+        return title;
     } catch (error) {
-        console.error("Error fetching group title:", error);
-        throw new Error("Unable to retrieve group title from Telegram API.");
+        console.log("Error:", error);
+        
+        if (axios.isAxiosError(error)) {
+            console.error("Axios error:", error.response?.data || error.message);
+        } else {
+            console.error("Unexpected error:", error);
+        }
+        throw new Error("Failed to get the group title.");
     }
 }
 
@@ -87,7 +98,7 @@ Given(
 );
 
 When('The student leaves the group with telegram id {string} in Telegram',async function (groupTelegramId: string) {
-    const groupTitle = "groupof10";
+    const groupTitle = await getGroupTitleFromBot(groupTelegramId);
     console.log(`Group title retrieved: ${groupTitle}`);
 
     await driver.switchContext("NATIVE_APP");
@@ -100,28 +111,48 @@ When('The student leaves the group with telegram id {string} in Telegram',async 
     await driver.pause(2000);
 
     // Search for the group using its title
-    const searchButton = await driver.$("~Search"); // "~" indicates content-desc in Appium
+    const searchButton = await driver.$("~Search");
     await searchButton.click();
 
     const searchBar = await driver.$('//android.widget.EditText[@text="Search"]');
     await searchBar.setValue(groupTitle);
 
-    await driver.pause(2000);
-
-    const groupResult = await driver.$(`//android.view.ViewGroup[@text="${groupTitle}"]`);
+    //the result is a viewgroup which the first characters of the text is the groupTitle + ","
+    const groupResult = await driver.$(`//android.view.ViewGroup[starts-with(@text, "${groupTitle},")]`);
+    await groupResult.waitForDisplayed({ timeout: 5000 });
     await groupResult.click();
 
-    const optionsButton = await driver.$('~More options'); // "~" indicates content-desc in Appium
+    const optionsButton = await driver.$('~More options');
     await optionsButton.click();
 
     const leaveGroupButton = await driver.$('//android.widget.TextView[@text="Leave group"]');
     await leaveGroupButton.click();
 
-    const confirmLeaveButton = await driver.$('//android.widget.TextView[@text="Leave group"]');
+    const confirmLeaveButton = await driver.$('(//android.widget.TextView[@text="Leave group"])[2]');
     await confirmLeaveButton.click();
 
 
+    // Reopen your app
+    console.log("Reopening the app...");
+    await driver.execute('mobile: shell', {
+        command: 'am start -n com.orange.mobile_app/com.orange.mobile_app.MainActivity', // Replace with your app package and activity
+    });
+
+    // Wait for the app to load
+    await driver.pause(2000);
+
     await driver.switchContext("FLUTTER");
+});
+
+Then('The student with id {string} is removed from the group with id {string}', async function (userTelegramId:string, groupTelegramId: string) {
+        const isInGroup = await isUserInGroup(userTelegramId, groupTelegramId);
+
+        assert.strictEqual(
+            !isInGroup,
+            false,
+            `User with ID ${userTelegramId} is in the group with ID ${groupTelegramId}`
+        );
+    
 });
 
 // // Initialize mock database with a test student and their Telegram account linked
@@ -133,41 +164,4 @@ When('The student leaves the group with telegram id {string} in Telegram',async 
 //             telegramAccount: 4848, // Replace with actual test Telegram account
 //         }),
 //     ]);
-// });
-
-// // Step to simulate a user leaving a Telegram group
-// When("The student leaves the group with telegram id {string} in Telegram", async function (telegramId: string) {
-//     console.log(`Simulating leaving the group with Telegram ID: ${telegramId}`);
-//     // Example logic: Navigate to group settings and trigger leave action
-//     // Customize this to match your app's UI and workflow
-//     await go_to_page(driver, BottomBarIcon.profile);
-//     await waitForElement(driver, UiId.joinedGroupTab);
-//     await clickButton(driver, UiId.joinedGroupTab);
-
-//     // Locate the group by ID and perform leave action
-//     const groupElement = byValueKey(telegramId);
-//     await driver.elementClick(groupElement);
-//     const leaveButton = byValueKey("leave_group_button");
-//     await driver.elementClick(leaveButton);
-// });
-
-// // Validate that the user is no longer part of the group in the app
-// Then("The student is removed from the group with telegram id {string} in the application", async function (telegramId: string) {
-//     console.log(`Validating the removal of the student from the group with Telegram ID: ${telegramId}`);
-//     await waitForElement(driver, UiId.noResultsMessage); // Assume no group visible indicates success
-//     const actualMessage = await driver.getText(byValueKey(UiId.noResultsMessage));
-//     const expectedMessage = "You are no longer part of this group."; // Adjust as needed
-//     assert.strictEqual(actualMessage, expectedMessage, "Group leave validation failed.");
-// });
-
-// // Additional steps to navigate and validate search results and UI changes can be added here
-// When("I go to the {string} page", async function (pageName: string) {
-//     const icon = getUiId(pageName.toLowerCase());
-//     await go_to_page(driver, icon);
-// });
-
-// // Logout step for clean-up
-// Then("I do the logout", async function () {
-//     console.log("Logging out the user...");
-//     await do_logout(driver);
 // });
