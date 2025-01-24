@@ -59,7 +59,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamedAndRemoveUntil('/profile', (route) => false);
+                            Navigator.of(context).pushNamedAndRemoveUntil('/profile', (route) => false);
                               // Navigator.of(context).pop();
                             },
                             child: Text('Ok'),
@@ -112,9 +112,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           hint: 'Capstone Project',
                           errorText: state.validationErrors['name'],
                           onChanged: (value) {
-                            _validateFields(context);
-                          },
-                          key: const Key('group_name_field'),
+                          _validateFields(context);
+                        },
+                        key: const Key('group_name_field'),
                         ),
                         const SizedBox(height: 4),
                         const Text(
@@ -123,15 +123,15 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         _buildTextField(
-                          enabled: state.isTelegramIdChecked,
-                          label: 'Description',
-                          hint: 'A study group for people who...',
-                          controller: descriptionController,
-                          maxLines: 3,
-                          errorText: state.validationErrors['description'],
-                          onChanged: (value) {
-                            _validateFields(context);
-                          },
+                        enabled: state.isTelegramIdChecked,
+                        label: 'Description',
+                        hint: 'A study group for people who...',
+                        controller: descriptionController,
+                        maxLines: 3,
+                        errorText: state.validationErrors['description'],
+                        onChanged: (value) {
+                          _validateFields(context);
+                        },
                           key: Key(
                               'group_description_field'), // he text color white
                         ),
@@ -149,9 +149,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           onChanged: (value) {
                             //selectedCourse = value!;
                             setState(() {
-                              selectedCourse = value ?? '';
-                            });
-                            _validateFields(context);
+                                selectedCourse = value ?? '';
+                              });
+                              _validateFields(context);
                           },
                           key: Key('course_dropdown_field'),
                           decoratorProps: DropDownDecoratorProps(
@@ -159,7 +159,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                               labelText: 'Course',
                               hintText: 'Select a course',
                               floatingLabelBehavior:
-                              FloatingLabelBehavior.always,
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder( borderSide: BorderSide(
                                 color: state.validationErrors['courseList'] != null
                                     ? Colors.red
@@ -174,12 +174,12 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: state.validationErrors['courseList'] != null
-                                      ? Colors.red
-                                      : Colors.grey,
-                                ),
+                              borderSide: BorderSide(
+                                color: state.validationErrors['courseList'] != null
+                                    ? Colors.red
+                                    : Colors.grey,
                               ),
+                            ),
                               labelStyle: const TextStyle(color: Colors.black),
                               fillColor: Colors.white,
                             ),
@@ -191,29 +191,29 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         //   style: TextStyle(fontSize: 12, color: Colors.black),
                         // ),
                         if (state.validationErrors['courseList'] != null)
-                          Text(
-                            state.validationErrors['courseList']!,
-                            style: const TextStyle(color: Colors.red, fontSize: 12),
+                            Text(
+                              state.validationErrors['courseList']!,
+                              style: const TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          const Text(
+                            'Choose a course from the list.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
                           ),
-                        const Text(
-                          'Choose a course from the list.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
-                        ),
                         const SizedBox(height: 16),
                         _buildTextField(
                           enabled: state.isTelegramIdChecked,
                           label: 'Members Limit',
                           hint: '2',
-                          controller: membersLimitController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10),
-                          ],
-                          errorText: state.validationErrors['membersLimit'],
-                          onChanged: (value) {
-                            _validateFields(context);
-                          },
+                        controller: membersLimitController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(10),
+                        ],
+                        errorText: state.validationErrors['membersLimit'],
+                        onChanged: (value) {
+                          _validateFields(context);
+                        },
                           key: Key('members_limit_field'),
                         ),
                         const SizedBox(height: 4),
@@ -223,42 +223,42 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         ),
                         const SizedBox(height: 16),
                         _buildTextField(
-                          label: 'Telegram Group ID',
-                          hint: '1234567890',
-                          controller: telegramGroupIdController,
-                          keyboardType: TextInputType.number,
-                          errorText: state.validationErrors['telegramId'],
-                          onChanged: (value) {
-                            _validateFields(context);
-                          },
-                          enabled: state.isTelegramIdChecked,
-                          key: const Key('telegram_group_link_field'),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.info_outline, color: Colors.blue),
-                            tooltip: 'Click for more information',
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: const Text('To get Telegram Group ID'),
-                                  content: const Text(
-                                    '1. First, create your group on Telegram.\n'
+                              label: 'Telegram Group ID',
+                              hint: '1234567890',
+                              controller: telegramGroupIdController,
+                              keyboardType: TextInputType.number,
+                              errorText: state.validationErrors['telegramId'],
+                              onChanged: (value) {
+                                _validateFields(context);
+                              },
+                              enabled: state.isTelegramIdChecked,
+                              key: const Key('telegram_group_link_field'),
+                              suffixIcon: IconButton(
+                                icon: const Icon(Icons.info_outline, color: Colors.blue),
+                                tooltip: 'Click for more information',
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text('To get Telegram Group ID'),
+                                      content: const Text(
+                                        '1. First, create your group on Telegram.\n'
                                         '2. Add our bot "studybuds" to the group and grant it administrative privileges.\n'
                                         '3. Send the message "/start" to the group.\n'
                                         '4. The bot will reply with the Telegram Group ID.\n\n'
                                         'Copy the Group ID and enter it in the field.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('Close'),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          child: const Text('Close'),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                                  );
+                                },
+                              ),
+                            ),
                         const SizedBox(height: 4),
                         const Text(
                           'You have to create your Telegram group and add its id here.',
@@ -278,10 +278,10 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                               key: Key('is_private_group_switch'),
                               onChanged: state.isTelegramIdChecked
                                   ? (value) {
-                                setState(() {
-                                  isPrivateGroup = value;
-                                });
-                              }
+                                      setState(() {
+                                        isPrivateGroup = value;
+                                      });
+                                    }
                                   : null,
                             ),
                           ],
@@ -299,21 +299,21 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                               context
                                   .read<GroupCreationBloc>()
                                   .add(CreateGroupEvent(
-                                Group(
-                                    name: nameController.text,
-                                    description: descriptionController.text,
-                                    course: selectedCourse,
-                                    membersLimit: membersLimitController
-                                        .text.isNotEmpty
-                                        ? int.parse(
-                                        membersLimitController.text)
-                                        : 2,
-                                    members: [],
-                                    telegramId:
-                                    int.parse(telegramGroupIdController.text),
-                                    isPublic: !isPrivateGroup,
-                                    ownerId: 10),
-                              ));
+                                    Group(
+                                        name: nameController.text,
+                                        description: descriptionController.text,
+                                        course: selectedCourse,
+                                        membersLimit: membersLimitController
+                                                .text.isNotEmpty
+                                            ? int.parse(
+                                                membersLimitController.text)
+                                            : 2,
+                                        members: [],
+                                        telegramId:
+                                            int.parse(telegramGroupIdController.text),
+                                        isPublic: !isPrivateGroup,
+                                        ownerId: 10),
+                                  ));
                             },
                           ),
                         ),
@@ -328,73 +328,73 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
   }
 
 
-  void _validateFields(BuildContext context) {
+void _validateFields(BuildContext context) {
     context.read<GroupCreationBloc>().add(
-      ValidateFieldsEvent(
-        name: nameController.text,
-        description: descriptionController.text,
-        membersLimit: membersLimitController.text,
-        telegramGroupId: telegramGroupIdController.text,
-        courseList: selectedCourse.isNotEmpty ? [selectedCourse] : [],
-      ),
-    );
+          ValidateFieldsEvent(
+            name: nameController.text,
+            description: descriptionController.text,
+            membersLimit: membersLimitController.text,
+            telegramGroupId: telegramGroupIdController.text,
+            courseList: selectedCourse.isNotEmpty ? [selectedCourse] : [],
+          ),
+        );
   }
 
 
   Widget _buildTextField({
-    required String label,
-    String? hint,
-    required TextEditingController controller,
-    String? errorText,
-    required Function(String) onChanged,
-    Key? key,
-    int maxLines = 1,
-    TextInputType keyboardType = TextInputType.text,
-    List<TextInputFormatter>? inputFormatters,
-    bool enabled = true,
-    Widget? suffixIcon,
-  }) {
-    return TextField(
-      key: key,
-      controller: controller,
-      onChanged: onChanged,
-      maxLines: maxLines,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      enabled: enabled,
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: errorText != null ? Colors.red : Colors.grey,
-          ),
+  required String label,
+  String? hint,
+  required TextEditingController controller,
+  String? errorText,
+  required Function(String) onChanged,
+  Key? key,
+  int maxLines = 1,
+  TextInputType keyboardType = TextInputType.text,
+  List<TextInputFormatter>? inputFormatters,
+  bool enabled = true,
+  Widget? suffixIcon,
+}) {
+  return TextField(
+    key: key,
+    controller: controller,
+    onChanged: onChanged,
+    maxLines: maxLines,
+    keyboardType: keyboardType,
+    inputFormatters: inputFormatters,
+    enabled: enabled,
+    style: const TextStyle(color: Colors.black),
+    decoration: InputDecoration(
+      labelText: label,
+      hintText: hint,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: errorText != null ? Colors.red : Colors.grey,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: errorText != null ? Colors.red : Colors.black,
-            width: 2,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: errorText != null ? Colors.red : Colors.grey,
-          ),
-        ),
-        errorText: errorText,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 12,
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        labelStyle: const TextStyle(color: Colors.black),
-        suffixIcon: suffixIcon,
       ),
-    );
-  }
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: errorText != null ? Colors.red : Colors.black,
+          width: 2,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: errorText != null ? Colors.red : Colors.grey,
+        ),
+      ),
+      errorText: errorText,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 12,
+      ),
+      filled: true,
+      fillColor: Colors.white,
+      labelStyle: const TextStyle(color: Colors.black),
+      suffixIcon: suffixIcon,
+    ),
+  );
+}
 
 
 }

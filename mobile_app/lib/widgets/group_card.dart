@@ -70,7 +70,6 @@ class GroupCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<JoinGroupBloc, JoinGroupState>(
       listenWhen: (prev, current) {
-        // Only listen if the current state's groupId matches this card's groupId
         if (current is JoinGroupRequestSuccess && current.groupId == group.id) {
           return true;
         }
@@ -82,8 +81,7 @@ class GroupCard extends StatelessWidget {
       listener: (context, state) {
         if (state is JoinGroupRequestSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text(state.message), backgroundColor: Colors.green),
+            SnackBar(content: Text(state.message), backgroundColor: Colors.green),
           );
         } else if (state is JoinGroupRequestFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -102,34 +100,43 @@ class GroupCard extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical: 8),
               color: backgroundColor,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              group.name,
-                              key: Key('group_name_${index.toString()}'),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Text(
+                                  group.name,
+                                  key: Key('group_name_${index.toString()}'),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 4),
-                            IconTheme(
-                              data: IconThemeData(
-                                color: Theme.of(context).colorScheme.primary,
+                              SizedBox(width: 4),
+                              IconTheme(
+                                data: IconThemeData(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                child: Icon(
+                                  group.isPublic ? Icons.lock_open : Icons.lock,
+                                  size: 16,
+                                ),
                               ),
-                              child: Icon(
-                                group.isPublic ? Icons.lock_open : Icons.lock,
-                                size: 18,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Row(
                           children: [
@@ -145,33 +152,36 @@ class GroupCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      group.course,
-                      key: Key('group_course_${index.toString()}'),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                    SizedBox(height: 6),
+                    Flexible(
+                      child: Text(
+                        group.course,
+                        key: Key('group_course_${index.toString()}'),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 6),
                     Text(
                       group.description,
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Theme.of(context).colorScheme.primary),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         if (additionalButtonLabel == "Delete the group") ...[
                           CustomFilledButton(
                             key: ValueKey('see_more_$index'),
-                            // Unique key for "See More"
                             backgroundColor: additionalButtonColor ??
                                 Theme.of(context).colorScheme.primary,
                             label: additionalButtonLabel,
@@ -187,7 +197,6 @@ class GroupCard extends StatelessWidget {
                         ] else
                           CustomTextButton(
                             key: ValueKey('see_more_$index'),
-                            // Unique key for "See More"
                             foregroundColor: additionalButtonColor ??
                                 Theme.of(context).colorScheme.primary,
                             label: additionalButtonLabel,
@@ -200,7 +209,7 @@ class GroupCard extends StatelessWidget {
                               }
                             },
                           ),
-                        Container(margin: EdgeInsets.symmetric(horizontal: 5)),
+                        Container(margin: EdgeInsets.symmetric(horizontal: 4)),
                         if (additionalButtonLabel != "Delete the group")
                           CustomFilledButton(
                             key: Key('join_button_${group.id}'),
@@ -212,7 +221,7 @@ class GroupCard extends StatelessWidget {
                                 : (group.isGroupMember
                                 ? "Already a Member"
                                 : (buttonLabel ??
-                                (group.joinRequestStatus.isNotEmpty
+                                (group.joinRequestStatus.isNotEmpty && group.joinRequestStatus != 'reject'
                                     ? group.joinRequestStatus!
                                     : (group.isPublic
                                     ? 'Join the group'

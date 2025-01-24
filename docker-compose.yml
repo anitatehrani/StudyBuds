@@ -227,6 +227,7 @@ services:
             - "443:443"
         volumes:
             - ./Caddyfile:/etc/caddy/Caddyfile:ro
+            - /config/caddy
             - /data
         restart: unless-stopped
         read_only: true

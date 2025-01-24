@@ -86,7 +86,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
 
 
   Future<void> _onValidateFields(
-      ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
+    ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
     final errors = <String, String>{};
 
 
@@ -101,16 +101,16 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
       errors['membersLimit'] = 'Members limit must be between 2 and 100';
     }
     if (event.telegramGroupId.isEmpty) {
-      errors['telegramId'] = 'Telegram Group ID must contain only digits';  // validation of TelegramGroupId field
-    }
-    if (event.courseList.isEmpty) {
-      errors['courseList'] = 'Course cannot be empty. Please select a course from the list';
-    }
+    errors['telegramId'] = 'Telegram Group ID must contain only digits';  // validation of TelegramGroupId field
+  }
+  if (event.courseList.isEmpty) {
+    errors['courseList'] = 'Course cannot be empty. Please select a course from the list';
+  }
     emit(state.copyWith(
       validationErrors: errors,
       isFormValid: errors.isEmpty,
     ));
 
 
-  }
+}
 }
