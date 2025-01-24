@@ -291,7 +291,9 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           child: CustomFilledButton(
                             isEnabled: state.isTelegramIdChecked && state.isFormValid,
                             label: 'Create the study group',
-                            key: Key('create_group_button'),
+                            key: Key(state.isTelegramIdChecked && state.isFormValid
+                                ? 'create_group_button_enabled'
+                                : 'create_group_button_disabled'),
                             iconData: Icons.add,
                             onPressed: () {
                               context
