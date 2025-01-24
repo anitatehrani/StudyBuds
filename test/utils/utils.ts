@@ -33,7 +33,7 @@ export enum UiId {
     membersLimitTextField = "members_limit_field",
     telegramGroupLinkTextField = "telegram_group_link_field",
     isPrivateGroupSwitch = "is_private_group_switch",
-    createGroupButton = "create_group_button",
+    createGroupButton = "create_group_button_enabled",
     successSnackbar = "success_snackbar",
     errorSnackbar = "error_snackbar",
     courseDropdownField = "course_dropdown_field",
