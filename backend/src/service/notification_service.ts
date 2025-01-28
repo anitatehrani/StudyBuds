@@ -105,6 +105,9 @@ export async function sendPushNotification(studentId: number, joinRequestId: num
         const message = {
             notification: template,
             token,
+            data : {
+                click_action : '/notifications'
+            }
         };
     
         await saveNotification(studentId, joinRequestId, notificationType, template.body);
@@ -125,9 +128,6 @@ export async function testNotification(token:string, msg:string) {
         console.log('jj');
 
         sendNotificationToFirebase(message);
-        // const response = await admin.messaging().send(message);
-
-        // console.log('Notification sent successfully:', response);
 
 }
 
