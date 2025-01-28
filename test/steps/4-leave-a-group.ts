@@ -9,79 +9,14 @@ import {
     waitForElementByValue,
     editTextField,
     getUiId,
-    UiId,
+    getText,
 } from "../utils/utils";
 import { driver } from "./all";
 import assert from "assert";
-import axios from "axios";
 import { initDB } from "../utils/mock-data";
 import { Student } from "../../backend/src/models/Student";
 import { byType, byValueKey } from "appium-flutter-finder";
-
-const BOT_TOKEN = "7629365794:AAH755qh_Dc9WKlYbGz2gkwjoFMQzr9056Y";
-const TELEGRAM_API_BASE = `https://api.telegram.org/bot${BOT_TOKEN}`;
-
-async function isUserInGroup(userId: string, groupId: string): Promise<boolean> {
-    try {
-        console.log(`Checking if user ${userId} is in group ${groupId}...`);
-        
-        const response = await axios.get(
-            `${TELEGRAM_API_BASE}/getChatMember`,
-            {
-                params: {
-                    chat_id: groupId,
-                    user_id: userId,
-                },
-            }
-        );
-
-        console.log("Response:", response.data);
-        
-        // Check if the user is a member of the group
-        const { status } = response.data.result;
-        return ["member", "administrator", "creator"].includes(status);
-    } catch (error) {
-        console.log("Error:", error);
-        
-        if (axios.isAxiosError(error)) {
-            console.error("Axios error:", error.response?.data || error.message);
-        } else {
-            console.error("Unexpected error:", error);
-        }
-        throw new Error("Failed to verify if the user is in the group.");
-    }
-}
-
-//get the group title from the bot
-async function getGroupTitleFromBot(groupId: string): Promise<string> {
-    try {
-        console.log(`Getting group title for group ${groupId}...`);
-        
-        const response = await axios.get(
-            `${TELEGRAM_API_BASE}/getChat`,
-            {
-                params: {
-                    chat_id: groupId,
-                },
-            }
-        );
-
-        console.log("Response:", response.data);
-        
-        //get the title of the group
-        const title = response.data.result.title;
-        return title;
-    } catch (error) {
-        console.log("Error:", error);
-        
-        if (axios.isAxiosError(error)) {
-            console.error("Axios error:", error.response?.data || error.message);
-        } else {
-            console.error("Unexpected error:", error);
-        }
-        throw new Error("Failed to get the group title.");
-    }
-}
+import { isUserInGroup, getGroupTitleFromBot } from "../utils/bot-utils";
 
 
 Given(
@@ -145,14 +80,18 @@ When('The student leaves the group with telegram id {string} in Telegram',async 
 });
 
 Then('The student with id {string} is removed from the group with id {string}', async function (userTelegramId:string, groupTelegramId: string) {
-        const isInGroup = await isUserInGroup(userTelegramId, groupTelegramId);
+    const isInGroup = await isUserInGroup(userTelegramId, groupTelegramId);
 
-        assert.strictEqual(
-            !isInGroup,
-            false,
-            `User with ID ${userTelegramId} is in the group with ID ${groupTelegramId}`
-        );
-    
+    assert.strictEqual(
+        !isInGroup,
+        false,
+        `User with ID ${userTelegramId} is in the group with ID ${groupTelegramId}`
+    );
+});
+
+Then('he can no longer see the {string} in the group description',  async function (field:string) {
+    const groupName = await getText(driver, getUiId(field));
+    assert.ok(!groupName, field + " is still displayed.");
 });
 
 // // Initialize mock database with a test student and their Telegram account linked

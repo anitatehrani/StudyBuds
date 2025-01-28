@@ -11,6 +11,6 @@ Scenario: Leave a group
     Then I see all groups where "groupof10" is inside their group name or course
     When I click on "see more" of the "first" group
     Then The group description dialog opens
-    And he can no longer see the "invitation link" in the group description
+    And he can no longer see the "telegram group link" in the group description
     And I go to the "profile" page
     And I do the logout

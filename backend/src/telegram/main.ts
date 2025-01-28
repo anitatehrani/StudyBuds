@@ -50,7 +50,10 @@ bot.onText(/\/start/, async (msg) => {
             return;
         }
     }
-    await bot.sendMessage(chatId, `Welcome! Your Telegram ID is ${chatId}`);
+    const escapeChatId = String(chatId).replace(/([_*\[\]()~`>#\+\-=|{}.!])/g, '\\$1');
+    await bot.sendMessage(chatId, `Welcome\\! Your Telegram ID is \`${escapeChatId}\``, { 
+        parse_mode: "MarkdownV2",
+     });
 });
 
 export async function getJoinLink(groupId: number) {
