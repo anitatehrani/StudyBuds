@@ -4,7 +4,6 @@ import 'package:flutter_driver/driver_extension.dart';
 import 'package:study_buds/firebase_options.dart';
 import 'package:study_buds/screens/login/login.dart';
 import 'package:study_buds/screens/main.dart';
-import 'package:study_buds/screens/profile/profile.dart';
 import 'package:study_buds/utils/auth_utils.dart';
 import 'package:study_buds/utils/push_notification.dart';
 import 'package:study_buds/utils/static_env.dart';
@@ -19,8 +18,14 @@ void main() async {
 
   // Check if the user is authenticated
   final isAuthenticated = await AuthUtils.isAuthenticated();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  PushNotificationService.catchNotification();
   runApp(MyApp(isAuthenticated: isAuthenticated));
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 
 class MyApp extends StatelessWidget {
   final bool isAuthenticated;
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'StudyBuds',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         primaryColor: const Color(0xFF252B33),
         primaryColorDark: const Color(0XFF000814),
@@ -49,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const MainScreen(selectedIndex: 0),
         '/login': (context) =>
             const Login(key: Key("login_page"), title: "Login"),
+        '/notifications': (context) => const MainScreen(selectedIndex: 3,),
         '/profile': (context) => const MainScreen(selectedIndex: 4),
       },
     );

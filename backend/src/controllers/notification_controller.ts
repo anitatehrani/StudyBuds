@@ -48,7 +48,6 @@ export async function saveToken(req: Request) {
 export async function testNotif(req: Request) {
     const token = checkString(req.body, "token");
     const msg = checkString(req.body, 'msg');
-
     testNotification(token, msg);
 
 }
