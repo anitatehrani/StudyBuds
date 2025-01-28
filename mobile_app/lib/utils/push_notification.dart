@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:study_buds/main.dart';
 import 'package:study_buds/network/request/update_firebase_token.dart';
 import 'package:study_buds/utils/shared_preference_helper.dart';
 
@@ -73,10 +74,10 @@ class PushNotificationService {
     return response.statusCode == 200;
   }
 
-  static void catchNotification(BuildContext context) {
+  static Future<void> catchNotification() async {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (message.data['click_action'] == 'notifications') {
-        Navigator.pushNamed(context, '/notifications');
+      if (message.data['route'] == '/notifications') {
+        navigatorKey.currentState?.pushReplacementNamed('/notifications');
       }
     });
   }

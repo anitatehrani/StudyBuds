@@ -106,7 +106,7 @@ export async function sendPushNotification(studentId: number, joinRequestId: num
             notification: template,
             token,
             data : {
-                click_action : '/notifications'
+                'route' : '/notifications'
             }
         };
     
@@ -123,9 +123,10 @@ export async function testNotification(token:string, msg:string) {
     const message = {
             notification: {title: 'test', body: msg},
             token,
+            data : {
+                'route': '/notifications'
+            }
         };
-
-        console.log('jj');
 
         sendNotificationToFirebase(message);
 
