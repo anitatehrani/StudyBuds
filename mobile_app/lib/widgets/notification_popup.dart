@@ -32,7 +32,8 @@ class NotificationPopup extends StatelessWidget {
             onPressed: () {
               sb.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
                   notification.joinRequestId, false));
-              Navigator.of(context).pop();
+              Navigator.of(context).pop('rejected');
+              listChanged.call();
             },
             label: rejectButtonLabel,
             iconData: Icons.cancel_rounded,
@@ -44,7 +45,8 @@ class NotificationPopup extends StatelessWidget {
             onPressed: () {
               sb.read<JoinRequestBloc>().add(ChangeJoinRequestStatusEvent(
                   notification.joinRequestId, true));
-              Navigator.of(context).pop();
+              Navigator.of(context).pop('accepted');
+              listChanged.call();
             },
             iconData: Icons.check_circle_rounded,
             label: acceptButtonLabel,

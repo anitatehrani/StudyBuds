@@ -5,15 +5,19 @@ import 'package:study_buds/network/request/fetch_courses_request.dart';
 import 'package:study_buds/network/request/group_creation_request.dart';
 import 'package:study_buds/network/request/profile_request.dart';
 
+
 part 'group_creation_event.dart';
 part 'group_creation_state.dart';
+
 
 class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
   GroupCreationBloc() : super(const GroupCreationState()) {
     on<TelegramIdCheckEvent>(_onTelegramIdCheck);
     on<FetchCoursesListEvent>(_onFetchCourses);
     on<CreateGroupEvent>(_onCreateGroup);
+    on<ValidateFieldsEvent>(_onValidateFields);
   }
+
 
   Future<void> _onTelegramIdCheck(
       TelegramIdCheckEvent event, Emitter<GroupCreationState> emit) async {
@@ -41,6 +45,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     }
   }
 
+
   Future<void> _onFetchCourses(
       FetchCoursesListEvent event, Emitter<GroupCreationState> emit) async {
     emit(FetchCoursesListLoading());
@@ -60,6 +65,7 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
     }
   }
 
+
   Future<void> _onCreateGroup(
       CreateGroupEvent event, Emitter<GroupCreationState> emit) async {
     emit(GroupCreationLoading());
@@ -67,13 +73,44 @@ class GroupCreationBloc extends Bloc<GroupCreationEvent, GroupCreationState> {
       final groupCreation = GroupCreationRequest(event.group);
       final response = await groupCreation.send();
 
+
       if (response.isSuccess) {
         emit(GroupCreationSuccess('The group created successfully.'));
       } else {
-        emit(GroupCreationFailed('Failed to create group.'));
+        emit(GroupCreationFailed(response.data['message']));
       }
     } catch (error) {
       emit(GroupCreationFailed('Failed to create group.'));
     }
   }
+
+
+  Future<void> _onValidateFields(
+    ValidateFieldsEvent event, Emitter<GroupCreationState> emit) async {
+    final errors = <String, String>{};
+
+
+    if (event.name.isEmpty) {
+      errors['name'] = 'Name cannot be empty';
+    }
+    if (event.description.isEmpty) {
+      errors['description'] = 'Description cannot be empty';
+    }
+    final membersLimit = int.tryParse(event.membersLimit);
+    if (membersLimit == null || membersLimit < 2 || membersLimit > 100) {
+      errors['membersLimit'] = 'Members limit must be between 2 and 100';
+    }
+    if (event.telegramGroupId.isEmpty) {
+    errors['telegramId'] = 'Telegram Group ID must contain only digits';  // validation of TelegramGroupId field
+  }
+  if (event.courseList.isEmpty) {
+    errors['courseList'] = 'Course cannot be empty. Please select a course from the list';
+  }
+    emit(state.copyWith(
+      validationErrors: errors,
+      isFormValid: errors.isEmpty,
+    ));
+
+
+}
 }

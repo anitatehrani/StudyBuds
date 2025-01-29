@@ -6,6 +6,7 @@ import type { JoinRequest, JoinRequestId } from './JoinRequest';
 import type { Notification, NotificationId } from './Notification';
 import type { StudentGroup, StudentGroupId } from './StudentGroup';
 
+
 export interface StudentAttributes {
   studentId: number;
   telegramAccount?: number;
@@ -99,43 +100,43 @@ export class Student extends Model<StudentAttributes, StudentCreationAttributes>
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Student {
     return Student.init({
-    studentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      field: 'student_id'
-    },
-    telegramAccount: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'telegram_account'
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'created_at'
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
-      field: 'updated_at'
-    }
-  }, {
-    sequelize,
-    tableName: 'student',
-    schema: 'studybuds',
-    timestamps: false,
-    indexes: [
-      {
-        name: "student_pkey",
-        unique: true,
-        fields: [
-          { name: "student_id" },
-        ]
+      studentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        field: 'student_id'
       },
-    ]
-  });
+      telegramAccount: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+        field: 'telegram_account'
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        field: 'created_at'
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+        field: 'updated_at'
+      }
+    }, {
+      sequelize,
+      tableName: 'student',
+      schema: 'studybuds',
+      timestamps: false,
+      indexes: [
+        {
+          name: "student_pkey",
+          unique: true,
+          fields: [
+            { name: "student_id" },
+          ]
+        },
+      ]
+    });
   }
 }

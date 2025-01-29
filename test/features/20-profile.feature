@@ -5,7 +5,7 @@ Scenario: Profile
     Given I do the login as "10" "10"
     When I go to the "profile" page
     Then I see my "studentId" "10"
-    And I see my "fullname" "Noah White"
+    And I see my "fullname" "Mexican Bonora"
     And I see my "telegramId" "36"
     And I do the logout
 

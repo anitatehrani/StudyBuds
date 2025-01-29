@@ -2,6 +2,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:study_buds/widgets/custom_text_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../blocs/group_creation/bloc/group_creation_bloc.dart';
 import '../../models/group.dart';
@@ -16,10 +18,11 @@ class GroupCreationScreen extends StatefulWidget {
 
 class _GroupCreationScreenState extends State<GroupCreationScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController membersLimitController = TextEditingController()
-    ..text = "2";
-  final TextEditingController telegramIdController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController membersLimitController =
+      TextEditingController(text: '2');
+  final TextEditingController telegramGroupIdController =
+      TextEditingController();
   bool isPrivateGroup = true;
   String selectedCourse = '';
 
@@ -55,8 +58,8 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, '/profile');
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/profile', (route) => false);
                               // Navigator.of(context).pop();
                             },
                             child: Text('Ok'),
@@ -101,54 +104,46 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextField(
+                        _buildTextField(
                           enabled: state.isTelegramIdChecked,
                           controller: nameController,
-                          decoration: InputDecoration(
-                              labelText: 'Name',
-                              hintText: 'Capstone Project',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                              filled: true,
-                              fillColor: Colors.white,
-                              labelStyle: TextStyle(color: Colors.black)),
-                          style: const TextStyle(color: Colors.black),
-                          key: Key('group_name_field'),
+                          label: 'Name',
+                          hint: 'Capstone Project',
+                          errorText: state.validationErrors['name'],
+                          onChanged: (value) {
+                            _validateFields(context);
+                          },
+                          key: const Key('group_name_field'),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
-                          'Set a descriptive name for your study group.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Set a descriptive name for your study group.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        TextField(
+                        _buildTextField(
                           enabled: state.isTelegramIdChecked,
+                          label: 'Description',
+                          hint: 'A study group for people who...',
                           controller: descriptionController,
                           maxLines: 3,
-                          decoration: const InputDecoration(
-                            labelText: 'Description',
-                            hintText: 'A study group for people who...',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 16),
-                            fillColor: Colors.white,
-                            // Set the fill color
-                            labelStyle: TextStyle(
-                                color: Colors
-                                    .black), // Make the label white for visibility
-                          ),
-                          style: const TextStyle(color: Colors.black),
+                          errorText: state.validationErrors['description'],
+                          onChanged: (value) {
+                            _validateFields(context);
+                          },
                           key: Key(
                               'group_description_field'), // he text color white
                         ),
                         const SizedBox(height: 4),
-                        const Text(
-                          'Provide details about the goals, topics, or preferences.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Provide details about the goals, topics, or preferences.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
                         ),
                         const SizedBox(height: 16),
                         DropdownSearch<String>(
@@ -157,152 +152,232 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                           // items: state.courses,
                           selectedItem: selectedCourse,
                           onChanged: (value) {
-                            selectedCourse = value!;
+                            //selectedCourse = value!;
+                            setState(() {
+                              selectedCourse = value ?? '';
+                            });
+                            _validateFields(context);
                           },
                           key: Key('course_dropdown_field'),
-                          decoratorProps: const DropDownDecoratorProps(
+                          decoratorProps: DropDownDecoratorProps(
                             decoration: InputDecoration(
                               labelText: 'Course',
                               hintText: 'Select a course',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
-                              border: OutlineInputBorder(),
-                              labelStyle: TextStyle(color: Colors.black),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: state.validationErrors['courseList'] !=
+                                          null
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: state.validationErrors['courseList'] !=
+                                          null
+                                      ? Colors.red
+                                      : Colors.black,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: state.validationErrors['courseList'] !=
+                                          null
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
+                              ),
+                              labelStyle: const TextStyle(color: Colors.black),
                               fillColor: Colors.white,
                             ),
                           ),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
-                          'Choose a course from the list.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        if (state.validationErrors['courseList'] != null)
+                          Text(
+                            state.validationErrors['courseList']!,
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 12),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Choose a course from the list.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        TextField(
+                        _buildTextField(
                           enabled: state.isTelegramIdChecked,
+                          label: 'Members Limit',
+                          hint: '2',
                           controller: membersLimitController,
-                          decoration: InputDecoration(
-                            labelText: 'Members Limit',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            fillColor: Colors.white,
-                            labelStyle: TextStyle(color: Colors.black),
-                          ),
-                          style: const TextStyle(color: Colors.black),
-                          //
-                          key: Key('members_limit_field'),
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(3),
+                            LengthLimitingTextInputFormatter(10),
                           ],
+                          errorText: state.validationErrors['membersLimit'],
                           onChanged: (value) {
-                            // Limit input value between 2 and 100
-                            if (value.isNotEmpty) {
-                              int? parsedValue = int.tryParse(value);
-                              if (parsedValue != null && (parsedValue < 2)) {
-                                // Show a message or update the state if the value is out of range
-                                membersLimitController.text =
-                                    '2'; // Reset to 2 if out of range
-                                membersLimitController.selection =
-                                    TextSelection.collapsed(
-                                        offset: 1); // Keep cursor at the end
-                              }
-
-                              if (parsedValue != null && (parsedValue > 100)) {
-                                // Show a message or update the state if the value is out of range
-                                membersLimitController.text =
-                                    '100'; // Reset to 100 if out of range
-                                membersLimitController.selection =
-                                    TextSelection.collapsed(
-                                        offset: 3); // Keep cursor at the end
-                              }
-                            }
+                            _validateFields(context);
                           },
+                          key: Key('members_limit_field'),
                         ),
                         const SizedBox(height: 4),
-                        const Text(
-                          'Limit should be between 2 and 100 members.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
-                        ),
-                        const SizedBox(height: 16),
-                        TextField(
-                          enabled: state.isTelegramIdChecked,
-                          controller: telegramIdController,
-                          decoration: InputDecoration(
-                            labelText: 'Telegram Group Id',
-                            hintText: '1234567890',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            fillColor: Colors.white,
-                            labelStyle: TextStyle(color: Colors.black),
-                            suffixIcon: IconButton(
-                              icon:
-                                  Icon(Icons.info_outline, color: Colors.blue),
-                              tooltip: 'Click for more information',
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text('To get Telegram Group ID'),
-                                    content: Text(
-                                        '1. First, create your group on Telegram.\n'
-                                        '2. Add our bot "studybuds" to the group and grant it administrative privileges.\n'
-                                        '3. Send the message "/start" to the group.\n'
-                                        '4. The bot will reply with the Telegram Group ID.\n\n'
-                                        'Copy the Group ID and enter it in the field.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('Close'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'Limit should be between 2 and 100 members.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
                           ),
-                          key: Key('telegram_group_link_field'),
-                          keyboardType: TextInputType.number,
-                          style: const TextStyle(color: Colors.black),
                         ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          'You have to create your Telegram group and add its id here.',
-                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Do you want to create a Private group?',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w500),
+                              ),
+                              Switch(
+                                value: isPrivateGroup,
+                                key: Key('is_private_group_switch'),
+                                onChanged: state.isTelegramIdChecked
+                                    ? (value) {
+                                        setState(() {
+                                          isPrivateGroup = value;
+                                        });
+                                      }
+                                    : null,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          thickness: 1,
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Private Group',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
-                            ),
-                            Switch(
-                              value: isPrivateGroup,
-                              key: Key('is_private_group_switch'),
-                              onChanged: state.isTelegramIdChecked
-                                  ? (value) {
-                                      setState(() {
-                                        isPrivateGroup = value;
-                                      });
-                                    }
-                                  : null,
-                            ),
-                          ],
+                        _buildTextField(
+                          label: 'Telegram Group ID',
+                          hint: '1234567890',
+                          controller: telegramGroupIdController,
+                          keyboardType: TextInputType.number,
+                          errorText: state.validationErrors['telegramId'],
+                          onChanged: (value) {
+                            _validateFields(context);
+                          },
+                          enabled: state.isTelegramIdChecked,
+                          key: const Key('telegram_group_link_field'),
+                        ),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'You have to create your Telegram group and add its id here.',
+                            style: TextStyle(fontSize: 12, color: Colors.black),
+                          ),
+                        ),
+                        Center(
+                          child: CustomTextButton(
+                            label: "Learn how to get Telegram Group ID",
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    'Process',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  content: IntrinsicHeight(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          '1. Create your group on Telegram.',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              height: 1.5),
+                                        ),
+                                        const Text(
+                                          '2. Add the bot and grant it administrative privileges.',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              height: 1.5),
+                                        ),
+                                        TextButton(
+                                            onPressed: () async {
+                                              const url =
+                                                  'https://t.me/study_buds_bot';
+                                              if (await canLaunch(url)) {
+                                                await launch(url);
+                                              } else {
+                                                throw 'Could not launch $url';
+                                              }
+                                            },
+                                            child: Text(
+                                              "If you cannot find the bot, click here",
+                                              style: TextStyle(
+                                                  color: Colors.deepOrange),
+                                            )),
+                                        const Text(
+                                          '3. Send the message "/start" to the group.',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              height: 1.5),
+                                        ),
+                                        const Text(
+                                          '4. The bot will reply with the Telegram Group ID.',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              height: 1.5),
+                                        ),
+                                        const Text(
+                                          '5. Copy the Group ID.',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                              height: 1.5),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            foregroundColor: Colors.deepOrange,
+                            iconData: Icons.info_outline_rounded,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Center(
                           child: CustomFilledButton(
-                            isEnabled: state.isTelegramIdChecked,
+                            isEnabled:
+                                state.isTelegramIdChecked && state.isFormValid,
                             label: 'Create the study group',
-                            key: Key('create_group_button'),
+                            key: Key(
+                                state.isTelegramIdChecked && state.isFormValid
+                                    ? 'create_group_button_enabled'
+                                    : 'create_group_button_disabled'),
                             iconData: Icons.add,
                             onPressed: () {
                               context
@@ -319,7 +394,7 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
                                             : 2,
                                         members: [],
                                         telegramId: int.parse(
-                                            telegramIdController.text),
+                                            telegramGroupIdController.text),
                                         isPublic: !isPrivateGroup,
                                         ownerId: 10),
                                   ));
@@ -334,5 +409,72 @@ class _GroupCreationScreenState extends State<GroupCreationScreen> {
             ),
           ),
         ));
+  }
+
+  void _validateFields(BuildContext context) {
+    context.read<GroupCreationBloc>().add(
+          ValidateFieldsEvent(
+            name: nameController.text,
+            description: descriptionController.text,
+            membersLimit: membersLimitController.text,
+            telegramGroupId: telegramGroupIdController.text,
+            courseList: selectedCourse.isNotEmpty ? [selectedCourse] : [],
+          ),
+        );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    String? hint,
+    required TextEditingController controller,
+    String? errorText,
+    required Function(String) onChanged,
+    Key? key,
+    int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text,
+    List<TextInputFormatter>? inputFormatters,
+    bool enabled = true,
+    Widget? suffixIcon,
+  }) {
+    return TextField(
+      key: key,
+      controller: controller,
+      onChanged: onChanged,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      enabled: enabled,
+      style: const TextStyle(color: Colors.black),
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: errorText != null ? Colors.red : Colors.grey,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: errorText != null ? Colors.red : Colors.black,
+            width: 2,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: errorText != null ? Colors.red : Colors.grey,
+          ),
+        ),
+        errorText: errorText,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 12,
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: const TextStyle(color: Colors.black),
+        suffixIcon: suffixIcon,
+      ),
+    );
   }
 }

@@ -40,13 +40,12 @@ export async function createGroup(groupData: GroupData): Promise<StudentGroup> {
     membersLimit,
     telegramId,
     adminId,
+    telegramLink,
   } = groupData;
 
   const student_info = await UnigeService.getUnigeProfile(adminId);
 
   const gpa = student_info.gpa || 0;
-  const telegramLink = await getJoinLink(telegramId);
-  // const telegramLink = await getJoinLink(telegramId);
   const group = new StudentGroup({
     name,
     description,
