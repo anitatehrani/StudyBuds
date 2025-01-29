@@ -53,7 +53,8 @@ export enum UiId {
     searchBar = "search_bar",
     searchButton = "search_button",
     noResultsMessage = "no_results_message",
-    sendJoinRequestButton = "send_join_request_button"
+    sendJoinRequestButton = "send_join_request_button",
+    groupDetailsTelegramLink = "group_details_telegram_link"
 }
 
 const fieldNameToUiIdMap: { [key: string]: UiId } = {
@@ -67,6 +68,7 @@ const fieldNameToUiIdMap: { [key: string]: UiId } = {
     "group details type icon": UiId.groupDetailsTypeIcon,
     "group details description": UiId.groupDetailsDescription,
     "group details course": UiId.groupDetailsCourse,
+    "group details telegram link": UiId.groupDetailsTelegramLink,
     "Joined group": UiId.joinedGroupTab,
     "Owned group": UiId.ownedGroupTab,
 };

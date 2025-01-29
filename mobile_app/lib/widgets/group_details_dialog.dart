@@ -190,6 +190,7 @@ class GroupDetailsDialog extends StatelessWidget {
                     }
                   },
                   child: Text(
+                    key: ValueKey('group_details_telegram_link'),
                     group.telegramLink!,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.secondary,

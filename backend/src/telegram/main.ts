@@ -54,25 +54,29 @@ bot.on(
 );
 
 bot.onText(
-  /\/start/,
-  suppressErrors(async (msg) => {
-    console.log("Received start command:", msg);
-    const chat = msg.chat;
-    const chatId = chat.id;
-    if (chat.type === "group") {
-      const me = await bot.getMe();
-      const botId = me.id;
-      const chatMember = await bot.getChatMember(chatId, botId);
-      console.log("Chat member object:", chatMember);
-      const isAdmin = chatMember.status === "administrator";
-      if (!isAdmin) {
-        await bot.sendMessage(chatId, "Error, the bot is not an admin");
-        return;
+    /\/start/,
+    suppressErrors(async (msg) => {
+      console.log("Received start command:", msg);
+      const chat = msg.chat;
+      const chatId = chat.id;
+      if (chat.type === "group") {
+        const me = await bot.getMe();
+        const botId = me.id;
+        const chatMember = await bot.getChatMember(chatId, botId);
+        console.log("Chat member object:", chatMember);
+        const isAdmin = chatMember.status === "administrator";
+        if (!isAdmin) {
+          await bot.sendMessage(chatId, "Error, the bot is not an admin");
+          return;
+        }
       }
-    }
-    await bot.sendMessage(chatId, `Welcome! Your Telegram ID is ${chatId}`);
-  }),
+      const escapeChatId = String(chatId).replace(/([_*\[\]()~`>#\+\-=|{}.!])/g, '\\$1');
+      await bot.sendMessage(chatId, `Welcome\\! Your Telegram ID is \`${escapeChatId}\``, { 
+          parse_mode: "MarkdownV2",
+       });
+  })
 );
+
 
 export async function getJoinLink(groupId: number) {
   try {
