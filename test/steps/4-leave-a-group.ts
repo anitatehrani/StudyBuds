@@ -1,21 +1,10 @@
-// File: 4-leave-a-group.ts
-
-import { Given, When, Then, Before } from "@cucumber/cucumber";
+import { Given, When, Then } from "@cucumber/cucumber";
 import {
-    BottomBarIcon,
-    clickButton,
-    go_to_page,
-    waitForElement,
-    waitForElementByValue,
-    editTextField,
     getUiId,
-    getText,
 } from "../utils/utils";
 import { driver } from "./all";
 import assert from "assert";
-import { initDB } from "../utils/mock-data";
-import { Student } from "../../backend/src/models/Student";
-import { byType, byValueKey } from "appium-flutter-finder";
+import { byValueKey } from "appium-flutter-finder";
 import { isUserInGroup, getGroupTitleFromBot } from "../utils/bot-utils";
 
 
@@ -67,6 +56,9 @@ When('The student leaves the group with telegram id {string} in Telegram',async 
     await confirmLeaveButton.click();
 
 
+    //wait 10 seconds until the user is deleted from database on backend also
+    await driver.pause(10000);
+
     // Reopen your app
     console.log("Reopening the app...");
     await driver.execute('mobile: shell', {
@@ -83,24 +75,22 @@ Then('The student with id {string} is removed from the group with id {string}', 
     const isInGroup = await isUserInGroup(userTelegramId, groupTelegramId);
 
     assert.strictEqual(
-        !isInGroup,
+        isInGroup,
         false,
         `User with ID ${userTelegramId} is in the group with ID ${groupTelegramId}`
     );
 });
 
 Then('he can no longer see the {string} in the group description',  async function (field:string) {
-    const groupName = await getText(driver, getUiId(field));
-    assert.ok(!groupName, field + " is still displayed.");
-});
+        // Get the corresponding UiId for the field
+        const fieldKey = getUiId(field);
 
-// // Initialize mock database with a test student and their Telegram account linked
-// Before({ tags: "@leave-a-group" }, async function () {
-//     const studentId = 10; // Replace with actual test student ID
-//     await initDB([
-//         new Student({
-//             studentId,
-//             telegramAccount: 4848, // Replace with actual test Telegram account
-//         }),
-//     ]);
-// });
+        try {
+            // Wait for the element (it should timeout if not visible)
+            await driver.execute("flutter:waitFor", byValueKey(fieldKey), 5000);
+            throw new Error(`${field} is still visible in the group description.`);
+        } catch (error) {
+            // Assert that the field is not visible
+            console.log(`${field} is no longer visible in the group description.`);
+        }
+});

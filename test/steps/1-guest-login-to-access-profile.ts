@@ -48,6 +48,7 @@ When(
             await driver.waitUntil(
                 async () => {
                     const contexts = await driver.getContexts();
+                    //@ts-ignore
                     return contexts.includes("WEBVIEW_chrome");
                 },
                 { timeout: 10_000, timeoutMsg: "WEBVIEW_chrome context not found" }
@@ -70,6 +71,7 @@ When(
             await driver.waitUntil(
                 async () => {
                     const contexts = await driver.getContexts();
+                    //@ts-ignore
                     return contexts.includes("FLUTTER");
                 },
                 { timeout: 10_000, timeoutMsg: "FLUTTER context not found" }
